@@ -48,18 +48,20 @@ function App() {
       keywords:[]},
   ])
 
-  const [displayShelf, setDisplayShelf] = useState({})
+  const [displayShelf, setDisplayShelf] = useState()
 
   return (
     <div>
     <Nav/>
-    <header className="Header">
+    <div className="Row">
+    <div className="Column col-1">
     <Header onSearch={onSearch}/>
-    {displayShelf!==undefined && <Shelf displayShelf={displayShelf}/>}
-    </header>
-    <main className="Main">
     {result!=='' && <Results result={result} setShelf={setDisplayShelf}/>}
-    </main>
+    </div>
+    <div className="Column col-2">
+    {displayShelf && <Shelf displayShelf={displayShelf}/>}
+    </div>
+    </div>
     </div>
   );
 }

@@ -2,10 +2,20 @@
 :root{
   --nav:black;
   --nav-text:white;
-}
-.Header {
-  display: flex;
-  justify-content: center;
+
+  --searchbg:blue;
+  --searchlistbg:white;
+  --searchlisttext:black;
+
+
+  --shelfbg:lightBlue;
+  --shelflistbg:black;
+  --shelflisttext:white;
+
+  --bookbg:darkGrey;
+  --booklistbg:white;
+  --booklisttext:black;
+
 }
 
 .Nav {
@@ -13,26 +23,53 @@
   color: var(--nav-text);
 }
 
+.Header{
+  align-self: center;
+  margin:20px;
+}
 .Results{
   display:flex;
   flex-direction: column;
 }
+.Column{
+  display:flex;
+  flex-direction: column;
+  width: 33vw;
+  height: 100vh;
 
-.Result {
-  background-color: lightBlue;
+}
+.col-1{
+  background-color: var(--searchbg);
+}
+.col-2{
+  background-color: var(--shelfbg);
+}
+.col-3{
+  background-color: var(--bookbg);
+}
+.list-1{
+  background-color: var(--searchlistbg);
+}
+.list-2{
+  background-color: var(--shelflistbg);
+}
+.list-3{
+  background-color: var(--booklistbg);
+}
+.text-1{
+  color: var(--searchlisttext);
+}
+.text-2{
+  color: var(--shelflisttext);
+}
+.text-3{
+  color: var(--booklisttext);
+}
+.Row{
+  display:flex;
+  flex-direction: row;
+}
+.list{
   padding: 3%;
-  align-self: center;
-  width: 20%;
-}
-
-.Shelf {
-  background-color: grey;
-}
-
-.ShelfBook{
-    background-color: lightGreen;
-    padding: 3%;
-    align-self: center;
-    width: 20%;
-
+  width: minmax(33vw,400px);
 }
