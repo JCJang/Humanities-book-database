@@ -4,6 +4,8 @@ import Nav from './components/Nav'
 import Results from './components/Results'
 import Shelf from './components/Shelf'
 import BookDetail from './components/BookDetail'
+import Test from './components/Test'
+
 import {useState, useEffect} from 'react'
 
 function App() {
@@ -23,7 +25,8 @@ function App() {
       books: [
         {
           title: 'On the uses and disadvantages of history for life',
-          work: 'OL98168W'
+          work: 'OL98168W',
+          preview: 'https://archive.org/embed/untimelymeditati0000niet',
         }, {
           title: 'The Rebel',
           work: 'OL15722007W'
@@ -55,7 +58,9 @@ function App() {
       books: [
         {
           title: 'The interpretation of cultures',
-          work: 'OL926851W'
+          work: 'OL926851W',
+          isbn: '',
+          googleId:'34yKDgAAQBAJ',
         }
       ],
       saved: false,
@@ -67,7 +72,8 @@ function App() {
       books: [
         {
           title: 'The theory of moral sentiments',
-          work: 'OL76826W'
+          work: 'OL76826W',
+          isbn: ['9781101460016','9781602060975','9780521598477','9780486452913']
         }
       ],
       saved: false,
@@ -79,7 +85,8 @@ function App() {
       books: [
         {
           title: 'sincerity and Authenticity',
-          work: 'OL76867W'
+          work: 'OL76867W',
+          isbn: '9780674504196',
         }
       ],
       saved: false,
@@ -91,16 +98,20 @@ function App() {
   const [detail,setDetail] = useState()
 
   return (<div>
+
     <Nav/>
     <div className="Row">
       <div className="Column col-1">
-        <Header onSearch={onSearch}/> {result !== '' && <Results result={result} setShelf={setDisplayShelf}/>}
+        <Header onSearch={onSearch}/>
+        {result !== '' && <Results result={result} setShelf={setDisplayShelf}/>}
+
       </div>
       <div className="Column col-2">
         {displayShelf && <Shelf displayShelf={displayShelf} setDetail={setDetail}/>}
       </div>
       <div className="Column col-3">
         {detail && <BookDetail bookResponse={detail}/>}
+        <Test/>
       </div>
     </div>
   </div>);
