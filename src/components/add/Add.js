@@ -1,16 +1,25 @@
 import {useState, useEffect} from 'react';
 import './Add.css';
-import {BrowserRouter as Router, Route} from 'react-router-dom'
+import Query from './Query'
 import Header from './Header'
 import Tasks from './Tasks'
 import AddTask from './AddTask'
-import Footer from './Footer'
-import About from './About'
+import SearchBar from '../SearchBar'
+
 
 
 const Add =()=>{
   const [showAddTask, setShowAddTask]=useState(false)
   const [tasks, setTasks] =  useState([])
+  const [results, setResults] = useState(false)
+  const [toAdd, setToAdd] = useState()
+
+  const onSearch = async(title)=>{
+    console.log(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title.search}`);
+    const work = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title.search}`)
+    const data = await work.json()
+      setResults(data)
+      }
 
   useEffect(()=>{
       const getTasks = async() => {
@@ -58,7 +67,6 @@ setTasks(tasks.map((item)=>item.id===id?{...item, reminder:data.reminder}:item))
 }
 
 
-
 const addTask = async (task)=>{
   const res = await fetch('http://localhost:5000/tasks', {
       method: 'POST',
@@ -80,21 +88,16 @@ setTasks([...tasks, data])
 // setTasks([...tasks,newTask])
 
   return (
-    <Router>
     <div className="container">
       <Header onAdd={()=>setShowAddTask(!showAddTask)} btnText={showAddTask?"Close":"Add"} btnColor={showAddTask?"red":"green"}/>
-
-
-      <Route path="/" exact render={(props)=>(
-        <>
         {showAddTask && <AddTask onSubmit={addTask}/>}
-        {tasks.length>0 ? <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder}/>:<p>There are no tasks</p>}
-        </>
-      )}/>
-      <Route path="/about" component={About}/>
-      <Footer/>
+        <SearchBar type="text" onSearch = {onSearch}
+         placeholder="What do you want to read?"/>
+        {results && (<Query result={results} setToAdd={setToAdd}/>)}
+        {toAdd}
+        {tasks.length>0 ? <Tasks tasks={tasks} onDelete={deleteTask}
+         onToggle={toggleReminder}/>:<p>There are no tasks</p>}
     </div>
-    </Router>
   )
 }
 

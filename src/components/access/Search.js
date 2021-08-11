@@ -1,7 +1,7 @@
-import SearchBar from './SearchBar'
+import SearchBar from '../SearchBar'
 import {useState} from 'react'
 
-const Header = ({onSearch}) => {
+const Search = ({onSearch}) => {
   return (
     <div className="Header"><h2>Search By Question</h2>
     <SearchBar type="text" onSearch = {onSearch}
@@ -11,4 +11,4 @@ const Header = ({onSearch}) => {
   )
 }
 
-export default Header
+export default Search

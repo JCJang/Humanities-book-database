@@ -7,7 +7,7 @@ const Header = ({title, onAdd,btnColor, btnText}) => {
   return (
     <header className="header">
       <h1>{title}</h1>
-      {location.pathname === '/' && (<Button color={btnColor} text={btnText} onClick={onAdd}/>)}
+      {location.pathname === '/add' && (<Button color={btnColor} text={btnText} onClick={onAdd}/>)}
       {/*REUSABLE components
         <Button color="green" text="another text for another button"/>
         <Button color="pink" text="more buttons using the same component"/>

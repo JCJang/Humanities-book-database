@@ -1,4 +1,4 @@
-import Header from './Header'
+import Search from './Search'
 import Results from './Results'
 import Shelf from './Shelf'
 import BookDetail from './BookDetail'
@@ -10,10 +10,6 @@ function Access() {
   const [result, setResult] = useState([])
   const onSearch = (value) => {
     setResult(shelf.filter((shelf) => shelf.text.indexOf(value.search) > 0))
-    if (result.length === 0) {
-      alert("there are no matches")
-      return
-    }
   }
   const [shelf, setShelf] = useState([])
   useEffect(()=>{
@@ -43,7 +39,7 @@ const fetchShelves = async() =>{
   return (<div>
     <div className="Row">
       <div className="Column col-1">
-        <Header onSearch={onSearch}/>
+        <Search onSearch={onSearch}/>
         {result !== '' && <Results result={result} setShelf={setDisplayShelf}/>}
 
       </div>
