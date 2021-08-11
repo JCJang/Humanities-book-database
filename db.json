@@ -1,0 +1,39 @@
+{
+  "shelves":[{
+    "id": 1,
+    "text": "How should humans relate to history?",
+    "books": [{
+      "title": "On the uses and disadvantages of history for life",
+      "work": "OL98168W",
+      "archive": "https://archive.org/embed/untimelymeditati0000niet",
+      "isbn": [],
+      "saved": false
+    }, {
+      "title": "The Rebel",
+      "work": "OL15722007W",
+      "archive": "",
+      "saved": false
+    }, {
+      "title": "the historian's craft",
+      "work": "OL284446W",
+      "archive": "",
+      "isbn": [],
+      "saved": false
+    }],
+    "saved": false,
+    "keywords": []
+  },
+  {
+    "id": 2,
+    "text": "What are human sentiments?",
+    "books": [{
+      "title": "The theory of moral sentiments",
+      "work": "OL76826W",
+      "archive": "",
+      "isbn": ["9781101460016", "9781602060975", "9780521598477", "9780486452913"],
+      "saved": false
+    }],
+    "saved": false,
+    "keywords": []
+  }]
+}

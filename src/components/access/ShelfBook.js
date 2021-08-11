@@ -6,12 +6,11 @@ const ShelfBook = ({book, setDetail}) => {
 
 const [tags, setTags] = useState();
 const [tagsLoaded, setTagsLoaded] = useState(false);
-    const loadShelf = ()=>{
-      fetch("https://openlibrary.org/works/"+book.work+".json")
-      .then(a=>a.json())
-      .then(response=>setTags(response))
-      .catch(console.log("no response from server"))
-      console.log(book);
+
+const loadShelf = async()=>{
+  const work = await fetch("https://openlibrary.org/works/"+book.work+".json")
+  const data = await work.json()
+      setTags(data);
       if(tags){setTagsLoaded(true)}
     }
 
@@ -23,7 +22,6 @@ const [tagsLoaded, setTagsLoaded] = useState(false);
      fetch("https://openlibrary.org/works/"+book.work+".json")
      .then(a=>a.json())
      .then(response=>setDetail(response))
-     .catch(console.log("no response from server"))
    }
 
   return (
