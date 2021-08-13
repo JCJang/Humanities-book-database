@@ -2,7 +2,6 @@ import Search from './Search'
 import Results from './Results'
 import Shelf from './Shelf'
 import BookDetail from './BookDetail'
-import Test from './Test'
 
 import {useState, useEffect} from 'react'
 
@@ -48,7 +47,6 @@ const fetchShelves = async() =>{
       </div>
       <div className="Column col-3">
         {detail && <BookDetail bookResponse={detail}/>}
-        <Test/>
       </div>
     </div>
   </div>);
