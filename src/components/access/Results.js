@@ -3,7 +3,7 @@ const Results = ({result, setShelf}) => {
   return (
     <div className="Results">
 
-    {result.map((result)=><Result result={result} setShelf={setShelf}/>)}
+    {result && result.map((result)=><Result result={result} setShelf={setShelf}/>)}
   </div>
   )
 
