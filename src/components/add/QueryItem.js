@@ -1,10 +1,11 @@
 const QueryItem = ({result, setToAdd}) => {
   return (
     <div className="QueryItem" onClick={()=>setToAdd(result)}>
-      <h4>{result.volumeInfo.title}</h4>
-      <p>{result.volumeInfo.authors.map(a=>a)}</p>
-      <p>{result.volumeInfo.publishedDate}</p>
-      <p>{result.volumeInfo.pageCount}</p>
+      <h3>{result.volumeInfo.title}</h3>
+      <p>Authors: <strong>{result.volumeInfo.authors.map(a=>a)}</strong></p>
+      <p>Publication date: <strong>{result.volumeInfo.publishedDate}</strong></p>
+      <p>Length: <strong>{result.volumeInfo.pageCount} pages</strong></p>
+      <br></br>
 
 
 

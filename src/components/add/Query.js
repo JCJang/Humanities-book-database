@@ -4,8 +4,8 @@ const Query = ({result, setToAdd}) => {
   return (
     <div className="Query">
     {result.items.map((a)=><QueryItem result={a} setToAdd={setToAdd}/>)}
-  </div>
-  )
+  </div>)
+
 
 }
 

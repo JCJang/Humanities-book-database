@@ -1,27 +1,23 @@
 import {useState, useEffect} from 'react';
 import './Add.css';
 import Query from './Query'
-import Header from './Header'
-import Tasks from './Tasks'
-import AddTask from './AddTask'
-import SearchBar from '../SearchBar'
-
+import SearchForm from './SearchForm'
+import SubmissionForm from './SubmissionForm'
 
 
 const Add =()=>{
   const [showAddTask, setShowAddTask]=useState(false)
-  const [tasks, setTasks] =  useState([])
   const [results, setResults] = useState(false)
   const [toAdd, setToAdd] = useState()
 
-  const onSearch = async(title)=>{
-    console.log(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title.search}`);
-    const work = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title.search}`)
+  const onSearch = async(title, author, isbn)=>{
+    console.log(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title}+inauthor:${author}`);
+    const work = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title}+inauthor:${author}+isbn:${isbn}`)
     const data = await work.json()
       setResults(data)
       }
 
-  useEffect(()=>{
+/*useEffect(()=>{
       const getTasks = async() => {
         const tasksFromServer = await fetchTasks();
         setTasks(tasksFromServer)
@@ -82,21 +78,17 @@ console.log(data)
 
 setTasks([...tasks, data])
 }
-
+*/
 // const id = Math.floor(Math.random() * 10000)+1
 // const newTask = {id, ...task}
 // setTasks([...tasks,newTask])
 
   return (
     <div className="container">
-      <Header onAdd={()=>setShowAddTask(!showAddTask)} btnText={showAddTask?"Close":"Add"} btnColor={showAddTask?"red":"green"}/>
-        {showAddTask && <AddTask onSubmit={addTask}/>}
-        <SearchBar type="text" onSearch = {onSearch}
-         placeholder="What do you want to read?"/>
+        <SearchForm onSearch = {onSearch}/>
         {results && (<Query result={results} setToAdd={setToAdd}/>)}
-        {toAdd}
-        {tasks.length>0 ? <Tasks tasks={tasks} onDelete={deleteTask}
-         onToggle={toggleReminder}/>:<p>There are no tasks</p>}
+        {toAdd && (<SubmissionForm toAdd = {toAdd} onSearch={onSearch}/>)}
+
     </div>
   )
 }
