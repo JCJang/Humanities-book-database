@@ -24,8 +24,9 @@ const SubmissionForm = ({toAdd,onSearch}) => {
     setTitle(toAdd.volumeInfo.title)
     setAuthor(toAdd.volumeInfo.authors.map(a=>a))
     const getIsbn=(isbn)=>{
+      if(toAdd.volumeInfo.hasOwnProperty("industryIdentifiers")){
       const res = toAdd.volumeInfo.industryIdentifiers.filter(a=>a.type===isbn)
-      if(res[0]!==undefined){return res[0].identifier}else{return ""}
+      if(res[0]!==undefined){return res[0].identifier}else{return ""}}else{return ""}
     }
     setIsbn(getIsbn("ISBN_10"))
   }},[toAdd])

@@ -1,7 +1,7 @@
 import React from 'react'
 import {useState, useEffect} from 'react'
 /*referencing Christina Sohn from https://chsohn15.medium.com/integrating-google-books-embedded-viewer-api-into-a-react-app-a81fde35c14d*/
-  const Test = ({viewerId}) => {
+  const Test = ({bookIdentifier}) => {
      const [loaded, setLoaded] = useState(false);
      // Create alert message if book not found in Google Database
      function alertNotFound() {
@@ -18,12 +18,12 @@ import {useState, useEffect} from 'react'
       }, []);
      // Once Google Books has loaded, then create new instance of Default viewer and load book's information to viewer
      useEffect(()=>{
-         if (!loaded) return
+         if (!loaded){return}
          else{
               if(window.viewer){
                  var viewer = new window.google.books.DefaultViewer
                  (document.getElementById('viewerCanvas'));
-                 viewer.load(viewerId, alertNotFound);
+                 viewer.load(bookIdentifier, alertNotFound);
                }
                else{
                  window.google.books.load();
@@ -31,16 +31,16 @@ import {useState, useEffect} from 'react'
                  var viewer = new window.google.books.DefaultViewer
                      (document.getElementById('viewerCanvas'));
                  window.viewer = viewer
-                 viewer.load(viewerId, alertNotFound);
+                 viewer.load(bookIdentifier, alertNotFound);
                })
              }
-         }}, [loaded, viewerId])
+         }}, [loaded, bookIdentifier])
 
          return (
             <div>
                 {loaded ?
                      <div>
-                        <div id="viewerCanvas" style={{height:"100vh",width:"100vw", backgroundColor:"red"}}>dskj</div>
+                        <div id="viewerCanvas" style={{height:"500px",width:"400px", backgroundColor:"red"}}>dskj</div>
                      </div> :
                 <h1>Script not loaded</h1>}
             </div>    )

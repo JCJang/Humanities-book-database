@@ -3,7 +3,6 @@ import './Add.css';
 import Query from './Query'
 import SearchForm from './SearchForm'
 import SubmissionForm from './SubmissionForm'
-import GoogleBooksViewer from './GoogleBooksViewer'
 import NewTest from './NewTest'
 
 
@@ -12,18 +11,43 @@ const Add =()=>{
   const [showAddTask, setShowAddTask]=useState(false)
   const [results, setResults] = useState(false)
   const [toAdd, setToAdd] = useState(false)
-    const [viewerId, setViewerId] = useState(false);
+    const [bookIdentifier, setBookIdentifier] = useState(false);
 
+//get isbn
+/*
     useEffect(()=> {
       if(toAdd!==false){
-      const getIsbn=(isbn)=>{
-        const res = toAdd.volumeInfo.industryIdentifiers.filter(a=>a.type===isbn)
-        if(res[0]!==undefined){return res[0].identifier}else{return ""}
-      }
+        const getIsbn=(isbn)=>{
+          if(toAdd.volumeInfo.hasOwnProperty("industryIdentifiers")){
+          const res = toAdd.volumeInfo.industryIdentifiers.filter(a=>a.type===isbn)
+          if(res[0]!==undefined){return res[0].identifier}else{return ""}}else{return ""}
+        }
+
       console.log(getIsbn("ISBN_10"))
-        if(getIsbn("ISBN_10").length>9){setViewerId("ISBN:"+getIsbn("ISBN_10"))}
-        console.log(viewerId);
-    }}, [toAdd]);
+        if(getIsbn("ISBN_10").length>10){setBookIdentifier("ISBN:"+getIsbn("ISBN_10"))}else if (getIsbn("ISBN_13").length>10){setBookIdentifier("ISBN:"+getIsbn("ISBN_13"))}else{alert("preview unavailable")}
+        }
+        console.log(bookIdentifier);
+    }, [toAdd]);*/
+
+    //get book google id
+useEffect(() => {
+      if (toAdd !== false) {
+        const getLink = () => {
+          if (toAdd.hasOwnProperty("id")) {
+            return toAdd.id
+          } else {
+            return ""
+          }}
+
+        console.log(getLink());
+        if (getLink().length > 0) {
+          setBookIdentifier(getLink())
+        } else {
+          alert("preview unavailable")
+        }
+
+        console.log(bookIdentifier);
+      }}, [toAdd]);
 
 
   const onSearch = async(title, author, isbn)=>{
@@ -109,8 +133,7 @@ setTasks([...tasks, data])
         {results && (<Query result={results} setToAdd={setToAdd}/>)}</div>
         <div className="SubmissionForm">
         {<SubmissionForm toAdd = {toAdd} onSearch={onSearch}/>}
-        {toAdd && (<GoogleBooksViewer toAdd={toAdd}/>)}
-        <NewTest viewerId={viewerId}/>
+        <NewTest bookIdentifier={bookIdentifier}/>
         </div>
     </div>
   )
