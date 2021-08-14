@@ -22,7 +22,7 @@ const SearchForm = ({type,placeholder,onSearch}) => {
       onChange={(e)=>setAuthor(e.target.value)} placeholder="book author"/>
       <input type="text" value={isbn}
        onChange={(e)=>setIsbn(e.target.value)} placeholder="isbn"/>
-    <input type="submit" value="Search"/>
+    <input type="submit"  className="btn" value="Search"/>
 
     </form>
   )

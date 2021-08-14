@@ -12,10 +12,14 @@ const Add =()=>{
 
   const onSearch = async(title, author, isbn)=>{
     console.log(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title}+inauthor:${author}`);
-    const work = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title}+inauthor:${author}+isbn:${isbn}`)
+    const work = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title}+inauthor:${author}+isbn:${isbn}&filter=partial&printType=books&maxResults=40`)
     const data = await work.json()
+    if(data.totalItems===0){
+      alert("no results for this search.")
+      return;
+    }
       setResults(data)
-      }
+    }
 
 /*useEffect(()=>{
       const getTasks = async() => {
@@ -85,10 +89,11 @@ setTasks([...tasks, data])
 
   return (
     <div className="container">
-        <SearchForm onSearch = {onSearch}/>
-        {results && (<Query result={results} setToAdd={setToAdd}/>)}
+        <div className="SearchForm"><SearchForm onSearch = {onSearch}/>
+        {results && (<Query result={results} setToAdd={setToAdd}/>)}</div>
+        <div className="SubmissionForm">
         {toAdd && (<SubmissionForm toAdd = {toAdd} onSearch={onSearch}/>)}
-
+        </div>
     </div>
   )
 }

@@ -30,7 +30,7 @@ const SubmissionForm = ({toAdd,onSearch}) => {
       onChange={(e)=>setAuthor(e.target.value)} placeholder="book author"/>
       <input type="text" value={isbn}
        onChange={(e)=>setIsbn(e.target.value)} placeholder="isbn"/>
-    <input type="submit" value="Search"/>
+    <input  className="btn" type="submit" value="Suggest"/>
 
     </form>
   )
