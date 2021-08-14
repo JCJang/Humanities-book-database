@@ -8,10 +8,10 @@ import SubmissionForm from './SubmissionForm'
 const Add =()=>{
   const [showAddTask, setShowAddTask]=useState(false)
   const [results, setResults] = useState(false)
-  const [toAdd, setToAdd] = useState()
+  const [toAdd, setToAdd] = useState(false)
 
   const onSearch = async(title, author, isbn)=>{
-    console.log(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title}+inauthor:${author}`);
+    console.log(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title}+inauthor:${author}+isbn:${isbn}&filter=partial&printType=books&maxResults=40`);
     const work = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title}+inauthor:${author}+isbn:${isbn}&filter=partial&printType=books&maxResults=40`)
     const data = await work.json()
     if(data.totalItems===0){
@@ -92,7 +92,7 @@ setTasks([...tasks, data])
         <div className="SearchForm"><SearchForm onSearch = {onSearch}/>
         {results && (<Query result={results} setToAdd={setToAdd}/>)}</div>
         <div className="SubmissionForm">
-        {toAdd && (<SubmissionForm toAdd = {toAdd} onSearch={onSearch}/>)}
+        {<SubmissionForm toAdd = {toAdd} onSearch={onSearch}/>}
         </div>
     </div>
   )
