@@ -4,6 +4,7 @@ import Query from './Query'
 import SearchForm from './SearchForm'
 import SubmissionForm from './SubmissionForm'
 import GoogleBooksViewer from './GoogleBooksViewer'
+import NewTest from './NewTest'
 
 
 
@@ -96,6 +97,7 @@ setTasks([...tasks, data])
         <div className="SubmissionForm">
         {<SubmissionForm toAdd = {toAdd} onSearch={onSearch}/>}
         {toAdd && (<GoogleBooksViewer toAdd={toAdd}/>)}
+        <NewTest/>
         </div>
     </div>
   )
