@@ -12,9 +12,11 @@ const Add =()=>{
   const [results, setResults] = useState(false)
   const [toAdd, setToAdd] = useState(false)
     const [bookIdentifier, setBookIdentifier] = useState(false);
+    const [isbnOrId, setIsbnOrId] = useState(true)
+
 
 //get isbn
-/*
+
     useEffect(()=> {
       if(toAdd!==false){
         const getIsbn=(isbn)=>{
@@ -24,13 +26,18 @@ const Add =()=>{
         }
 
       console.log(getIsbn("ISBN_10"))
-        if(getIsbn("ISBN_10").length>10){setBookIdentifier("ISBN:"+getIsbn("ISBN_10"))}else if (getIsbn("ISBN_13").length>10){setBookIdentifier("ISBN:"+getIsbn("ISBN_13"))}else{alert("preview unavailable")}
+        if(getIsbn("ISBN_10").length>10){setBookIdentifier(getIsbn("ISBN_10")); setIsbnOrId(true)}else if (getIsbn("ISBN_13").length>10){setBookIdentifier(getIsbn("ISBN_13")); setIsbnOrId(true)}else if(toAdd.hasOwnProperty("id")){
+            setBookIdentifier(toAdd.id);
+            setIsbnOrId(false)
+          } else {
+            console.log("no identifier found")
+            setBookIdentifier(false)
         }
         console.log(bookIdentifier);
-    }, [toAdd]);*/
+    }}, [toAdd]);
 
     //get book google id
-useEffect(() => {
+/*useEffect(() => {
       if (toAdd !== false) {
         const getLink = () => {
           if (toAdd.hasOwnProperty("id")) {
@@ -47,7 +54,7 @@ useEffect(() => {
         }
 
         console.log(bookIdentifier);
-      }}, [toAdd]);
+      }}, [toAdd]);*/
 
 
   const onSearch = async(title, author, isbn)=>{
@@ -133,7 +140,7 @@ setTasks([...tasks, data])
         {results && (<Query result={results} setToAdd={setToAdd}/>)}</div>
         <div className="SubmissionForm">
         {<SubmissionForm toAdd = {toAdd} onSearch={onSearch}/>}
-        <NewTest bookIdentifier={bookIdentifier}/>
+        <NewTest bookIdentifier={bookIdentifier} isbnOrId={isbnOrId}/>
         </div>
     </div>
   )
