@@ -3,7 +3,7 @@ const Query = ({result, setToAdd}) => {
   console.log(result)
   return (
     <div className="Query">
-    {result.items.map((a)=><QueryItem result={a} setToAdd={setToAdd}/>)}
+    {result.items.map((a)=><QueryItem key={a.id} result={a} setToAdd={setToAdd}/>)}
   </div>)
 
 

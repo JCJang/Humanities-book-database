@@ -17,6 +17,7 @@ import {useState, useEffect} from 'react'
         document.body.appendChild(scriptTag);
       }, []);
      // Once Google Books has loaded, then create new instance of Default viewer and load book's information to viewer
+     //Currently supported RFC 3066 language codes include af, ar, hy, bg, ca, zh-CN, zh-TW, hr, cs, da, nl, en, fil, fi, fr, de, el, he, hu, is, id, it, ja, ko, lv, lt, ms, no, pl, pt-BR, pt-PT, ro, ru, sr, sk, sl, es, sv, tl, th, tr, uk, and vi.
      useEffect(()=>{
          if (!loaded){return}
          else{
@@ -26,7 +27,8 @@ import {useState, useEffect} from 'react'
                  viewer.load(bookIdentifier, alertNotFound);
                }
                else{
-                 window.google.books.load();
+
+                 window.google.books.load({"language": "en"});
                  window.google.books.setOnLoadCallback(() => {
                  var viewer = new window.google.books.DefaultViewer
                      (document.getElementById('viewerCanvas'));
@@ -40,7 +42,7 @@ import {useState, useEffect} from 'react'
             <div>
                 {loaded ?
                      <div>
-                        <div id="viewerCanvas" style={{height:"500px",width:"400px", backgroundColor:"red"}}>dskj</div>
+                        <div id="viewerCanvas" style={{height:"500px",width:"400px", backgroundColor:"red"}}>loading</div>
                      </div> :
                 <h1>Script not loaded</h1>}
             </div>    )

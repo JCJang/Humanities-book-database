@@ -16,6 +16,8 @@ const getIsbn=(isbn)=>{
       <p>Authors: <strong>{result.volumeInfo.authors && result.volumeInfo.authors.map(a=>a)}</strong></p>
       <p>ISBN-10: <strong>{getIsbn("ISBN_10")}</strong></p>
       <p>ISBN-13: <strong>{getIsbn("ISBN_13")}</strong></p>
+      <p>preview: <strong>{result.accessInfo && result.accessInfo.viewability}</strong></p>
+  
       <p>Publication date: <strong>{result.volumeInfo.publishedDate}</strong></p>
       <p>Length: <strong>{result.volumeInfo.pageCount} pages</strong></p>
       <br></br>

@@ -5,6 +5,8 @@ const SubmissionForm = ({toAdd,onSearch}) => {
   const [title, setTitle] =  useState('')
   const [author, setAuthor] =  useState('')
   const [isbn, setIsbn] =  useState('')
+  const [isbn10, setIsbn10] =  useState('')
+  const [isbn13, setIsbn13] =  useState('')
 
   const validateForm = (e)=>{
     console.log("submitted");
@@ -28,7 +30,9 @@ const SubmissionForm = ({toAdd,onSearch}) => {
       const res = toAdd.volumeInfo.industryIdentifiers.filter(a=>a.type===isbn)
       if(res[0]!==undefined){return res[0].identifier}else{return ""}}else{return ""}
     }
-    setIsbn(getIsbn("ISBN_10"))
+    setIsbn10(getIsbn("ISBN_10"))
+    setIsbn13(getIsbn("ISBN_13"))
+
   }},[toAdd])
 
   return (
@@ -41,9 +45,19 @@ const SubmissionForm = ({toAdd,onSearch}) => {
       onChange={(e)=>setAuthor(e.target.value)} placeholder="book author"/>
       <label htmlFor="isbn">Isbn:</label>
       <input className="form-control" type="text" id="isbn" value={isbn}
-       onChange={(e)=>setIsbn(e.target.value)} placeholder="isbn"/>
+       onChange={(e)=>setIsbn(e.target.value)} placeholder="isbn" />
+
+      <br></br>
+      <h4>autofill(read-only)</h4>
+      <label htmlFor="isbn10">Isbn-10:</label>
+      <input className="form-control" type="text" id="isbn10" value={isbn10}
+       onChange={(e)=>setIsbn10(e.target.value)} placeholder="isbn-10" readOnly="readOnly"/>
+       <label htmlFor="isbn13">Isbn-13:</label>
+       <input className="form-control" type="text" id="isbn13" value={isbn13}
+        onChange={(e)=>setIsbn13(e.target.value)} placeholder="isbn-13" readOnly="readOnly"/>
     <input  className="btn" type="submit" value="Suggest"/>
 
+readonly="readonly"
     </form>
   )
 
