@@ -34,7 +34,8 @@ import {useState, useEffect} from 'react'
                  viewer.load(viewerId, alertNotFound);
                })
              }
-         }}, [loaded])
+         }}, [loaded, viewerId])
+
          return (
             <div>
                 {loaded ?
