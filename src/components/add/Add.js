@@ -12,6 +12,19 @@ const Add =()=>{
   const [showAddTask, setShowAddTask]=useState(false)
   const [results, setResults] = useState(false)
   const [toAdd, setToAdd] = useState(false)
+    const [viewerId, setViewerId] = useState(false);
+
+    useEffect(()=> {
+      if(toAdd!==false){
+      const getIsbn=(isbn)=>{
+        const res = toAdd.volumeInfo.industryIdentifiers.filter(a=>a.type===isbn)
+        if(res[0]!==undefined){return res[0].identifier}else{return ""}
+      }
+      console.log(getIsbn("ISBN_10"))
+        if(getIsbn("ISBN_10").length>9){setViewerId("ISBN:"+getIsbn("ISBN_10"))}
+        console.log(viewerId);
+    }}, [toAdd]);
+
 
   const onSearch = async(title, author, isbn)=>{
     console.log(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title}+inauthor:${author}+isbn:${isbn}&filter=partial&printType=books&maxResults=40`);
@@ -97,7 +110,7 @@ setTasks([...tasks, data])
         <div className="SubmissionForm">
         {<SubmissionForm toAdd = {toAdd} onSearch={onSearch}/>}
         {toAdd && (<GoogleBooksViewer toAdd={toAdd}/>)}
-        <NewTest/>
+        <NewTest viewerId={viewerId}/>
         </div>
     </div>
   )

@@ -1,7 +1,7 @@
 import React from 'react'
 import {useState, useEffect} from 'react'
 /*referencing Christina Sohn from https://chsohn15.medium.com/integrating-google-books-embedded-viewer-api-into-a-react-app-a81fde35c14d*/
-  const Test = () => {
+  const Test = ({viewerId}) => {
      const [loaded, setLoaded] = useState(false);
      // Create alert message if book not found in Google Database
      function alertNotFound() {
@@ -23,7 +23,7 @@ import {useState, useEffect} from 'react'
               if(window.viewer){
                  var viewer = new window.google.books.DefaultViewer
                  (document.getElementById('viewerCanvas'));
-                 viewer.load('ISBN:0738531367', alertNotFound);
+                 viewer.load(viewerId, alertNotFound);
                }
                else{
                  window.google.books.load();
@@ -31,7 +31,7 @@ import {useState, useEffect} from 'react'
                  var viewer = new window.google.books.DefaultViewer
                      (document.getElementById('viewerCanvas'));
                  window.viewer = viewer
-                 viewer.load('ISBN:0738531367', alertNotFound);
+                 viewer.load(viewerId, alertNotFound);
                })
              }
          }}, [loaded])
