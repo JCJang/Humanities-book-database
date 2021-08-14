@@ -3,6 +3,8 @@ import './Add.css';
 import Query from './Query'
 import SearchForm from './SearchForm'
 import SubmissionForm from './SubmissionForm'
+import GoogleBooksViewer from './GoogleBooksViewer'
+
 
 
 const Add =()=>{
@@ -93,6 +95,7 @@ setTasks([...tasks, data])
         {results && (<Query result={results} setToAdd={setToAdd}/>)}</div>
         <div className="SubmissionForm">
         {<SubmissionForm toAdd = {toAdd} onSearch={onSearch}/>}
+        {toAdd && (<GoogleBooksViewer toAdd={toAdd}/>)}
         </div>
     </div>
   )

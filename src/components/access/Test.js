@@ -17,6 +17,8 @@ import {useState, useEffect} from 'react'
         document.body.appendChild(scriptTag);
       }, []);
      // Once Google Books has loaded, then create new instance of Default viewer and load book's information to viewer
+
+
      useEffect(()=>{
          if (!loaded) return
          else{

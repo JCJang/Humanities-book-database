@@ -2,6 +2,7 @@ const QueryItem = ({result, setToAdd}) => {
 
 //if you see this warning again: "Objects are not valid as a React child (found: object with keys {type, identifier}). If you meant to render a collection of children, use an array instead." you messed up something here, while accessing the object. Don't change setResults.
 
+
 const getIsbn=(isbn)=>{
   if(result.volumeInfo.hasOwnProperty("industryIdentifiers")){
   const res = result.volumeInfo.industryIdentifiers.filter(a=>a.type===isbn)
