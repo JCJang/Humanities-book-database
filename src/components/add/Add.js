@@ -3,7 +3,7 @@ import './Add.css';
 import Query from './Query'
 import SearchForm from './SearchForm'
 import SubmissionForm from './SubmissionForm'
-import NewTest from './NewTest'
+import GoogleBooksViewer from './GoogleBooksViewer'
 
 
 
@@ -13,6 +13,20 @@ const Add =()=>{
   const [toAdd, setToAdd] = useState(false)
     const [bookIdentifier, setBookIdentifier] = useState(false);
     const [isbnOrId, setIsbnOrId] = useState(true)
+    const [googleScriptLoaded, setGoogleScriptLoaded] = useState(false);
+
+
+         // Was able to fix first load bug by setting google script load not within the useEffect, but as part of a component.
+        const loadGoogleBooksViewer = (() =>{
+            const scriptTag = document.createElement('script')
+            scriptTag.src= 'https://www.google.com/books/jsapi.js'
+            scriptTag.type="text/javascript"
+            scriptTag.id = "google-script"
+            document.body.appendChild(scriptTag);
+
+          })()
+
+          useEffect(()=>{document.getElementById("google-script").addEventListener('load', ()=>setGoogleScriptLoaded(true))},[])
 
 
 //get isbn
@@ -140,7 +154,7 @@ setTasks([...tasks, data])
         {results && (<Query result={results} setToAdd={setToAdd}/>)}</div>
         <div className="SubmissionForm">
         {<SubmissionForm toAdd = {toAdd} onSearch={onSearch}/>}
-        <NewTest bookIdentifier={bookIdentifier} isbnOrId={isbnOrId}/>
+        <GoogleBooksViewer bookIdentifier={bookIdentifier} isbnOrId={isbnOrId} googleScriptLoaded={googleScriptLoaded}/>
         </div>
     </div>
   )

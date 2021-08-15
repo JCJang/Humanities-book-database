@@ -23,8 +23,7 @@ for(let x of author){
     console.log(author)
               const work = await fetch(`https://en.wikipedia.org/w/rest.php/v1/page/${author}`)
               const data = await work.json()
-              console.log(data)
-              setAuthorWikiData([data])
+              console.log("author data: "+ data)
               }
 
 
