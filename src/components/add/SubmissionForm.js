@@ -1,4 +1,6 @@
 import {useEffect, useState} from 'react';
+import WikiTest from './WikiTest'
+
 const SubmissionForm = ({toAdd,onSearch}) => {
 
   const [idea, setId] =  useState('')
@@ -37,6 +39,8 @@ const SubmissionForm = ({toAdd,onSearch}) => {
 
   return (
     <form onSubmit={(e)=>validateForm(e)}>
+
+    {toAdd && <WikiTest author={toAdd.volumeInfo.authors}/>}
     <label htmlFor="title">Title:</label>
     <input className="form-control" type="text" id="title" value={title}
      onChange={(e)=>setTitle(e.target.value)} placeholder="book title"/>
@@ -57,7 +61,6 @@ const SubmissionForm = ({toAdd,onSearch}) => {
         onChange={(e)=>setIsbn13(e.target.value)} placeholder="isbn-13" readOnly="readOnly"/>
     <input  className="btn" type="submit" value="Suggest"/>
 
-readonly="readonly"
     </form>
   )
 
