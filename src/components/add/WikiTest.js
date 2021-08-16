@@ -97,7 +97,6 @@ fetchAuthorWikiUrl(author)
       setAuthorAgeAtPublication(earliestPublicationYear-authorBirthDate.getFullYear())}
     }, [earliestPublicationYear])
 
-
 const fetchAuthorWikiData = (author) => {
   console.log(author)
 wiki({ apiUrl: `https://${languageSetting}.wikipedia.org/w/api.php` })
@@ -117,9 +116,8 @@ wiki({ apiUrl: `https://${languageSetting}.wikipedia.org/w/api.php` })
     console.log(res)
     setAuthorWikiTitle(res.title)
     setAuthorWikiExtract(res.extract)
-    setAuthorWikiCategory(res.categories)
+    setAuthorWikiCategory([...res.categories]) //not working
     setAuthorWikiLanglinks(res.langlinks)
-
     setAuthorWikiCategory(authorWikiCategory.filter((x)=>/hlist/.test(x)===false))
 
 
@@ -132,30 +130,62 @@ try{
   .then((res)=>{
     console.log(res)
     setAuthorBirthPlace(res.birthPlace)
-    setTimelineLinks(res.schoolTradition)
-    setSubjectLinks(res.schoolTradition)
-    if(res.schoolTradition.length>1){
-    setAuthorBgKeywords([res.region,...res.schoolTradition])}else{
+
+
+    if(res.schoolTradition && res.schoolTradition.length>1){
+    setAuthorBgKeywords([res.region,...res.schoolTradition])}else if(res.schoolTradition.length==1){
         setAuthorBgKeywords([res.region,res.schoolTradition])
     }
-    console.log(res.mainInterests)
-    setAuthorLifeWorkKeywords([res.mainInterests])
-    setContentKeywords([...res.mainInterests,...res.notableIdeas])//choose from main interests,notable ideas
+
+
+        if(res.schoolTradition>1 && res.region.length>1){
+          setAuthorBgKeywords([...res.schoolTradition,...res.region])
+        }else if(res.schoolTradition<=1 && res.region.length>1){
+          setAuthorBgKeywords([res.schoolTradition,...res.region])
+        }else if(res.schoolTradition>1 && res.region.length<=1) {
+          setAuthorBgKeywords([...res.schoolTradition,res.region])
+        }else{setAuthorBgKeywords([res.schoolTradition,res.region])
+}
+
+
+    if(res.mainInterests.length>1 && res.notableIdeas.length>1){
+      setAuthorLifeWorkKeywords([...res.mainInterests,...res.notableIdeas])
+      setContentKeywords([...res.mainInterests,...res.notableIdeas])
+    }else if (res.mainInterests.length<=1 && res.notableIdeas.length>1) {
+      setAuthorLifeWorkKeywords([res.mainInterests,...res.notableIdeas])
+      setContentKeywords([res.mainInterests,...res.notableIdeas])
+    }else if (res.mainInterests.length>1 && res.notableIdeas.length<=1) {
+      setAuthorLifeWorkKeywords([...res.mainInterests,res.notableIdeas])
+      setContentKeywords([...res.mainInterests,res.notableIdeas])
+    }else if (res.mainInterests.length<=1 && res.notableIdeas.length<=1) {
+      setAuthorLifeWorkKeywords([res.mainInterests,res.notableIdeas])
+      setContentKeywords([res.mainInterests,res.notableIdeas])
+    }
 
     console.log(authorLifeWorkKeywords)
 
     setAuthorBirthDate(res.birthDate.date)
-    setAuthorDeathDate(res.deathDate.date)
-    setAuthorLifespan(res.deathDate.age)
+    if(res.deathDate){ setAuthorDeathDate(res.deathDate.date)
+     setAuthorLifespan(res.deathDate.age)}
 
+         if(!res.schoolTradition){return}else{ setTimelineLinks(res.schoolTradition)}
+         if(!res.schoolTradition){return}else{  setSubjectLinks(res.schoolTradition)}
+         if(!res.influences){return}else if(res.influences.length>1){ setAuthorInfluences([...res.influences])}else if(res.influences.length===1){ setAuthorInfluences([res.influences])}
+         if(!res.influences){return}else if(res.influenced.length>1){ setAuthorInfluenced([...res.influenced])}else if(res.influenced.length===1){setAuthorInfluenced([res.influenced])}
 //filter out hlist
 
-  setTimelineLinks(timelineLinks.filter((x)=>/hlist/.test(x)===false))
-  setSubjectLinks(subjectLinks.filter((x)=>/hlist/.test(x)===false))
-    setContentKeywords(contentKeywords.filter((x)=>/hlist/.test(x)===false))
-    setAuthorLifeWorkKeywords(authorLifeWorkKeywords.filter((x)=>/hlist/.test(x)===false))
-    if(/hlist/.test(res.influences)){return}else if(res.influences.length>1){ setAuthorInfluences([...res.influences])}else if(res.influences.length===1){ setAuthorInfluences([res.influences])}
-    if(/hlist/.test(res.influenced)){return}else if(res.influenced.length>1){ setAuthorInfluenced([...res.influenced])}else if(res.influenced.length===1){setAuthorInfluenced([res.influenced])}
+const filter = (x, setX,regex) => {
+  if(x){
+    if(x.isArray===true){
+    setX(x.filter((x)=>/regex/.test(x)===false))}}
+}
+
+filter(timelineLinks,setTimelineLinks,"hlist")
+filter(subjectLinks,setSubjectLinks,"hlist")
+filter(authorInfluences,setAuthorInfluences,"hlist")
+filter(authorInfluenced,setAuthorInfluenced,"hlist")
+filter(contentKeywords,setContentKeywords,"hlist")
+filter(authorLifeWorkKeywords,setAuthorLifeWorkKeywords,"hlist")
 
   })
 }catch(err){
@@ -175,13 +205,24 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
     <>
     <div className="form-section">
 
+            <label htmlFor="authorbirthPlace">Author's birth place:</label>
+            <input className="form-control" type="text" id="authorBirthPlace" value={authorBirthPlace}
+             onChange={(e)=>setAuthorBirthPlace(e.target.value)} placeholder="city, country/region"/>
+        <label htmlFor="authorBirthDate">Author Birth Date</label>
+        <input className="form-control" type="text" id="authorBirthDate" value={authorBirthDate}
+        onChange={(e)=>setAuthorBirthDate(e.target.value)} placeholder="Author Birth Date"/>
+
     <label htmlFor="authorAgeAtPublication">Author Age at Publication</label>
     <input className="form-control" type="text" id="authorAgeAtPublication" value={authorAgeAtPublication}
     onChange={(e)=>setAuthorAgeAtPublication(e.target.value)} placeholder={`publication - ${authorBirthDate}`}/>
 
-        <label htmlFor="authorbirthPlace">Author's birth place:</label>
-        <input className="form-control" type="text" id="authorBirthPlace" value={authorBirthPlace}
-         onChange={(e)=>setAuthorBirthPlace(e.target.value)} placeholder="city, country/region"/>
+        <label htmlFor="authorDeathDate">Author Death Date</label>
+        <input className="form-control" type="text" id="authorDeathDate" value={authorDeathDate}
+        onChange={(e)=>setAuthorDeathDate(e.target.value)} placeholder="Author Death Date" />
+
+        <label htmlFor="authorLifespan">Author Lifespan</label>
+        <input className="form-control" type="text" id="authorLifespan" value={authorLifespan}
+        onChange={(e)=>setAuthorLifespan(e.target.value)} placeholder="Author Lifespan"/>
 
         <label htmlFor="timelineLinks">Wikipedia timeline pages:</label>
         <input className="form-control" type="text" id="timelineLinks" value={timelineLinks}
@@ -201,18 +242,6 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
 
         <label htmlFor={`${author}url`}>Wikipedia Link for {author}:</label>
         <input className="form-control" type="text" value={authorWikiUrl} placeholder="wikipedia link" readOnly="readOnly" />
-
-    <label htmlFor="authorBirthDate">Author Birth Date</label>
-    <input className="form-control" type="text" id="authorBirthDate" value={authorBirthDate}
-    onChange={(e)=>setAuthorBirthDate(e.target.value)} placeholder="Author Birth Date" readOnly="readOnly"/>
-
-    <label htmlFor="authorDeathDate">Author Death Date</label>
-    <input className="form-control" type="text" id="authorDeathDate" value={authorDeathDate}
-    onChange={(e)=>setAuthorDeathDate(e.target.value)} placeholder="Author Death Date" readOnly="readOnly"/>
-
-    <label htmlFor="authorLifespan">Author Lifespan</label>
-    <input className="form-control" type="text" id="authorLifespan" value={authorLifespan}
-    onChange={(e)=>setAuthorLifespan(e.target.value)} placeholder="Author Lifespan" readOnly="readOnly"/>
 
     <label htmlFor="authorBgKeywords">Author Background Keywords</label>
     <input className="form-control" type="text" id="authorBgKeywords" value={authorBgKeywords}
