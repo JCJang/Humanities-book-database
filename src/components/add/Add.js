@@ -4,6 +4,7 @@ import Query from './Query'
 import SearchForm from './SearchForm'
 import SubmissionForm from './SubmissionForm'
 import GoogleBooksViewer from './GoogleBooksViewer'
+import WikiHistory from './WikiHistory'
 
 
 
@@ -151,6 +152,7 @@ setTasks([...tasks, data])
   return (
     <div className="container">
         <div className="SearchForm"><SearchForm onSearch = {onSearch}/>
+        <WikiHistory/>
         {results && (<Query result={results} setToAdd={setToAdd}/>)}</div>
         <div className="GoogleBooksViewer">
         <GoogleBooksViewer bookIdentifier={bookIdentifier} isbnOrId={isbnOrId} googleScriptLoaded={googleScriptLoaded}/>

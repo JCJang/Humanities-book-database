@@ -10,6 +10,9 @@ const SubmissionForm = ({toAdd,onSearch}) => {
   const [isbn10, setIsbn10] =  useState('')
   const [isbn13, setIsbn13] =  useState('')
 
+  //manual fill
+  const [publicationDate, setPublicationDate] = useState("")
+
 
   const validateForm = (e)=>{
     console.log("submitted");

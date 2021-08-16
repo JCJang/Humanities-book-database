@@ -1,17 +1,71 @@
 import {parseInfo} from 'infobox-parser'
 import wiki from 'wikijs'
 import {useEffect, useState} from 'react'
-const WikiTest = ({author}) => {
+const WikiTest = ({author, languageSetting="en", publicationDate}) => {
 
 const [authorWikiTitle, setAuthorWikiTitle] = useState("")
+
+//manual fill
+const [authorBirthPlace, setAuthorBirthPlace] = useState("")
+const [timelineLinks, setTimelineLinks] = useState("")
+const [subjectLinks, setSubjectLinks] = useState("")//use what?
+const [contentKeywords, setContentKeywords] = useState("")//choose from main interests,notable ideas
+
+
+const [authorBirthDate, setAuthorBirthDate] = useState("")
+const [authorDeathDate, setAuthorDeathDate] = useState("")
+const [authorLifespan, setAuthorLifespan] = useState("")
+const [authorAgeAtPublication, setAuthorAgeAtPublication] = useState("") //
+const [authorBgKeywords, setAuthorBgKeywords] = useState("") //region,school
+const [authorLifeWorkKeywords, authorLifeWork] = useState("") //main interests,notable ideas
+
 const [authorWikiExtract, setAuthorWikiExtract] = useState("")
 const [authorWikiCategory, setAuthorWikiCategory] = useState("")
 const [authorWikiLanglinks, setAuthorWikiLanglinks] = useState("")
-const [authorWikiExtlinks, setAuthorWikiExtlinks] = useState("")
 const [authorWikiImage, setAuthorWikiImage] = useState("")
-const [authorWikiRelated, setAuthorWikiRelated] = useState("")
 const [authorWikiUrl, setAuthorWikiUrl] = useState("")
 
+const beauvoir = {
+    "name": "Simone de Beauvoir",
+    "image": "Simone de Beauvoir2.png",
+    "caption": "Beauvoir in 1967",
+    "birthName": "Simone Lucie Ernestine Marie Bertrand de Beauvoir",
+    "birthDate": {
+        "date": "1908-01-09T05:00:00.000Z",
+        "age": 113
+    },
+    "birthPlace": "Paris",
+    "deathDate": {
+        "date": "1986-04-14T05:00:00.000Z",
+        "age": 78
+    },
+    "deathPlace": "French Fifth Republic",
+    "education": "University of Paris",
+    "era": "20th-century philosophy",
+    "region": "Western philosophy",
+    "schoolTradition": [
+        "Continental philosophy",
+        "Existentialism",
+        "Existential phenomenology",
+        "French feminism",
+        "Western Marxism"
+    ],
+    "mainInterests": [
+        "Political philosophy",
+        "{{hlist",
+        "Feminism",
+        "Ethics"
+    ],
+    "notableIdeas": [
+        "The Ethics of Ambiguity",
+        "Feminist ethics",
+        "Existential feminism"
+    ],
+    "influences": "hlist ",
+    "influenced": "hlist ",
+    "partner": "Jean-Paul Sartre",
+    "signature": "Simone de Beauvoir (signature).jpg"
+}
 
 useEffect(()=>{
   fetchAuthorWikiData(author)
@@ -39,7 +93,7 @@ fetchAuthorWikiUrl(author)
 
 const fetchAuthorWikiData = (author) => {
   console.log(author)
-wiki()
+wiki({ apiUrl: `https://${languageSetting}.wikipedia.org/w/api.php` })
 	.page(author)
 	.then(page =>
 		page
@@ -47,7 +101,6 @@ wiki()
     .categories()
     .extlinks()
     .langlinks()
-    .links()
     .summary()
     .request()
 
@@ -59,11 +112,15 @@ wiki()
     setAuthorWikiExtract(res.extract)
     setAuthorWikiCategory(res.categories)
     setAuthorWikiLanglinks(res.langlinks)
-    setAuthorWikiExtlinks(res.extlinks)
-    setAuthorWikiRelated(res.links)
 
   })
-}
+
+  wiki({ apiUrl: `https://${languageSetting}.wikipedia.org/w/api.php` })
+  .page(author)
+  .then(page => page.fullInfo())
+  .then(info => info.general).then((x)=>console.log(x));
+  }
+
 
 const fetchAuthorImage = (author) => {
 wiki().page(author).then(page => page.mainImage()).then((res)=>setAuthorWikiImage(res)
