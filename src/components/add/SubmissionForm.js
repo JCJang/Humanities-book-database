@@ -39,6 +39,7 @@ const SubmissionForm = ({toAdd,onSearch}) => {
 
   }},[toAdd])
 
+
   return (
     <form onSubmit={(e)=>validateForm(e)}>
     <label htmlFor="title">Title:</label>
@@ -50,11 +51,12 @@ const SubmissionForm = ({toAdd,onSearch}) => {
       <label htmlFor="isbn">Isbn:</label>
       <input className="form-control" type="text" id="isbn" value={isbn}
        onChange={(e)=>setIsbn(e.target.value)} placeholder="isbn" />
-       <input className="form-control" type="text" id="wikiUrl" value={wikiUrl}
-        onChange={(e)=>setWikiUrl(e.target.value)} placeholder="wikipedia link" />
+
 
       <br></br>
       <h4>autofill(read-only)</h4>
+      <label htmlFor="wikiUrl">Wikipedia Link(s):</label>
+      <input className="form-control" type="text" id="wikiUrl" value={wikiUrl} placeholder="wikipedia link" readOnly="readOnly" />
       <label htmlFor="isbn10">Isbn-10:</label>
       <input className="form-control" type="text" id="isbn10" value={isbn10}
        onChange={(e)=>setIsbn10(e.target.value)} placeholder="isbn-10" readOnly="readOnly"/>
