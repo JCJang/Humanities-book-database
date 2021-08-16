@@ -9,6 +9,8 @@ const SubmissionForm = ({toAdd,onSearch}) => {
   const [isbn, setIsbn] =  useState('')
   const [isbn10, setIsbn10] =  useState('')
   const [isbn13, setIsbn13] =  useState('')
+  const [wikiUrl, setWikiUrl] =  useState('')
+
 
   const validateForm = (e)=>{
     console.log("submitted");
@@ -39,8 +41,6 @@ const SubmissionForm = ({toAdd,onSearch}) => {
 
   return (
     <form onSubmit={(e)=>validateForm(e)}>
-
-    {toAdd && <WikiTest author={toAdd.volumeInfo.authors}/>}
     <label htmlFor="title">Title:</label>
     <input className="form-control" type="text" id="title" value={title}
      onChange={(e)=>setTitle(e.target.value)} placeholder="book title"/>
@@ -50,6 +50,8 @@ const SubmissionForm = ({toAdd,onSearch}) => {
       <label htmlFor="isbn">Isbn:</label>
       <input className="form-control" type="text" id="isbn" value={isbn}
        onChange={(e)=>setIsbn(e.target.value)} placeholder="isbn" />
+       <input className="form-control" type="text" id="wikiUrl" value={wikiUrl}
+        onChange={(e)=>setWikiUrl(e.target.value)} placeholder="wikipedia link" />
 
       <br></br>
       <h4>autofill(read-only)</h4>
@@ -60,6 +62,7 @@ const SubmissionForm = ({toAdd,onSearch}) => {
        <input className="form-control" type="text" id="isbn13" value={isbn13}
         onChange={(e)=>setIsbn13(e.target.value)} placeholder="isbn-13" readOnly="readOnly"/>
     <input  className="btn" type="submit" value="Suggest"/>
+    {author && <WikiTest author={toAdd.volumeInfo.authors} setWikiUrl={setWikiUrl}/>}
 
     </form>
   )

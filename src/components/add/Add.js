@@ -152,9 +152,11 @@ setTasks([...tasks, data])
     <div className="container">
         <div className="SearchForm"><SearchForm onSearch = {onSearch}/>
         {results && (<Query result={results} setToAdd={setToAdd}/>)}</div>
+        <div className="GoogleBooksViewer">
+        <GoogleBooksViewer bookIdentifier={bookIdentifier} isbnOrId={isbnOrId} googleScriptLoaded={googleScriptLoaded}/>
+        </div>
         <div className="SubmissionForm">
         {<SubmissionForm toAdd = {toAdd} onSearch={onSearch}/>}
-        <GoogleBooksViewer bookIdentifier={bookIdentifier} isbnOrId={isbnOrId} googleScriptLoaded={googleScriptLoaded}/>
         </div>
     </div>
   )
