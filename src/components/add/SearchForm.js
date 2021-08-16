@@ -1,8 +1,8 @@
 import {useState} from 'react'
 
 const SearchForm = ({type,placeholder,onSearch}) => {
-  const [title, setTitle] =  useState('the theory of moral')
-  const [author, setAuthor] =  useState('adam smith')
+  const [title, setTitle] =  useState('the')
+  const [author, setAuthor] =  useState('Simone de Beauvoir')
   const [isbn, setIsbn] =  useState('')
 
   const validateForm = (e)=>{
@@ -26,8 +26,10 @@ const SearchForm = ({type,placeholder,onSearch}) => {
     onSearch(titleStr,authorStr,isbn)
   }
   return (
-    <form onSubmit={(e)=>validateForm(e)}>
+    <div>
     <h3>Search database to autofill suggestion</h3>
+
+    <form onSubmit={(e)=>validateForm(e)} className="form-section">
     <label htmlFor="title">Title:</label>
     <input className="form-control" type="text" id="title" value={title}
      onChange={(e)=>setTitle(e.target.value)} placeholder="book title"/>
@@ -40,6 +42,7 @@ const SearchForm = ({type,placeholder,onSearch}) => {
     <input type="submit"  className="btn" value="Search"/>
 
     </form>
+    </div>
   )
 }
 

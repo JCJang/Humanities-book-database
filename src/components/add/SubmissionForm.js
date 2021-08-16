@@ -3,15 +3,19 @@ import WikiTest from './WikiTest'
 
 const SubmissionForm = ({toAdd,onSearch}) => {
 
-  const [idea, setId] =  useState('')
+  const [id, setId] =  useState('')
   const [title, setTitle] =  useState('')
   const [author, setAuthor] =  useState('')
   const [isbn, setIsbn] =  useState('')
   const [isbn10, setIsbn10] =  useState('')
   const [isbn13, setIsbn13] =  useState('')
 
+
+
   //manual fill
-  const [publicationDate, setPublicationDate] = useState("")
+  const [earliestPublicationYear, setEarliestPublicationYear] = useState("")
+  const [bookLength, setBookLength] = useState("")
+
 
 
   const validateForm = (e)=>{
@@ -37,33 +41,49 @@ const SubmissionForm = ({toAdd,onSearch}) => {
     }
     setIsbn10(getIsbn("ISBN_10"))
     setIsbn13(getIsbn("ISBN_13"))
+    setEarliestPublicationYear(toAdd.volumeInfo.publishedDate)
+    setBookLength(toAdd.volumeInfo.pageCount)
 
   }},[toAdd])
 
 
   return (
-    <form onSubmit={(e)=>validateForm(e)}>
-    <label htmlFor="title">Title:</label>
-    <input className="form-control" type="text" id="title" value={title}
-     onChange={(e)=>setTitle(e.target.value)} placeholder="book title"/>
-     <label htmlFor="author">Author(s):</label>
-     <input className="form-control" type="text" id="author" value={author}
-      onChange={(e)=>setAuthor(e.target.value)} placeholder="book author"/>
-      <label htmlFor="isbn">Isbn:</label>
-      <input className="form-control" type="text" id="isbn" value={isbn}
-       onChange={(e)=>setIsbn(e.target.value)} placeholder="isbn" />
+    <form onSubmit={(e)=>validateForm(e)} className="SubmissionForm">
+      <h4>manual fill(partial-fill; corrections needed)</h4>
+    <div className="form-section">
+      <label htmlFor="title">Title:</label>
+      <input className="form-control" type="text" id="title" value={title}
+       onChange={(e)=>setTitle(e.target.value)} placeholder="book title"/>
+       <label htmlFor="author">Author(s):</label>
+       <input className="form-control" type="textArea" id="author" value={author}
+        onChange={(e)=>setAuthor(e.target.value)} placeholder="book author(s). Should match wikipedia page title. Separate with commas"/>
+
+        <label htmlFor="isbn">Isbn:</label>
+        <input className="form-control" type="text" id="isbn" value={isbn}
+         onChange={(e)=>setIsbn(e.target.value)} placeholder="isbn" />
+
+        <label htmlFor="earliestPublicationYear">Publication Date</label>
+        <input className="form-control" type="number" id="earliestPublicationYear" value={earliestPublicationYear}
+         onChange={(e)=>setEarliestPublicationYear(e.target.value)} placeholder="earliest publication year"/>
+
+    </div>
 
 
       <br></br>
-      <h4>autofill(read-only)</h4>
-        {author && toAdd.volumeInfo.authors.map(author=> <WikiTest author={author} key={author}/>)}
+        {author && toAdd.volumeInfo.authors.map(author=> <WikiTest author={author} key={author} earliestPublicationYear={earliestPublicationYear}/>)}
 
+        <div className="form-section readOnly">
       <label htmlFor="isbn10">Isbn-10:</label>
       <input className="form-control" type="text" id="isbn10" value={isbn10}
        onChange={(e)=>setIsbn10(e.target.value)} placeholder="isbn-10" readOnly="readOnly"/>
        <label htmlFor="isbn13">Isbn-13:</label>
        <input className="form-control" type="text" id="isbn13" value={isbn13}
         onChange={(e)=>setIsbn13(e.target.value)} placeholder="isbn-13" readOnly="readOnly"/>
+         <label htmlFor="bookLength">Length (pages)</label>
+         <input className="form-control" type="text" id="bookLength" value={bookLength}
+          onChange={(e)=>setBookLength(e.target.value)} placeholder="book length" readOnly="readOnly"/>
+        </div>
+
     <input  className="btn" type="submit" value="Suggest"/>
 
 

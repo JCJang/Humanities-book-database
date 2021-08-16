@@ -67,3 +67,12 @@ img {
 .form-control{
   margin:5px;
 }
+.form-section{
+  display:grid;
+grid-template-rows:auto;
+  grid-template-columns: 30% 70%;
+  grid-row-gap:0.5em;
+}
+.readOnly{
+  background-color: grey;
+}
