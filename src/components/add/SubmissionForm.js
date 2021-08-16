@@ -26,7 +26,7 @@ const SubmissionForm = ({toAdd,onSearch}) => {
     if(toAdd===undefined){
       return}
     if(toAdd.volumeInfo!==undefined){
-
+    setWikiUrl("")
     setTitle(toAdd.volumeInfo.title)
     setAuthor(toAdd.volumeInfo.authors.map(a=>a))
     const getIsbn=(isbn)=>{
@@ -62,7 +62,7 @@ const SubmissionForm = ({toAdd,onSearch}) => {
        <input className="form-control" type="text" id="isbn13" value={isbn13}
         onChange={(e)=>setIsbn13(e.target.value)} placeholder="isbn-13" readOnly="readOnly"/>
     <input  className="btn" type="submit" value="Suggest"/>
-    {author && <WikiTest author={toAdd.volumeInfo.authors} setWikiUrl={setWikiUrl}/>}
+    {author && toAdd.volumeInfo.authors.map(author=> <WikiTest author={author} key={author} setWikiUrl={setWikiUrl} wikiUrl={wikiUrl}/>)}
 
     </form>
   )
