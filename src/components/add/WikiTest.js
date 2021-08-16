@@ -1,7 +1,7 @@
 import {parseInfo} from 'infobox-parser'
 import wiki from 'wikijs'
 import {useEffect, useState} from 'react'
-const WikiTest = ({author, setWikiUrl, wikiUrl}) => {
+const WikiTest = ({author}) => {
 
 const [authorWikiTitle, setAuthorWikiTitle] = useState("")
 const [authorWikiExtract, setAuthorWikiExtract] = useState("")
@@ -10,6 +10,8 @@ const [authorWikiLanglinks, setAuthorWikiLanglinks] = useState("")
 const [authorWikiExtlinks, setAuthorWikiExtlinks] = useState("")
 const [authorWikiImage, setAuthorWikiImage] = useState("")
 const [authorWikiRelated, setAuthorWikiRelated] = useState("")
+const [authorWikiUrl, setAuthorWikiUrl] = useState("")
+
 
 useEffect(()=>{
   fetchAuthorWikiData(author)
@@ -67,13 +69,16 @@ const fetchAuthorImage = (author) => {
 wiki().page(author).then(page => page.mainImage()).then((res)=>setAuthorWikiImage(res)
 )}
 const fetchAuthorWikiUrl = (author) => {
-wiki().page(author).then(page => page.url()).then((res)=>setWikiUrl([...wikiUrl,res])
+wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
 )}
 
 
 //if no page found, display "no wikipedia page found"
   return (
-    <div><h4>{authorWikiTitle}</h4>
+    <div>
+    <label htmlFor={`${author}url`}>Wikipedia Link for {author}:</label>
+    <input className="form-control" type="text" value={authorWikiUrl} placeholder="wikipedia link" readOnly="readOnly" />
+    <h4>{authorWikiTitle}</h4>
     <div id="authorWikiImageHolder"><img src={authorWikiImage}></img></div>
     <p>{authorWikiExtract}</p>
     </div>
