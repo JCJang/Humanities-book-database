@@ -11,10 +11,10 @@ const [timelineLinks, setTimelineLinks] = useState([])
 const [subjectLinks, setSubjectLinks] = useState([])//use what?
 const [contentKeywords, setContentKeywords] = useState([])//choose from main interests,notable ideas
 
-const [authorBirthDate, setAuthorBirthDate] = useState()
-const [authorDeathDate, setAuthorDeathDate] = useState()
-const [authorLifespan, setAuthorLifespan] = useState()
-const [authorAgeAtPublication, setAuthorAgeAtPublication] = useState() //
+const [authorBirthDate, setAuthorBirthDate] = useState("")
+const [authorDeathDate, setAuthorDeathDate] = useState("")
+const [authorLifespan, setAuthorLifespan] = useState("")
+const [authorAgeAtPublication, setAuthorAgeAtPublication] = useState("") //
 const [authorBgKeywords, setAuthorBgKeywords] = useState([]) //region,school
 const [authorLifeWorkKeywords, setAuthorLifeWorkKeywords] = useState([]) //main interests,notable ideas
 
@@ -93,104 +93,70 @@ fetchAuthorWikiUrl(author)
 
 //https://www.w3schools.com/jsref/jsref_obj_date.asp JS dates killing me
     useEffect(()=>{
-      if(authorBirthDate!==undefined && authorBirthDate.getFullYear()!==NaN){
+      if(authorBirthDate!=="" && authorBirthDate.getFullYear()!==NaN){
       setAuthorAgeAtPublication(earliestPublicationYear-authorBirthDate.getFullYear())}
     }, [earliestPublicationYear])
 
-const fetchAuthorWikiData = (author) => {
+  const fetchAuthorWikiData = (author) => {
   console.log(author)
-wiki({ apiUrl: `https://${languageSetting}.wikipedia.org/w/api.php` })
-	.page(author)
-	.then(page =>
-		page
-			.chain()
-    .categories()
-    .extlinks()
-    .langlinks()
-    .summary()
-    .request()
-
-
-	)
-  .then((res)=>{
-    console.log(res)
-    setAuthorWikiTitle(res.title)
-    setAuthorWikiExtract(res.extract)
-    setAuthorWikiCategory([...res.categories]) //not working
-    setAuthorWikiLanglinks(res.langlinks)
-    setAuthorWikiCategory(authorWikiCategory.filter((x)=>/hlist/.test(x)===false))
-
-
-  })
-try{
   wiki({ apiUrl: `https://${languageSetting}.wikipedia.org/w/api.php` })
-  .page(author)
-  .then(page => page.fullInfo())
-  .then(info => info.general)
-  .then((res)=>{
-    console.log(res)
-    setAuthorBirthPlace(res.birthPlace)
+  	.page(author)
+  	.then(page =>
+  		page
+  			.chain()
+      .categories()
+      .extlinks()
+      .langlinks()
+      .summary()
+      .request()
+  	)
+    .then((res)=>{
+      console.log(res)
+      setAuthorWikiTitle(res.title)
+      setAuthorWikiExtract(res.extract)
+      setAuthorWikiCategory(res.categories) //not working
+      setAuthorWikiLanglinks(res.langlinks)
+    })
+  try{
+    wiki({ apiUrl: `https://${languageSetting}.wikipedia.org/w/api.php` })
+    .page(author)
+    .then(page => page.fullInfo())
+    .then(info => info.general)
+    .then((res)=>{
+      console.log(res)
+      setAuthorBirthPlace(res.birthPlace)
 
 
-    if(res.schoolTradition && res.schoolTradition.length>1){
-    setAuthorBgKeywords([res.region,...res.schoolTradition])}else if(res.schoolTradition.length==1){
-        setAuthorBgKeywords([res.region,res.schoolTradition])
-    }
+  //steamroll later.
 
-
-        if(res.schoolTradition>1 && res.region.length>1){
-          setAuthorBgKeywords([...res.schoolTradition,...res.region])
-        }else if(res.schoolTradition<=1 && res.region.length>1){
-          setAuthorBgKeywords([res.schoolTradition,...res.region])
-        }else if(res.schoolTradition>1 && res.region.length<=1) {
-          setAuthorBgKeywords([...res.schoolTradition,res.region])
-        }else{setAuthorBgKeywords([res.schoolTradition,res.region])
-}
-
-
-    if(res.mainInterests.length>1 && res.notableIdeas.length>1){
-      setAuthorLifeWorkKeywords([...res.mainInterests,...res.notableIdeas])
-      setContentKeywords([...res.mainInterests,...res.notableIdeas])
-    }else if (res.mainInterests.length<=1 && res.notableIdeas.length>1) {
-      setAuthorLifeWorkKeywords([res.mainInterests,...res.notableIdeas])
-      setContentKeywords([res.mainInterests,...res.notableIdeas])
-    }else if (res.mainInterests.length>1 && res.notableIdeas.length<=1) {
-      setAuthorLifeWorkKeywords([...res.mainInterests,res.notableIdeas])
-      setContentKeywords([...res.mainInterests,res.notableIdeas])
-    }else if (res.mainInterests.length<=1 && res.notableIdeas.length<=1) {
-      setAuthorLifeWorkKeywords([res.mainInterests,res.notableIdeas])
-      setContentKeywords([res.mainInterests,res.notableIdeas])
-    }
-
-    console.log(authorLifeWorkKeywords)
-
+  setAuthorBgKeywords([res.region,res.schoolTradition])
+  setAuthorLifeWorkKeywords([res.mainInterests,res.notableIdeas])
+    setContentKeywords([res.mainInterests,res.notableIdeas])
     setAuthorBirthDate(res.birthDate.date)
-    if(res.deathDate){ setAuthorDeathDate(res.deathDate.date)
-     setAuthorLifespan(res.deathDate.age)}
-
-         if(!res.schoolTradition){return}else{ setTimelineLinks(res.schoolTradition)}
-         if(!res.schoolTradition){return}else{  setSubjectLinks(res.schoolTradition)}
-         if(!res.influences){return}else if(res.influences.length>1){ setAuthorInfluences([...res.influences])}else if(res.influences.length===1){ setAuthorInfluences([res.influences])}
-         if(!res.influences){return}else if(res.influenced.length>1){ setAuthorInfluenced([...res.influenced])}else if(res.influenced.length===1){setAuthorInfluenced([res.influenced])}
-//filter out hlist
-
-const filter = (x, setX,regex) => {
-  if(x){
-    if(x.isArray===true){
-    setX(x.filter((x)=>/regex/.test(x)===false))}}
-}
-
-filter(timelineLinks,setTimelineLinks,"hlist")
-filter(subjectLinks,setSubjectLinks,"hlist")
-filter(authorInfluences,setAuthorInfluences,"hlist")
-filter(authorInfluenced,setAuthorInfluenced,"hlist")
-filter(contentKeywords,setContentKeywords,"hlist")
-filter(authorLifeWorkKeywords,setAuthorLifeWorkKeywords,"hlist")
-
-  })
-}catch(err){
-  alert('Error has occured: '+err.stack)
-}
+      if(res.deathDate){ setAuthorDeathDate(res.deathDate.date)
+       setAuthorLifespan(res.deathDate.age)}
+      setTimelineLinks(res.schoolTradition)
+      setSubjectLinks(res.schoolTradition)
+      setAuthorInfluences(res.influences)
+      setAuthorInfluenced(res.influenced)
+  //filter out hlist
+  // const filter = (x, setX,regex) => {
+  //   if(x){
+  //     if(Array.isArray(x)){
+  //     setX(x.filter((x)=>/regex/.test(x) ===false))}}
+  // }
+  // filter(timelineLinks,setTimelineLinks,"hlist")
+  // filter(subjectLinks,setSubjectLinks,"hlist")
+  // filter(authorInfluences,setAuthorInfluences,"hlist")
+  // filter(authorInfluenced,setAuthorInfluenced,"hlist")
+  // filter(contentKeywords,setContentKeywords,"hlist")
+  // filter(authorLifeWorkKeywords,setAuthorLifeWorkKeywords,"hlist")
+  // filter(authorWikiCategory,setAuthorWikiCategory,"hlist")
+    }
+  )
+  }catch(err){
+    alert('Error has occured: '+err.stack)
+  }
 }
 
 const fetchAuthorImage = (author) => {

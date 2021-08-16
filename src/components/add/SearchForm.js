@@ -1,8 +1,8 @@
 import {useState} from 'react'
 
 const SearchForm = ({type,placeholder,onSearch}) => {
-  const [title, setTitle] =  useState('the')
-  const [author, setAuthor] =  useState('Simone de Beauvoir')
+  const [title, setTitle] =  useState('')
+  const [author, setAuthor] =  useState('')
   const [isbn, setIsbn] =  useState('')
 
   const validateForm = (e)=>{
