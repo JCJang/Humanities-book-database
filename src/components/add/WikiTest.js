@@ -171,7 +171,10 @@ fetchAuthorWikiUrl(author)
           const flatTemp = temp.flat()
           const filteredFlatTemp = flatTemp.filter((y)=> {return /\{*hlist/.test(y)===false})
           setX(filteredFlatTemp)
-        }
+        }else{
+          if(/\{*hlist/.test(temp)===false)
+            setX(temp)
+          }
       }
 
       steamrollAndFilter(authorBgKeywords,setAuthorBgKeywords,[res.region,res.schoolTradition])
