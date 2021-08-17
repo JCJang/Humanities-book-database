@@ -161,10 +161,11 @@ setTasks([...tasks, data])
         <div  className="container">
         <div className="SearchForm"><SearchForm onSearch = {onSearch}/>
         {results && (<Query result={results} setToAdd={setToAdd}/>)}
+
         </div>
 
         <div>
-        <Route path = "/viewer" exact render={()=><GoogleBooksViewer bookIdentifier={bookIdentifier} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId}/>}/>
+        <GoogleBooksViewer bookIdentifier={bookIdentifier} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId}/>
         <Route path = "/submission-form" render ={()=><SubmissionForm toAdd = {toAdd} onSearch={onSearch}/>}/>
         </div>
         </div>

@@ -161,11 +161,9 @@ fetchAuthorWikiUrl(author)
 
 const fetchAuthorImage = (author) => {
 wiki().page(author).then(page => page.mainImage()).then((res)=>setAuthorWikiImage(res)
-.catch(console.log("wiki image not found"))
 )}
 const fetchAuthorWikiUrl = (author) => {
 wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
-.catch(console.log("wiki url not found"))
 )}
 
 //if no page found, display "no wikipedia page found"
