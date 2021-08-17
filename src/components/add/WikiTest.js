@@ -1,7 +1,7 @@
 import {parseInfo} from 'infobox-parser'
 import wiki from 'wikijs'
 import {useEffect, useState} from 'react'
-const WikiTest = ({author, languageSetting="en", earliestPublicationYear=0}) => {
+const WikiTest = ({author, toAdd, languageSetting="en", earliestPublicationYear=0}) => {
 
 const [authorWikiTitle, setAuthorWikiTitle] = useState("")
 
@@ -161,14 +161,17 @@ fetchAuthorWikiUrl(author)
 
 const fetchAuthorImage = (author) => {
 wiki().page(author).then(page => page.mainImage()).then((res)=>setAuthorWikiImage(res)
+.catch(console.log("wiki image not found"))
 )}
 const fetchAuthorWikiUrl = (author) => {
 wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
+.catch(console.log("wiki url not found"))
 )}
 
 //if no page found, display "no wikipedia page found"
   return (
     <>
+    <h4>{author} information (partial-fill; corrections needed)</h4>
     <div className="form-section">
 
             <label htmlFor="authorbirthPlace">Author's birth place:</label>
@@ -202,8 +205,6 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
       <input className="form-control" type="text" id="contentKeywords" value={contentKeywords}
        onChange={(e)=>setContentKeywords(e.target.value)} placeholder="content keywords"/>
        </div>
-
-    <h4>autofill(read-only)</h4>
     <div className="form-section readOnly">
 
         <label htmlFor={`${author}url`}>Wikipedia Link for {author}:</label>

@@ -1,10 +1,11 @@
 import {useState, useEffect} from 'react';
 import './Add.css';
+import Links from '../nav/Links'
 import Query from './Query'
 import SearchForm from './SearchForm'
 import SubmissionForm from './SubmissionForm'
 import GoogleBooksViewer from './GoogleBooksViewer'
-import WikiHistory from './WikiHistory'
+import {Route, BrowserRouter as Router} from 'react-router-dom'
 
 
 
@@ -150,17 +151,25 @@ setTasks([...tasks, data])
 // setTasks([...tasks,newTask])
 
   return (
-    <div className="container">
+    <Router>
+
+    <div>
+    <header>
+        <Links routeName="/viewer" label="Book preview"/>
+        <Links routeName="/submission-form" label="Submission Form"/>
+      </header>
+        <div  className="container">
         <div className="SearchForm"><SearchForm onSearch = {onSearch}/>
-        <WikiHistory/>
-        {results && (<Query result={results} setToAdd={setToAdd}/>)}</div>
-        <div className="GoogleBooksViewer">
-        <GoogleBooksViewer bookIdentifier={bookIdentifier} isbnOrId={isbnOrId} googleScriptLoaded={googleScriptLoaded}/>
+        {results && (<Query result={results} setToAdd={setToAdd}/>)}
         </div>
-        <div className="SubmissionForm">
-        {<SubmissionForm toAdd = {toAdd} onSearch={onSearch}/>}
+
+        <div>
+        <Route path = "/viewer" exact render={()=><GoogleBooksViewer bookIdentifier={bookIdentifier} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId}/>}/>
+        <Route path = "/submission-form" render ={()=><SubmissionForm toAdd = {toAdd} onSearch={onSearch}/>}/>
+        </div>
         </div>
     </div>
+    </Router>
   )
 }
 
