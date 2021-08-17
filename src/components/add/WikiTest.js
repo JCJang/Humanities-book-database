@@ -85,12 +85,15 @@ const beauvoir = {
     "signature": "Simone de Beauvoir (signature).jpg"
 }
 
+//get data
 useEffect(()=>{
   fetchAuthorWikiData(author)
   fetchAuthorImage(author)
 fetchAuthorWikiUrl(author)
 }, [author])
 
+
+//calculate Author Age at Publication
 //https://www.w3schools.com/jsref/jsref_obj_date.asp JS dates killing me
 //https://stackoverflow.com/questions/643782/how-to-check-whether-an-object-is-a-date
     useEffect(()=>{
@@ -122,7 +125,19 @@ fetchAuthorWikiUrl(author)
       console.log(res)
       setAuthorWikiTitle(res.title)
       setAuthorWikiExtract(res.extract)
-      setAuthorWikiCategory(res.categories) //not working
+      const validCategories = res.categories.map((category)=>{
+          return category.replace(/^Category:/,"")
+      })
+      .filter((category)=>{
+          return /^\d\d\d\d/.test(category)===false
+      })
+      .filter((category)=>{
+          return /^All\sarticles/.test(category)===false
+      })
+      .filter((category)=>{
+          return /^AC/.test(category)===false
+      })
+    setAuthorWikiCategory(validCategories)
       setAuthorWikiLanglinks(res.langlinks)
     })
   try{
@@ -133,35 +148,40 @@ fetchAuthorWikiUrl(author)
     .then((res)=>{
       console.log(res)
       setAuthorBirthPlace(res.birthPlace)
+  if(res.birthDate){setAuthorBirthDate(res.birthDate.date)}
+    if(res.deathDate){ setAuthorDeathDate(res.deathDate.date)
+     setAuthorLifespan(res.deathDate.age)}
 
+  // setAuthorBgKeywords([res.region,res.schoolTradition])
+  // setAuthorLifeWorkKeywords([res.mainInterests,res.notableIdeas])
+    // setContentKeywords([res.mainInterests,res.notableIdeas])
+      // setTimelineLinks(res.schoolTradition)
+      // setSubjectLinks(res.schoolTradition)
+      // setAuthorInfluences(res.influences)
+      // setAuthorInfluenced(res.influenced)
+      //
 
-  //steamroll later.
+      //filter out hlist
+      const steamrollAndFilter = (x, setX, dependencies) => {
+        const temp = dependencies
+          if(Array.isArray(temp)){
+          const flatTemp = temp.flat()
+          const filteredFlatTemp = flatTemp.filter((y)=> {return /\{*hlist/.test(y)===false})
+          setX(filteredFlatTemp)
+        }
+      }
 
-  setAuthorBgKeywords([res.region,res.schoolTradition])
-  setAuthorLifeWorkKeywords([res.mainInterests,res.notableIdeas])
-    setContentKeywords([res.mainInterests,res.notableIdeas])
-    if(res.birthDate){setAuthorBirthDate(res.birthDate.date)}
-      if(res.deathDate){ setAuthorDeathDate(res.deathDate.date)
-       setAuthorLifespan(res.deathDate.age)}
-      setTimelineLinks(res.schoolTradition)
-      setSubjectLinks(res.schoolTradition)
-      setAuthorInfluences(res.influences)
-      setAuthorInfluenced(res.influenced)
-  //filter out hlist
-  // const filter = (x, setX,regex) => {
-  //   if(x){
-  //     if(Array.isArray(x)){
-  //     setX(x.filter((x)=>/regex/.test(x) ===false))}}
-  // }
-  // filter(timelineLinks,setTimelineLinks,"hlist")
-  // filter(subjectLinks,setSubjectLinks,"hlist")
-  // filter(authorInfluences,setAuthorInfluences,"hlist")
-  // filter(authorInfluenced,setAuthorInfluenced,"hlist")
-  // filter(contentKeywords,setContentKeywords,"hlist")
-  // filter(authorLifeWorkKeywords,setAuthorLifeWorkKeywords,"hlist")
-  // filter(authorWikiCategory,setAuthorWikiCategory,"hlist")
+      steamrollAndFilter(authorBgKeywords,setAuthorBgKeywords,[res.region,res.schoolTradition])
+      steamrollAndFilter(authorLifeWorkKeywords,setAuthorLifeWorkKeywords,[res.mainInterests,res.notableIdeas])
+      steamrollAndFilter(contentKeywords,setContentKeywords, [res.mainInterests,res.notableIdeas])
+      steamrollAndFilter(timelineLinks,setTimelineLinks, res.schoolTradition)
+      steamrollAndFilter(subjectLinks,setSubjectLinks,res.schoolTradition)
+      steamrollAndFilter(authorInfluences,setAuthorInfluences,res.influences)
+      steamrollAndFilter(authorInfluenced,setAuthorInfluenced,res.influenced)
     }
   )
+
+
   }catch(err){
     alert('Error has occured: '+err.stack)
   }
@@ -200,15 +220,15 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
         onChange={(e)=>setAuthorLifespan(e.target.value)} placeholder="Author Lifespan"/>
 
         <label htmlFor="timelineLinks">Wikipedia timeline pages:</label>
-        <input className="form-control" type="text" id="timelineLinks" value={timelineLinks}
+        <textarea className="form-control" rows={4} form="SubmissionForm"  id="timelineLinks" value={timelineLinks}
          onChange={(e)=>setTimelineLinks(e.target.value)} placeholder="separate by comma"/>
 
         <label htmlFor="subjectLinks">Wikipedia subject pages:</label>
-        <input className="form-control" type="text" id="subjectLinks" value={subjectLinks}
+        <textarea className="form-control" rows={4} form="SubmissionForm"  id="subjectLinks" value={subjectLinks}
          onChange={(e)=>setSubjectLinks(e.target.value)} placeholder="separate by comma"/>
 
       <label htmlFor="contentKeywords">content keywords:</label>
-      <input className="form-control" type="text" id="contentKeywords" value={contentKeywords}
+      <textarea className="form-control" rows={4} form="SubmissionForm"  id="contentKeywords" value={contentKeywords}
        onChange={(e)=>setContentKeywords(e.target.value)} placeholder="content keywords"/>
        </div>
     <div className="form-section readOnly">
@@ -217,19 +237,19 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
         <input className="form-control" type="text" value={authorWikiUrl} placeholder="wikipedia link" readOnly="readOnly" />
 
     <label htmlFor="authorBgKeywords">Author Background Keywords</label>
-    <input className="form-control" type="text" id="authorBgKeywords" value={authorBgKeywords}
+    <textarea className="form-control" rows={4} form="SubmissionForm"  id="authorBgKeywords" value={authorBgKeywords}
     onChange={(e)=>setAuthorBgKeywords(e.target.value)} placeholder="Author Background Keywords" readOnly="readOnly"/>
 
     <label htmlFor="authorLifeWorkKeywords">Author Life Work Keywords</label>
-    <input className="form-control" type="text" id="authorLifeWorkKeywords" value={authorLifeWorkKeywords}
+    <textarea className="form-control" rows={4} form="SubmissionForm"  id="authorLifeWorkKeywords" value={authorLifeWorkKeywords}
     onChange={(e)=>setAuthorLifeWorkKeywords(e.target.value)} placeholder="Author Life Work Keywords" readOnly="readOnly"/>
 
     <label htmlFor="authorWikiExtract">Summary</label>
-    <input className="form-control" type="textArea" id="authorWikiExtract" value={authorWikiExtract}
+    <textarea className="form-control" rows={4} form="SubmissionForm"  id="authorWikiExtract" value={authorWikiExtract}
     onChange={(e)=>setAuthorWikiExtract(e.target.value)} placeholder="extract from wikipedia page" readOnly="readOnly"/>
 
     <label htmlFor="authorWikiCategory">Author Categories</label>
-    <input className="form-control" type="text" id="authorWikiCategory" value={authorWikiCategory}
+    <textarea className="form-control" rows={4} form="SubmissionForm"  id="authorWikiCategory" value={authorWikiCategory}
     onChange={(e)=>setAuthorWikiCategory(e.target.value)} placeholder="author categories" readOnly="readOnly"/>
 
     <label htmlFor="authorWikiLanglinks">langlinks</label>
@@ -241,12 +261,12 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
     onChange={(e)=>setAuthorWikiImage(e.target.value)} placeholder="author image url" readOnly="readOnly"/>
 
     <label htmlFor="authorInfluences">Influences</label>
-    <input className="form-control" type="text" id="authorInfluences" value={authorInfluences}
+    <textarea className="form-control" rows={4} form="SubmissionForm"  id="authorInfluences" value={authorInfluences}
     onChange={(e)=>setAuthorInfluences(e.target.value)} placeholder={`${author} was influenced by these people`} readOnly="readOnly"/>
 
 
     <label htmlFor="authorInfluenced">authorInfluenced</label>
-    <input className="form-control" type="text" id="authorInfluenced" value={authorInfluenced}
+    <textarea className="form-control" rows={4} form="SubmissionForm" id="authorInfluenced" value={authorInfluenced}
     onChange={(e)=>setAuthorInfluenced(e.target.value)} placeholder={`${author}'s thought influenced these people`}readOnly="readOnly"/>
 
 

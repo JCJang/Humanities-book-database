@@ -48,14 +48,14 @@ const SubmissionForm = ({toAdd,onSearch,formToggleOn }) => {
 
 
   return (
-    <form onSubmit={(e)=>validateForm(e)} className="SubmissionForm" style={{display:formToggleOn?"block":"none"}}>
+    <form onSubmit={(e)=>validateForm(e)} className="SubmissionForm" id="SubmissionForm" style={{display:formToggleOn?"block":"none"}}>
       <h4>Book information (partial-fill; corrections needed)</h4>
     <div className="form-section">
       <label htmlFor="title">Title:</label>
       <input className="form-control" type="text" id="title" value={title}
        onChange={(e)=>setTitle(e.target.value)} placeholder="book title"/>
        <label htmlFor="author">Author(s):</label>
-       <input className="form-control" type="textArea" id="author" value={author}
+       <textarea className="form-control"  id="author" form="SubmissionForm" rows={4} value={author}
         onChange={(e)=>setAuthor(e.target.value)} placeholder="book author(s). Should match wikipedia page title. Separate with commas"/>
 
         <label htmlFor="isbn">Isbn:</label>
