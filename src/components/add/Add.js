@@ -15,8 +15,13 @@ const Add =()=>{
   const [toAdd, setToAdd] = useState(false)
     const [bookIdentifier, setBookIdentifier] = useState(false);
     const [isbnOrId, setIsbnOrId] = useState(true)
+    const [formToggleOn, setFormToggleOn] = useState(false)
     const [googleScriptLoaded, setGoogleScriptLoaded] = useState(false);
 
+
+     const toggleForm = () =>{
+       setFormToggleOn(!formToggleOn)
+     }
 
          // Was able to fix first load bug by setting google script load not within the useEffect, but as part of a component.
         const loadGoogleBooksViewer = (() =>{
@@ -151,12 +156,11 @@ setTasks([...tasks, data])
 // setTasks([...tasks,newTask])
 
   return (
-    <Router>
 
     <div>
     <header>
-        <Links routeName="/viewer" label="Book preview"/>
-        <Links routeName="/submission-form" label="Submission Form"/>
+      <h3>Suggest a Book</h3>
+      <p>see suggestion guide</p>
       </header>
         <div  className="container">
         <div className="SearchForm"><SearchForm onSearch = {onSearch}/>
@@ -165,12 +169,13 @@ setTasks([...tasks, data])
         </div>
 
         <div>
-        <GoogleBooksViewer bookIdentifier={bookIdentifier} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId}/>
-        <Route path = "/submission-form" render ={()=><SubmissionForm toAdd = {toAdd} onSearch={onSearch}/>}/>
+          <input type="submit"  className="btn" value={formToggleOn?"Show Submission Form":"Preview Book"} onClick={toggleForm}/>
+          <GoogleBooksViewer bookIdentifier={bookIdentifier} formToggleOn={formToggleOn} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId}/>
+         {formToggleOn ===false &&
+         <SubmissionForm toAdd = {toAdd} onSearch={onSearch}/>}
         </div>
         </div>
     </div>
-    </Router>
   )
 }
 

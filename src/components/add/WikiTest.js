@@ -92,10 +92,18 @@ fetchAuthorWikiUrl(author)
 }, [author])
 
 //https://www.w3schools.com/jsref/jsref_obj_date.asp JS dates killing me
+//https://stackoverflow.com/questions/643782/how-to-check-whether-an-object-is-a-date
     useEffect(()=>{
-      if(authorBirthDate!=="" && authorBirthDate.getFullYear()!==NaN){
-      setAuthorAgeAtPublication(earliestPublicationYear-authorBirthDate.getFullYear())}
-    }, [earliestPublicationYear])
+        if(authorBirthDate!==undefined && authorBirthDate!==""){
+        if(Object.prototype.toString.call(authorBirthDate) === '[object Date]'){
+          if(earliestPublicationYear-authorBirthDate.getFullYear()!==NaN){
+      setAuthorAgeAtPublication(earliestPublicationYear-authorBirthDate.getFullYear())}}
+    }else{
+      if(earliestPublicationYear-authorBirthDate!==NaN){
+      setAuthorAgeAtPublication(earliestPublicationYear-authorBirthDate)
+    }}
+  }, [earliestPublicationYear, authorBirthDate])
+
 
   const fetchAuthorWikiData = (author) => {
   console.log(author)
@@ -132,7 +140,7 @@ fetchAuthorWikiUrl(author)
   setAuthorBgKeywords([res.region,res.schoolTradition])
   setAuthorLifeWorkKeywords([res.mainInterests,res.notableIdeas])
     setContentKeywords([res.mainInterests,res.notableIdeas])
-    setAuthorBirthDate(res.birthDate.date)
+    if(res.birthDate){setAuthorBirthDate(res.birthDate.date)}
       if(res.deathDate){ setAuthorDeathDate(res.deathDate.date)
        setAuthorLifespan(res.deathDate.age)}
       setTimelineLinks(res.schoolTradition)
