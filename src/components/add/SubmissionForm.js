@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import WikiTest from './WikiTest'
 
-const SubmissionForm = ({toAdd,onSearch}) => {
+const SubmissionForm = ({toAdd,onSearch,formToggleOn }) => {
 
   const [id, setId] =  useState('')
   const [title, setTitle] =  useState('')
@@ -48,7 +48,7 @@ const SubmissionForm = ({toAdd,onSearch}) => {
 
 
   return (
-    <form onSubmit={(e)=>validateForm(e)} className="SubmissionForm">
+    <form onSubmit={(e)=>validateForm(e)} className="SubmissionForm" style={{display:formToggleOn?"block":"none"}}>
       <h4>Book information (partial-fill; corrections needed)</h4>
     <div className="form-section">
       <label htmlFor="title">Title:</label>

@@ -169,10 +169,9 @@ setTasks([...tasks, data])
         </div>
 
         <div>
-          <input type="submit"  className="btn" value={formToggleOn?"Show Submission Form":"Preview Book"} onClick={toggleForm}/>
+          <input type="submit"  className="btn" value={formToggleOn?"Preview Book":"Show Submission Form"} onClick={toggleForm}/>
           <GoogleBooksViewer bookIdentifier={bookIdentifier} formToggleOn={formToggleOn} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId}/>
-         {formToggleOn ===false &&
-         <SubmissionForm toAdd = {toAdd} onSearch={onSearch}/>}
+         <SubmissionForm toAdd = {toAdd} formToggleOn={formToggleOn} onSearch={onSearch}/>
         </div>
         </div>
     </div>
