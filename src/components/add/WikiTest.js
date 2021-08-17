@@ -3,7 +3,10 @@ import wiki from 'wikijs'
 import {useEffect, useState} from 'react'
 const WikiTest = ({author, toAdd, languageSetting="en", earliestPublicationYear=0}) => {
 
+
 const [authorWikiTitle, setAuthorWikiTitle] = useState("")
+const [previewAuthorWiki, setpreviewAuthorWiki] = useState(false)
+
 
 //manual fill
 const [authorBirthPlace, setAuthorBirthPlace] = useState("")
@@ -187,6 +190,11 @@ fetchAuthorWikiUrl(author)
   }
 }
 
+const togglePreviewAuthorWiki= (e)=>{
+  e.preventDefault()
+  setpreviewAuthorWiki(!previewAuthorWiki)
+}
+
 const fetchAuthorImage = (author) => {
 wiki().page(author).then(page => page.mainImage()).then((res)=>setAuthorWikiImage(res)
 )}
@@ -197,9 +205,13 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
 //if no page found, display "no wikipedia page found"
   return (
     <>
-    <h4>{author} information (partial-fill; corrections needed)</h4>
-    <div className="form-section">
+      <h4>{author} information (partial-fill; corrections needed)</h4>
+    <input type="submit" className="btn" value={previewAuthorWiki?"Back to Form":"Preview Author Details"} onClick={togglePreviewAuthorWiki}/>
+    {previewAuthorWiki && (<div><h4>{authorWikiTitle}</h4>
+      <div id="authorWikiImageHolder"><img src={authorWikiImage}></img></div>
+      <p>authorWikiExtract</p></div>)}
 
+    <div className="form-section" style={{display:previewAuthorWiki?"none":"grid"}}>
             <label htmlFor="authorbirthPlace">Author's birth place:</label>
             <input className="form-control" type="text" id="authorBirthPlace" value={authorBirthPlace}
              onChange={(e)=>setAuthorBirthPlace(e.target.value)} placeholder="city, country/region"/>
@@ -231,7 +243,7 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
       <textarea className="form-control" rows={4} form="SubmissionForm"  id="contentKeywords" value={contentKeywords}
        onChange={(e)=>setContentKeywords(e.target.value)} placeholder="content keywords"/>
        </div>
-    <div className="form-section readOnly">
+    <div className="form-section readOnly" style={{display:previewAuthorWiki?"none":"grid"}}>
 
         <label htmlFor={`${author}url`}>Wikipedia Link for {author}:</label>
         <input className="form-control" type="text" value={authorWikiUrl} placeholder="wikipedia link" readOnly="readOnly" />
@@ -270,10 +282,10 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
     onChange={(e)=>setAuthorInfluenced(e.target.value)} placeholder={`${author}'s thought influenced these people`}readOnly="readOnly"/>
 
 
-  {/* <h4>{authorWikiTitle}</h4>
-    // <div id="authorWikiImageHolder"><img src={authorWikiImage}></img></div>
-    // <p>{authorWikiExtract}</p>*/}
+
+
     </div>
+
     </>
   )
 }

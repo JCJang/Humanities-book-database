@@ -19,7 +19,8 @@ const Add =()=>{
     const [googleScriptLoaded, setGoogleScriptLoaded] = useState(false);
 
 
-     const toggleForm = () =>{
+     const toggleForm = (e) =>{
+       e.preventDefault()
        setFormToggleOn(!formToggleOn)
      }
 
