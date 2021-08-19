@@ -4,6 +4,7 @@ const SearchForm = ({type,placeholder,onSearch}) => {
   const [title, setTitle] =  useState('the')
   const [author, setAuthor] =  useState('beauvoir')
   const [isbn, setIsbn] =  useState('')
+  const [previewFilter, setPreviewFilter] = useState(true)
 
   const validateForm = (e)=>{
     console.log("submitted");
@@ -23,13 +24,14 @@ const SearchForm = ({type,placeholder,onSearch}) => {
     const authorStr = querify(author);
     console.log(titleStr,authorStr);
 
-    onSearch(titleStr,authorStr,isbn)
+    onSearch(titleStr,authorStr,isbn,previewFilter)
   }
   return (
     <div>
     <h3>Search database to autofill suggestion</h3>
 
     <form onSubmit={(e)=>validateForm(e)} className="form-section">
+
     <label htmlFor="title">Title:</label>
     <input className="form-control" type="text" id="title" value={title}
      onChange={(e)=>setTitle(e.target.value)} placeholder="book title"/>
@@ -39,6 +41,9 @@ const SearchForm = ({type,placeholder,onSearch}) => {
       <label htmlFor="isbn">Isbn:</label>
       <input className="form-control" type="number" id="isbn" value={isbn}
        onChange={(e)=>setIsbn(e.target.value)} placeholder="isbn"/>
+      <input type="checkbox" className="btn" id="previewFilter" onClick={()=>setPreviewFilter(!previewFilter)} value="previewFilter" checked={previewFilter}/>
+      <label htmlFor="previewFilter">only display results with preview available</label>
+
     <input type="submit"  className="btn" value="Search"/>
 
     </form>

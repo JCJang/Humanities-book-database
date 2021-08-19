@@ -77,18 +77,35 @@ const Add =()=>{
 
         console.log(bookIdentifier);
       }}, [toAdd]);*/
+  //
+  //
 
+      // const onSearch = async(title, author, isbn,previewFilter)=>{
+      //   console.log("https://www.googleapis.com/books/v1/volumes?q="+(title ? "intitle:"+title : "")+ (title? "+" :"")+(author? "inauthor:"+author:"")+((title == true || author == true)?"+":"")+(isbn? ("isbn:"+isbn):"")+(previewFilter? "&filter=partial":"")+"&printType=books&maxResults=40")
+      //   const work = await fetch("https://www.googleapis.com/books/v1/volumes?q="+(title ? "intitle:"+title : "")+ (title? "+" :"")+(author? "inauthor:"+author:"")+((title == true || author == true)?"+":"")+(isbn? ("isbn:"+isbn):"")+(previewFilter? "&filter=partial":"")+"&printType=books&maxResults=40")
+      //   const data = await work.json()
+      //   if(data.totalItems===0){
+      //     alert("no results for this search.")
+      //     return;
+      //   }
+      //     setResults(data)
+      //   }
 
-  const onSearch = async(title, author, isbn)=>{
-    console.log(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title}+inauthor:${author}+isbn:${isbn}&filter=partial&printType=books&maxResults=40`);
-    const work = await fetch(`https://www.googleapis.com/books/v1/volumes?q=intitle:${title}+inauthor:${author}+isbn:${isbn}&filter=partial&printType=books&maxResults=40`)
-    const data = await work.json()
-    if(data.totalItems===0){
-      alert("no results for this search.")
-      return;
-    }
-      setResults(data)
-    }
+        const onSearch = async(title, author, isbn,previewFilter)=>{
+          console.log("https://www.googleapis.com/books/v1/volumes?q="+(title ? "intitle:"+title : "")+ (title? "+" :"")+(author? "inauthor:"+author:"")+((title == true || author == true)?"+":"")+(isbn? ("isbn:"+isbn):"")+"&printType=books&maxResults=40")
+          const work = await fetch("https://www.googleapis.com/books/v1/volumes?q="+(title ? "intitle:"+title : "")+ (title? "+" :"")+(author? "inauthor:"+author:"")+((title == true || author == true)?"+":"")+(isbn? ("isbn:"+isbn):"")+"&printType=books&maxResults=40")
+          const data = await work.json()
+          if(data.totalItems===0){
+            alert("no results for this search.")
+            return;
+          }
+            if(previewFilter){
+              const filteredData = data.items.filter((a)=>{return a.accessInfo.viewability!=="NO_PAGES"})
+              setResults(filteredData)
+          }else{
+              setResults(data.items)
+            }
+          }
 
 /*useEffect(()=>{
       const getTasks = async() => {
