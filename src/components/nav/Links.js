@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom'
 const Links = ({routeName, label}) => {
   return (
-    <Link to={routeName}>
+    <Link to={routeName} className="Link">
     {label}
     </Link>
   )

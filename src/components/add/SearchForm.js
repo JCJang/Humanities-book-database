@@ -28,9 +28,9 @@ const SearchForm = ({type,placeholder,onSearch}) => {
   }
   return (
     <div>
-    <h3>Search database to autofill suggestion</h3>
+    <h5>Search database to autofill suggestion</h5>
 
-    <form onSubmit={(e)=>validateForm(e)} className="form-section">
+    <form onSubmit={(e)=>validateForm(e)} id="SearchForm" className="form-section">
 
     <label htmlFor="title">Title:</label>
     <input className="form-control" type="text" id="title" value={title}
@@ -43,9 +43,10 @@ const SearchForm = ({type,placeholder,onSearch}) => {
        onChange={(e)=>setIsbn(e.target.value)} placeholder="isbn"/>
       <input type="checkbox" className="btn" id="previewFilter" onClick={()=>setPreviewFilter(!previewFilter)} value="previewFilter" checked={previewFilter}/>
       <label htmlFor="previewFilter">only display results with preview available</label>
-      <input type="submit"  className="btn" value="Search"/>
 
     </form>
+    <input type="submit" form="SearchForm" className="btn" value="Search"/>
+
     </div>
   )
 }

@@ -49,7 +49,7 @@ const SubmissionForm = ({toAdd,onSearch,formToggleOn }) => {
 
   return (
     <form onSubmit={(e)=>validateForm(e)} className="SubmissionForm" id="SubmissionForm" style={{display:formToggleOn?"block":"none"}}>
-      <h4>Book information (partial-fill; corrections needed)</h4>
+      <h6>Book information (partial-fill; corrections needed)</h6>
     <div className="form-section">
       <label htmlFor="title">Title:</label>
       <input className="form-control" type="text" id="title" value={title}

@@ -7,6 +7,8 @@ body {
   background: var(--nav);
   color: var(--nav-text);
   height:60px;
+  align-items: center;
+  display:flex;
 }
 
 .Header{
@@ -64,4 +66,10 @@ h4{
 .list{
   padding: 3%;
   width: minmax(33vw,400px);
+}
+
+.Link{
+  color: var(--detailspaneltext);
+  text-decoration: none;
+  padding:3rem;
 }

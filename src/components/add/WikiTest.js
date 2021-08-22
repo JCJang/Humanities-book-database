@@ -208,8 +208,10 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
 //if no page found, display "no wikipedia page found"
   return (
     <>
-      <h4>{author} information (partial-fill; corrections needed)</h4>
+    <div style={{display:"flex"}}>
+      <h6>{author} information (partial-fill; corrections needed)</h6>
     <input type="submit" className="btn" value={previewAuthorWiki?"Back to Form":"Preview Author Details"} onClick={togglePreviewAuthorWiki}/>
+    </div>
     {previewAuthorWiki && (<div><h4>{authorWikiTitle}</h4>
       <div id="authorWikiImageHolder"><img src={authorWikiImage}></img></div>
       <p>authorWikiExtract</p></div>)}

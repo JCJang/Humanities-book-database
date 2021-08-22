@@ -176,14 +176,10 @@ setTasks([...tasks, data])
   return (
 
     <div>
-    <header>
-      <h3>Suggest a Book</h3>
-      <p>see suggestion guide</p>
-    </header>
         <div  className="container">
         <div className="subcontainer left-block">
           <SearchForm onSearch = {onSearch}/>
-        {results && (<Query result={results} setToAdd={setToAdd}/>)}
+        {results && (<Query result={results} toAdd={toAdd} setToAdd={setToAdd}/>)}
 
         </div>
 
