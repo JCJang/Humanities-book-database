@@ -43,8 +43,7 @@ const SearchForm = ({type,placeholder,onSearch}) => {
        onChange={(e)=>setIsbn(e.target.value)} placeholder="isbn"/>
       <input type="checkbox" className="btn" id="previewFilter" onClick={()=>setPreviewFilter(!previewFilter)} value="previewFilter" checked={previewFilter}/>
       <label htmlFor="previewFilter">only display results with preview available</label>
-
-    <input type="submit"  className="btn" value="Search"/>
+      <input type="submit"  className="btn" value="Search"/>
 
     </form>
     </div>

@@ -1,47 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Jost:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Palanquin:wght@400;500;600;700&display=swap')
-
-html { font-size: 17px; }
-:root{
-  --nav:black;
-  --nav-text:white;
-
-  --searchbg:blue;
-  --searchlistbg:white;
-  --searchlisttext:black;
-
-
-  --shelfbg:lightBlue;
-  --shelflistbg:black;
-  --shelflisttext:white;
-
-  --bookbg:darkGrey;
-  --booklistbg:white;
-  --booklisttext:black;
-
-
-  --main-headline1: light 6.5rem/1.5 Jost, Palanquin, sans-serif;
-  --main-headline2: light 4rem/1.5 Jost, Palanquin, sans-serif;
-  --main-headline3: light 3.2rem/1.5 Jost, Palanquin, sans-serif;
-  --main-headline4: light 2.3rem/1.5 Jost, Palanquin, sans-serif;
-  --main-headline5: light 1.65rem/1.5 Jost, Palanquin, sans-serif;
-  --main-headline6: light 1.35rem/1.5 Jost, Palanquin, sans-serif;
-  --main-body1: light 1rem/1.5 Palanquin, sans-serif;
-  --main-body2: light 0.9rem/1.5 Palanquin, sans-serif;
-  --main-subtitle1: light 1.06rem/1.5 Jost, Palanquin, sans-serif;
-  --main-subtitle2: light 0.95rem/1.5 Jost, Palanquin, sans-serif;
-  --main-button: light 0.95rem/1.5 Palanquin, sans-serif;
-  --main-overline: light 0.65rem/1.5 Palanquin, sans-serif;
-  --main-caption: light 0.9rem/1.5 Palanquin, sans-serif;
-
-}
 
 body {
   font: 1rem/1.5 'Palanquin', sans-serif;
 }
 
 .Nav {
-  background-color: var(--nav);
+  background: var(--nav);
   color: var(--nav-text);
+  height:60px;
 }
 
 .Header{
@@ -67,31 +32,30 @@ h4{
   font: var(--main-headline4);
 }
 .col-1{
-  background-color: var(--searchbg);
+  background-color: var(--searchpanel);
 }
 .col-2{
-  background-color: var(--shelfbg);
+  background-color: var(--shelfpanel);
 }
 .col-3{
-  background-color: var(--bookbg);
+  background-color: var(--detailspanel);
 }
 .list-1{
-  background-color: var(--searchlistbg);
+  background-color: var(--searchpanellist);
 }
 .list-2{
-  background-color: var(--shelflistbg);
+  background-color: var(--shelfpanellist);
 }
-.list-3{
-  background-color: var(--booklistbg);
-}
+
+
 .text-1{
-  color: var(--searchlisttext);
+  color: var(--searchpaneltext);
 }
 .text-2{
-  color: var(--shelflisttext);
+  color: var(--shelfpaneltext);
 }
 .text-3{
-  color: var(--booklisttext);
+  color: var(--detailspaneltext);
 }
 .Row{
   display:flex;

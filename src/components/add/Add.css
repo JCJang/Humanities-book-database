@@ -6,30 +6,114 @@
   padding: 0;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Jost:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Palanquin:wght@400;500;600;700&display=swap')
+
+html { font-size: 17px; }
+:root{
+  --nav:rgba(83,100,109,0.8);
+  --nav-text:white;
+
+  --searchpanel:#F5EBE2;
+  --searchpanellist:#EDEDED;
+  --searchpaneltext:#6B2A0A;
+
+
+  --shelfpanel:#E9D6CA;
+  --shelfpanellist:#DDDDDD;
+
+  --shelfpanellistpressed:#E0C6B6;
+  --shelfpanellistpressedborder:#A08D80;
+
+  --shelfpaneltext:#3D1C0D;
+  --shelfpanellistborder:#776A61;
+
+  --detailspanel:#695F60;
+  --detailspaneltext:white;
+
+--lightactionbtn:#F17C67;
+--lightactionbtntext:#F9F6F0;
+--darkactionbtn:#71272F;
+--darkactionbtntext:#F9F6F0;
+
+--inactive:#BBBBBB;
+--inactivetext:#FFFFFF;
+
+--lightshadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+--heavyshadow:0px 6px 8px rgba(0, 0, 0, 0.15);
+
+
+  --main-headline1: light 6.5rem/1.5 Jost, Palanquin, sans-serif;
+  --main-headline2: light 4rem/1.5 Jost, Palanquin, sans-serif;
+  --main-headline3: light 3.2rem/1.5 Jost, Palanquin, sans-serif;
+  --main-headline4: light 2.3rem/1.5 Jost, Palanquin, sans-serif;
+  --main-headline5: light 1.65rem/1.5 Jost, Palanquin, sans-serif;
+  --main-headline6: light 1.35rem/1.5 Jost, Palanquin, sans-serif;
+  --main-body1: light 1rem/1.5 Palanquin, sans-serif;
+  --main-body2: light 0.9rem/1.5 Palanquin, sans-serif;
+  --main-subtitle1: light 1.06rem/1.5 Jost, Palanquin, sans-serif;
+  --main-subtitle2: light 0.95rem/1.5 Jost, Palanquin, sans-serif;
+  --main-button: light 0.95rem/1.5 Palanquin, sans-serif;
+  --main-overline: light 0.65rem/1.5 Palanquin, sans-serif;
+  --main-caption: light 0.9rem/1.5 Palanquin, sans-serif;
+
+}
+
+
 body {
-  font: 1rem/1.5 'Palanquin', sans-serif;
+  font: 1rem/1.2 'Palanquin', sans-serif;
 }
 
 .container {
-  max-width: 1000px;
-  margin: 30px auto;
+  max-width: 100vw;
   overflow: auto;
-  min-height: 300px;
-  border: 1px solid steelblue;
-  padding: 30px;
-  border-radius: 5px;
   display: flex;
+  flex-direction: row;
+
 }
 
+.subcontainer{
+  margin: 45px;
+  display:flex;
+  flex-direction: column;
+  justify-self: center;
+
+}
+
+.left-block{
+  flex:1 1 20vw;
+}
+
+.right-block{
+  flex:2 1 80vw;
+}
+
+.SearchForm{
+  background-color: var(--searchpanel);
+  color:var(--searchpaneltext);
+}
 .Query{
-  height:60vh;
+  height:70vh;
   overflow-y: auto;
 }
+
+.QueryItem{
+  background-color: var(--searchpanellist);
+  color:var(--shelfpaneltext);
+  margin:0.8rem;
+  box-shadow: var(--heavyshadow);
+  border:solid 1px var(--shelfpanellistborder);
+  padding:0 1rem;
+  cursor: pointer;
+}
+.QueryItemSelected{
+  background-color: var(--shelfpanellistpressed);
+  border-color: var(--shelfpanellistpressedborder);
+}
+
 
 #authorWikiImageHolder{
 width: 200px;
 height:auto;
-
 }
 
 img {
@@ -39,20 +123,15 @@ img {
 
 .btn {
   display: inline-block;
-  background: #000;
-  color: #fff;
+  background: var(--lightactionbtn);
+  color: var(--lightactionbtntext);
   border: none;
+  box-shadow: var(--lightshadow);
   padding: 10px 20px;
-  margin: 5px;
-  border-radius: 5px;
+  margin:1rem;
   cursor: pointer;
   text-decoration: none;
-  font-size: 15px;
-  font-family: inherit;
-}
-
-.btn:focus {
-  outline: none;
+  font: var(--main-button);
 }
 
 .btn:active {
@@ -65,14 +144,17 @@ img {
 }
 
 .form-control{
-  margin:5px;
+margin:5px;
+padding: 6px 12px;
+height: 2rem;
+background: white;
+border: 1px solid var(--inactive);
+box-sizing: border-box;
+border-radius: 4px;
 }
 .form-section{
   display:grid;
 grid-template-rows:auto;
   grid-template-columns: 30% 70%;
   grid-row-gap:0.5em;
-}
-.readOnly{
-  background-color: grey;
 }
