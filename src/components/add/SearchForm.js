@@ -1,6 +1,6 @@
 import {useState} from 'react'
 
-const SearchForm = ({type,placeholder,onSearch}) => {
+const SearchForm = ({type,placeholder,onSearch, results}) => {
   const [title, setTitle] =  useState('the')
   const [author, setAuthor] =  useState('beauvoir')
   const [isbn, setIsbn] =  useState('')
@@ -28,7 +28,7 @@ const SearchForm = ({type,placeholder,onSearch}) => {
   }
   return (
     <div>
-    <h5>Search database to autofill suggestion</h5>
+    <h5 className="SearchCaption" style={{font:results?"var(--main-overline)":"var(--main-headline4)", textTransform: results?`uppercase`:'', letterSpacing: results? `0.375rem`:''}}>Search database to autofill suggestion</h5>
 
     <form onSubmit={(e)=>validateForm(e)} id="SearchForm" className="form-section">
 
@@ -41,11 +41,12 @@ const SearchForm = ({type,placeholder,onSearch}) => {
       <label htmlFor="isbn">Isbn:</label>
       <input className="form-control" type="number" id="isbn" value={isbn}
        onChange={(e)=>setIsbn(e.target.value)} placeholder="isbn"/>
-      <input type="checkbox" className="btn" id="previewFilter" onClick={()=>setPreviewFilter(!previewFilter)} value="previewFilter" checked={previewFilter}/>
-      <label htmlFor="previewFilter">only display results with preview available</label>
-
     </form>
+    <div style={{display:"flex"}}>
+    <input type="checkbox" style={{alignSelf:"center", marginRight:"1rem",width:"1.5rem",height:"1.5rem"}} form="SearchForm" id="previewFilter" onClick={()=>setPreviewFilter(!previewFilter)} value="previewFilter" checked={previewFilter}/>
+    <label htmlFor="previewFilter" className="subtitle1">only display results with preview available</label>
     <input type="submit" form="SearchForm" className="btn" value="Search"/>
+    </div>
 
     </div>
   )

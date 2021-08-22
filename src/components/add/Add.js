@@ -177,14 +177,14 @@ setTasks([...tasks, data])
 
     <div>
         <div  className="container">
-        <div className="subcontainer left-block">
-          <SearchForm onSearch = {onSearch}/>
+        <div className="subcontainer left-block"  style={{width:"30rem"}}>
+          <SearchForm onSearch = {onSearch} results={results}/>
         {results && (<Query result={results} toAdd={toAdd} setToAdd={setToAdd}/>)}
 
         </div>
 
-        <div className="subcontainer right-block">
-          <input type="submit"  className="btn" value={formToggleOn?"Preview Book":"Show Submission Form"} onClick={toggleForm}/>
+        <div className="subcontainer right-block" style={{display:results?"":"none"}}>
+          {results && <input type="submit"  className="btn" value={formToggleOn?"Preview Book":"Show Submission Form"} onClick={toggleForm}/>}
           <GoogleBooksViewer bookIdentifier={bookIdentifier} formToggleOn={formToggleOn} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId}/>
          <SubmissionForm toAdd = {toAdd} formToggleOn={formToggleOn} onSearch={onSearch}/>
         </div>
