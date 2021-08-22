@@ -62,7 +62,7 @@ import {useState, useEffect} from 'react'
 
          return (
             <div>
-              <div id="viewerCanvas" style={{height:"70vh",width:"400px", backgroundColor:"(var(--detailspanel))", display:formToggleOn?"none":"block"}}></div>
+              <div id="viewerCanvas" style={{position:formToggleOn?"absolute":"relative", height:"80vh",width:"400px", backgroundColor:"(var(--detailspanel))", visibility:formToggleOn?"hidden":"visible", left:formToggleOn?"110vw":"0px"}}></div>
               { googleScriptLoaded===false &&"loading script"}
             </div>)
   ;}
