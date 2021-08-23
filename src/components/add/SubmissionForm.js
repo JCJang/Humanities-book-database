@@ -110,7 +110,15 @@ useEffect(()=>{
   return (
     <form onSubmit={(e)=>validateShelf(e)} className="SubmissionForm" id="shelfform" style={{display:formToggleOn?"block":"none"}}>
       <h5>Shelf information</h5>
-      {allShelves && allShelves.map((shelf)=><div onClick={()=>{setShelfTitle(shelf[1]); setNewShelf(false); setShelfDescription(shelf[2]);setShelfId(shelf[0])}} key={shelf[0]}>{shelf[1]}</div>)}
+      {allShelves && allShelves.map((shelf)=><div onClick={()=>{setShelfTitle(shelf[1]); setNewShelf(false); setShelfDescription(shelf[2]);setShelfId(shelf[0])}} key={shelf[0]}
+      style={{backgroundColor:shelf[0]==shelfId?"var(--shelfpanellistpressed)":"var(--shelfpanellist)",
+      border:shelf[0]==shelfId?"1px solid var(--shelfpanellistpressedborder)":"1px solid var(--shelfpanellistborder)",
+      transform:shelf[0]==shelfId?"translateY(0.3rem)":"translateY(0px)",
+      boxShadow:shelf[0]==shelfId?"none":"var(--heavyshadow)"}}>
+        <div className="subtitle1">
+      {shelf[1]}
+        </div>
+      </div>)}
       <input type="checkbox" style={{alignSelf:"center", marginRight:"1rem",width:"1.5rem",height:"1.5rem"}} id="previewFilter" onClick={()=>setNewShelf(!newShelf)} value="newShelf" checked={newShelf} disabled/>
       <label htmlFor="newShelf" className="subtitle1">Create a new shelf</label>
       <div className="form-section">
