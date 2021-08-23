@@ -100,9 +100,8 @@ fetchAuthorWikiUrl(author)
 }, [author])
 
   function postAuthor(){
-    Axios.post("http://localhost:3001/author",{
+    Axios.post("http://localhost:3001/insert",{
       authorWikiTitle:authorWikiTitle,
-      previewAuthorWiki:previewAuthorWiki,
       authorBirthPlace: authorBirthPlace,
       authorCountry:authorCountry,
       authorWikiExtract:authorWikiExtract,
@@ -330,6 +329,8 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
     <input className="form-control" type="text" id="authorWikiImage" value={authorWikiImage}
     onChange={(e)=>setAuthorWikiImage(e.target.value)} placeholder="author image url" readOnly="readOnly"/>
 
+
+    <input  className="btn" type="submit" onClick={(e)=>{validateAuthor(e)}} value="Suggest"/>
 
 
     </div>

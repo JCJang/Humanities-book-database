@@ -35,10 +35,6 @@ const SubmissionForm = ({toAdd,onSearch,formToggleOn }) => {
         postShelf();
   }
 
-  const messageAuthorArray=(e)=>{
-    console.log("submitted author");
-    e.preventDefault();
-  }
 
   useEffect(()=>{
     if(toAdd===undefined){
@@ -131,7 +127,7 @@ const SubmissionForm = ({toAdd,onSearch,formToggleOn }) => {
       {author && toAdd.volumeInfo.authors.map(author=> <WikiTest author={author} key={author} toAdd={toAdd} earliestPublicationYear={earliestPublicationYear} setSubjectLinks={setSubjectLinks} subjectLinks={subjectLinks} formToggleOn={formToggleOn}/>)}
 
 
-    <input  className="btn" type="submit" onClick={(e)=>{validateShelf(e); toAdd.volumeInfo.authors.forEach((author)=>document.getElementById(`${author}form`).submit())}} value="Suggest"/>
+    <input  className="btn" type="submit" onClick={(e)=>{validateShelf(e)}} value="Suggest"/>
 
     </form>
   )
