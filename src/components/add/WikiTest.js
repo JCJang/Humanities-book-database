@@ -4,7 +4,7 @@ import {useEffect, useState} from 'react'
 import Axios from 'axios'
 import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 
-const WikiTest = ({author, toAdd, languageSetting="en", earliestPublicationYear=0, subjectLinks, formToggleOn, setSubjectLinks}) => {
+const WikiTest = ({author, toAdd, languageSetting="en", subjectLinks, formToggleOn, setSubjectLinks}) => {
 
   const [countryCodeHelp, setCountryCodeHelp] = useState(false)
 
@@ -117,14 +117,14 @@ fetchAuthorWikiUrl(author)
       timelineLinks:timelineLinks,
       authorWikiLanglinks:authorWikiLanglinks,
       authorInfluences:authorInfluences,
-      authorInfluenced:authorInfluenced,
+      authorInfluenced:authorInfluenced
     })
 }
 
 const validateAuthor = (e)=>{
-  console.log("submitted");
   e.preventDefault();
-  if(!authorWikiTitle){
+  console.log("submitted author");
+  if(!authorWikiTitle || !authorCountry){
     alert("please fill in missing data");
     return;
   }
@@ -248,7 +248,7 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
 //if no page found, display "no wikipedia page found"
   return (
 
-    <form onSubmit={(e)=>validateAuthor(e)} className="SubmissionForm" id={`${author}form`} style={{display:formToggleOn?"block":"none"}}>
+    <form onSubmit={(e)=>{validateAuthor(e)}} className="SubmissionForm" id={`${author}form`} style={{display:formToggleOn?"block":"none"}}>
     <div style={{display:"flex"}}>
       <h5>{author} information (partial-fill; corrections needed)</h5>
     <input type="submit" className="btn" value={previewAuthorWiki?"Back to Form":"Preview Author Details"} onClick={togglePreviewAuthorWiki}/>

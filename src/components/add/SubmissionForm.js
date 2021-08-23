@@ -19,20 +19,26 @@ const SubmissionForm = ({toAdd,onSearch,formToggleOn }) => {
   const [subjectLinks, setSubjectLinks] = useState([])//use what?
 
   //manual fill
-  const [earliestPublicationYear, setEarliestPublicationYear] = useState("")
+  const [earliestPublicationYear, setEarliestPublicationYear] = useState(0)
   const [bookLength, setBookLength] = useState("")
 
   const[languageCodeHelp, setLanguageCodeHelp] = useState(false)
+
+
   const validateShelf = (e)=>{
-    console.log("submitted");
+    console.log("submitted shelf");
     e.preventDefault();
-    if(!title||!author||!isbn){
+    if(!title||!author){
       alert("please fill in missing data");
       return;
     }
         postShelf();
   }
 
+  const messageAuthorArray=(e)=>{
+    console.log("submitted author");
+    e.preventDefault();
+  }
 
   useEffect(()=>{
     if(toAdd===undefined){
@@ -40,6 +46,7 @@ const SubmissionForm = ({toAdd,onSearch,formToggleOn }) => {
     if(toAdd.volumeInfo!==undefined){
     setTitle(toAdd.volumeInfo.title)
     setAuthor(toAdd.volumeInfo.authors.map(a=>a))
+    setId(toAdd.id)
     const getIsbn=(isbn)=>{
       if(toAdd.volumeInfo.hasOwnProperty("industryIdentifiers")){
       const res = toAdd.volumeInfo.industryIdentifiers.filter(a=>a.type===isbn)
@@ -47,7 +54,6 @@ const SubmissionForm = ({toAdd,onSearch,formToggleOn }) => {
     }
     setIsbn10(getIsbn("ISBN_10"))
     setIsbn13(getIsbn("ISBN_13"))
-    setEarliestPublicationYear(toAdd.volumeInfo.publishedDate)
     setBookLength(toAdd.volumeInfo.pageCount)
 
   }},[toAdd])
@@ -56,7 +62,10 @@ const SubmissionForm = ({toAdd,onSearch,formToggleOn }) => {
 
   function postShelf(){
 
-    const bookSchema={
+    Axios.post("http://localhost:3001/shelf",{
+
+      shelfTitle:shelfTitle,
+      shelfDescription:shelfDescription,
       googleId:id,
       bookTitle:title,
       bookAuthor:author,
@@ -68,14 +77,7 @@ const SubmissionForm = ({toAdd,onSearch,formToggleOn }) => {
       languageVersions:languageVersions,
       previewLanguage:previewLanguage,
       previewStatus:toAdd.accessInfo.viewability,
-      subjectLinks:subjectLinks,
-    }
-
-    Axios.post("http://localhost:3001/shelf",{
-
-      shelfTitle:shelfTitle,
-      shelfDescription:shelfDescription,
-      shelfBooks:bookSchema,
+      subjectLinks:subjectLinks
     })
 
   }
@@ -129,8 +131,7 @@ const SubmissionForm = ({toAdd,onSearch,formToggleOn }) => {
       {author && toAdd.volumeInfo.authors.map(author=> <WikiTest author={author} key={author} toAdd={toAdd} earliestPublicationYear={earliestPublicationYear} setSubjectLinks={setSubjectLinks} subjectLinks={subjectLinks} formToggleOn={formToggleOn}/>)}
 
 
-    <input  className="btn" type="submit" onClick={()=>{document.getElementById("shelfform").submit();
-    toAdd.volumeInfo.authors.map(author=>document.getElementById(`${author}form`).submit())}} value="Suggest"/>
+    <input  className="btn" type="submit" onClick={(e)=>{validateShelf(e); toAdd.volumeInfo.authors.forEach((author)=>document.getElementById(`${author}form`).submit())}} value="Suggest"/>
 
     </form>
   )
