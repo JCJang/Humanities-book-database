@@ -23,6 +23,9 @@ const SubmissionForm = ({toAdd,onSearch,formToggleOn }) => {
   const [bookLength, setBookLength] = useState("")
 
   const[languageCodeHelp, setLanguageCodeHelp] = useState(false)
+  const[newShelf,setNewShelf] = useState(true)
+  const [allShelves, setAllShelves]=useState(false)
+  const [shelfId, setShelfId]=useState('')
 
 
   const validateShelf = (e)=>{
@@ -32,7 +35,7 @@ const SubmissionForm = ({toAdd,onSearch,formToggleOn }) => {
       alert("please fill in missing data");
       return;
     }
-        postShelf();
+    newShelf?postShelf():addToShelf()
   }
 
 
@@ -78,14 +81,42 @@ const SubmissionForm = ({toAdd,onSearch,formToggleOn }) => {
 
   }
 
+useEffect(()=>{
+  Axios.get("http://localhost:3001/allshelves").then((res)=>{
+      setAllShelves(res.data.map((obj)=>{return [obj._id, obj.shelfTitle, obj.shelfDescription]}))
+  })
+},[])
+
+
+  function addToShelf(){
+    Axios.put("http://localhost:3001/addbooktoshelf",{
+      shelfId:shelfId,
+      googleId:id,
+      bookTitle:title,
+      bookAuthor:author,
+      isbn10:isbn10,
+      isbn13:isbn13,
+      bookHighlights:bookHighlights,
+      earliestPublicationYear:earliestPublicationYear,
+      bookLength:bookLength,
+      languageVersions:languageVersions,
+      previewLanguage:previewLanguage,
+      previewStatus:toAdd.accessInfo.viewability,
+      subjectLinks:subjectLinks
+    })
+
+  }
 
   return (
     <form onSubmit={(e)=>validateShelf(e)} className="SubmissionForm" id="shelfform" style={{display:formToggleOn?"block":"none"}}>
       <h5>Shelf information</h5>
+      {allShelves && allShelves.map((shelf)=><div onClick={()=>{setShelfTitle(shelf[1]); setNewShelf(false); setShelfDescription(shelf[2]);setShelfId(shelf[0])}} key={shelf[0]}>{shelf[1]}</div>)}
+      <input type="checkbox" style={{alignSelf:"center", marginRight:"1rem",width:"1.5rem",height:"1.5rem"}} id="previewFilter" onClick={()=>setNewShelf(!newShelf)} value="newShelf" checked={newShelf} disabled/>
+      <label htmlFor="newShelf" className="subtitle1">Create a new shelf</label>
       <div className="form-section">
       <label htmlFor="shelfTitle">Shelf Question:</label>
       <input className="form-control" type="text" id="shelfTitle" value={shelfTitle}
-       onChange={(e)=>setShelfTitle(e.target.value)} placeholder="question form"/>
+       onChange={(e)=>{setShelfTitle(e.target.value); setNewShelf(true)}} placeholder="question form"/>
        <label htmlFor="shelfDescription">Shelf Description:</label>
        <input className="form-control" type="text" id="shelfDescription" value={shelfDescription}
         onChange={(e)=>setShelfDescription(e.target.value)} placeholder="one or two short paragraphs"/>
@@ -123,11 +154,11 @@ const SubmissionForm = ({toAdd,onSearch,formToggleOn }) => {
                    <textarea className="form-control" type="text" id="bookHighlights" value={bookHighlights}
                     onChange={(e)=>setBookHighlights(e.target.value)} placeholder="one or two paragraphs from the book"/>
                   </div>
+                  <input  className="btn" type="submit" onClick={(e)=>{validateShelf(e)}} value="Submit Shelf and Book"/>
 
       {author && toAdd.volumeInfo.authors.map(author=> <WikiTest author={author} key={author} toAdd={toAdd} earliestPublicationYear={earliestPublicationYear} setSubjectLinks={setSubjectLinks} subjectLinks={subjectLinks} formToggleOn={formToggleOn}/>)}
 
 
-    <input  className="btn" type="submit" onClick={(e)=>{validateShelf(e)}} value="Suggest"/>
 
     </form>
   )
