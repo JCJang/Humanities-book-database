@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import WikiTest from './WikiTest'
 import Axios from 'axios'
+import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 
 const SubmissionForm = ({toAdd,onSearch,formToggleOn }) => {
 
@@ -21,6 +22,7 @@ const SubmissionForm = ({toAdd,onSearch,formToggleOn }) => {
   const [earliestPublicationYear, setEarliestPublicationYear] = useState("")
   const [bookLength, setBookLength] = useState("")
 
+  const[languageCodeHelp, setLanguageCodeHelp] = useState(false)
   const validateShelf = (e)=>{
     console.log("submitted");
     e.preventDefault();
@@ -63,7 +65,7 @@ const SubmissionForm = ({toAdd,onSearch,formToggleOn }) => {
       bookHighlights:bookHighlights,
       earliestPublicationYear:earliestPublicationYear,
       bookLength:bookLength,
-      languageVersions:languageVersion.indexOf(',')==-1?[languageVersions]:[...languageVersions],
+      languageVersions:languageVersions,
       previewLanguage:previewLanguage,
       previewStatus:toAdd.accessInfo.viewability,
       subjectLinks:subjectLinks,
@@ -80,8 +82,8 @@ const SubmissionForm = ({toAdd,onSearch,formToggleOn }) => {
 
 
   return (
-    <form onSubmit={(e)=>validateShelf(e)} className="SubmissionForm" id="bookform" style={{display:formToggleOn?"block":"none"}}>
-      <h6>Shelf information</h6>
+    <form onSubmit={(e)=>validateShelf(e)} className="SubmissionForm" id="shelfform" style={{display:formToggleOn?"block":"none"}}>
+      <h5>Shelf information</h5>
       <div className="form-section">
       <label htmlFor="shelfTitle">Shelf Question:</label>
       <input className="form-control" type="text" id="shelfTitle" value={shelfTitle}
@@ -92,11 +94,11 @@ const SubmissionForm = ({toAdd,onSearch,formToggleOn }) => {
         <label htmlFor="previewLanguage">Preview Language:</label>
         <input className="form-control" type="text" id="previewLanguage" value={previewLanguage}
          onChange={(e)=>setpreviewLanguage(e.target.value)} placeholder="language code"/>
-         <label htmlFor="languageVersions">Available in these Languages:</label>
-         <input className="form-control" type="text" id="languageVersions" value={languageVersions} onChange{(e)=>setLanguageVersions(e.target.value)} placeholder="write in language code. separate with commas">
+         <label htmlFor="languageVersions">Available in these Languages <HelpOutlineOutlinedIcon style={{cursor:"pointer"}} onClick={()=>{setLanguageCodeHelp(!languageCodeHelp)}}/>:</label>
+         <input className="form-control" type="text" id="languageVersions" value={languageVersions} onChange={(e)=>setLanguageVersions([e.target.value])} placeholder="write in language code. separate with commas"/>
         </div>
-<iframe src="https://datahub.io/core/language-codes/r/0.html" width="100%" height="300px" frameborder="0"></iframe>
-      <h6>Book information (partial-fill; corrections needed)</h6>
+{languageCodeHelp && <iframe src="https://datahub.io/core/language-codes/r/0.html" width="100%" height="300px" frameborder="0"></iframe>}
+      <h5>Book information (partial-fill; corrections needed)</h5>
     <div className="form-section">
       <label htmlFor="title">Title:</label>
       <input className="form-control" type="text" id="title" value={title}
@@ -127,7 +129,7 @@ const SubmissionForm = ({toAdd,onSearch,formToggleOn }) => {
       {author && toAdd.volumeInfo.authors.map(author=> <WikiTest author={author} key={author} toAdd={toAdd} earliestPublicationYear={earliestPublicationYear} setSubjectLinks={setSubjectLinks} subjectLinks={subjectLinks} formToggleOn={formToggleOn}/>)}
 
 
-    <input  className="btn" type="submit" onClick={()=>{validateShelf();
+    <input  className="btn" type="submit" onClick={()=>{document.getElementById("shelfform").submit();
     toAdd.volumeInfo.authors.map(author=>document.getElementById(`${author}form`).submit())}} value="Suggest"/>
 
     </form>

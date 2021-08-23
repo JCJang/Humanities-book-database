@@ -2,8 +2,11 @@ import {parseInfo} from 'infobox-parser'
 import wiki from 'wikijs'
 import {useEffect, useState} from 'react'
 import Axios from 'axios'
+import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
+
 const WikiTest = ({author, toAdd, languageSetting="en", earliestPublicationYear=0, subjectLinks, formToggleOn, setSubjectLinks}) => {
 
+  const [countryCodeHelp, setCountryCodeHelp] = useState(false)
 
 const [authorWikiTitle, setAuthorWikiTitle] = useState("")
 const [previewAuthorWiki, setpreviewAuthorWiki] = useState(false)
@@ -247,7 +250,7 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
 
     <form onSubmit={(e)=>validateAuthor(e)} className="SubmissionForm" id={`${author}form`} style={{display:formToggleOn?"block":"none"}}>
     <div style={{display:"flex"}}>
-      <h6>{author} information (partial-fill; corrections needed)</h6>
+      <h5>{author} information (partial-fill; corrections needed)</h5>
     <input type="submit" className="btn" value={previewAuthorWiki?"Back to Form":"Preview Author Details"} onClick={togglePreviewAuthorWiki}/>
     </div>
     {previewAuthorWiki && (<div><h4>{authorWikiTitle}</h4>
@@ -258,11 +261,11 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
             <label htmlFor="authorbirthPlace">Author's birth place:</label>
             <input className="form-control" type="text" id="authorBirthPlace" value={authorBirthPlace}
              onChange={(e)=>setAuthorBirthPlace(e.target.value)} placeholder="city, country/region"/>
-               <label htmlFor="authorCountry">Author's country(s):</label>
+               <label htmlFor="authorCountry">Author's country(s) <HelpOutlineOutlinedIcon  style={{cursor:"pointer"}}  onClick={()=>{setCountryCodeHelp(!countryCodeHelp)}}/></label>
                <input className="form-control" type="text" id="authorCountry" value={authorCountry}
                   onChange={(e)=>setAuthorCountry([e.target.value])} placeholder="country code (see list)"/>
                   </div>
-                  <iframe src="https://www.datahub.io/core/country-list/r/0.html" width="100%" height="300px" frameborder="0"></iframe>
+                { countryCodeHelp && <iframe src="https://www.datahub.io/core/country-list/r/0.html" width="100%" height="300px" frameborder="0"></iframe>}
                   <div className="form-section" style={{display:previewAuthorWiki?"none":"grid"}}>
 
         <label htmlFor="authorBirthDate">Author Birth Date</label>
