@@ -1,7 +1,8 @@
 import {parseInfo} from 'infobox-parser'
 import wiki from 'wikijs'
 import {useEffect, useState} from 'react'
-const WikiTest = ({author, toAdd, languageSetting="en", earliestPublicationYear=0}) => {
+import Axios from 'axios'
+const WikiTest = ({author, toAdd, languageSetting="en", earliestPublicationYear=0, subjectLinks, formToggleOn, setSubjectLinks}) => {
 
 
 const [authorWikiTitle, setAuthorWikiTitle] = useState("")
@@ -10,14 +11,14 @@ const [previewAuthorWiki, setpreviewAuthorWiki] = useState(false)
 
 //manual fill
 const [authorBirthPlace, setAuthorBirthPlace] = useState("")
+const [authorCountry, setAuthorCountry] = useState([])
+
 const [timelineLinks, setTimelineLinks] = useState([])
-const [subjectLinks, setSubjectLinks] = useState([])//use what?
 const [contentKeywords, setContentKeywords] = useState([])//choose from main interests,notable ideas
 
 const [authorBirthDate, setAuthorBirthDate] = useState("")
 const [authorDeathDate, setAuthorDeathDate] = useState("")
 const [authorLifespan, setAuthorLifespan] = useState("")
-const [authorAgeAtPublication, setAuthorAgeAtPublication] = useState("") //
 const [authorBgKeywords, setAuthorBgKeywords] = useState([]) //region,school
 const [authorLifeWorkKeywords, setAuthorLifeWorkKeywords] = useState([]) //main interests,notable ideas
 
@@ -95,11 +96,41 @@ useEffect(()=>{
 fetchAuthorWikiUrl(author)
 }, [author])
 
+  function postAuthor(){
+    Axios.post("http://localhost:3001/author",{
+      authorWikiTitle:authorWikiTitle,
+      previewAuthorWiki:previewAuthorWiki,
+      authorBirthPlace: authorBirthPlace,
+      authorCountry:authorCountry,
+      authorWikiExtract:authorWikiExtract,
+      authorWikiUrl:authorWikiUrl,
+      authorWikiImage:authorWikiImage,
+      authorBirthDate:authorBirthDate,
+      authorDeathDate:authorDeathDate,
+      authorLifespan:authorLifespan,
+      authorBgKeywords:authorBgKeywords,
+      authorLifeWorkKeywords:authorLifeWorkKeywords,
+      authorWikiCategory:authorWikiCategory,
+      timelineLinks:timelineLinks,
+      authorWikiLanglinks:authorWikiLanglinks,
+      authorInfluences:authorInfluences,
+      authorInfluenced:authorInfluenced,
+    })
+}
 
+const validateAuthor = (e)=>{
+  console.log("submitted");
+  e.preventDefault();
+  if(!authorWikiTitle){
+    alert("please fill in missing data");
+    return;
+  }
+      postAuthor();
+}
 //calculate Author Age at Publication
 //https://www.w3schools.com/jsref/jsref_obj_date.asp JS dates killing me
 //https://stackoverflow.com/questions/643782/how-to-check-whether-an-object-is-a-date
-    useEffect(()=>{
+/*    useEffect(()=>{
         if(authorBirthDate!==undefined && authorBirthDate!==""){
         if(Object.prototype.toString.call(authorBirthDate) === '[object Date]'){
           if(earliestPublicationYear-authorBirthDate.getFullYear()!==NaN){
@@ -109,7 +140,12 @@ fetchAuthorWikiUrl(author)
       setAuthorAgeAtPublication(earliestPublicationYear-authorBirthDate)
     }}
   }, [earliestPublicationYear, authorBirthDate])
+*/
 
+/*    <label htmlFor="authorAgeAtPublication">Author Age at Publication</label>
+    <input className="form-control" type="text" id="authorAgeAtPublication" form="bookform" value={authorAgeAtPublication}
+    onChange={(e)=>setAuthorAgeAtPublication(e.target.value)} placeholder={`publication - ${authorBirthDate}`}/>
+*/
 
   const fetchAuthorWikiData = (author) => {
   console.log(author)
@@ -205,9 +241,11 @@ const fetchAuthorWikiUrl = (author) => {
 wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
 )}
 
+
 //if no page found, display "no wikipedia page found"
   return (
-    <>
+
+    <form onSubmit={(e)=>validateAuthor(e)} className="SubmissionForm" id={`${author}form`} style={{display:formToggleOn?"block":"none"}}>
     <div style={{display:"flex"}}>
       <h6>{author} information (partial-fill; corrections needed)</h6>
     <input type="submit" className="btn" value={previewAuthorWiki?"Back to Form":"Preview Author Details"} onClick={togglePreviewAuthorWiki}/>
@@ -220,13 +258,17 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
             <label htmlFor="authorbirthPlace">Author's birth place:</label>
             <input className="form-control" type="text" id="authorBirthPlace" value={authorBirthPlace}
              onChange={(e)=>setAuthorBirthPlace(e.target.value)} placeholder="city, country/region"/>
+               <label htmlFor="authorCountry">Author's country(s):</label>
+               <input className="form-control" type="text" id="authorCountry" value={authorCountry}
+                  onChange={(e)=>setAuthorCountry([e.target.value])} placeholder="country code (see list)"/>
+                  </div>
+                  <iframe src="https://www.datahub.io/core/country-list/r/0.html" width="100%" height="300px" frameborder="0"></iframe>
+                  <div className="form-section" style={{display:previewAuthorWiki?"none":"grid"}}>
+
         <label htmlFor="authorBirthDate">Author Birth Date</label>
         <input className="form-control" type="text" id="authorBirthDate" value={authorBirthDate}
         onChange={(e)=>setAuthorBirthDate(e.target.value)} placeholder="Author Birth Date"/>
 
-    <label htmlFor="authorAgeAtPublication">Author Age at Publication</label>
-    <input className="form-control" type="text" id="authorAgeAtPublication" value={authorAgeAtPublication}
-    onChange={(e)=>setAuthorAgeAtPublication(e.target.value)} placeholder={`publication - ${authorBirthDate}`}/>
 
         <label htmlFor="authorDeathDate">Author Death Date</label>
         <input className="form-control" type="text" id="authorDeathDate" value={authorDeathDate}
@@ -237,16 +279,24 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
         onChange={(e)=>setAuthorLifespan(e.target.value)} placeholder="Author Lifespan"/>
 
         <label htmlFor="timelineLinks">Wikipedia timeline pages:</label>
-        <textarea className="form-control" rows={4} form="SubmissionForm"  id="timelineLinks" value={timelineLinks}
-         onChange={(e)=>setTimelineLinks(e.target.value)} placeholder="separate by comma"/>
+        <textarea className="form-control" rows={4} form={`${author}form`}  id="timelineLinks" value={timelineLinks}
+         onChange={(e)=>setTimelineLinks([e.target.value])} placeholder="separate by comma"/>
 
         <label htmlFor="subjectLinks">Wikipedia subject pages:</label>
-        <textarea className="form-control" rows={4} form="SubmissionForm"  id="subjectLinks" value={subjectLinks}
-         onChange={(e)=>setSubjectLinks(e.target.value)} placeholder="separate by comma"/>
+        <textarea className="form-control" rows={4}  form={`${author}form`}   id="subjectLinks" value={subjectLinks}
+         onChange={(e)=>setSubjectLinks([e.target.value])} placeholder="separate by comma"/>
 
       <label htmlFor="contentKeywords">content keywords:</label>
-      <textarea className="form-control" rows={4} form="SubmissionForm"  id="contentKeywords" value={contentKeywords}
-       onChange={(e)=>setContentKeywords(e.target.value)} placeholder="content keywords"/>
+      <textarea className="form-control" rows={4} form={`${author}form`}    id="contentKeywords" value={contentKeywords}
+       onChange={(e)=>setContentKeywords([e.target.value])} placeholder="content keywords"/>
+       <label htmlFor="authorInfluences">Influences</label>
+       <textarea className="form-control" rows={4}  form={`${author}form`}    id="authorInfluences" value={authorInfluences}
+       onChange={(e)=>setAuthorInfluences([e.target.value])} placeholder={`${author} was influenced by these people`} />
+
+
+       <label htmlFor="authorInfluenced">authorInfluenced</label>
+       <textarea className="form-control" rows={4}  form={`${author}form`}  id="authorInfluenced" value={authorInfluenced}
+       onChange={(e)=>setAuthorInfluenced([e.target.value])} placeholder={`${author}'s thought influenced these people`}/>
        </div>
     <div className="form-section readOnly" style={{display:previewAuthorWiki?"none":"grid"}}>
 
@@ -254,19 +304,19 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
         <input className="form-control" type="text" value={authorWikiUrl} placeholder="wikipedia link" readOnly="readOnly" />
 
     <label htmlFor="authorBgKeywords">Author Background Keywords</label>
-    <textarea className="form-control" rows={4} form="SubmissionForm"  id="authorBgKeywords" value={authorBgKeywords}
+    <textarea className="form-control" rows={4}  form={`${author}form`}    id="authorBgKeywords" value={authorBgKeywords}
     onChange={(e)=>setAuthorBgKeywords(e.target.value)} placeholder="Author Background Keywords" readOnly="readOnly"/>
 
     <label htmlFor="authorLifeWorkKeywords">Author Life Work Keywords</label>
-    <textarea className="form-control" rows={4} form="SubmissionForm"  id="authorLifeWorkKeywords" value={authorLifeWorkKeywords}
+    <textarea className="form-control" rows={4}  form={`${author}form`}    id="authorLifeWorkKeywords" value={authorLifeWorkKeywords}
     onChange={(e)=>setAuthorLifeWorkKeywords(e.target.value)} placeholder="Author Life Work Keywords" readOnly="readOnly"/>
 
     <label htmlFor="authorWikiExtract">Summary</label>
-    <textarea className="form-control" rows={4} form="SubmissionForm"  id="authorWikiExtract" value={authorWikiExtract}
+    <textarea className="form-control" rows={4} form={`${author}form`}   id="authorWikiExtract" value={authorWikiExtract}
     onChange={(e)=>setAuthorWikiExtract(e.target.value)} placeholder="extract from wikipedia page" readOnly="readOnly"/>
 
     <label htmlFor="authorWikiCategory">Author Categories</label>
-    <textarea className="form-control" rows={4} form="SubmissionForm"  id="authorWikiCategory" value={authorWikiCategory}
+    <textarea className="form-control" rows={4}  form={`${author}form`}   id="authorWikiCategory" value={authorWikiCategory}
     onChange={(e)=>setAuthorWikiCategory(e.target.value)} placeholder="author categories" readOnly="readOnly"/>
 
     <label htmlFor="authorWikiLanglinks">langlinks</label>
@@ -277,21 +327,12 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
     <input className="form-control" type="text" id="authorWikiImage" value={authorWikiImage}
     onChange={(e)=>setAuthorWikiImage(e.target.value)} placeholder="author image url" readOnly="readOnly"/>
 
-    <label htmlFor="authorInfluences">Influences</label>
-    <textarea className="form-control" rows={4} form="SubmissionForm"  id="authorInfluences" value={authorInfluences}
-    onChange={(e)=>setAuthorInfluences(e.target.value)} placeholder={`${author} was influenced by these people`} readOnly="readOnly"/>
-
-
-    <label htmlFor="authorInfluenced">authorInfluenced</label>
-    <textarea className="form-control" rows={4} form="SubmissionForm" id="authorInfluenced" value={authorInfluenced}
-    onChange={(e)=>setAuthorInfluenced(e.target.value)} placeholder={`${author}'s thought influenced these people`}readOnly="readOnly"/>
-
-
 
 
     </div>
+    </form>
 
-    </>
+
   )
 }
 
