@@ -26,19 +26,30 @@ const SubmissionForm = ({toAdd,onSearch,formToggleOn }) => {
   const[newShelf,setNewShelf] = useState(true)
   const [allShelves, setAllShelves]=useState(false)
   const [shelfId, setShelfId]=useState('')
+  const [preventResubmitShelf, setPreventResubmitShelf] = useState(false)
+
 
 
   const validateShelf = (e)=>{
-    console.log("submitted shelf");
     e.preventDefault();
     if(!title||!author){
       alert("please fill in missing data");
       return;
     }
+    if(preventResubmitShelf==false){
     newShelf?postShelf():addToShelf()
+    setPreventResubmitShelf(true)
+  }else{
+    return;
+  }
   }
 
+  useEffect(()=>{
+  setPreventResubmitShelf(false)
+}, [shelfTitle,toAdd])
 
+
+//set book data with toAdd
   useEffect(()=>{
     if(toAdd===undefined){
       return}
@@ -57,10 +68,16 @@ const SubmissionForm = ({toAdd,onSearch,formToggleOn }) => {
 
   }},[toAdd])
 
+//get book data
+  useEffect(()=>{
+    Axios.get("http://localhost:3001/allshelves").then((res)=>{
+        setAllShelves(res.data.map((obj)=>{return [obj._id, obj.shelfTitle, obj.shelfDescription]}))
+    })
+    console.log("reloaded shelves");
+  },[toAdd,preventResubmitShelf])
 
 
   function postShelf(){
-
     Axios.post("http://localhost:3001/shelf",{
 
       shelfTitle:shelfTitle,
@@ -78,14 +95,9 @@ const SubmissionForm = ({toAdd,onSearch,formToggleOn }) => {
       previewStatus:toAdd.accessInfo.viewability,
       subjectLinks:subjectLinks
     })
+    console.log("posted new shelf");
 
   }
-
-useEffect(()=>{
-  Axios.get("http://localhost:3001/allshelves").then((res)=>{
-      setAllShelves(res.data.map((obj)=>{return [obj._id, obj.shelfTitle, obj.shelfDescription]}))
-  })
-},[])
 
 
   function addToShelf(){
@@ -104,7 +116,7 @@ useEffect(()=>{
       previewStatus:toAdd.accessInfo.viewability,
       subjectLinks:subjectLinks
     })
-
+    console.log("added book to shelf");
   }
 
   return (
@@ -162,7 +174,7 @@ useEffect(()=>{
                    <textarea className="form-control" type="text" id="bookHighlights" value={bookHighlights}
                     onChange={(e)=>setBookHighlights(e.target.value)} placeholder="one or two paragraphs from the book"/>
                   </div>
-                  <input  className="btn" type="submit" onClick={(e)=>{validateShelf(e)}} value="Submit Shelf and Book"/>
+                  <input  className="btn" type="submit" style={{backgroundColor:preventResubmitShelf?"var(--inactive)":"var(--lightactionbtn)", color:preventResubmitShelf?"var(--shelfpanellistborder)":"var(--lightactionbtntext)",boxShadow:preventResubmitShelf?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateShelf(e)}} value="Submit Shelf and Book"/>
 
       {author && toAdd.volumeInfo.authors.map(author=> <WikiTest author={author} key={author} toAdd={toAdd} earliestPublicationYear={earliestPublicationYear} setSubjectLinks={setSubjectLinks} subjectLinks={subjectLinks} formToggleOn={formToggleOn}/>)}
 

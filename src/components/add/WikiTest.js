@@ -7,6 +7,7 @@ import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 const WikiTest = ({author, toAdd, languageSetting="en", subjectLinks, formToggleOn, setSubjectLinks}) => {
 
   const [countryCodeHelp, setCountryCodeHelp] = useState(false)
+  const [preventResubmitAuthor, setPreventResubmitAuthor] = useState(false)
 
 const [authorWikiTitle, setAuthorWikiTitle] = useState("")
 const [previewAuthorWiki, setpreviewAuthorWiki] = useState(false)
@@ -50,54 +51,16 @@ const [authorInfluenced, setAuthorInfluenced] = useState([])//people referencing
 //   )
 //   .then(console.log)
 
-const beauvoir = {
-    "name": "Simone de Beauvoir",
-    "image": "Simone de Beauvoir2.png",
-    "caption": "Beauvoir in 1967",
-    "birthName": "Simone Lucie Ernestine Marie Bertrand de Beauvoir",
-    "birthDate": {
-        "date": "1908-01-09T05:00:00.000Z",
-        "age": 113
-    },
-    "birthPlace": "Paris",
-    "deathDate": {
-        "date": "1986-04-14T05:00:00.000Z",
-        "age": 78
-    },
-    "deathPlace": "French Fifth Republic",
-    "education": "University of Paris",
-    "era": "20th-century philosophy",
-    "region": "Western philosophy",
-    "schoolTradition": [
-        "Continental philosophy",
-        "Existentialism",
-        "Existential phenomenology",
-        "French feminism",
-        "Western Marxism"
-    ],
-    "mainInterests": [
-        "Political philosophy",
-        "{{hlist",
-        "Feminism",
-        "Ethics"
-    ],
-    "notableIdeas": [
-        "The Ethics of Ambiguity",
-        "Feminist ethics",
-        "Existential feminism"
-    ],
-    "influences": "hlist ",
-    "influenced": "hlist ",
-    "partner": "Jean-Paul Sartre",
-    "signature": "Simone de Beauvoir (signature).jpg"
-}
-
 //get data
 useEffect(()=>{
   fetchAuthorWikiData(author)
   fetchAuthorImage(author)
 fetchAuthorWikiUrl(author)
 }, [author])
+
+useEffect(()=>{
+setPreventResubmitAuthor(false)
+}, [authorWikiTitle,toAdd])
 
   function postAuthor(){
     Axios.post("http://localhost:3001/author",{
@@ -118,16 +81,23 @@ fetchAuthorWikiUrl(author)
       authorInfluences:authorInfluences,
       authorInfluenced:authorInfluenced
     })
+    console.log("author posted")
 }
 
 const validateAuthor = (e)=>{
   e.preventDefault();
-  console.log("submitted author");
+
   if(!authorWikiTitle || !authorCountry){
     alert("please fill in missing data");
     return;
   }
+
+  if(preventResubmitAuthor==false){
       postAuthor();
+      setPreventResubmitAuthor(true)
+    }else{
+      return;
+    }
 }
 //calculate Author Age at Publication
 //https://www.w3schools.com/jsref/jsref_obj_date.asp JS dates killing me
@@ -257,6 +227,8 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
       <p>authorWikiExtract</p></div>)}
 
     <div className="form-section" style={{display:previewAuthorWiki?"none":"grid"}}>
+    <label htmlFor='authorWikiTitle'>Author name:</label>
+    <input className="form-control" type="text"  onChange={(e)=>setAuthorWikiTitle(e.target.value)} value={authorWikiTitle} placeholder="author name"/>
             <label htmlFor="authorbirthPlace">Author's birth place:</label>
             <input className="form-control" type="text" id="authorBirthPlace" value={authorBirthPlace}
              onChange={(e)=>setAuthorBirthPlace(e.target.value)} placeholder="city, country/region"/>
@@ -330,7 +302,7 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
     onChange={(e)=>setAuthorWikiImage(e.target.value)} placeholder="author image url" readOnly="readOnly"/>
 
 
-    <input  className="btn" type="submit" onClick={(e)=>{validateAuthor(e)}} value="Submit this Author"/>
+    <input  className="btn" type="submit" style={{backgroundColor:preventResubmitAuthor?"var(--inactive)":"var(--lightactionbtn)", color:preventResubmitAuthor?"var(--shelfpanellistborder)":"var(--lightactionbtntext)",boxShadow:preventResubmitAuthor?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateAuthor(e)}} value="Submit this Author"/>
 
 
     </div>
