@@ -1067,6 +1067,7 @@ setPreventResubmitAuthor(false)
       authorCountry:stripLabels(authorCountry),
       authorWikiExtract:authorWikiExtract,
       authorWikiUrl:authorWikiUrl,
+      previewLanguage:previewLanguage,
       authorWikiImage:authorWikiImage,
       authorBirthDate:authorBirthDate,
       authorDeathDate:authorDeathDate,

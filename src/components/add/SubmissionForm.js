@@ -887,6 +887,7 @@ setShelfLanguage(languageSetting)
   }},[toAdd])
 
 //get book data
+//shelfLanguage
   useEffect(()=>{
     Axios.get("http://localhost:3001/allshelves").then((res)=>{
         setAllShelves(res.data.map((obj)=>{return [obj._id, obj.shelfTitle, obj.shelfDescription]}))
@@ -930,16 +931,15 @@ setShelfLanguage(languageSetting)
 
   function addToShelf(){
     Axios.put("http://localhost:3001/addbooktoshelf",{
-      shelfId:shelfId,
+      language:previewLanguage,
       googleId:id,
       bookTitle:title,
       bookAuthor:author,
+      previewStatus:toAdd.accessInfo.viewability,
       isbn10:isbn10,
       isbn13:isbn13,
       bookHighlights:bookHighlights,
       bookLength:bookLength,
-      previewLanguage:previewLanguage,
-      previewStatus:toAdd.accessInfo.viewability,
     })
     console.log("added book to shelf");
   }
@@ -1023,7 +1023,7 @@ setShelfLanguage(languageSetting)
                  </div>
                   <input  className="btn" type="submit" style={{backgroundColor:preventResubmitShelf?"var(--inactive)":"var(--lightactionbtn)", color:preventResubmitShelf?"var(--shelfpanellistborder)":"var(--lightactionbtntext)",boxShadow:preventResubmitShelf?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateShelf(e)}} value="Submit Shelf and Book"/>
 
-      {toAdd && toAdd.volumeInfo.authors?toAdd.volumeInfo.authors.map(author=> <WikiTest author={author} key={author} toAdd={toAdd} earliestPublicationYear={earliestPublicationYear} setSubjectLinks={setSubjectLinks} previewLanguage={previewLanguage} subjectLinks={subjectLinks} formToggleOn={formToggleOn}/>):<WikiTest stripLabels={stripLabels} toAdd={toAdd} earliestPublicationYear={earliestPublicationYear} setSubjectLinks={setSubjectLinks} subjectLinks={subjectLinks} previewLanguage={previewLanguage} formToggleOn={formToggleOn}/>}
+      {toAdd && toAdd.volumeInfo.authors?toAdd.volumeInfo.authors.map(author=> <WikiTest author={author} key={author} toAdd={toAdd} stripLabels={stripLabels} earliestPublicationYear={earliestPublicationYear} setSubjectLinks={setSubjectLinks} previewLanguage={previewLanguage} subjectLinks={subjectLinks} formToggleOn={formToggleOn}/>):<WikiTest stripLabels={stripLabels} toAdd={toAdd} earliestPublicationYear={earliestPublicationYear} setSubjectLinks={setSubjectLinks} subjectLinks={subjectLinks} previewLanguage={previewLanguage} formToggleOn={formToggleOn}/>}
 
 
 
