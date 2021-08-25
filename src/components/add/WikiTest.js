@@ -5,7 +5,7 @@ import Axios from 'axios'
 import MultiSelect from "react-multi-select-component";
 
 
-const WikiTest = ({author, toAdd, previewLanguage, subjectLinks, formToggleOn, setSubjectLinks}) => {
+const WikiTest = ({author, toAdd, stripLabels, previewLanguage, subjectLinks, formToggleOn, setSubjectLinks}) => {
 
   const [preventResubmitAuthor, setPreventResubmitAuthor] = useState(false)
 
@@ -1064,7 +1064,7 @@ setPreventResubmitAuthor(false)
     Axios.post("http://localhost:3001/author",{
       authorWikiTitle:authorWikiTitle,
       authorBirthPlace: authorBirthPlace,
-      authorCountry:authorCountry,
+      authorCountry:stripLabels(authorCountry),
       authorWikiExtract:authorWikiExtract,
       authorWikiUrl:authorWikiUrl,
       authorWikiImage:authorWikiImage,

@@ -894,11 +894,19 @@ setShelfLanguage(languageSetting)
     console.log("reloaded shelves");
   },[toAdd,preventResubmitShelf])
 
+  function stripLabels(a){
+    const result = []
+    a.map((a)=>{
+      result.push(a.value)
+    })
+    return result
+  }
 
   function postShelf(){
+
     Axios.post("http://localhost:3001/shelf",{
 
-      shelfSubjects:subjects,
+      shelfSubjects:stripLabels(subjects),
       shelfTitle:shelfTitle,
       shelfDescription:shelfDescription,
       googleId:id,
@@ -909,7 +917,8 @@ setShelfLanguage(languageSetting)
       bookHighlights:bookHighlights,
       earliestPublicationYear:earliestPublicationYear,
       bookLength:bookLength,
-      languageVersions:languageVersions,
+      languageVersions:stripLabels(languageVersions),
+      shelfLanguage:shelfLanguage,
       previewLanguage:previewLanguage,
       previewStatus:toAdd.accessInfo.viewability,
       subjectLinks:subjectLinks
@@ -929,7 +938,7 @@ setShelfLanguage(languageSetting)
       isbn13:isbn13,
       bookHighlights:bookHighlights,
       bookLength:bookLength,
-      language:previewLanguage,
+      previewLanguage:previewLanguage,
       previewStatus:toAdd.accessInfo.viewability,
     })
     console.log("added book to shelf");
@@ -1014,7 +1023,7 @@ setShelfLanguage(languageSetting)
                  </div>
                   <input  className="btn" type="submit" style={{backgroundColor:preventResubmitShelf?"var(--inactive)":"var(--lightactionbtn)", color:preventResubmitShelf?"var(--shelfpanellistborder)":"var(--lightactionbtntext)",boxShadow:preventResubmitShelf?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateShelf(e)}} value="Submit Shelf and Book"/>
 
-      {toAdd && toAdd.volumeInfo.authors?toAdd.volumeInfo.authors.map(author=> <WikiTest author={author} key={author} toAdd={toAdd} earliestPublicationYear={earliestPublicationYear} setSubjectLinks={setSubjectLinks} previewLanguage={previewLanguage} subjectLinks={subjectLinks} formToggleOn={formToggleOn}/>):<WikiTest toAdd={toAdd} earliestPublicationYear={earliestPublicationYear} setSubjectLinks={setSubjectLinks} subjectLinks={subjectLinks} previewLanguage={previewLanguage} formToggleOn={formToggleOn}/>}
+      {toAdd && toAdd.volumeInfo.authors?toAdd.volumeInfo.authors.map(author=> <WikiTest author={author} key={author} toAdd={toAdd} earliestPublicationYear={earliestPublicationYear} setSubjectLinks={setSubjectLinks} previewLanguage={previewLanguage} subjectLinks={subjectLinks} formToggleOn={formToggleOn}/>):<WikiTest stripLabels={stripLabels} toAdd={toAdd} earliestPublicationYear={earliestPublicationYear} setSubjectLinks={setSubjectLinks} subjectLinks={subjectLinks} previewLanguage={previewLanguage} formToggleOn={formToggleOn}/>}
 
 
 
