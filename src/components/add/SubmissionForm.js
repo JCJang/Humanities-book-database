@@ -42,8 +42,64 @@ const SubmissionForm = ({toAdd,onSearch, languageSetting, formToggleOn }) => {
       { label: "Art", value: "9 Art" },
       { label: "Gender Issues", value: "10 Gender Issues" },
     ];
-
     const selectLanguageVersions = [
+      {
+          label: "English",
+          value: "en"
+      },
+      {
+          label: "Chinese (Simplified)",
+          value: "zh-cn"
+      },
+      {
+          label: "Chinese (Traditional)",
+          value: "zh-tw"
+      },
+      {
+          label: "Hindi",
+          value: "hi"
+      },
+      {
+          label: "Spanish; Castilian",
+          value: "es"
+      },
+      {
+          label: "Arabic",
+          value: "ar"
+      },
+      {
+          label: "Urdu",
+          value: "ur"
+      },
+      {
+          label: "Bengali",
+          value: "bn"
+      },
+      {
+          label: "French",
+          value: "fr"
+      },
+      {
+          label: "Russian",
+          value: "ru"
+      },
+      {
+          label: "Portuguese",
+          value: "pt"
+      },
+      {
+          label: "Indonesian",
+          value: "id"
+      },
+      {
+          label: "German",
+          value: "de"
+      },
+
+      {
+          label: "Japanese",
+          value: "ja"
+      },
     {  label: "Afar",   value: "aa"  },
     {
         label: "Abkhazian",
@@ -770,22 +826,24 @@ const SubmissionForm = ({toAdd,onSearch, languageSetting, formToggleOn }) => {
         value: "za"
     },
     {
-        label: "Chinese",
-        value: "zh"
+        label: "Chinese (Simplified)",
+        value: "zh-cn"
+    },
+    {
+        label: "Chinese (Traditional)",
+        value: "zh-tw"
     },
     {
         label: "Zulu",
         value: "zu"
     },
 ];
-
-
     const [subjects, setSubjects] = useState([]);
 
 
   const validateShelf = (e)=>{
     e.preventDefault();
-    if(!title||!author){
+    if(!title||!author||!subjects){
       alert("please fill in missing data");
       return;
     }
@@ -840,6 +898,7 @@ setShelfLanguage(languageSetting)
   function postShelf(){
     Axios.post("http://localhost:3001/shelf",{
 
+      shelfSubjects:subjects,
       shelfTitle:shelfTitle,
       shelfDescription:shelfDescription,
       googleId:id,
@@ -869,12 +928,9 @@ setShelfLanguage(languageSetting)
       isbn10:isbn10,
       isbn13:isbn13,
       bookHighlights:bookHighlights,
-      earliestPublicationYear:earliestPublicationYear,
       bookLength:bookLength,
-      languageVersions:languageVersions,
-      previewLanguage:previewLanguage,
+      language:previewLanguage,
       previewStatus:toAdd.accessInfo.viewability,
-      subjectLinks:subjectLinks
     })
     console.log("added book to shelf");
   }
