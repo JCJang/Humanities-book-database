@@ -4,14 +4,13 @@ import {useEffect, useState} from 'react'
 import Axios from 'axios'
 import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 
-const WikiTest = ({author, toAdd, languageSetting="en", subjectLinks, formToggleOn, setSubjectLinks}) => {
+const WikiTest = ({author, toAdd, previewLanguage, subjectLinks, formToggleOn, setSubjectLinks}) => {
 
   const [countryCodeHelp, setCountryCodeHelp] = useState(false)
   const [preventResubmitAuthor, setPreventResubmitAuthor] = useState(false)
 
 const [authorWikiTitle, setAuthorWikiTitle] = useState("")
 const [previewAuthorWiki, setpreviewAuthorWiki] = useState(false)
-
 
 //manual fill
 const [authorBirthPlace, setAuthorBirthPlace] = useState("")
@@ -120,8 +119,9 @@ const validateAuthor = (e)=>{
 */
 
   const fetchAuthorWikiData = (author) => {
-  console.log(author)
-  wiki({ apiUrl: `https://${languageSetting}.wikipedia.org/w/api.php` })
+    const code=previewLanguage.slice(0,2);
+    console.log(code)
+  wiki({ apiUrl: `https://${code}.wikipedia.org/w/api.php` })
   	.page(author)
   	.then(page =>
   		page
@@ -152,7 +152,7 @@ const validateAuthor = (e)=>{
       setAuthorWikiLanglinks(res.langlinks)
     })
   try{
-    wiki({ apiUrl: `https://${languageSetting}.wikipedia.org/w/api.php` })
+    wiki({ apiUrl: `https://${code}.wikipedia.org/w/api.php` })
     .page(author)
     .then(page => page.fullInfo())
     .then(info => info.general)

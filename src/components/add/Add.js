@@ -17,6 +17,7 @@ const Add =()=>{
     const [isbnOrId, setIsbnOrId] = useState(true)
     const [formToggleOn, setFormToggleOn] = useState(false)
     const [googleScriptLoaded, setGoogleScriptLoaded] = useState(false);
+    const [languageSetting, setLanguageSetting] = useState('EN')
 
 
      const toggleForm = (e) =>{
@@ -178,7 +179,7 @@ setTasks([...tasks, data])
     <div>
         <div  className="container">
         <div className="subcontainer left-block"  style={{width:"30rem"}}>
-          <SearchForm onSearch = {onSearch} results={results}/>
+          <SearchForm onSearch = {onSearch} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting} results={results}/>
         {results && (<Query result={results} toAdd={toAdd} setToAdd={setToAdd}/>)}
 
         </div>
@@ -186,7 +187,7 @@ setTasks([...tasks, data])
         <div className="subcontainer right-block" style={{display:results?"":"none"}}>
           {results && <input type="submit"  className="btn" value={formToggleOn?"Preview Book":"Show Submission Form"} onClick={toggleForm}/>}
           <GoogleBooksViewer bookIdentifier={bookIdentifier} formToggleOn={formToggleOn} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId}/>
-         <SubmissionForm toAdd = {toAdd} formToggleOn={formToggleOn} onSearch={onSearch}/>
+         <SubmissionForm toAdd = {toAdd} formToggleOn={formToggleOn}  languageSetting={languageSetting} onSearch={onSearch}/>
         </div>
     </div>
   </div>

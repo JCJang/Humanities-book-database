@@ -1,6 +1,6 @@
 import {useState} from 'react'
 
-const SearchForm = ({type,placeholder,onSearch, results}) => {
+const SearchForm = ({type,placeholder,onSearch, setLanguageSetting, languageSetting, results}) => {
   const [title, setTitle] =  useState('the')
   const [author, setAuthor] =  useState('beauvoir')
   const [isbn, setIsbn] =  useState('')
@@ -41,6 +41,20 @@ const SearchForm = ({type,placeholder,onSearch, results}) => {
       <label htmlFor="isbn">Isbn:</label>
       <input className="form-control" type="number" id="isbn" value={isbn}
        onChange={(e)=>setIsbn(e.target.value)} placeholder="isbn"/>
+       <label htmlFor="languageSetting">search language:</label>
+       <select className="form-control" id="languageSetting" value={languageSetting}
+        onChange={(e)=>setLanguageSetting(e.target.value)} placeholder="toggles auto input settings">
+        <option value="EN">English</option>
+        <option value="ZH-TW">Traditional Chinese</option>
+        <option value="ZH-CN">Simplified Chinese</option>
+        <option value="AR">Arabic</option>
+        <option value="FR">French</option>
+        <option value="ES">Spanish</option>
+        <option value="JA">Japanese</option>
+        <option value="IT">Italian</option>
+
+        </select>
+
     </form>
     <div style={{display:"flex"}}>
     <input type="checkbox" style={{alignSelf:"center", marginRight:"1rem",width:"1.5rem",height:"1.5rem"}} form="SearchForm" id="previewFilter" onClick={()=>setPreviewFilter(!previewFilter)} value="previewFilter" checked={previewFilter}/>
