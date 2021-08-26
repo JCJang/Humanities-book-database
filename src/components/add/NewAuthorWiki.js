@@ -1067,7 +1067,7 @@ setPreventResubmitAuthor(false)
       authorCountry:stripLabels(authorCountry),
       authorWikiExtract:authorWikiExtract,
       authorWikiUrl:authorWikiUrl,
-      previewLanguage:previewLanguage,
+      previewLanguage:stripLabels(previewLanguage),
       authorWikiImage:authorWikiImage,
       authorBirthDate:authorBirthDate,
       authorDeathDate:authorDeathDate,
@@ -1119,7 +1119,7 @@ const validateAuthor = (e)=>{
 */
 
   const fetchAuthorWikiData = (author) => {
-    const code=previewLanguage.slice(0,2);
+    const code=stripLabels(previewLanguage).slice(0,2);
     console.log(code)
   wiki({ apiUrl: `https://${code}.wikipedia.org/w/api.php` })
   	.page(author)

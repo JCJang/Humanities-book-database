@@ -19,6 +19,18 @@ const [authorWikiCategory, setAuthorWikiCategory] = useState([])
 const [translatingFrom, setTranslatingFrom] = useState([])
 const [translatingInto, setTranslatingInto] = useState([])
 
+useEffect(() => {
+    if (translatingFrom.length > 1) {
+      setTranslatingFrom([translatingFrom[translatingFrom.length - 1]])
+    }
+}, [translatingFrom])
+
+useEffect(() => {
+    if (translatingInto.length > 1) {
+      setTranslatingInto([translatingInto[translatingInto.length - 1]])
+    }
+}, [translatingInto])
+
 const [allAuthors, setAllAuthors] = useState([])
 const [authorInfluenced, setAuthorInfluenced]=useState([])
 const [authorInfluences, setAuthorInfluences]=useState([])
@@ -950,24 +962,24 @@ id="translatingInto"
         <textarea className="form-control" rows={4} form={`${author}form`}  id="timelineLinks" value={timelineLinks}
          onChange={(e)=>setTimelineLinks([e.target.value])} placeholder="separate by comma"/>
          </div>
-    <div className="form-section readOnly" style={{display:previewAuthorWiki?"none":"grid"}}>
+    <div className="form-section" style={{display:previewAuthorWiki?"none":"grid"}}>
 
 
     <label htmlFor="authorBgKeywords">Author Background Keywords</label>
     <textarea className="form-control" rows={4}  form={`${author}form`}    id="authorBgKeywords" value={authorBgKeywords}
-    onChange={(e)=>setAuthorBgKeywords(e.target.value)} placeholder="Author Background Keywords" readOnly="readOnly"/>
+    onChange={(e)=>setAuthorBgKeywords(e.target.value)} placeholder="Author Background Keywords" />
 
     <label htmlFor="authorLifeWorkKeywords">Author Life Work Keywords</label>
     <textarea className="form-control" rows={4}  form={`${author}form`}    id="authorLifeWorkKeywords" value={authorLifeWorkKeywords}
-    onChange={(e)=>setAuthorLifeWorkKeywords(e.target.value)} placeholder="Author Life Work Keywords" readOnly="readOnly"/>
+    onChange={(e)=>setAuthorLifeWorkKeywords(e.target.value)} placeholder="Author Life Work Keywords" />
 
     <label htmlFor="authorWikiExtract">Summary</label>
     <textarea className="form-control" rows={4} form={`${author}form`}   id="authorWikiExtract" value={authorWikiExtract}
-    onChange={(e)=>setAuthorWikiExtract(e.target.value)} placeholder="extract from wikipedia page" readOnly="readOnly"/>
+    onChange={(e)=>setAuthorWikiExtract(e.target.value)} placeholder="extract from wikipedia page" />
 
     <label htmlFor="authorWikiCategory">Author Categories</label>
     <textarea className="form-control" rows={4} form={`${author}form`}   id="authorWikiCategory" value={authorWikiCategory}
-    onChange={(e)=>setAuthorWikiCategory(e.target.value)} placeholder="author categories" readOnly="readOnly"/>
+    onChange={(e)=>setAuthorWikiCategory(e.target.value)} placeholder="author categories" />
 
     <input  className="btn" type="submit" style={{backgroundColor:preventResubmitAuthor?"var(--inactive)":"var(--lightactionbtn)", color:preventResubmitAuthor?"var(--shelfpanellistborder)":"var(--lightactionbtntext)",boxShadow:preventResubmitAuthor?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateAuthor(e)}} value="Submit this Author"/>
 

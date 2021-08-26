@@ -16,9 +16,26 @@ const SubmissionForm = ({toAdd, stripLabels,onSearch, languageSetting, formToggl
   const [isbn13, setIsbn13] =  useState('')
   const [bookHighlights, setBookHighlights] = useState('')
   const [languageVersions, setLanguageVersions] = useState([])
-  const [previewLanguage, setPreviewLanguage] = useState('en')
+  const [previewLanguage, setPreviewLanguage] = useState([])
+
+//restricts selection to one
+useEffect(() => {
+    if (previewLanguage.length > 1) {
+      setPreviewLanguage([previewLanguage[previewLanguage.length - 1]])
+    }
+}, [previewLanguage])
+
+
   const [subjectLinks, setSubjectLinks] = useState([])//use what?
-  const [shelfLanguage, setShelfLanguage] = useState('en')//use what?
+  const [shelfLanguage, setShelfLanguage] = useState([])//use what?
+
+  //restricts selection to one
+  useEffect(() => {
+      if (shelfLanguage.length > 1) {
+        setShelfLanguage([shelfLanguage[shelfLanguage.length - 1]])
+      }
+  }, [shelfLanguage])
+
 
   //manual fill
   const [earliestPublicationYear, setEarliestPublicationYear] = useState(0)
@@ -860,6 +877,7 @@ const SubmissionForm = ({toAdd, stripLabels,onSearch, languageSetting, formToggl
 }, [shelfTitle,toAdd])
 
 
+//case insensitively match shelves to typed shelves.
   useEffect(()=>{
     if(allShelves){
     allShelves.forEach((x)=>{if(x[0].toLowerCase()===shelfTitle.toLowerCase()){
@@ -868,10 +886,12 @@ const SubmissionForm = ({toAdd, stripLabels,onSearch, languageSetting, formToggl
 }, [shelfTitle])
 
 
+//initially autoset form languages based on language settings
   useEffect(()=>{
- setPreviewLanguage(languageSetting)
-setShelfLanguage(languageSetting)
-}, [languageSetting])
+    const addLabel = selectLanguageVersions.filter((x)=>{return x.value===languageSetting})
+ setPreviewLanguage([addLabel[0]])
+setShelfLanguage([addLabel[0]])
+}, [])
 
 
 //set book data with toAdd
@@ -898,7 +918,7 @@ setShelfLanguage(languageSetting)
 //shelfLanguage
   useEffect(()=>{
     Axios.post("http://localhost:3001/allshelves",{
-      shelfLanguage:shelfLanguage
+      shelfLanguage:shelfLanguage[0]?stripLabels(shelfLanguage)[0]:languageSetting
     }).then((res)=>{
       setAllShelves(res.data.map((x)=>{ return [x.editions[0].details.shelfTitle, x.editions[0].details.shelfDescription,  x.shelfSubjects, x._id]}))
     }).then( console.log("reloaded shelves"))
@@ -921,7 +941,7 @@ setShelfLanguage(languageSetting)
       bookLength:bookLength,
       languageVersions:stripLabels(languageVersions),
       shelfLanguage:shelfLanguage,
-      previewLanguage:previewLanguage,
+      previewLanguage:stripLabels(previewLanguage),
       previewStatus:toAdd.accessInfo.viewability,
       subjectLinks:subjectLinks
     })
@@ -932,7 +952,7 @@ setShelfLanguage(languageSetting)
 
   function addToShelf(){
     Axios.put("http://localhost:3001/addbooktoshelf",{
-      language:previewLanguage,
+      language:stripLabels(previewLanguage),
       googleId:id,
       bookTitle:title,
       bookAuthor:author,
@@ -962,9 +982,14 @@ setShelfLanguage(languageSetting)
       <div className="form-section">
 
       <label htmlFor="shelfLanguage">Shelf Language:</label>
-      <input className="form-control" type="text" id="shelfLanguage" value={shelfLanguage}
-       onChange={(e)=>{setShelfLanguage(e.target.value)}} placeholder="language code"/>
-      <label htmlFor="shelfTitle">Shelf Question:</label>
+    <MultiSelect
+    id="shelfLanguage"
+      options={selectLanguageVersions}
+      value={shelfLanguage}
+      onChange={setShelfLanguage}
+      hasSelectAll={false}
+      />
+      <label htmlFor="shelfTitle">Shelf Title</label>
       <input className="form-control" type="text" id="shelfTitle" value={shelfTitle}
        onChange={(e)=>{setShelfTitle(e.target.value); setNewShelf(true)}} placeholder="question form"/>
        <label htmlFor="shelfDescription">Shelf Description:</label>
@@ -982,9 +1007,14 @@ setShelfLanguage(languageSetting)
       <h5>Book information (partial-fill; corrections needed)</h5>
 
     <div className="form-section">
-    <label htmlFor="previewLanguage">Preview Language:</label>
-    <input className="form-control" type="text" id="previewLanguage" value={previewLanguage}
-     onChange={(e)=>setPreviewLanguage(e.target.value)} placeholder="language code"/>
+     <label htmlFor="previewLanguage">Preview language:</label>
+<MultiSelect
+id="previewLanguage"
+     options={selectLanguageVersions}
+     value={previewLanguage}
+     onChange={setPreviewLanguage}
+     hasSelectAll={false}
+     />
       <label htmlFor="title">Title:</label>
       <input className="form-control" type="text" id="title" value={title}
        onChange={(e)=>setTitle(e.target.value)} placeholder="book title"/>
