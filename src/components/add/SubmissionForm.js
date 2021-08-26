@@ -861,6 +861,14 @@ const SubmissionForm = ({toAdd,onSearch, languageSetting, formToggleOn }) => {
 
 
   useEffect(()=>{
+    if(allShelves){
+    allShelves.forEach((x)=>{if(x[0].toLowerCase()===shelfTitle.toLowerCase()){
+      setNewShelf(false); setShelfId(x[3])}})
+    }
+}, [shelfTitle])
+
+
+  useEffect(()=>{
  setPreviewLanguage(languageSetting)
 setShelfLanguage(languageSetting)
 }, [languageSetting])
@@ -889,11 +897,14 @@ setShelfLanguage(languageSetting)
 //get book data
 //shelfLanguage
   useEffect(()=>{
-    Axios.get("http://localhost:3001/allshelves").then((res)=>{
-        setAllShelves(res.data.map((obj)=>{return [obj._id, obj.shelfTitle, obj.shelfDescription]}))
-    })
-    console.log("reloaded shelves");
+    Axios.post("http://localhost:3001/allshelves",{
+      shelfLanguage:shelfLanguage
+    }).then((res)=>{
+      setAllShelves(res.data.map((x)=>{ return [x.editions[0].details.shelfTitle, x.editions[0].details.shelfDescription,  x.shelfSubjects, x._id]}))
+    }).then( console.log("reloaded shelves"))
   },[toAdd,preventResubmitShelf])
+
+
 
   function stripLabels(a){
     const result = []
@@ -903,10 +914,9 @@ setShelfLanguage(languageSetting)
     return result
   }
 
+
   function postShelf(){
-
     Axios.post("http://localhost:3001/shelf",{
-
       shelfSubjects:stripLabels(subjects),
       shelfTitle:shelfTitle,
       shelfDescription:shelfDescription,
@@ -947,13 +957,13 @@ setShelfLanguage(languageSetting)
   return (
     <form onSubmit={(e)=>validateShelf(e)} className="SubmissionForm" id="shelfform" style={{display:formToggleOn?"block":"none"}}>
       <h5>Shelf information</h5>
-      {allShelves && allShelves.map((shelf)=><div onClick={()=>{setShelfTitle(shelf[1]); setNewShelf(false); setShelfDescription(shelf[2]);setShelfId(shelf[0])}} key={shelf[0]}
-      style={{backgroundColor:shelf[0]==shelfId?"var(--shelfpanellistpressed)":"var(--shelfpanellist)",
-      border:shelf[0]==shelfId?"1px solid var(--shelfpanellistpressedborder)":"1px solid var(--shelfpanellistborder)",
-      transform:shelf[0]==shelfId?"translateY(0.3rem)":"translateY(0px)",
-      boxShadow:shelf[0]==shelfId?"none":"var(--heavyshadow)"}}>
+      {allShelves && allShelves.map((shelf)=><div onClick={()=>{setShelfTitle(shelf[0]); setNewShelf(false); setShelfDescription(shelf[1]);setShelfId(shelf[3])}} key={shelf[3]}
+      style={{backgroundColor:shelf[3]==shelfId?"var(--shelfpanellistpressed)":"var(--shelfpanellist)",
+      border:shelf[3]==shelfId?"1px solid var(--shelfpanellistpressedborder)":"1px solid var(--shelfpanellistborder)",
+      transform:shelf[3]==shelfId?"translateY(0.3rem)":"translateY(0px)",
+      boxShadow:shelf[3]==shelfId?"none":"var(--heavyshadow)"}}>
         <div className="subtitle1">
-      {shelf[1]}
+      {shelf[0]}
         </div>
       </div>)}
       <input type="checkbox" style={{alignSelf:"center", marginRight:"1rem",width:"1.5rem",height:"1.5rem"}} id="previewFilter" onClick={()=>setNewShelf(!newShelf)} value="newShelf" checked={newShelf} disabled/>
