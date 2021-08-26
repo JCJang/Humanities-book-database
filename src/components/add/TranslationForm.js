@@ -15,30 +15,15 @@ const TranslationForm = ({toAdd, stripLabels,onSearch, languageSetting, translat
   const [isbn10, setIsbn10] =  useState('')
   const [isbn13, setIsbn13] =  useState('')
   const [bookHighlights, setBookHighlights] = useState('')
-  const [previewLanguage, setPreviewLanguage] = useState([])
   const [subjectLinks, setSubjectLinks] = useState([])//use what?
-  const [shelfLanguage, setShelfLanguage] = useState([])//use what?
-
+  const [translatingFrom, setTranslatingFrom] = useState([])
+  const [shelfTranslatingInto, setShelfTranslatingInto] = useState([])
   //manual fill
   const [bookLength, setBookLength] = useState("")
-
-  const [allShelves, setAllShelves]=useState(false)
+  const [allShelves, setAllShelves]=useState([])
   const [shelfId, setShelfId]=useState('')
   const [preventResubmitShelf, setPreventResubmitShelf] = useState(false)
 
-    const selectSubjects = [
-      { label: "Ancient and Modern Languages", value: "0 Ancient and Modern Languages"},
-      { label: "Literature", value: "1 Literature" },
-      { label: "Philosophy", value: "2 Philosophy"},
-      { label: "History and Archaeology", value: "3 History and Archaeology" },
-      { label: "Anthropology and cultural sciences", value: "4 Anthropology" },
-      { label: "Human Geography", value: "5 Human Geography" },
-      { label: "Law", value: "6 Law" },
-      { label: "Politics", value: "7 Politics" },
-      { label: "Religion", value: "8 Religion" },
-      { label: "Art", value: "9 Art" },
-      { label: "Gender Issues", value: "10 Gender Issues" },
-    ];
     const selectLanguageVersions = [
       {
           label: "English",
@@ -880,26 +865,26 @@ const TranslationForm = ({toAdd, stripLabels,onSearch, languageSetting, translat
 //shelfLanguage
   useEffect(()=>{
     Axios.post("http://localhost:3001/allshelves",{
-      shelfLanguage:shelfLanguage
+      shelfLanguage:translatingFrom[0]?stripLabels(translatingFrom)[0]:languageSetting
     }).then((res)=>{
-      setAllShelves(res.data.map((x)=>{ return [x.editions[0].details.shelfTitle, x.editions[0].details.shelfDescription,  x.shelfSubjects, x._id]}))
+      setAllShelves(res.data.map((x)=>{ return [x.editions[0].details.shelfTitle, x.editions[0].details.shelfDescription, x.shelfSubjects, x._id]}))
     }).then( console.log("reloaded shelves"))
-  },[toAdd,preventResubmitShelf])
+  },[toAdd, translatingFrom,preventResubmitShelf])
 
 
   function postShelfTranslation(){
     Axios.post("http://localhost:3001/shelftranslation",{
+      shelfId:shelfId,
+      shelfTranslatingInto:shelfTranslatingInto,
       shelfTitle:shelfTitle,
       shelfDescription:shelfDescription,
-      shelfLanguage:shelfLanguage,
     })
-    console.log("posted new shelf");
-
+    console.log("posted shelf translation");
   }
 
   function postBookTranslation(){
     Axios.put("http://localhost:3001/booktranslation",{
-      language:previewLanguage,
+      language:shelfTranslatingInto,
       googleId:id,
       bookTitle:title,
       bookAuthor:author,
@@ -924,16 +909,20 @@ const TranslationForm = ({toAdd, stripLabels,onSearch, languageSetting, translat
       {shelf[0]}
         </div>
       </div>)}
-
-
-      <label htmlFor="shelfLanguage">Translating into:</label>
-      <input className="form-control" type="text" id="shelfLanguage" value={shelfLanguage}
-       onChange={(e)=>{setShelfLanguage(e.target.value)}} placeholder="language code"/>
+      <label htmlFor="translatingFrom">Translating From:</label>
+    <MultiSelect
+    id="translatingFrom"
+      options={selectLanguageVersions}
+      value={translatingFrom}
+      onChange={setTranslatingFrom}
+      hasSelectAll={false}
+      />
+      <label htmlFor="shelfTranslatingInto">Translating into:</label>
        <MultiSelect
        id="selectLanguageVersions"
              options={selectLanguageVersions}
-             value={shelfLanguage}
-             onChange={setShelfLanguage}
+             value={shelfTranslatingInto}
+             onChange={setShelfTranslatingInto}
              hasSelectAll={false}
              />
       <label htmlFor="shelfTitle">Shelf Question:</label>
@@ -947,9 +936,6 @@ const TranslationForm = ({toAdd, stripLabels,onSearch, languageSetting, translat
       <h5>Translate Books in this shelf</h5>
 
     <div className="form-section">
-    <label htmlFor="previewLanguage">Preview Language:</label>
-    <input className="form-control" type="text" id="previewLanguage" value={previewLanguage}
-     onChange={(e)=>setPreviewLanguage(e.target.value)} placeholder="language code"/>
       <label htmlFor="title">Title:</label>
       <input className="form-control" type="text" id="title" value={title}
        onChange={(e)=>setTitle(e.target.value)} placeholder="book title"/>
@@ -976,7 +962,7 @@ const TranslationForm = ({toAdd, stripLabels,onSearch, languageSetting, translat
                  </div>
                   <input  className="btn" type="submit" style={{backgroundColor:preventResubmitShelf?"var(--inactive)":"var(--lightactionbtn)", color:preventResubmitShelf?"var(--shelfpanellistborder)":"var(--lightactionbtntext)",boxShadow:preventResubmitShelf?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateShelf(e)}} value="Submit Shelf and Book"/>
 
-      {toAdd && toAdd.volumeInfo.authors?toAdd.volumeInfo.authors.map(author=> <TranslationAuthorWiki author={author} key={author} toAdd={toAdd} stripLabels={stripLabels} translateForm={translateForm} setSubjectLinks={setSubjectLinks} previewLanguage={previewLanguage} subjectLinks={subjectLinks} formToggleOn={formToggleOn}/>):<TranslationAuthorWiki stripLabels={stripLabels} toAdd={toAdd} setSubjectLinks={setSubjectLinks} translateForm={translateForm} subjectLinks={subjectLinks} previewLanguage={previewLanguage} formToggleOn={formToggleOn}/>}
+      {toAdd && toAdd.volumeInfo.authors?toAdd.volumeInfo.authors.map(author=> <TranslationAuthorWiki author={author} key={author} toAdd={toAdd} stripLabels={stripLabels} translateForm={translateForm} setSubjectLinks={setSubjectLinks} shelfLanguage={translatingFrom}  subjectLinks={subjectLinks} formToggleOn={formToggleOn}/>):<TranslationAuthorWiki stripLabels={stripLabels} toAdd={toAdd} setSubjectLinks={setSubjectLinks} translateForm={translateForm} subjectLinks={subjectLinks} shelfLanguage={translatingFrom} formToggleOn={formToggleOn}/>}
 
 
 

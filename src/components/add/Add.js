@@ -19,7 +19,7 @@ const Add =()=>{
     const [isbnOrId, setIsbnOrId] = useState(true)
     const [formToggleOn, setFormToggleOn] = useState(false)
     const [googleScriptLoaded, setGoogleScriptLoaded] = useState(false);
-    const [languageSetting, setLanguageSetting] = useState('EN')
+    const [languageSetting, setLanguageSetting] = useState('en')
     const [translateForm, setTranslateForm] = useState(false)
 
 
@@ -205,7 +205,7 @@ setTasks([...tasks, data])
           {results && <input type="submit"  className="btn" value={translateForm?"Submit new shelf or book":"Translate existing entries"} onClick={toggleTranslateForm}/>}
           <GoogleBooksViewer bookIdentifier={bookIdentifier} formToggleOn={formToggleOn} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId}/>
 
-         {translateForm?<TranslationForm toAdd = {toAdd} translateForm={translateForm} formToggleOn={formToggleOn}  languageSetting={languageSetting} onSearch={onSearch}/>:<SubmissionForm toAdd = {toAdd} formToggleOn={formToggleOn} translateForm={translateForm} languageSetting={languageSetting} onSearch={onSearch}/>}
+         {translateForm?<TranslationForm stripLabels={stripLabels} toAdd = {toAdd} translateForm={translateForm} formToggleOn={formToggleOn}  languageSetting={languageSetting} onSearch={onSearch}/>:<SubmissionForm toAdd = {toAdd} stripLabels={stripLabels} formToggleOn={formToggleOn} translateForm={translateForm} languageSetting={languageSetting} onSearch={onSearch}/>}
 
         </div>
     </div>

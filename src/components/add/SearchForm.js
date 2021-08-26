@@ -44,14 +44,14 @@ const SearchForm = ({type,placeholder,onSearch, setLanguageSetting, languageSett
        <label htmlFor="languageSetting">search language:</label>
        <select className="form-control" id="languageSetting" value={languageSetting}
         onChange={(e)=>setLanguageSetting(e.target.value)} placeholder="toggles auto input settings">
-        <option value="EN">English</option>
-        <option value="ZH-TW">Traditional Chinese</option>
-        <option value="ZH-CN">Simplified Chinese</option>
-        <option value="AR">Arabic</option>
-        <option value="FR">French</option>
-        <option value="ES">Spanish</option>
-        <option value="JA">Japanese</option>
-        <option value="IT">Italian</option>
+        <option value="en">English</option>
+        <option value="zh-tw">Traditional Chinese</option>
+        <option value="zh-cn">Simplified Chinese</option>
+        <option value="ar">Arabic</option>
+        <option value="fr">French</option>
+        <option value="es">Spanish</option>
+        <option value="ja">Japanese</option>
+        <option value="it">Italian</option>
 
         </select>
 

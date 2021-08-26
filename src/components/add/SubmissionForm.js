@@ -16,9 +16,9 @@ const SubmissionForm = ({toAdd, stripLabels,onSearch, languageSetting, formToggl
   const [isbn13, setIsbn13] =  useState('')
   const [bookHighlights, setBookHighlights] = useState('')
   const [languageVersions, setLanguageVersions] = useState([])
-  const [previewLanguage, setPreviewLanguage] = useState('EN')
+  const [previewLanguage, setPreviewLanguage] = useState('en')
   const [subjectLinks, setSubjectLinks] = useState([])//use what?
-  const [shelfLanguage, setShelfLanguage] = useState('EN')//use what?
+  const [shelfLanguage, setShelfLanguage] = useState('en')//use what?
 
   //manual fill
   const [earliestPublicationYear, setEarliestPublicationYear] = useState(0)
@@ -903,8 +903,6 @@ setShelfLanguage(languageSetting)
       setAllShelves(res.data.map((x)=>{ return [x.editions[0].details.shelfTitle, x.editions[0].details.shelfDescription,  x.shelfSubjects, x._id]}))
     }).then( console.log("reloaded shelves"))
   },[toAdd,preventResubmitShelf])
-
-
 
 
 
