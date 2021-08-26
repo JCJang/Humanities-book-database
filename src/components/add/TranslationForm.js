@@ -8,6 +8,10 @@ const TranslationForm = ({toAdd, stripLabels,onSearch, languageSetting, translat
 
   const [shelfTitle, setShelfTitle] = useState('')
   const [shelfDescription, setShelfDescription] = useState('')
+
+  const [shelfTitleDisplay, setShelfTitleDisplay] = useState('')
+  const [shelfDescriptionDisplay, setShelfDescriptionDisplay] = useState('')
+
   const [id, setId] =  useState('')
   const [title, setTitle] =  useState('')
   const [author, setAuthor] =  useState([])
@@ -961,7 +965,7 @@ setBookTranslatingFrom([addLabel[0]])
   return (
     <form  id="TranslationFormShelf" style={{display:formToggleOn?"block":"none"}}>
       <h5>Translate Shelf:</h5>
-      {allShelves && allShelves.map((shelf)=><div onClick={()=>{setShelfTitle(shelf[0]); setShelfDescription(shelf[1]);setShelfId(shelf[3])}} key={shelf[3]}
+      {allShelves && allShelves.map((shelf)=><div onClick={()=>{setShelfTitleDisplay(shelf[0]); setShelfDescriptionDisplay(shelf[1]);setShelfId(shelf[3])}} key={shelf[3]}
       style={{backgroundColor:shelf[3]==shelfId?"var(--shelfpanellistpressed)":"var(--shelfpanellist)",
       border:shelf[3]==shelfId?"1px solid var(--shelfpanellistpressedborder)":"1px solid var(--shelfpanellistborder)",
       transform:shelf[3]==shelfId?"translateY(0.3rem)":"translateY(0px)",
@@ -970,7 +974,11 @@ setBookTranslatingFrom([addLabel[0]])
       {shelf[0]}
         </div>
       </div>)}
+      <div className="translation-section translation-header">
+
       <label htmlFor="shelfTranslatingFrom">Translating From:</label>
+
+      <label htmlFor="shelfTranslatingInto">Translating into:</label>
     <MultiSelect
     id="shelfTranslatingFrom"
       options={selectLanguageVersions}
@@ -978,7 +986,6 @@ setBookTranslatingFrom([addLabel[0]])
       onChange={setShelfTranslatingFrom}
       hasSelectAll={false}
       />
-      <label htmlFor="shelfTranslatingInto">Translating into:</label>
        <MultiSelect
        id="selectLanguageVersions"
              options={selectLanguageVersions}
@@ -986,18 +993,26 @@ setBookTranslatingFrom([addLabel[0]])
              onChange={setShelfTranslatingInto}
              hasSelectAll={false}
              />
+             </div>
       <label htmlFor="shelfTitle">Shelf Question:</label>
-      <input className="form-control" type="text" id="shelfTitle" value={shelfTitle}
-       onChange={(e)=>{setShelfTitle(e.target.value);}} placeholder="question form"/>
+      <div className="translation-section">
+     {shelfTitleDisplay}  <input className="form-control" type="text" id="shelfTitle" value={shelfTitle}  onChange={(e)=>{setShelfTitle(e.target.value);}} placeholder="question form"/>
+      </div>
+
        <label htmlFor="shelfDescription">Shelf Description:</label>
-       <input className="form-control" type="text" id="shelfDescription" value={shelfDescription}
+       <div className="translation-section">
+       {shelfDescriptionDisplay}<input className="form-control" type="text" id="shelfDescription" value={shelfDescription}
         onChange={(e)=>setShelfDescription(e.target.value)} placeholder="one or two short paragraphs"/>
+        </div>
 
         <input  className="btn" type="submit" style={{backgroundColor:preventResubmitShelf?"var(--inactive)":"var(--lightactionbtn)", color:preventResubmitShelf?"var(--shelfpanellistborder)":"var(--lightactionbtntext)",boxShadow:preventResubmitShelf?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateShelfTranslation(e)}} value="Submit Shelf Translation"/>
 
 
       <h5>Translate Books in this shelf</h5>
+      <div className="translation-section translation-header">
+
       <label htmlFor="bookTranslatingFrom">Translating From:</label>
+      <label htmlFor="bookTranslatingInto">Translating into:</label>
     <MultiSelect
     id="bookTranslatingFrom"
       options={selectLanguageVersions}
@@ -1005,7 +1020,6 @@ setBookTranslatingFrom([addLabel[0]])
       onChange={setBookTranslatingFrom}
       hasSelectAll={false}
       />
-      <label htmlFor="bookTranslatingInto">Translating into:</label>
        <MultiSelect
        id="bookTranslatingInto"
              options={selectLanguageVersions}
@@ -1013,7 +1027,9 @@ setBookTranslatingFrom([addLabel[0]])
              onChange={setBookTranslatingInto}
              hasSelectAll={false}
              />
-    <div className="form-section">
+             </div>
+
+    <div className="translation-section">
       <label htmlFor="title">Title:</label>
       <input className="form-control" type="text" id="title" value={title}
        onChange={(e)=>setTitle(e.target.value)} placeholder="book title"/>
@@ -1022,8 +1038,7 @@ setBookTranslatingFrom([addLabel[0]])
         onChange={(e)=>setAuthor(e.target.value)} placeholder="book author(s). Should match wikipedia page title. Separate with commas"/>
 
     </div>
-           <div className="form-section">
-
+           <div className="translation-section">
                <label htmlFor="isbn10">Isbn-10:</label>
                <input className="form-control" type="text" id="isbn10" value={isbn10}
                 onChange={(e)=>setIsbn10(e.target.value)} placeholder="isbn-10" />

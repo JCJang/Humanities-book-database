@@ -240,6 +240,17 @@ grid-template-rows:auto;
   grid-template-columns: 30% 70%;
   grid-row-gap:0.5em;
 }
+.translation-section{
+  display:grid;
+  grid-template-rows:auto;
+  grid-template-columns: 50% 50%;
+  grid-row-gap:1rem;
+  grid-column-gap:1rem;
+}
+.translation-header{
+  padding:3rem;
+  background-color: var(--nav);
+}
 
 input{
   height: 2rem;

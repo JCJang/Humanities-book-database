@@ -38,11 +38,14 @@ const [newAuthorInfluenced, setNewAuthorInfluenced]=useState([])
 const [newAuthorInfluences, setNewAuthorInfluences]=useState([])
 //get data
 useEffect(()=>{
+  if(!translatingInto){return}
   fetchAuthorWikiData(author)
-}, [author])
+}, [author, translatingInto])
 
 useEffect(()=>{
   setTranslatingFrom(shelfLanguage)
+  setTranslatingInto(shelfLanguage)
+
 }, [])
 
 useEffect(()=>{
@@ -51,15 +54,11 @@ setPreventResubmitAuthor(false)
 
 
 useEffect(()=>{
-  let temp = ""
-  if(translatingInto[0]){
-  temp =translatingInto[0].slice(0,2)
-  }
   Axios.post("http://localhost:3001/allauthors",{
-    translatingFrom:translatingFrom[0],
-    translatingInto:temp
+    translatingFrom:translatingFrom[0]?stripLabels(translatingFrom)[0]:stripLabels(shelfLanguage)[0],
+    translatingInto:translatingInto[0]?stripLabels(translatingInto)[0]:stripLabels(shelfLanguage)[0]
   }).then((res)=>{
-    setAllAuthors(res.data.map((x)=>{ return [ x.authorWikiLanglinks[0].title, x.Influenced, x.Influences, x._id]}))
+    console.log(res.data)
   }).then( console.log("reloaded shelves"))
 },[toAdd,translatingFrom, translatingInto, preventResubmitAuthor])
 
@@ -892,9 +891,10 @@ const validateAuthor = (e)=>{
       return;
     }
 }
-const fetchAuthorWikiData = (author) => {
-  const code = translatingInto.slice(0, 2);
-  console.log(code)
+const fetchAuthorWikiData = async(author) => {
+  let code= await stripLabels(translatingInto)[0]
+if(code.length>2){code=code.slice(0,2)}
+
   wiki({
       apiUrl: `https://${code}.wikipedia.org/w/api.php`
     })
@@ -923,8 +923,9 @@ const togglePreviewAuthorWiki= (e)=>{
   return (
 
     <form onSubmit={(e)=>{validateAuthor(e)}} className="SubmissionForm" id={`${author}form`} style={{display:formToggleOn?"block":"none"}}>
-    <div style={{display:"flex"}}>
+    <div className="translation-section translation-header">
     <label htmlFor="setTranslatingFrom">Translating From:</label>
+    <label htmlFor="setTranslatingInto">Translating Into:</label>
 <MultiSelect
 id="translatingFrom"
     options={selectLanguageVersions}
@@ -932,7 +933,6 @@ id="translatingFrom"
     onChange={setTranslatingFrom}
     hasSelectAll={false}
     />
-    <label htmlFor="setTranslatingInto">Translating Into:</label>
 <MultiSelect
 id="translatingInto"
     options={selectLanguageVersions}
@@ -940,6 +940,7 @@ id="translatingInto"
     onChange={setTranslatingInto}
     hasSelectAll={false}
     />
+    </div>
     {allAuthors && allAuthors.map((author)=><div onClick={()=>{setAuthorWikiTitle(author[0]);  setAuthorInfluenced(author[1]);setAuthorInfluences(author[2]);setAuthorId(author[3])}} key={author[3]}
     style={{backgroundColor:author[3]==authorId?"var(--shelfpanellistpressed)":"var(--shelfpanellist)",
     border:author[3]==authorId?"1px solid var(--shelfpanellistpressedborder)":"1px solid var(--shelfpanellistborder)",
@@ -953,16 +954,15 @@ id="translatingInto"
 
       <h5>{author} information (partial-fill; corrections needed)</h5>
     <input type="submit" className="btn" value={previewAuthorWiki?"Back to Form":"Preview Author Details"} onClick={togglePreviewAuthorWiki}/>
-    </div>
 
-    <div className="form-section" style={{display:previewAuthorWiki?"none":"grid"}}>
+    <div className="translation-section" style={{display:previewAuthorWiki?"none":"grid"}}>
     <label htmlFor='authorWikiTitle'>Author name:</label>
     <input className="form-control" type="text"  onChange={(e)=>setAuthorWikiTitle(e.target.value)} value={authorWikiTitle} placeholder="author name"/>
             <label htmlFor="timelineLinks">Wikipedia timeline pages:</label>
         <textarea className="form-control" rows={4} form={`${author}form`}  id="timelineLinks" value={timelineLinks}
          onChange={(e)=>setTimelineLinks([e.target.value])} placeholder="separate by comma"/>
          </div>
-    <div className="form-section" style={{display:previewAuthorWiki?"none":"grid"}}>
+    <div className="translation-section" style={{display:previewAuthorWiki?"none":"grid"}}>
 
 
     <label htmlFor="authorBgKeywords">Author Background Keywords</label>

@@ -1118,9 +1118,9 @@ const validateAuthor = (e)=>{
     onChange={(e)=>setAuthorAgeAtPublication(e.target.value)} placeholder={`publication - ${authorBirthDate}`}/>
 */
 
-  const fetchAuthorWikiData = (author) => {
-    const code=stripLabels(previewLanguage).slice(0,2);
-    console.log(code)
+  const fetchAuthorWikiData = async(author) => {
+    let code= await stripLabels(previewLanguage)[0]
+    code = await code.slice(0,2)
   wiki({ apiUrl: `https://${code}.wikipedia.org/w/api.php` })
   	.page(author)
   	.then(page =>
