@@ -1,10 +1,10 @@
 import {useEffect, useState} from 'react';
-import NewAuthorWiki from './NewAuthorWiki'
+import TranslationAuthorWiki from './TranslationAuthorWiki'
 import Axios from 'axios'
 import MultiSelect from "react-multi-select-component";
 
 
-const SubmissionForm = ({toAdd, stripLabels,onSearch, languageSetting, formToggleOn }) => {
+const TranslationForm = ({toAdd, stripLabels,onSearch, languageSetting, translateForm, formToggleOn }) => {
 
   const [shelfTitle, setShelfTitle] = useState('')
   const [shelfDescription, setShelfDescription] = useState('')
@@ -15,16 +15,13 @@ const SubmissionForm = ({toAdd, stripLabels,onSearch, languageSetting, formToggl
   const [isbn10, setIsbn10] =  useState('')
   const [isbn13, setIsbn13] =  useState('')
   const [bookHighlights, setBookHighlights] = useState('')
-  const [languageVersions, setLanguageVersions] = useState([])
-  const [previewLanguage, setPreviewLanguage] = useState('EN')
+  const [previewLanguage, setPreviewLanguage] = useState([])
   const [subjectLinks, setSubjectLinks] = useState([])//use what?
-  const [shelfLanguage, setShelfLanguage] = useState('EN')//use what?
+  const [shelfLanguage, setShelfLanguage] = useState([])//use what?
 
   //manual fill
-  const [earliestPublicationYear, setEarliestPublicationYear] = useState(0)
   const [bookLength, setBookLength] = useState("")
 
-  const[newShelf,setNewShelf] = useState(true)
   const [allShelves, setAllShelves]=useState(false)
   const [shelfId, setShelfId]=useState('')
   const [preventResubmitShelf, setPreventResubmitShelf] = useState(false)
@@ -848,7 +845,7 @@ const SubmissionForm = ({toAdd, stripLabels,onSearch, languageSetting, formToggl
       return;
     }
     if(preventResubmitShelf==false){
-    newShelf?postShelf():addToShelf()
+    postShelfTranslation()
     setPreventResubmitShelf(true)
   }else{
     return;
@@ -858,21 +855,6 @@ const SubmissionForm = ({toAdd, stripLabels,onSearch, languageSetting, formToggl
   useEffect(()=>{
   setPreventResubmitShelf(false)
 }, [shelfTitle,toAdd])
-
-
-  useEffect(()=>{
-    if(allShelves){
-    allShelves.forEach((x)=>{if(x[0].toLowerCase()===shelfTitle.toLowerCase()){
-      setNewShelf(false); setShelfId(x[3])}})
-    }
-}, [shelfTitle])
-
-
-  useEffect(()=>{
- setPreviewLanguage(languageSetting)
-setShelfLanguage(languageSetting)
-}, [languageSetting])
-
 
 //set book data with toAdd
   useEffect(()=>{
@@ -905,35 +887,18 @@ setShelfLanguage(languageSetting)
   },[toAdd,preventResubmitShelf])
 
 
-
-
-
-  function postShelf(){
-    Axios.post("http://localhost:3001/shelf",{
-      shelfSubjects:stripLabels(subjects),
+  function postShelfTranslation(){
+    Axios.post("http://localhost:3001/shelftranslation",{
       shelfTitle:shelfTitle,
       shelfDescription:shelfDescription,
-      googleId:id,
-      bookTitle:title,
-      bookAuthor:author,
-      isbn10:isbn10,
-      isbn13:isbn13,
-      bookHighlights:bookHighlights,
-      earliestPublicationYear:earliestPublicationYear,
-      bookLength:bookLength,
-      languageVersions:stripLabels(languageVersions),
       shelfLanguage:shelfLanguage,
-      previewLanguage:previewLanguage,
-      previewStatus:toAdd.accessInfo.viewability,
-      subjectLinks:subjectLinks
     })
     console.log("posted new shelf");
 
   }
 
-
-  function addToShelf(){
-    Axios.put("http://localhost:3001/addbooktoshelf",{
+  function postBookTranslation(){
+    Axios.put("http://localhost:3001/booktranslation",{
       language:previewLanguage,
       googleId:id,
       bookTitle:title,
@@ -948,9 +913,9 @@ setShelfLanguage(languageSetting)
   }
 
   return (
-    <form onSubmit={(e)=>validateShelf(e)} className="SubmissionForm" id="shelfform" style={{display:formToggleOn?"block":"none"}}>
-      <h5>New Shelf and/or Book</h5>
-      {allShelves && allShelves.map((shelf)=><div onClick={()=>{setShelfTitle(shelf[0]); setNewShelf(false); setShelfDescription(shelf[1]);setShelfId(shelf[3])}} key={shelf[3]}
+    <form onSubmit={(e)=>validateShelf(e)} className="TranslationForm" id="translateshelfform" style={{display:formToggleOn?"block":"none"}}>
+      <h5>Translate Shelf:</h5>
+      {allShelves && allShelves.map((shelf)=><div onClick={()=>{setShelfTitle(shelf[0]); setShelfDescription(shelf[1]);setShelfId(shelf[3])}} key={shelf[3]}
       style={{backgroundColor:shelf[3]==shelfId?"var(--shelfpanellistpressed)":"var(--shelfpanellist)",
       border:shelf[3]==shelfId?"1px solid var(--shelfpanellistpressedborder)":"1px solid var(--shelfpanellistborder)",
       transform:shelf[3]==shelfId?"translateY(0.3rem)":"translateY(0px)",
@@ -959,29 +924,27 @@ setShelfLanguage(languageSetting)
       {shelf[0]}
         </div>
       </div>)}
-      <input type="checkbox" style={{alignSelf:"center", marginRight:"1rem",width:"1.5rem",height:"1.5rem"}} id="previewFilter" onClick={()=>setNewShelf(!newShelf)} value="newShelf" checked={newShelf} disabled/>
-      <label htmlFor="newShelf" className="subtitle1">Create a new shelf</label>
-      <div className="form-section">
 
-      <label htmlFor="shelfLanguage">Shelf Language:</label>
+
+      <label htmlFor="shelfLanguage">Translating into:</label>
       <input className="form-control" type="text" id="shelfLanguage" value={shelfLanguage}
        onChange={(e)=>{setShelfLanguage(e.target.value)}} placeholder="language code"/>
+       <MultiSelect
+       id="selectLanguageVersions"
+             options={selectLanguageVersions}
+             value={shelfLanguage}
+             onChange={setShelfLanguage}
+             hasSelectAll={false}
+             />
       <label htmlFor="shelfTitle">Shelf Question:</label>
       <input className="form-control" type="text" id="shelfTitle" value={shelfTitle}
-       onChange={(e)=>{setShelfTitle(e.target.value); setNewShelf(true)}} placeholder="question form"/>
+       onChange={(e)=>{setShelfTitle(e.target.value);}} placeholder="question form"/>
        <label htmlFor="shelfDescription">Shelf Description:</label>
        <input className="form-control" type="text" id="shelfDescription" value={shelfDescription}
         onChange={(e)=>setShelfDescription(e.target.value)} placeholder="one or two short paragraphs"/>
-        <label htmlFor="selectSubjects">Select Covered Subjects:</label>
-  <MultiSelect
-  id="selectSubjects"
-        options={selectSubjects}
-        value={subjects}
-        onChange={setSubjects}
-        hasSelectAll={false}
-        />
-        </div>
-      <h5>Book information (partial-fill; corrections needed)</h5>
+
+
+      <h5>Translate Books in this shelf</h5>
 
     <div className="form-section">
     <label htmlFor="previewLanguage">Preview Language:</label>
@@ -993,9 +956,6 @@ setShelfLanguage(languageSetting)
        <label htmlFor="author">Author(s):</label>
        <textarea className="form-control"  id="author" form="SubmissionForm" rows={4} value={author}
         onChange={(e)=>setAuthor(e.target.value)} placeholder="book author(s). Should match wikipedia page title. Separate with commas"/>
-        <label htmlFor="earliestPublicationYear">Publication Date</label>
-        <input className="form-control" type="number" id="earliestPublicationYear" value={earliestPublicationYear}
-         onChange={(e)=>setEarliestPublicationYear(e.target.value)} placeholder="earliest publication year"/>
 
     </div>
            <div className="form-section readOnly">
@@ -1013,20 +973,10 @@ setShelfLanguage(languageSetting)
                    <label htmlFor="bookHighlights">highlights</label>
                    <textarea className="form-control" type="text" id="bookHighlights" value={bookHighlights}
                     onChange={(e)=>setBookHighlights(e.target.value)} placeholder="one or two paragraphs from the book"/>
-                      <label htmlFor="selectLanguageVersions">Select Language Versions:</label>
-                <MultiSelect
-                id="selectLanguageVersions"
-                      options={selectLanguageVersions}
-                      value={languageVersions}
-                      onChange={setLanguageVersions}
-                      hasSelectAll={false}
-                      />
-
-
                  </div>
                   <input  className="btn" type="submit" style={{backgroundColor:preventResubmitShelf?"var(--inactive)":"var(--lightactionbtn)", color:preventResubmitShelf?"var(--shelfpanellistborder)":"var(--lightactionbtntext)",boxShadow:preventResubmitShelf?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateShelf(e)}} value="Submit Shelf and Book"/>
 
-      {toAdd && toAdd.volumeInfo.authors?toAdd.volumeInfo.authors.map(author=> <NewAuthorWiki author={author} key={author} toAdd={toAdd} stripLabels={stripLabels} setSubjectLinks={setSubjectLinks} previewLanguage={previewLanguage} subjectLinks={subjectLinks} formToggleOn={formToggleOn}/>):<NewAuthorWiki stripLabels={stripLabels} toAdd={toAdd} setSubjectLinks={setSubjectLinks} subjectLinks={subjectLinks} previewLanguage={previewLanguage} formToggleOn={formToggleOn}/>}
+      {toAdd && toAdd.volumeInfo.authors?toAdd.volumeInfo.authors.map(author=> <TranslationAuthorWiki author={author} key={author} toAdd={toAdd} stripLabels={stripLabels} translateForm={translateForm} setSubjectLinks={setSubjectLinks} previewLanguage={previewLanguage} subjectLinks={subjectLinks} formToggleOn={formToggleOn}/>):<TranslationAuthorWiki stripLabels={stripLabels} toAdd={toAdd} setSubjectLinks={setSubjectLinks} translateForm={translateForm} subjectLinks={subjectLinks} previewLanguage={previewLanguage} formToggleOn={formToggleOn}/>}
 
 
 
@@ -1036,4 +986,4 @@ setShelfLanguage(languageSetting)
 
 }
 
-export default SubmissionForm
+export default TranslationForm

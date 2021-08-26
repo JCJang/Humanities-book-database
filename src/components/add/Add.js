@@ -4,6 +4,8 @@ import Links from '../nav/Links'
 import Query from './Query'
 import SearchForm from './SearchForm'
 import SubmissionForm from './SubmissionForm'
+import TranslationForm from './TranslationForm'
+
 import GoogleBooksViewer from './GoogleBooksViewer'
 import {Route, BrowserRouter as Router} from 'react-router-dom'
 
@@ -18,11 +20,25 @@ const Add =()=>{
     const [formToggleOn, setFormToggleOn] = useState(false)
     const [googleScriptLoaded, setGoogleScriptLoaded] = useState(false);
     const [languageSetting, setLanguageSetting] = useState('EN')
+    const [translateForm, setTranslateForm] = useState(false)
 
 
      const toggleForm = (e) =>{
        e.preventDefault()
        setFormToggleOn(!formToggleOn)
+     }
+     const toggleTranslateForm= (e) =>{
+       e.preventDefault()
+       setTranslateForm(!translateForm)
+     }
+
+
+     function stripLabels(a){
+       const result = []
+       a.map((a)=>{
+         result.push(a.value)
+       })
+       return result
      }
 
          // Was able to fix first load bug by setting google script load not within the useEffect, but as part of a component.
@@ -186,8 +202,11 @@ setTasks([...tasks, data])
 
         <div className="subcontainer right-block" style={{display:results?"":"none"}}>
           {results && <input type="submit"  className="btn" value={formToggleOn?"Preview Book":"Show Submission Form"} onClick={toggleForm}/>}
+          {results && <input type="submit"  className="btn" value={translateForm?"Submit new shelf or book":"Translate existing entries"} onClick={toggleTranslateForm}/>}
           <GoogleBooksViewer bookIdentifier={bookIdentifier} formToggleOn={formToggleOn} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId}/>
-         <SubmissionForm toAdd = {toAdd} formToggleOn={formToggleOn}  languageSetting={languageSetting} onSearch={onSearch}/>
+
+         {translateForm?<TranslationForm toAdd = {toAdd} translateForm={translateForm} formToggleOn={formToggleOn}  languageSetting={languageSetting} onSearch={onSearch}/>:<SubmissionForm toAdd = {toAdd} formToggleOn={formToggleOn} translateForm={translateForm} languageSetting={languageSetting} onSearch={onSearch}/>}
+
         </div>
     </div>
   </div>

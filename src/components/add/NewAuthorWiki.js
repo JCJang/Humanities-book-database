@@ -5,7 +5,7 @@ import Axios from 'axios'
 import MultiSelect from "react-multi-select-component";
 
 
-const WikiTest = ({author, toAdd, stripLabels, previewLanguage, subjectLinks, formToggleOn, setSubjectLinks}) => {
+const NewAuthorWiki = ({translation, author, toAdd, stripLabels, previewLanguage, subjectLinks, formToggleOn, setSubjectLinks}) => {
 
   const [preventResubmitAuthor, setPreventResubmitAuthor] = useState(false)
 
@@ -1219,7 +1219,7 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
 
     <form onSubmit={(e)=>{validateAuthor(e)}} className="SubmissionForm" id={`${author}form`} style={{display:formToggleOn?"block":"none"}}>
     <div style={{display:"flex"}}>
-      <h5>{author} information (partial-fill; corrections needed)</h5>
+      <h5>Translate {author} information</h5>
     <input type="submit" className="btn" value={previewAuthorWiki?"Back to Form":"Preview Author Details"} onClick={togglePreviewAuthorWiki}/>
     </div>
     {previewAuthorWiki && (<div><h4>{authorWikiTitle}</h4>
@@ -1241,11 +1241,9 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
              hasSelectAll={false}
            />
 
-
-        <label htmlFor="authorBirthDate">Author Birth Date</label>
+      <label htmlFor="authorBirthDate">Author Birth Date</label>
         <input className="form-control" type="text" id="authorBirthDate" value={authorBirthDate}
         onChange={(e)=>setAuthorBirthDate(e.target.value)} placeholder="Author Birth Date"/>
-
 
         <label htmlFor="authorDeathDate">Author Death Date</label>
         <input className="form-control" type="text" id="authorDeathDate" value={authorDeathDate}
@@ -1269,7 +1267,6 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
        <label htmlFor="authorInfluences">Influences</label>
        <textarea className="form-control" rows={4}  form={`${author}form`}    id="authorInfluences" value={authorInfluences}
        onChange={(e)=>setAuthorInfluences([e.target.value])} placeholder={`${author} was influenced by these people`} />
-
 
        <label htmlFor="authorInfluenced">authorInfluenced</label>
        <textarea className="form-control" rows={4}  form={`${author}form`}  id="authorInfluenced" value={authorInfluenced}
@@ -1315,4 +1312,4 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
   )
 }
 
-export default WikiTest
+export default NewAuthorWiki
