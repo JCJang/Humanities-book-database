@@ -23,7 +23,6 @@ const SearchForm = ({type,placeholder,onSearch, setLanguageSetting, languageSett
     const titleStr = querify(title);
     const authorStr = querify(author);
     console.log(titleStr,authorStr);
-
     onSearch(titleStr,authorStr,isbn,previewFilter)
   }
   return (
@@ -59,7 +58,7 @@ const SearchForm = ({type,placeholder,onSearch, setLanguageSetting, languageSett
     <div style={{display:"flex"}}>
     <input type="checkbox" style={{alignSelf:"center", marginRight:"1rem",width:"1.5rem",height:"1.5rem"}} form="SearchForm" id="previewFilter" onClick={()=>setPreviewFilter(!previewFilter)} value="previewFilter" checked={previewFilter}/>
     <label htmlFor="previewFilter" className="subtitle1">only display results with preview available</label>
-    <input type="submit" form="SearchForm" className="btn" value="Search"/>
+    <input type="submit" form="SearchForm" className="btn lightbtn" value="Search"/>
     </div>
 
     </div>

@@ -1120,7 +1120,7 @@ const validateAuthor = (e)=>{
 
   const fetchAuthorWikiData = async(author) => {
     let code= await stripLabels(previewLanguage)[0]
-    code = await code.slice(0,2)
+    if(code){if(code.length>2){code=code.slice(0,2)}}
   wiki({ apiUrl: `https://${code}.wikipedia.org/w/api.php` })
   	.page(author)
   	.then(page =>
@@ -1220,7 +1220,7 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
     <form onSubmit={(e)=>{validateAuthor(e)}} className="SubmissionForm" id={`${author}form`} style={{display:formToggleOn?"block":"none"}}>
     <div style={{display:"flex"}}>
       <h5>Translate {author} information</h5>
-    <input type="submit" className="btn" value={previewAuthorWiki?"Back to Form":"Preview Author Details"} onClick={togglePreviewAuthorWiki}/>
+    <input type="submit" className="btn lightbtn" value={previewAuthorWiki?"Back to Form":"Preview Author Details"} onClick={togglePreviewAuthorWiki}/>
     </div>
     {previewAuthorWiki && (<div><h4>{authorWikiTitle}</h4>
       <div id="authorWikiImageHolder"><img src={authorWikiImage}></img></div>
@@ -1302,7 +1302,7 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
     onChange={(e)=>setAuthorWikiImage(e.target.value)} placeholder="author image url" readOnly="readOnly"/>
 
 
-    <input  className="btn" type="submit" style={{backgroundColor:preventResubmitAuthor?"var(--inactive)":"var(--lightactionbtn)", color:preventResubmitAuthor?"var(--shelfpanellistborder)":"var(--lightactionbtntext)",boxShadow:preventResubmitAuthor?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateAuthor(e)}} value="Submit this Author"/>
+    <input  className="btn lightbtn" type="submit" style={{backgroundColor:preventResubmitAuthor?"var(--inactive)":"var(--lightactionbtn)", color:preventResubmitAuthor?"var(--shelfpanellistborder)":"var(--lightactionbtntext)",boxShadow:preventResubmitAuthor?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateAuthor(e)}} value="Submit this Author"/>
 
 
     </div>

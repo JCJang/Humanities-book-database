@@ -10,7 +10,6 @@ import GoogleBooksViewer from './GoogleBooksViewer'
 import {Route, BrowserRouter as Router} from 'react-router-dom'
 
 
-
 const Add =()=>{
   const [showAddTask, setShowAddTask]=useState(false)
   const [results, setResults] = useState(false)
@@ -200,9 +199,10 @@ setTasks([...tasks, data])
 
         </div>
 
-        <div className="subcontainer right-block" style={{display:results?"":"none"}}>
-          {results && <input type="submit"  className="btn" value={formToggleOn?"Preview Book":"Show Submission Form"} onClick={toggleForm}/>}
-          {results && <input type="submit"  className="btn" value={translateForm?"Submit new shelf or book":"Translate existing entries"} onClick={toggleTranslateForm}/>}
+        <div className="subcontainer right-block" style={{display:results?"":"none", backgroundColor:formToggleOn?"var(--shelfpanel)":"var(--detailspanel)",color:formToggleOn?"var(--shelfpaneltext)":"var(--detailspaneltext)",
+        border:formToggleOn?"none":"1.5px solid var(--detailspaneltext)"}}>
+          {results && <input type="submit"  className={formToggleOn?"btn lightbtn":"btn darkbtn"} value={formToggleOn?"Preview Book":"Show Submission Form"} onClick={toggleForm}/>}
+          {formToggleOn && <input type="submit"  className="btn lightbtn" value={translateForm?"Submit new shelf or book":"Translate existing entries"} onClick={toggleTranslateForm}/>}
           <GoogleBooksViewer bookIdentifier={bookIdentifier} formToggleOn={formToggleOn} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId}/>
 
          {translateForm?<TranslationForm stripLabels={stripLabels} toAdd = {toAdd} translateForm={translateForm} formToggleOn={formToggleOn}  languageSetting={languageSetting} onSearch={onSearch}/>:<SubmissionForm toAdd = {toAdd} stripLabels={stripLabels} formToggleOn={formToggleOn} translateForm={translateForm} languageSetting={languageSetting} onSearch={onSearch}/>}

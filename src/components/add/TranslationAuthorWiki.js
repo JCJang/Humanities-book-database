@@ -893,7 +893,7 @@ const validateAuthor = (e)=>{
 }
 const fetchAuthorWikiData = async(author) => {
   let code= await stripLabels(translatingInto)[0]
-if(code.length>2){code=code.slice(0,2)}
+if(code){if(code.length>2){code=code.slice(0,2)}}
 
   wiki({
       apiUrl: `https://${code}.wikipedia.org/w/api.php`
@@ -953,7 +953,7 @@ id="translatingInto"
 
 
       <h5>{author} information (partial-fill; corrections needed)</h5>
-    <input type="submit" className="btn" value={previewAuthorWiki?"Back to Form":"Preview Author Details"} onClick={togglePreviewAuthorWiki}/>
+    <input type="submit" className="btn lightbtn" value={previewAuthorWiki?"Back to Form":"Preview Author Details"} onClick={togglePreviewAuthorWiki}/>
 
     <div className="translation-section" style={{display:previewAuthorWiki?"none":"grid"}}>
     <label htmlFor='authorWikiTitle'>Author name:</label>
@@ -981,7 +981,7 @@ id="translatingInto"
     <textarea className="form-control" rows={4} form={`${author}form`}   id="authorWikiCategory" value={authorWikiCategory}
     onChange={(e)=>setAuthorWikiCategory(e.target.value)} placeholder="author categories" />
 
-    <input  className="btn" type="submit" style={{backgroundColor:preventResubmitAuthor?"var(--inactive)":"var(--lightactionbtn)", color:preventResubmitAuthor?"var(--shelfpanellistborder)":"var(--lightactionbtntext)",boxShadow:preventResubmitAuthor?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateAuthor(e)}} value="Submit this Author"/>
+    <input  className="btn lightbtn" type="submit" style={{backgroundColor:preventResubmitAuthor?"var(--inactive)":"var(--lightactionbtn)", color:preventResubmitAuthor?"var(--shelfpanellistborder)":"var(--lightactionbtntext)",boxShadow:preventResubmitAuthor?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateAuthor(e)}} value="Submit this Author"/>
 
     </div>
     </form>
