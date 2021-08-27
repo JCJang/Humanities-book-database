@@ -141,6 +141,18 @@ letter-spacing: 0.375rem;}
   letter-spacing: 0.025rem;
 }
 
+.TranslateShelf{
+background-color: var(--shelfpanel);
+
+}
+
+.TranslateBook{
+  background-color: var(--detailspanel);
+}
+.TranslateAuthor{
+  background-color: var(--authorpanel,black);
+}
+
 
 .container {
   width: 100%;
@@ -256,9 +268,10 @@ grid-template-rows:auto;
   grid-template-columns: 50% 50%;
   grid-row-gap:1rem;
   grid-column-gap:1rem;
+  padding:3rem;
+
 }
 .translation-header{
-  padding:3rem;
   background-color: var(--nav);
 }
 

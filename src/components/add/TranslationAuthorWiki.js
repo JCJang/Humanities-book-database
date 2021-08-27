@@ -923,6 +923,8 @@ const togglePreviewAuthorWiki= (e)=>{
   return (
 
     <form onSubmit={(e)=>{validateAuthor(e)}} className="SubmissionForm" id={`${author}form`} style={{display:formToggleOn?"block":"none"}}>
+    <h5>{author} information (corrections needed)</h5>
+    <div className="TranslateAuthor">
     <div className="translation-section translation-header">
     <label htmlFor="setTranslatingFrom">Translating From:</label>
     <label htmlFor="setTranslatingInto">Translating Into:</label>
@@ -952,7 +954,6 @@ id="translatingInto"
     </div>)}
 
 
-      <h5>{author} information (partial-fill; corrections needed)</h5>
     <input type="submit" className="btn lightbtn" value={previewAuthorWiki?"Back to Form":"Preview Author Details"} onClick={togglePreviewAuthorWiki}/>
 
     <div className="translation-section" style={{display:previewAuthorWiki?"none":"grid"}}>
@@ -983,6 +984,7 @@ id="translatingInto"
 
     <input  className="btn lightbtn" type="submit" style={{backgroundColor:preventResubmitAuthor?"var(--inactive)":"var(--lightactionbtn)", color:preventResubmitAuthor?"var(--shelfpanellistborder)":"var(--lightactionbtntext)",boxShadow:preventResubmitAuthor?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateAuthor(e)}} value="Submit this Author"/>
 
+    </div>
     </div>
     </form>
 

@@ -964,7 +964,29 @@ setBookTranslatingFrom([addLabel[0]])
 
   return (
     <form  id="TranslationFormShelf" style={{display:formToggleOn?"block":"none"}}>
-      <h5>Translate Shelf:</h5>
+    <h5>Translate Shelf:</h5>
+
+    <div className="TranslateShelf">
+      <div className="translation-section translation-header">
+
+            <label htmlFor="shelfTranslatingFrom">Translating From:</label>
+
+            <label htmlFor="shelfTranslatingInto">Translating into:</label>
+          <MultiSelect
+          id="shelfTranslatingFrom"
+            options={selectLanguageVersions}
+            value={shelfTranslatingFrom}
+            onChange={setShelfTranslatingFrom}
+            hasSelectAll={false}
+            />
+             <MultiSelect
+             id="selectLanguageVersions"
+                   options={selectLanguageVersions}
+                   value={shelfTranslatingInto}
+                   onChange={setShelfTranslatingInto}
+                   hasSelectAll={false}
+                   />
+            </div>
       {allShelves && allShelves.map((shelf)=><div onClick={()=>{setShelfTitleDisplay(shelf[0]); setShelfDescriptionDisplay(shelf[1]);setShelfId(shelf[3])}} key={shelf[3]}
       style={{backgroundColor:shelf[3]==shelfId?"var(--shelfpanellistpressed)":"var(--shelfpanellist)",
       border:shelf[3]==shelfId?"1px solid var(--shelfpanellistpressedborder)":"1px solid var(--shelfpanellistborder)",
@@ -974,26 +996,8 @@ setBookTranslatingFrom([addLabel[0]])
       {shelf[0]}
         </div>
       </div>)}
-      <div className="translation-section translation-header">
+      <div className="translation-section">
 
-      <label htmlFor="shelfTranslatingFrom">Translating From:</label>
-
-      <label htmlFor="shelfTranslatingInto">Translating into:</label>
-    <MultiSelect
-    id="shelfTranslatingFrom"
-      options={selectLanguageVersions}
-      value={shelfTranslatingFrom}
-      onChange={setShelfTranslatingFrom}
-      hasSelectAll={false}
-      />
-       <MultiSelect
-       id="selectLanguageVersions"
-             options={selectLanguageVersions}
-             value={shelfTranslatingInto}
-             onChange={setShelfTranslatingInto}
-             hasSelectAll={false}
-             />
-             </div>
       <label htmlFor="shelfTitle">Shelf Question:</label>
       <div className="translation-section">
      {shelfTitleDisplay}  <input className="form-control" type="text" id="shelfTitle" value={shelfTitle}  onChange={(e)=>{setShelfTitle(e.target.value);}} placeholder="question form"/>
@@ -1006,11 +1010,11 @@ setBookTranslatingFrom([addLabel[0]])
         </div>
 
         <input  className="btn lightbtn" type="submit" style={{backgroundColor:preventResubmitShelf?"var(--inactive)":"var(--lightactionbtn)", color:preventResubmitShelf?"var(--shelfpanellistborder)":"var(--lightactionbtntext)",boxShadow:preventResubmitShelf?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateShelfTranslation(e)}} value="Submit Shelf Translation"/>
+</div>
+<h5>Translate Books in this shelf</h5>
 
-
-      <h5>Translate Books in this shelf</h5>
+<div className="TranslateBook">
       <div className="translation-section translation-header">
-
       <label htmlFor="bookTranslatingFrom">Translating From:</label>
       <label htmlFor="bookTranslatingInto">Translating into:</label>
     <MultiSelect
@@ -1057,7 +1061,8 @@ setBookTranslatingFrom([addLabel[0]])
 
       {toAdd && toAdd.volumeInfo.authors?toAdd.volumeInfo.authors.map(author=> <TranslationAuthorWiki author={author} key={author} toAdd={toAdd} stripLabels={stripLabels} translateForm={translateForm} setSubjectLinks={setSubjectLinks} shelfLanguage={shelfTranslatingFrom}  subjectLinks={subjectLinks} formToggleOn={formToggleOn}/>):<TranslationAuthorWiki stripLabels={stripLabels} toAdd={toAdd} setSubjectLinks={setSubjectLinks} translateForm={translateForm} subjectLinks={subjectLinks} shelfLanguage={shelfTranslatingFrom} formToggleOn={formToggleOn}/>}
 
-
+</div>
+</div>
 
     </form>
   )
