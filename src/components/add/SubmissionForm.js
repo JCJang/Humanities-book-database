@@ -940,8 +940,8 @@ setShelfLanguage([addLabel[0]])
       earliestPublicationYear:earliestPublicationYear,
       bookLength:bookLength,
       languageVersions:stripLabels(languageVersions),
-      shelfLanguage:shelfLanguage,
-      previewLanguage:stripLabels(previewLanguage),
+      shelfLanguage:stripLabels(shelfLanguage)[0],
+      previewLanguage:stripLabels(previewLanguage)[0],
       previewStatus:toAdd.accessInfo.viewability,
       subjectLinks:subjectLinks
     })
@@ -952,8 +952,12 @@ setShelfLanguage([addLabel[0]])
 
   function addToShelf(){
     Axios.put("http://localhost:3001/addbooktoshelf",{
-      language:stripLabels(previewLanguage),
+      language:stripLabels(previewLanguage)[0],
       googleId:id,
+      shelfId:shelfId,
+      languageVersions:languageVersions,
+      earliestPublicationYear:earliestPublicationYear,
+      subjectLinks:subjectLinks,
       bookTitle:title,
       bookAuthor:author,
       previewStatus:toAdd.accessInfo.viewability,

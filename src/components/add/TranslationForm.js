@@ -51,6 +51,7 @@ const TranslationForm = ({toAdd, stripLabels,onSearch, languageSetting, translat
       }
   }, [bookTranslatingInto])
 
+
   //autoset form languages based on language settings
   useEffect(()=>{
     const addLabel = selectLanguageVersions.filter((x)=>{return x.value===languageSetting})
@@ -889,7 +890,7 @@ useEffect(()=>{
 
   const validateBookTranslation = (e)=>{
       e.preventDefault();
-      if(!title||!author||!bookId){
+      if(!title||!author||!shelfId||!bookTranslatingInto){
         alert("please fill in missing book data");
         return;
       }
@@ -904,6 +905,10 @@ useEffect(()=>{
   useEffect(()=>{
   setPreventResubmitShelf(false)
 }, [shelfTitle,toAdd])
+
+useEffect(()=>{
+setPreventResubmitBook(false)
+}, [title,toAdd])
 
 //set book data with toAdd
   useEffect(()=>{
@@ -937,13 +942,13 @@ useEffect(()=>{
 
 
   function postShelfTranslation(){
-    Axios.post("http://localhost:3001/shelftranslation",{
+    Axios.put("http://localhost:3001/shelftranslation",{
       shelfId:shelfId,
-      shelfTranslatingInto:shelfTranslatingInto,
+      shelfTranslatingInto:stripLabels(shelfTranslatingInto)[0],
       shelfTitle:shelfTitle,
       shelfDescription:shelfDescription,
     })
-    console.log("posted shelf translation");
+    console.log("put shelf translation");
   }
 
 
@@ -960,7 +965,8 @@ useEffect(()=>{
 
   function postBookTranslation(){
     Axios.put("http://localhost:3001/booktranslation",{
-      language:shelfTranslatingInto,
+      bookId:bookId,
+      language:stripLabels(bookTranslatingInto),
       googleId:id,
       bookTitle:title,
       bookAuthor:author,
@@ -968,6 +974,7 @@ useEffect(()=>{
       isbn10:isbn10,
       isbn13:isbn13,
       bookHighlights:bookHighlights,
+      subjectLinks:subjectLinks,
       bookLength:bookLength,
     })
     console.log("added book to shelf");
@@ -1063,15 +1070,15 @@ useEffect(()=>{
        </div>
        <label htmlFor="author">Author(s):</label>
        <div className="forty-sixty">
-       {bookAuthorDisplay}
+       {bookAuthorDisplay.length>1?bookAuthorDisplay.join(", "):bookAuthorDisplay}
        <textarea className="form-control"  id="author" form="SubmissionForm" rows={4} value={author}
-        onChange={(e)=>setAuthor(e.target.value)} placeholder="book author(s). Should match wikipedia page title. Separate with commas"/>
+        onChange={(e)=>setAuthor([e.target.value])} placeholder="book author(s). Should match wikipedia page title. Separate with commas"/>
         </div>
         <label htmlFor="subjectLinks">Subject Links:</label>
         <div className="forty-sixty">
-        {bookSubjectLinksDisplay}
+        {bookSubjectLinksDisplay.join(", ")}
         <textarea className="form-control"  id="subjectLinks" form="SubmissionForm" rows={4} value={subjectLinks}
-         onChange={(e)=>setSubjectLinks(e.target.value)} placeholder="subject Links. Separate with commas"/>
+         onChange={(e)=>setSubjectLinks(e.target.value.split(/[、,]\s*/))} placeholder="subject Links. Separate with commas"/>
          </div>
 
     </div>

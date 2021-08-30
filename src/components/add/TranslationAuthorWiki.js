@@ -39,12 +39,48 @@ const [newAuthorInfluences, setNewAuthorInfluences]=useState([])
 
 
 useEffect(()=>{
-if(!translatingInto || !mongoAuthor[1]){return}
+
+  const fetchArticleTranslation = async(author, arr) => {
+
+    if(translatingInto.length===0){return}
+
+    const getLanguage = async() =>{ let language = await stripLabels(translatingInto)[0];
+       return language.slice(0,2)
+      }
+    const getTranslation = async() =>{
+        const language = await getLanguage();
+
+            wiki({  apiUrl: `https://${language}.wikipedia.org/w/api.php`
+              })
+              .page(author)
+              .then(page =>
+                page
+                .chain()
+                .summary()
+                .request()
+              )
+              .then((res) => {
+                arr.push(res.title)
+              })
+          }
+          getTranslation()
+
+  }
+
+
+if(!translatingInto || !mongoAuthor[0]){return}else{
+const influenced = []
+mongoAuthor[0].forEach((author)=>fetchArticleTranslation(author, influenced))
+setAuthorInfluenced(influenced)}
+
+if(!translatingInto || !mongoAuthor[1]){return}else{
 const influences = []
 mongoAuthor[1].forEach((author)=>fetchArticleTranslation(author, influences))
-console.log(influences)
+setAuthorInfluences(influences)}
 
-},[translatingFrom,translatingInto,mongoAuthor])
+},[translatingFrom,translatingInto,mongoAuthor]
+
+)
 
 //get author data from wikipedia
 useEffect(()=>{
@@ -65,20 +101,28 @@ setPreventResubmitAuthor(false)
 
 
 useEffect(()=>{
-  if(!translatingFrom){return}
+  if(translatingFrom.length===0){return}
+
+  const getLanguage = async() =>{ const language = await stripLabels(translatingFrom)[0];
+    return language}
+  const getAuthorId = async() =>{
+      const language = await getLanguage();
   Axios.post("http://localhost:3001/getauthorid",{
     author:author,
-    translatingFrom:stripLabels(translatingFrom)[0],
+    translatingFrom:language
   }).then((res)=>{
-    setAuthorId(res.data[0]._id)
     setMongoAuthor([res.data[0].authorInfluenced,res.data[0].authorInfluences,res.data[0].editions[0].details])
     console.log(mongoAuthor)
-  }).then( console.log(`loaded ${author}`))
+  }).then((res)=>{setAuthorId(res.data[0]._id)})
+  .then( console.log(`loaded ${author}`))
+}
+getAuthorId()
+
 },[translatingFrom, author])
 
 
-  function postAuthor(){
-    Axios.post("http://localhost:3001/authortranslation",{
+  function postAuthorTranslation(){
+    Axios.put("http://localhost:3001/authortranslation",{
       authorId:authorId,
       translatingInto:translatingInto,
       authorWikiTitle:authorWikiTitle,
@@ -898,37 +942,13 @@ const validateAuthor = (e)=>{
   }
 
   if(preventResubmitAuthor==false){
-      postAuthor();
+      postAuthorTranslation();
       setPreventResubmitAuthor(true)
     }else{
       return;
     }
 }
 
-
-const fetchArticleTranslation = async(author, arr) => {
-  let code= await stripLabels(translatingInto)[0]
-if(code){if(code.length>2){code=code.slice(0,2)}}
-
-  wiki(code?{
-      apiUrl: `https://${code}.wikipedia.org/w/api.php`
-    }:"")
-    .page(author)
-    .then(page =>
-      page
-      .chain()
-      .summary()
-      .request()
-    )
-    .catch((err)=>{
-      arr.push(undefined)
-    })
-    .then((res) => {
-      arr.push(res.title)
-    })
-
-
-}
 
 const fetchAuthorWikiData = async(author) => {
   let code= await stripLabels(translatingInto)[0]
@@ -1024,28 +1044,51 @@ id="translatingInto"
     </div>
     </div>)}
 
-    <div className="translation-section" style={{display:previewAuthorWiki?"none":"grid"}}>
 
+    {mongoAuthor[2] &&(
+    <div className="translation-section" style={{display:previewAuthorWiki?"none":mongoAuthor[2].authorBgKeywords.length>0?"grid":"none"}}>
     <label htmlFor="authorBgKeywords">Author Background Keywords</label>
+    <div className="forty-sixty">
+    {mongoAuthor[2].authorBgKeywords.join(", ")}
     <textarea className="form-control" rows={4}  form={`${author}form`}    id="authorBgKeywords" value={authorBgKeywords}
     onChange={(e)=>setAuthorBgKeywords(e.target.value)} placeholder="Author Background Keywords" />
+    </div>
+    </div>)}
 
+    {mongoAuthor[2] &&(
+      <div className="translation-section" style={{display:previewAuthorWiki?"none":mongoAuthor[2].authorLifeWorkKeywords.length>0?"grid":"none"}}>
     <label htmlFor="authorLifeWorkKeywords">Author Life Work Keywords</label>
+    <div className="forty-sixty">
+    {mongoAuthor[2].authorLifeWorkKeywords.join(", ")}
     <textarea className="form-control" rows={4}  form={`${author}form`}    id="authorLifeWorkKeywords" value={authorLifeWorkKeywords}
     onChange={(e)=>setAuthorLifeWorkKeywords(e.target.value)} placeholder="Author Life Work Keywords" />
+    </div>
+    </div>)}
 
+    {mongoAuthor[2] &&(
+      <div className="translation-section" style={{display:previewAuthorWiki?"none":mongoAuthor[2].authorWikiExtract.length>0?"grid":"none"}}>
     <label htmlFor="authorWikiExtract">Summary</label>
+    <div className="forty-sixty">
+    {mongoAuthor[2].authorWikiExtract}
     <textarea className="form-control" rows={4} form={`${author}form`}   id="authorWikiExtract" value={authorWikiExtract}
     onChange={(e)=>setAuthorWikiExtract(e.target.value)} placeholder="extract from wikipedia page" />
+    </div>
+    </div>)}
 
+
+  {mongoAuthor[2] &&(
+    <div className="translation-section" style={{display:previewAuthorWiki?"none":mongoAuthor[2].authorWikiCategory.length>0?"grid":"none"}}>
     <label htmlFor="authorWikiCategory">Author Categories</label>
+    <div className="forty-sixty">
+    {mongoAuthor[2].authorWikiCategory.join(", ")}
     <textarea className="form-control" rows={4} form={`${author}form`}   id="authorWikiCategory" value={authorWikiCategory}
     onChange={(e)=>setAuthorWikiCategory(e.target.value)} placeholder="author categories" />
-    <label htmlFor="subtmitbooktranslation"></label>
+    </div>
+    </div>)}
 
+    <label htmlFor="subtmitbooktranslation"></label>
     <input  className="btn lightbtn" type="submit" style={{backgroundColor:preventResubmitAuthor?"var(--inactive)":"var(--lightactionbtn)", color:preventResubmitAuthor?"var(--shelfpanellistborder)":"var(--lightactionbtntext)",boxShadow:preventResubmitAuthor?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateAuthor(e)}} value="Submit this Author"/>
 
-    </div>
     </form>
 
 
