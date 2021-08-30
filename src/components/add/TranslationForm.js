@@ -11,6 +11,9 @@ const TranslationForm = ({toAdd, stripLabels,onSearch, languageSetting, translat
 
   const [shelfTitleDisplay, setShelfTitleDisplay] = useState('')
   const [shelfDescriptionDisplay, setShelfDescriptionDisplay] = useState('')
+  const [bookTitleDisplay, setBookTitleDisplay] = useState('')
+  const [bookAuthorDisplay, setBookAuthorDisplay] = useState('')
+  const [bookSubjectLinksDisplay, setBookSubjectLinksDisplay] = useState([])
 
   const [id, setId] =  useState('')
   const [title, setTitle] =  useState('')
@@ -61,7 +64,7 @@ setBookTranslatingFrom([addLabel[0]])
   const [allShelves, setAllShelves]=useState([])
   const [allBooks, setAllBooks]=useState([])
 
-  const [shelfId, setShelfId]=useState('')
+  const [shelfId, setShelfId]=useState()
   const [bookId, setBookId]=useState('')
   const [preventResubmitShelf, setPreventResubmitShelf] = useState(false)
   const [preventResubmitBook, setPreventResubmitBook] = useState(false)
@@ -938,14 +941,17 @@ setBookTranslatingFrom([addLabel[0]])
     console.log("posted shelf translation");
   }
 
-  useEffect(()=>{
-    Axios.post("http://localhost:3001/allbooks",{
-      bookTranslatingFrom:bookTranslatingFrom[0]?stripLabels(bookTranslatingFrom)[0]:languageSetting,
 
+
+  useEffect(()=>{
+    if(!shelfId || !bookTranslatingFrom){return}
+      Axios.post("http://localhost:3001/allbooks",{
+      bookTranslatingFrom:bookTranslatingFrom[0]?stripLabels(bookTranslatingFrom)[0]:languageSetting,
+      shelfId:shelfId
     }).then((res)=>{
-      setAllBooks(res.data.map((x)=>{ return [x.editions[0].details.shelfTitle, x.editions[0].details.shelfDescription, x.shelfSubjects, x._id]}))
-    }).then( console.log("reloaded shelves"))
-  },[toAdd, shelfTranslatingFrom,preventResubmitShelf])
+      setAllBooks(res.data[0].shelfBooks.map((book)=>{return [book._id, book.editions[0].details.bookTitle,book.editions[0].details.bookAuthor,book.editions[0].details.subjectLinks]}))
+    }).then( console.log("reloaded books"))
+  },[bookTranslatingFrom,shelfId])
 
   function postBookTranslation(){
     Axios.put("http://localhost:3001/booktranslation",{
@@ -1008,8 +1014,10 @@ setBookTranslatingFrom([addLabel[0]])
        {shelfDescriptionDisplay}<input className="form-control" type="text" id="shelfDescription" value={shelfDescription}
         onChange={(e)=>setShelfDescription(e.target.value)} placeholder="one or two short paragraphs"/>
         </div>
+        <label htmlFor="subtmitbooktranslation"></label>
 
         <input  className="btn lightbtn" type="submit" style={{backgroundColor:preventResubmitShelf?"var(--inactive)":"var(--lightactionbtn)", color:preventResubmitShelf?"var(--shelfpanellistborder)":"var(--lightactionbtntext)",boxShadow:preventResubmitShelf?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateShelfTranslation(e)}} value="Submit Shelf Translation"/>
+</div>
 </div>
 <h5>Translate Books in this shelf</h5>
 
@@ -1032,14 +1040,30 @@ setBookTranslatingFrom([addLabel[0]])
              hasSelectAll={false}
              />
              </div>
-
+             {allBooks && allBooks.map((book)=><div onClick={()=>{setBookTitleDisplay(book[1]); setBookAuthorDisplay(book[2]);setBookId(book[0]);setBookSubjectLinksDisplay(book[3])}} key={book[0]}
+             style={{backgroundColor:book[0]==bookId?"var(--shelfpanellistpressed)":"var(--shelfpanellist)",
+             border:book[0]==bookId?"1px solid var(--shelfpanellistpressedborder)":"1px solid var(--shelfpanellistborder)",
+             transform:book[0]==bookId?"translateY(0.3rem)":"translateY(0px)",
+             boxShadow:book[0]==bookId?"none":"var(--heavyshadow)"}}>
+               <div className="subtitle1">
+             {book[1]} by {book[2].map((author)=>{return author})}
+               </div>
+             </div>)}
     <div className="translation-section">
       <label htmlFor="title">Title:</label>
+      {bookTitleDisplay}
       <input className="form-control" type="text" id="title" value={title}
        onChange={(e)=>setTitle(e.target.value)} placeholder="book title"/>
        <label htmlFor="author">Author(s):</label>
+       {bookAuthorDisplay}
        <textarea className="form-control"  id="author" form="SubmissionForm" rows={4} value={author}
         onChange={(e)=>setAuthor(e.target.value)} placeholder="book author(s). Should match wikipedia page title. Separate with commas"/>
+
+        <label htmlFor="subjectLinks">Subject Links:</label>
+        {bookSubjectLinksDisplay}
+        <textarea className="form-control"  id="subjectLinks" form="SubmissionForm" rows={4} value={subjectLinks}
+         onChange={(e)=>setSubjectLinks(e.target.value)} placeholder="subject Links. Separate with commas"/>
+
 
     </div>
            <div className="translation-section">
@@ -1056,13 +1080,12 @@ setBookTranslatingFrom([addLabel[0]])
                    <label htmlFor="bookHighlights">highlights</label>
                    <textarea className="form-control" type="text" id="bookHighlights" value={bookHighlights}
                     onChange={(e)=>setBookHighlights(e.target.value)} placeholder="one or two paragraphs from the book"/>
+                    <label htmlFor="subtmitbooktranslation"></label>
+                    <input  className="btn lightbtn" type="submit" style={{ backgroundColor:preventResubmitBook?"var(--inactive)":"var(--lightactionbtn)", color:preventResubmitBook?"var(--shelfpanellistborder)":"var(--lightactionbtntext)",boxShadow:preventResubmitBook?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateBookTranslation(e)}} value="Submit Book Translation"/>
                  </div>
-                  <input  className="btn lightbtn" type="submit" style={{backgroundColor:preventResubmitBook?"var(--inactive)":"var(--lightactionbtn)", color:preventResubmitBook?"var(--shelfpanellistborder)":"var(--lightactionbtntext)",boxShadow:preventResubmitBook?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateBookTranslation(e)}} value="Submit Book Translation"/>
+</div>
 
       {toAdd && toAdd.volumeInfo.authors?toAdd.volumeInfo.authors.map(author=> <TranslationAuthorWiki author={author} key={author} toAdd={toAdd} stripLabels={stripLabels} translateForm={translateForm} setSubjectLinks={setSubjectLinks} shelfLanguage={shelfTranslatingFrom}  subjectLinks={subjectLinks} formToggleOn={formToggleOn}/>):<TranslationAuthorWiki stripLabels={stripLabels} toAdd={toAdd} setSubjectLinks={setSubjectLinks} translateForm={translateForm} subjectLinks={subjectLinks} shelfLanguage={shelfTranslatingFrom} formToggleOn={formToggleOn}/>}
-
-</div>
-</div>
 
     </form>
   )

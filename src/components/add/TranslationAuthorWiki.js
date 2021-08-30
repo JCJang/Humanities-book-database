@@ -54,13 +54,14 @@ setPreventResubmitAuthor(false)
 
 
 useEffect(()=>{
+  if(!translatingFrom || !translatingInto){return}
+  console.log(stripLabels(translatingInto)[0])
   Axios.post("http://localhost:3001/allauthors",{
-    translatingFrom:translatingFrom[0]?stripLabels(translatingFrom)[0]:stripLabels(shelfLanguage)[0],
-    translatingInto:translatingInto[0]?stripLabels(translatingInto)[0]:stripLabels(shelfLanguage)[0]
+    translatingFrom:stripLabels(translatingFrom)[0],   translatingInto:stripLabels(translatingInto)[0]
   }).then((res)=>{
     console.log(res.data)
   }).then( console.log("reloaded shelves"))
-},[toAdd,translatingFrom, translatingInto, preventResubmitAuthor])
+},[translatingFrom, translatingInto])
 
 
   function postAuthor(){
@@ -981,6 +982,7 @@ id="translatingInto"
     <label htmlFor="authorWikiCategory">Author Categories</label>
     <textarea className="form-control" rows={4} form={`${author}form`}   id="authorWikiCategory" value={authorWikiCategory}
     onChange={(e)=>setAuthorWikiCategory(e.target.value)} placeholder="author categories" />
+    <label htmlFor="subtmitbooktranslation"></label>
 
     <input  className="btn lightbtn" type="submit" style={{backgroundColor:preventResubmitAuthor?"var(--inactive)":"var(--lightactionbtn)", color:preventResubmitAuthor?"var(--shelfpanellistborder)":"var(--lightactionbtntext)",boxShadow:preventResubmitAuthor?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateAuthor(e)}} value="Submit this Author"/>
 

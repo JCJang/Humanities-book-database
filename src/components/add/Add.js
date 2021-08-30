@@ -199,8 +199,7 @@ setTasks([...tasks, data])
 
         </div>
 
-        <div className="subcontainer right-block" style={{display:results?"":"none", backgroundColor:formToggleOn?"var(--shelfpanel)":"var(--detailspanel)",color:formToggleOn?"var(--shelfpaneltext)":"var(--detailspaneltext)",
-        border:formToggleOn?"none":"1.5px solid var(--detailspaneltext)"}}>
+        <div className="subcontainer right-block" style={{display:results?"":"none", backgroundColor:formToggleOn?"var(--shelfpanel)":"var(--detailspanel)",color:formToggleOn?"var(--shelfpaneltext)":"var(--detailspaneltext)"}}>
           {results && <input type="submit"  className={formToggleOn?"btn lightbtn":"btn darkbtn"} value={formToggleOn?"Preview Book":"Show Submission Form"} onClick={toggleForm}/>}
           {formToggleOn && <input type="submit"  className="btn lightbtn" value={translateForm?"Submit new shelf or book":"Translate existing entries"} onClick={toggleTranslateForm}/>}
           <GoogleBooksViewer bookIdentifier={bookIdentifier} formToggleOn={formToggleOn} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId}/>
