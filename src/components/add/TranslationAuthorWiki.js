@@ -103,20 +103,17 @@ setPreventResubmitAuthor(false)
 useEffect(()=>{
   if(translatingFrom.length===0){return}
 
-  const getLanguage = async() =>{ const language = await stripLabels(translatingFrom)[0];
-    return language}
-  const getAuthorId = async() =>{
-      const language = await getLanguage();
   Axios.post("http://localhost:3001/getauthorid",{
     author:author,
-    translatingFrom:language
+    translatingFrom:stripLabels(translatingFrom)[0],
   }).then((res)=>{
-    setMongoAuthor([res.data[0].authorInfluenced,res.data[0].authorInfluences,res.data[0].editions[0].details])
-    console.log(mongoAuthor)
-  }).then((res)=>{setAuthorId(res.data[0]._id)})
+    res.data.forEach((data)=>{
+      setAuthorId(data._id);
+      setMongoAuthor([data.authorInfluenced,data.authorInfluences,data.editions[0].details])
+
+    });
+    console.log(mongoAuthor)})
   .then( console.log(`loaded ${author}`))
-}
-getAuthorId()
 
 },[translatingFrom, author])
 
@@ -124,7 +121,7 @@ getAuthorId()
   function postAuthorTranslation(){
     Axios.put("http://localhost:3001/authortranslation",{
       authorId:authorId,
-      translatingInto:translatingInto,
+      translatingInto:stripLabels(translatingInto)[0],
       authorWikiTitle:authorWikiTitle,
       authorWikiExtract:authorWikiExtract,
       authorBgKeywords:authorBgKeywords,
@@ -954,9 +951,8 @@ const fetchAuthorWikiData = async(author) => {
   let code= await stripLabels(translatingInto)[0]
 if(code){if(code.length>2){code=code.slice(0,2)}}
 
-  wiki(code?{
-      apiUrl: `https://${code}.wikipedia.org/w/api.php`
-    }:"")
+  wiki({ apiUrl: `https://${code}.wikipedia.org/w/api.php`
+    })
     .page(author)
     .then(page =>
       page
@@ -975,7 +971,6 @@ if(code){if(code.length>2){code=code.slice(0,2)}}
 
 }
 
-
 const togglePreviewAuthorWiki= (e)=>{
   e.preventDefault()
   setpreviewAuthorWiki(!previewAuthorWiki)}
@@ -985,8 +980,8 @@ const togglePreviewAuthorWiki= (e)=>{
     <form onSubmit={(e)=>{validateAuthor(e)}} className="SubmissionForm" id={`${author}form`} style={{display:formToggleOn?"block":"none"}}>
     <h5>{author} information (corrections needed)</h5>
     <div className="translation-section translation-header">
-    <label htmlFor="setTranslatingFrom">Translating From:</label>
-    <label htmlFor="setTranslatingInto">Translating Into:</label>
+    <label htmlFor="translatingFrom">Translating From:</label>
+    <label htmlFor="translatingInto">Translating Into:</label>
 <MultiSelect
 id="translatingFrom"
     options={selectLanguageVersions}

@@ -966,7 +966,7 @@ setPreventResubmitBook(false)
   function postBookTranslation(){
     Axios.put("http://localhost:3001/booktranslation",{
       bookId:bookId,
-      language:stripLabels(bookTranslatingInto),
+      language:stripLabels(bookTranslatingInto)[0],
       googleId:id,
       bookTitle:title,
       bookAuthor:author,
