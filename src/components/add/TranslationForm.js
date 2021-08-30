@@ -27,25 +27,24 @@ const TranslationForm = ({toAdd, stripLabels,onSearch, languageSetting, translat
   const [shelfTranslatingInto, setShelfTranslatingInto] = useState([])
   const [bookTranslatingFrom, setBookTranslatingFrom] = useState([])
   const [bookTranslatingInto, setBookTranslatingInto] = useState([])
+
+
   //restricts selection to one
   useEffect(() => {
       if (shelfTranslatingFrom.length > 1) {
         setShelfTranslatingFrom([shelfTranslatingFrom[shelfTranslatingFrom.length - 1]])
       }
   }, [shelfTranslatingFrom])
-
   useEffect(() => {
       if (shelfTranslatingInto.length > 1) {
         setShelfTranslatingInto([shelfTranslatingInto[shelfTranslatingInto.length - 1]])
       }
   }, [shelfTranslatingInto])
-
   useEffect(() => {
       if (bookTranslatingFrom.length > 1) {
         setBookTranslatingFrom([bookTranslatingFrom[bookTranslatingFrom.length - 1]])
       }
   }, [bookTranslatingFrom])
-
   useEffect(() => {
       if (bookTranslatingInto.length > 1) {
         setBookTranslatingInto([bookTranslatingInto[bookTranslatingInto.length - 1]])
@@ -58,6 +57,12 @@ const TranslationForm = ({toAdd, stripLabels,onSearch, languageSetting, translat
  setShelfTranslatingFrom([addLabel[0]])
 setBookTranslatingFrom([addLabel[0]])
 }, [])
+
+//autofill all target languages based on the one selected for Shelf
+useEffect(()=>{
+  setBookTranslatingFrom(shelfTranslatingFrom)
+  setBookTranslatingInto(shelfTranslatingInto)
+},[shelfTranslatingFrom, shelfTranslatingInto])
 
   //manual fill
   const [bookLength, setBookLength] = useState("")
@@ -1005,12 +1010,12 @@ setBookTranslatingFrom([addLabel[0]])
       <div className="translation-section">
 
       <label htmlFor="shelfTitle">Shelf Question:</label>
-      <div className="translation-section">
+      <div className="forty-sixty">
      {shelfTitleDisplay}  <input className="form-control" type="text" id="shelfTitle" value={shelfTitle}  onChange={(e)=>{setShelfTitle(e.target.value);}} placeholder="question form"/>
       </div>
 
        <label htmlFor="shelfDescription">Shelf Description:</label>
-       <div className="translation-section">
+       <div className="forty-sixty">
        {shelfDescriptionDisplay}<input className="form-control" type="text" id="shelfDescription" value={shelfDescription}
         onChange={(e)=>setShelfDescription(e.target.value)} placeholder="one or two short paragraphs"/>
         </div>
@@ -1051,19 +1056,23 @@ setBookTranslatingFrom([addLabel[0]])
              </div>)}
     <div className="translation-section">
       <label htmlFor="title">Title:</label>
+      <div className="forty-sixty">
       {bookTitleDisplay}
       <input className="form-control" type="text" id="title" value={title}
        onChange={(e)=>setTitle(e.target.value)} placeholder="book title"/>
+       </div>
        <label htmlFor="author">Author(s):</label>
+       <div className="forty-sixty">
        {bookAuthorDisplay}
        <textarea className="form-control"  id="author" form="SubmissionForm" rows={4} value={author}
         onChange={(e)=>setAuthor(e.target.value)} placeholder="book author(s). Should match wikipedia page title. Separate with commas"/>
-
+        </div>
         <label htmlFor="subjectLinks">Subject Links:</label>
+        <div className="forty-sixty">
         {bookSubjectLinksDisplay}
         <textarea className="form-control"  id="subjectLinks" form="SubmissionForm" rows={4} value={subjectLinks}
          onChange={(e)=>setSubjectLinks(e.target.value)} placeholder="subject Links. Separate with commas"/>
-
+         </div>
 
     </div>
            <div className="translation-section">
@@ -1085,7 +1094,7 @@ setBookTranslatingFrom([addLabel[0]])
                  </div>
 </div>
 
-      {toAdd && toAdd.volumeInfo.authors?toAdd.volumeInfo.authors.map(author=> <TranslationAuthorWiki author={author} key={author} toAdd={toAdd} stripLabels={stripLabels} translateForm={translateForm} setSubjectLinks={setSubjectLinks} shelfLanguage={shelfTranslatingFrom}  subjectLinks={subjectLinks} formToggleOn={formToggleOn}/>):<TranslationAuthorWiki stripLabels={stripLabels} toAdd={toAdd} setSubjectLinks={setSubjectLinks} translateForm={translateForm} subjectLinks={subjectLinks} shelfLanguage={shelfTranslatingFrom} formToggleOn={formToggleOn}/>}
+      {bookAuthorDisplay && bookAuthorDisplay.map(author=> <TranslationAuthorWiki author={author} bookId={bookId} key={author} toAdd={toAdd} stripLabels={stripLabels} translateForm={translateForm} shelfLanguage={shelfTranslatingFrom} shelfTranslatingInto={shelfTranslatingInto}  formToggleOn={formToggleOn}/>)}
 
     </form>
   )

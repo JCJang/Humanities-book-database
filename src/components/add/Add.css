@@ -277,13 +277,19 @@ grid-template-rows:auto;
 .translation-section{
   display:grid;
   grid-template-rows:auto;
-  grid-template-columns: 30% 70%;
+  grid-template-columns: 20% 80%;
   grid-row-gap:1rem;
   grid-column-gap:1rem;
   padding:3rem;
   background-color: var(--paper);
   color:var(--ink);
-
+}
+.forty-sixty{
+  display:grid;
+  grid-template-rows:auto;
+  grid-template-columns: 40% 60%;
+  grid-row-gap:1rem;
+  grid-column-gap:1rem;
 }
 .translation-header{
   background-color: var(--ink);
@@ -294,6 +300,9 @@ grid-template-rows:auto;
   grid-row-gap:1rem;
   grid-column-gap:1rem;
   padding:2rem 3rem;
+}
+.translation-header .rmsc{
+  color:var(--ink);
 }
 
 input{

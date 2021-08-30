@@ -4,7 +4,7 @@ import {useEffect, useState} from 'react'
 import Axios from 'axios'
 import MultiSelect from "react-multi-select-component";
 
-const TranslationAuthorWiki = ({author, toAdd, stripLabels, shelfLanguage, subjectLinks, formToggleOn, setSubjectLinks}) => {
+const TranslationAuthorWiki = ({author, toAdd, stripLabels, shelfLanguage, bookId, shelfTranslatingInto, formToggleOn}) => {
 
 const [preventResubmitAuthor, setPreventResubmitAuthor] = useState(false)
 const [authorId, setAuthorId] = useState("")
@@ -19,49 +19,62 @@ const [authorWikiCategory, setAuthorWikiCategory] = useState([])
 const [translatingFrom, setTranslatingFrom] = useState([])
 const [translatingInto, setTranslatingInto] = useState([])
 
+//restricts selection to one
 useEffect(() => {
     if (translatingFrom.length > 1) {
       setTranslatingFrom([translatingFrom[translatingFrom.length - 1]])
     }
 }, [translatingFrom])
-
 useEffect(() => {
     if (translatingInto.length > 1) {
       setTranslatingInto([translatingInto[translatingInto.length - 1]])
     }
 }, [translatingInto])
 
-const [allAuthors, setAllAuthors] = useState([])
+const [mongoAuthor, setMongoAuthor] = useState([])
 const [authorInfluenced, setAuthorInfluenced]=useState([])
 const [authorInfluences, setAuthorInfluences]=useState([])
 const [newAuthorInfluenced, setNewAuthorInfluenced]=useState([])
 const [newAuthorInfluences, setNewAuthorInfluences]=useState([])
-//get data
+
+
+useEffect(()=>{
+if(!translatingInto || !mongoAuthor[1]){return}
+const influences = []
+mongoAuthor[1].forEach((author)=>fetchArticleTranslation(author, influences))
+console.log(influences)
+
+},[translatingFrom,translatingInto,mongoAuthor])
+
+//get author data from wikipedia
 useEffect(()=>{
   if(!translatingInto){return}
   fetchAuthorWikiData(author)
 }, [author, translatingInto])
 
+//autofill all target languages based on the one selected for Shelf
 useEffect(()=>{
   setTranslatingFrom(shelfLanguage)
-  setTranslatingInto(shelfLanguage)
-
+  setTranslatingInto(shelfTranslatingInto)
 }, [])
 
+//prevent resubmit
 useEffect(()=>{
 setPreventResubmitAuthor(false)
 }, [authorWikiTitle,toAdd])
 
 
 useEffect(()=>{
-  if(!translatingFrom || !translatingInto){return}
-  console.log(stripLabels(translatingInto)[0])
-  Axios.post("http://localhost:3001/allauthors",{
-    translatingFrom:stripLabels(translatingFrom)[0],   translatingInto:stripLabels(translatingInto)[0]
+  if(!translatingFrom){return}
+  Axios.post("http://localhost:3001/getauthorid",{
+    author:author,
+    translatingFrom:stripLabels(translatingFrom)[0],
   }).then((res)=>{
-    console.log(res.data)
-  }).then( console.log("reloaded shelves"))
-},[translatingFrom, translatingInto])
+    setAuthorId(res.data[0]._id)
+    setMongoAuthor([res.data[0].authorInfluenced,res.data[0].authorInfluences,res.data[0].editions[0].details])
+    console.log(mongoAuthor)
+  }).then( console.log(`loaded ${author}`))
+},[translatingFrom, author])
 
 
   function postAuthor(){
@@ -876,7 +889,6 @@ const selectLanguageVersions = [
 },
 ];
 
-
 const validateAuthor = (e)=>{
   e.preventDefault();
 
@@ -892,13 +904,39 @@ const validateAuthor = (e)=>{
       return;
     }
 }
+
+
+const fetchArticleTranslation = async(author, arr) => {
+  let code= await stripLabels(translatingInto)[0]
+if(code){if(code.length>2){code=code.slice(0,2)}}
+
+  wiki(code?{
+      apiUrl: `https://${code}.wikipedia.org/w/api.php`
+    }:"")
+    .page(author)
+    .then(page =>
+      page
+      .chain()
+      .summary()
+      .request()
+    )
+    .catch((err)=>{
+      arr.push(undefined)
+    })
+    .then((res) => {
+      arr.push(res.title)
+    })
+
+
+}
+
 const fetchAuthorWikiData = async(author) => {
   let code= await stripLabels(translatingInto)[0]
 if(code){if(code.length>2){code=code.slice(0,2)}}
 
-  wiki({
+  wiki(code?{
       apiUrl: `https://${code}.wikipedia.org/w/api.php`
-    })
+    }:"")
     .page(author)
     .then(page =>
       page
@@ -916,16 +954,16 @@ if(code){if(code.length>2){code=code.slice(0,2)}}
     })
 
 }
+
+
 const togglePreviewAuthorWiki= (e)=>{
   e.preventDefault()
   setpreviewAuthorWiki(!previewAuthorWiki)}
 
 
   return (
-
     <form onSubmit={(e)=>{validateAuthor(e)}} className="SubmissionForm" id={`${author}form`} style={{display:formToggleOn?"block":"none"}}>
     <h5>{author} information (corrections needed)</h5>
-    <div className="TranslateAuthor">
     <div className="translation-section translation-header">
     <label htmlFor="setTranslatingFrom">Translating From:</label>
     <label htmlFor="setTranslatingInto">Translating Into:</label>
@@ -944,28 +982,49 @@ id="translatingInto"
     hasSelectAll={false}
     />
     </div>
-    {allAuthors && allAuthors.map((author)=><div onClick={()=>{setAuthorWikiTitle(author[0]);  setAuthorInfluenced(author[1]);setAuthorInfluences(author[2]);setAuthorId(author[3])}} key={author[3]}
-    style={{backgroundColor:author[3]==authorId?"var(--shelfpanellistpressed)":"var(--shelfpanellist)",
-    border:author[3]==authorId?"1px solid var(--shelfpanellistpressedborder)":"1px solid var(--shelfpanellistborder)",
-    transform:author[3]==authorId?"translateY(0.3rem)":"translateY(0px)",
-    boxShadow:author[3]==authorId?"none":"var(--heavyshadow)"}}>
-      <div className="subtitle1">
-    {author[0]}
-      </div>
-    </div>)}
-
 
     <input type="submit" className="btn lightbtn" value={previewAuthorWiki?"Back to Form":"Preview Author Details"} onClick={togglePreviewAuthorWiki}/>
 
-    <div className="translation-section" style={{display:previewAuthorWiki?"none":"grid"}}>
-    <label htmlFor='authorWikiTitle'>Author name:</label>
+    {mongoAuthor[2] &&(
+      <div className="translation-section" style={{display:previewAuthorWiki?"none":"grid"}}>
+      <label htmlFor='authorWikiTitle'>Author name:</label>
+    <div className="forty-sixty">
+    {mongoAuthor[2].authorWikiTitle}
     <input className="form-control" type="text"  onChange={(e)=>setAuthorWikiTitle(e.target.value)} value={authorWikiTitle} placeholder="author name"/>
-            <label htmlFor="timelineLinks">Wikipedia timeline pages:</label>
-        <textarea className="form-control" rows={4} form={`${author}form`}  id="timelineLinks" value={timelineLinks}
+    </div>
+    </div>)}
+
+    {mongoAuthor[2] && (
+      <div className="translation-section" style={{display:previewAuthorWiki?"none":mongoAuthor[2].timelineLinks.length>0?"grid":"none"}}>
+      <label htmlFor='authorWikiTitle'>Author Timeline Links:</label>
+    <div className="forty-sixty">
+    {mongoAuthor[2].timelineLinks}
+    <textarea className="form-control" rows={4} form={`${author}form`}  id="timelineLinks" value={timelineLinks}
          onChange={(e)=>setTimelineLinks([e.target.value])} placeholder="separate by comma"/>
          </div>
-    <div className="translation-section" style={{display:previewAuthorWiki?"none":"grid"}}>
+         </div>)
+    }
 
+         {mongoAuthor[0] && (
+     <div className="translation-section" style={{display:previewAuthorWiki?"none":mongoAuthor[0].length>0?"grid":"none"}}>
+<label htmlFor="authorInfluenced">Author Influenced:</label>
+     <div className="forty-sixty">
+         {mongoAuthor[0]} <textarea className="form-control" rows={4} form={`${author}form`}  id="authorInfluenced" value={authorInfluenced}
+      onChange={(e)=>setAuthorInfluenced([e.target.value])} placeholder="separate by comma"/>
+      </div>
+      </div>)}
+
+    {mongoAuthor[1] &&(
+    <div className="translation-section" style={{display:previewAuthorWiki?"none":mongoAuthor[1].length>0?"grid":"none"}}>
+    <label htmlFor="authorInfluences">Author Influences:</label>
+    <div className="forty-sixty">
+    {mongoAuthor[1].join(", ")}
+  <textarea className="form-control" rows={4} form={`${author}form`}  id="authorInfluences" value={authorInfluences}
+   onChange={(e)=>setAuthorInfluences([e.target.value])} placeholder="separate by comma"/>
+    </div>
+    </div>)}
+
+    <div className="translation-section" style={{display:previewAuthorWiki?"none":"grid"}}>
 
     <label htmlFor="authorBgKeywords">Author Background Keywords</label>
     <textarea className="form-control" rows={4}  form={`${author}form`}    id="authorBgKeywords" value={authorBgKeywords}
@@ -986,7 +1045,6 @@ id="translatingInto"
 
     <input  className="btn lightbtn" type="submit" style={{backgroundColor:preventResubmitAuthor?"var(--inactive)":"var(--lightactionbtn)", color:preventResubmitAuthor?"var(--shelfpanellistborder)":"var(--lightactionbtntext)",boxShadow:preventResubmitAuthor?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateAuthor(e)}} value="Submit this Author"/>
 
-    </div>
     </div>
     </form>
 
