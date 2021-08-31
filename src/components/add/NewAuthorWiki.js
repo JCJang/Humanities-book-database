@@ -5,7 +5,7 @@ import Axios from 'axios'
 import MultiSelect from "react-multi-select-component";
 
 
-const NewAuthorWiki = ({translation, author, toAdd, stripLabels, previewLanguage, subjectLinks, formToggleOn, setSubjectLinks}) => {
+const NewAuthorWiki = ({translation, author, toAdd, stripLabels, contentKeywords,setContentKeywords, previewLanguage, subjectLinks, formToggleOn, setSubjectLinks}) => {
 
   const [preventResubmitAuthor, setPreventResubmitAuthor] = useState(false)
 
@@ -17,7 +17,6 @@ const [authorBirthPlace, setAuthorBirthPlace] = useState("")
 const [authorCountry, setAuthorCountry] = useState([])
 
 const [timelineLinks, setTimelineLinks] = useState([])
-const [contentKeywords, setContentKeywords] = useState([])//choose from main interests,notable ideas
 
 const [authorBirthDate, setAuthorBirthDate] = useState("")
 const [authorDeathDate, setAuthorDeathDate] = useState("")
@@ -26,7 +25,6 @@ const [authorBgKeywords, setAuthorBgKeywords] = useState([]) //region,school
 const [authorLifeWorkKeywords, setAuthorLifeWorkKeywords] = useState([]) //main interests,notable ideas
 
 const [authorWikiExtract, setAuthorWikiExtract] = useState("")
-const [authorWikiCategory, setAuthorWikiCategory] = useState([])
 const [authorWikiLanglinks, setAuthorWikiLanglinks] = useState([])
 const [authorWikiImage, setAuthorWikiImage] = useState("")
 const [authorWikiUrl, setAuthorWikiUrl] = useState("")
@@ -1080,7 +1078,6 @@ setPreventResubmitAuthor(false)
       authorLifespan:authorLifespan,
       authorBgKeywords:authorBgKeywords,
       authorLifeWorkKeywords:authorLifeWorkKeywords,
-      authorWikiCategory:authorWikiCategory,
       timelineLinks:timelineLinks,
       authorWikiLanglinks:authorWikiLanglinks,
       authorInfluences:authorInfluences,
@@ -1142,19 +1139,6 @@ const validateAuthor = (e)=>{
       console.log(res)
       setAuthorWikiTitle(res.title)
       setAuthorWikiExtract(res.extract)
-      const validCategories = res.categories.map((category)=>{
-          return category.replace(/^Category:/,"")
-      })
-      .filter((category)=>{
-          return /^\d\d\d\d/.test(category)===false
-      })
-      .filter((category)=>{
-          return /^All\sarticles/.test(category)===false
-      })
-      .filter((category)=>{
-          return /^AC/.test(category)===false
-      })
-    setAuthorWikiCategory(validCategories)
       setAuthorWikiLanglinks(res.langlinks)
     })
   try{
@@ -1261,22 +1245,15 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
 
         <label htmlFor="timelineLinks">Wikipedia timeline pages:</label>
         <textarea className="form-control" rows={4} form={`${author}form`}  id="timelineLinks" value={timelineLinks}
-         onChange={(e)=>setTimelineLinks(e.target.value.split(/[、,]\s*/))} placeholder="separate by comma"/>
+         onChange={(e)=>setTimelineLinks(e.target.value.split(/[、,,،，]\s*/))} placeholder="separate by comma"/>
 
-        <label htmlFor="subjectLinks">Wikipedia subject pages:</label>
-        <textarea className="form-control" rows={4}  form={`${author}form`}   id="subjectLinks" value={subjectLinks}
-         onChange={(e)=>setSubjectLinks(e.target.value.split(/[、,]\s*/))} placeholder="separate by comma"/>
-
-      <label htmlFor="contentKeywords">content keywords:</label>
-      <textarea className="form-control" rows={4} form={`${author}form`}    id="contentKeywords" value={contentKeywords}
-       onChange={(e)=>setContentKeywords(e.target.value.split(/[、,]\s*/))} placeholder="content keywords"/>
        <label htmlFor="authorInfluences">Influences</label>
        <textarea className="form-control" rows={4}  form={`${author}form`}    id="authorInfluences" value={authorInfluences}
-       onChange={(e)=>setAuthorInfluences(e.target.value.split(/[、,]\s*/))} placeholder={`${author} was influenced by these people`} />
+       onChange={(e)=>setAuthorInfluences(e.target.value.split(/[、,,،，]\s*/))} placeholder={`${author} was influenced by these people`} />
 
        <label htmlFor="authorInfluenced">authorInfluenced</label>
        <textarea className="form-control" rows={4}  form={`${author}form`}  id="authorInfluenced" value={authorInfluenced}
-       onChange={(e)=>setAuthorInfluenced(e.target.value.split(/[、,]\s*/))} placeholder={`${author}'s thought influenced these people`}/>
+       onChange={(e)=>setAuthorInfluenced(e.target.value.split(/[、,,،，]\s*/))} placeholder={`${author}'s thought influenced these people`}/>
        </div>
     <div className="form-section readOnly" style={{display:previewAuthorWiki?"none":"grid"}}>
 
@@ -1285,19 +1262,15 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
 
     <label htmlFor="authorBgKeywords">Author Background Keywords</label>
     <textarea className="form-control" rows={4}  form={`${author}form`}    id="authorBgKeywords" value={authorBgKeywords}
-    onChange={(e)=>setAuthorBgKeywords(e.target.value.split(/[、,]\s*/))} placeholder="Author Background Keywords" />
+    onChange={(e)=>setAuthorBgKeywords(e.target.value.split(/[、,,،，]\s*/))} placeholder="Author Background Keywords" />
 
     <label htmlFor="authorLifeWorkKeywords">Author Life Work Keywords</label>
     <textarea className="form-control" rows={4}  form={`${author}form`}    id="authorLifeWorkKeywords" value={authorLifeWorkKeywords}
-    onChange={(e)=>setAuthorLifeWorkKeywords(e.target.value.split(/[、,]\s*/))} placeholder="Author Life Work Keywords" />
+    onChange={(e)=>setAuthorLifeWorkKeywords(e.target.value.split(/[、,,،，]\s*/))} placeholder="Author Life Work Keywords" />
 
     <label htmlFor="authorWikiExtract">Summary</label>
     <textarea className="form-control" rows={4} form={`${author}form`}   id="authorWikiExtract" value={authorWikiExtract}
     onChange={(e)=>setAuthorWikiExtract(e.target.value)} placeholder="extract from wikipedia page" />
-
-    <label htmlFor="authorWikiCategory">Author Categories</label>
-    <textarea className="form-control" rows={4}  form={`${author}form`}   id="authorWikiCategory" value={authorWikiCategory}
-    onChange={(e)=>setAuthorWikiCategory(e.target.value.split(/[、,]\s*/))} placeholder="author categories" />
 
     <label htmlFor="authorWikiLanglinks">langlinks</label>
     <input className="form-control" type="text" id="authorWikiLanglinks" value={authorWikiLanglinks}

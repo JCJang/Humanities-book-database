@@ -14,6 +14,7 @@ const TranslationForm = ({toAdd, stripLabels,onSearch, languageSetting, translat
   const [bookTitleDisplay, setBookTitleDisplay] = useState('')
   const [bookAuthorDisplay, setBookAuthorDisplay] = useState('')
   const [bookSubjectLinksDisplay, setBookSubjectLinksDisplay] = useState([])
+  const [bookContentKeywordsDisplay, setBookContentKeywordsDisplay] = useState([])
 
   const [id, setId] =  useState('')
   const [title, setTitle] =  useState('')
@@ -22,7 +23,8 @@ const TranslationForm = ({toAdd, stripLabels,onSearch, languageSetting, translat
   const [isbn10, setIsbn10] =  useState('')
   const [isbn13, setIsbn13] =  useState('')
   const [bookHighlights, setBookHighlights] = useState('')
-  const [subjectLinks, setSubjectLinks] = useState([])//use what?
+  const [subjectLinks, setSubjectLinks] = useState([])
+  const [contentKeywords, setContentKeywords] = useState([])//choose from main interests,notable ideas
   const [shelfTranslatingFrom, setShelfTranslatingFrom] = useState([])
   const [shelfTranslatingInto, setShelfTranslatingInto] = useState([])
   const [bookTranslatingFrom, setBookTranslatingFrom] = useState([])
@@ -959,7 +961,7 @@ setPreventResubmitBook(false)
       bookTranslatingFrom:bookTranslatingFrom[0]?stripLabels(bookTranslatingFrom)[0]:languageSetting,
       shelfId:shelfId
     }).then((res)=>{
-      setAllBooks(res.data[0].shelfBooks.map((book)=>{return [book._id, book.editions[0].details.bookTitle,book.editions[0].details.bookAuthor,book.editions[0].details.subjectLinks]}))
+      setAllBooks(res.data[0].shelfBooks.map((book)=>{return [book._id, book.editions[0].details.bookTitle,book.editions[0].details.bookAuthor,book.editions[0].details.subjectLinks,book.editions[0].details.contentKeywords ]}))
     }).then( console.log("reloaded books"))
   },[bookTranslatingFrom,shelfId])
 
@@ -975,6 +977,7 @@ setPreventResubmitBook(false)
       isbn13:isbn13,
       bookHighlights:bookHighlights,
       subjectLinks:subjectLinks,
+      contentKeywords:contentKeywords,
       bookLength:bookLength,
     })
     console.log("added book to shelf");
@@ -1052,7 +1055,7 @@ setPreventResubmitBook(false)
              hasSelectAll={false}
              />
              </div>
-             {allBooks && allBooks.map((book)=><div onClick={()=>{setBookTitleDisplay(book[1]); setBookAuthorDisplay(book[2]);setBookId(book[0]);setBookSubjectLinksDisplay(book[3])}} key={book[0]}
+             {allBooks && allBooks.map((book)=><div onClick={()=>{setBookTitleDisplay(book[1]); setBookAuthorDisplay(book[2]);setBookId(book[0]);setBookSubjectLinksDisplay(book[3]); setBookContentKeywordsDisplay(book[4])}} key={book[0]}
              style={{backgroundColor:book[0]==bookId?"var(--shelfpanellistpressed)":"var(--shelfpanellist)",
              border:book[0]==bookId?"1px solid var(--shelfpanellistpressedborder)":"1px solid var(--shelfpanellistborder)",
              transform:book[0]==bookId?"translateY(0.3rem)":"translateY(0px)",
@@ -1078,8 +1081,15 @@ setPreventResubmitBook(false)
         <div className="forty-sixty">
         {bookSubjectLinksDisplay.join(", ")}
         <textarea className="form-control"  id="subjectLinks" form="SubmissionForm" rows={4} value={subjectLinks}
-         onChange={(e)=>setSubjectLinks(e.target.value.split(/[、,]\s*/))} placeholder="subject Links. Separate with commas"/>
+         onChange={(e)=>setSubjectLinks(e.target.value.split(/[、,,،，]\s*/))} placeholder="subject Links. Separate with commas"/>
          </div>
+
+
+         <label htmlFor="contentKeywords">content keywords:</label>
+         <div className="forty-sixty">
+         {bookContentKeywordsDisplay.join(", ")}
+       <textarea className="form-control" rows={4} form={`${author}form`}    id="contentKeywords" value={contentKeywords} onChange={(e)=>setContentKeywords(e.target.value.split(/[、,,،，]\s*/))} placeholder="content keywords"/>
+       </div>
 
     </div>
            <div className="translation-section">

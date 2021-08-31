@@ -5,7 +5,7 @@ import MultiSelect from "react-multi-select-component";
 
 
 const SubmissionForm = ({toAdd, stripLabels,onSearch, languageSetting, formToggleOn }) => {
-
+  const [contentKeywords, setContentKeywords] = useState([])//choose from main interests,notable ideas
   const [shelfTitle, setShelfTitle] = useState('')
   const [shelfDescription, setShelfDescription] = useState('')
   const [id, setId] =  useState('')
@@ -939,6 +939,7 @@ setShelfLanguage([addLabel[0]])
       bookHighlights:bookHighlights,
       earliestPublicationYear:earliestPublicationYear,
       bookLength:bookLength,
+      contentKeywords:contentKeywords,
       languageVersions:stripLabels(languageVersions),
       shelfLanguage:stripLabels(shelfLanguage)[0],
       previewLanguage:stripLabels(previewLanguage)[0],
@@ -955,6 +956,7 @@ setShelfLanguage([addLabel[0]])
       language:stripLabels(previewLanguage)[0],
       googleId:id,
       shelfId:shelfId,
+      contentKeywords:contentKeywords,
       languageVersions:stripLabels(languageVersions),
       earliestPublicationYear:earliestPublicationYear,
       subjectLinks:subjectLinks,
@@ -1045,7 +1047,15 @@ id="previewLanguage"
                    <label htmlFor="bookHighlights">highlights</label>
                    <textarea className="form-control" type="text" id="bookHighlights" value={bookHighlights}
                     onChange={(e)=>setBookHighlights(e.target.value)} placeholder="one or two paragraphs from the book"/>
-                      <label htmlFor="selectLanguageVersions">Select Language Versions:</label>
+
+                    <label htmlFor="subjectLinks">Wikipedia subject pages:</label>
+                    <textarea className="form-control" rows={4}  form={`${author}form`}   id="subjectLinks" value={subjectLinks}
+                   onChange={(e)=>setSubjectLinks(e.target.value.split(/[、,,،，]\s*/))} placeholder="separate by comma"/>
+
+                  <label htmlFor="contentKeywords">content keywords:</label>
+                <textarea className="form-control" rows={4} form={`${author}form`}    id="contentKeywords" value={contentKeywords} onChange={(e)=>setContentKeywords(e.target.value.split(/[、,,،，]\s*/))} placeholder="content keywords"/>
+                <label htmlFor="selectLanguageVersions">Select Language Versions:</label>
+
                 <MultiSelect
                 id="selectLanguageVersions"
                       options={selectLanguageVersions}
@@ -1058,7 +1068,8 @@ id="previewLanguage"
                  </div>
                   <input  className="btn lightbtn" type="submit" style={{backgroundColor:preventResubmitShelf?"var(--inactive)":"var(--lightactionbtn)", color:preventResubmitShelf?"var(--shelfpanellistborder)":"var(--lightactionbtntext)",boxShadow:preventResubmitShelf?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateShelf(e)}} value="Submit Shelf and Book"/>
 
-      {toAdd && toAdd.volumeInfo.authors?toAdd.volumeInfo.authors.map(author=> <NewAuthorWiki author={author} key={author} toAdd={toAdd} stripLabels={stripLabels} setSubjectLinks={setSubjectLinks} previewLanguage={previewLanguage} subjectLinks={subjectLinks} formToggleOn={formToggleOn}/>):<NewAuthorWiki stripLabels={stripLabels} toAdd={toAdd} setSubjectLinks={setSubjectLinks} subjectLinks={subjectLinks} previewLanguage={previewLanguage} formToggleOn={formToggleOn}/>}
+
+      {toAdd && toAdd.volumeInfo.authors?toAdd.volumeInfo.authors.map(author=> <NewAuthorWiki author={author} key={author} toAdd={toAdd} stripLabels={stripLabels} setSubjectLinks={setSubjectLinks} contentKeywords={contentKeywords} setContentKeywords={setContentKeywords} previewLanguage={previewLanguage} subjectLinks={subjectLinks} formToggleOn={formToggleOn}/>):<NewAuthorWiki stripLabels={stripLabels} toAdd={toAdd} setSubjectLinks={setSubjectLinks} subjectLinks={subjectLinks}  contentKeywords={contentKeywords} setContentKeywords={setContentKeywords} previewLanguage={previewLanguage} formToggleOn={formToggleOn}/>}
 
 
 
