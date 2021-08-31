@@ -1,8 +1,8 @@
 import {useState} from 'react'
 
 const SearchForm = ({type,placeholder,onSearch, setLanguageSetting, languageSetting, results}) => {
-  const [title, setTitle] =  useState('the')
-  const [author, setAuthor] =  useState('beauvoir')
+  const [title, setTitle] =  useState('')
+  const [author, setAuthor] =  useState('')
   const [isbn, setIsbn] =  useState('')
   const [previewFilter, setPreviewFilter] = useState(true)
 

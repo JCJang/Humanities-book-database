@@ -955,7 +955,7 @@ setShelfLanguage([addLabel[0]])
       language:stripLabels(previewLanguage)[0],
       googleId:id,
       shelfId:shelfId,
-      languageVersions:languageVersions,
+      languageVersions:stripLabels(languageVersions),
       earliestPublicationYear:earliestPublicationYear,
       subjectLinks:subjectLinks,
       bookTitle:title,

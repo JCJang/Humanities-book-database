@@ -1051,6 +1051,12 @@ const selectAuthorCountry = [
 
 //get data
 useEffect(()=>{
+  fetchAuthorWikiData(authorWikiTitle)
+  fetchAuthorImage(authorWikiTitle)
+fetchAuthorWikiUrl(authorWikiTitle)
+}, [authorWikiTitle,previewLanguage])
+
+useEffect(()=>{
   fetchAuthorWikiData(author)
   fetchAuthorImage(author)
 fetchAuthorWikiUrl(author)
@@ -1255,51 +1261,51 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
 
         <label htmlFor="timelineLinks">Wikipedia timeline pages:</label>
         <textarea className="form-control" rows={4} form={`${author}form`}  id="timelineLinks" value={timelineLinks}
-         onChange={(e)=>setTimelineLinks([e.target.value])} placeholder="separate by comma"/>
+         onChange={(e)=>setTimelineLinks(e.target.value.split(/[、,]\s*/))} placeholder="separate by comma"/>
 
         <label htmlFor="subjectLinks">Wikipedia subject pages:</label>
         <textarea className="form-control" rows={4}  form={`${author}form`}   id="subjectLinks" value={subjectLinks}
-         onChange={(e)=>setSubjectLinks([e.target.value])} placeholder="separate by comma"/>
+         onChange={(e)=>setSubjectLinks(e.target.value.split(/[、,]\s*/))} placeholder="separate by comma"/>
 
       <label htmlFor="contentKeywords">content keywords:</label>
       <textarea className="form-control" rows={4} form={`${author}form`}    id="contentKeywords" value={contentKeywords}
-       onChange={(e)=>setContentKeywords([e.target.value])} placeholder="content keywords"/>
+       onChange={(e)=>setContentKeywords(e.target.value.split(/[、,]\s*/))} placeholder="content keywords"/>
        <label htmlFor="authorInfluences">Influences</label>
        <textarea className="form-control" rows={4}  form={`${author}form`}    id="authorInfluences" value={authorInfluences}
-       onChange={(e)=>setAuthorInfluences([e.target.value])} placeholder={`${author} was influenced by these people`} />
+       onChange={(e)=>setAuthorInfluences(e.target.value.split(/[、,]\s*/))} placeholder={`${author} was influenced by these people`} />
 
        <label htmlFor="authorInfluenced">authorInfluenced</label>
        <textarea className="form-control" rows={4}  form={`${author}form`}  id="authorInfluenced" value={authorInfluenced}
-       onChange={(e)=>setAuthorInfluenced([e.target.value])} placeholder={`${author}'s thought influenced these people`}/>
+       onChange={(e)=>setAuthorInfluenced(e.target.value.split(/[、,]\s*/))} placeholder={`${author}'s thought influenced these people`}/>
        </div>
     <div className="form-section readOnly" style={{display:previewAuthorWiki?"none":"grid"}}>
 
         <label htmlFor={`${author}url`}>Wikipedia Link for {author}:</label>
-        <input className="form-control" type="text" value={authorWikiUrl} placeholder="wikipedia link" readOnly="readOnly" />
+        <input className="form-control" type="text" value={authorWikiUrl} onChange={(e)=>setAuthorWikiUrl(e.target.value)} placeholder="wikipedia link"  />
 
     <label htmlFor="authorBgKeywords">Author Background Keywords</label>
     <textarea className="form-control" rows={4}  form={`${author}form`}    id="authorBgKeywords" value={authorBgKeywords}
-    onChange={(e)=>setAuthorBgKeywords(e.target.value)} placeholder="Author Background Keywords" readOnly="readOnly"/>
+    onChange={(e)=>setAuthorBgKeywords(e.target.value.split(/[、,]\s*/))} placeholder="Author Background Keywords" />
 
     <label htmlFor="authorLifeWorkKeywords">Author Life Work Keywords</label>
     <textarea className="form-control" rows={4}  form={`${author}form`}    id="authorLifeWorkKeywords" value={authorLifeWorkKeywords}
-    onChange={(e)=>setAuthorLifeWorkKeywords(e.target.value)} placeholder="Author Life Work Keywords" readOnly="readOnly"/>
+    onChange={(e)=>setAuthorLifeWorkKeywords(e.target.value.split(/[、,]\s*/))} placeholder="Author Life Work Keywords" />
 
     <label htmlFor="authorWikiExtract">Summary</label>
     <textarea className="form-control" rows={4} form={`${author}form`}   id="authorWikiExtract" value={authorWikiExtract}
-    onChange={(e)=>setAuthorWikiExtract(e.target.value)} placeholder="extract from wikipedia page" readOnly="readOnly"/>
+    onChange={(e)=>setAuthorWikiExtract(e.target.value)} placeholder="extract from wikipedia page" />
 
     <label htmlFor="authorWikiCategory">Author Categories</label>
     <textarea className="form-control" rows={4}  form={`${author}form`}   id="authorWikiCategory" value={authorWikiCategory}
-    onChange={(e)=>setAuthorWikiCategory(e.target.value)} placeholder="author categories" readOnly="readOnly"/>
+    onChange={(e)=>setAuthorWikiCategory(e.target.value.split(/[、,]\s*/))} placeholder="author categories" />
 
     <label htmlFor="authorWikiLanglinks">langlinks</label>
     <input className="form-control" type="text" id="authorWikiLanglinks" value={authorWikiLanglinks}
-    onChange={(e)=>setAuthorWikiLanglinks(e.target.value)} placeholder="author langlinks" readOnly="readOnly"/>
+    onChange={(e)=>setAuthorWikiLanglinks(e.target.value)} placeholder="author langlinks" />
 
     <label htmlFor="authorWikiImage">authorWikiImage</label>
     <input className="form-control" type="text" id="authorWikiImage" value={authorWikiImage}
-    onChange={(e)=>setAuthorWikiImage(e.target.value)} placeholder="author image url" readOnly="readOnly"/>
+    onChange={(e)=>setAuthorWikiImage(e.target.value)} placeholder="author image url" />
 
 
     <input  className="btn lightbtn" type="submit" style={{backgroundColor:preventResubmitAuthor?"var(--inactive)":"var(--lightactionbtn)", color:preventResubmitAuthor?"var(--shelfpanellistborder)":"var(--lightactionbtntext)",boxShadow:preventResubmitAuthor?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateAuthor(e)}} value="Submit this Author"/>

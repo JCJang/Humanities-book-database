@@ -1015,7 +1015,7 @@ id="translatingInto"
     <div className="forty-sixty">
     {mongoAuthor[2].timelineLinks}
     <textarea className="form-control" rows={4} form={`${author}form`}  id="timelineLinks" value={timelineLinks}
-         onChange={(e)=>setTimelineLinks([e.target.value])} placeholder="separate by comma"/>
+         onChange={(e)=>setTimelineLinks(e.target.value.split(/[、,]\s*/))} placeholder="separate by comma"/>
          </div>
          </div>)
     }
@@ -1025,7 +1025,7 @@ id="translatingInto"
 <label htmlFor="authorInfluenced">Author Influenced:</label>
      <div className="forty-sixty">
          {mongoAuthor[0]} <textarea className="form-control" rows={4} form={`${author}form`}  id="authorInfluenced" value={authorInfluenced}
-      onChange={(e)=>setAuthorInfluenced([e.target.value])} placeholder="separate by comma"/>
+      onChange={(e)=>setAuthorInfluenced(e.target.value.split(/[、,]\s*/))} placeholder="separate by comma"/>
       </div>
       </div>)}
 
@@ -1035,7 +1035,7 @@ id="translatingInto"
     <div className="forty-sixty">
     {mongoAuthor[1].join(", ")}
   <textarea className="form-control" rows={4} form={`${author}form`}  id="authorInfluences" value={authorInfluences}
-   onChange={(e)=>setAuthorInfluences([e.target.value])} placeholder="separate by comma"/>
+   onChange={(e)=>setAuthorInfluences(e.target.value.split(/[、,]\s*/))} placeholder="separate by comma"/>
     </div>
     </div>)}
 
@@ -1046,7 +1046,7 @@ id="translatingInto"
     <div className="forty-sixty">
     {mongoAuthor[2].authorBgKeywords.join(", ")}
     <textarea className="form-control" rows={4}  form={`${author}form`}    id="authorBgKeywords" value={authorBgKeywords}
-    onChange={(e)=>setAuthorBgKeywords(e.target.value)} placeholder="Author Background Keywords" />
+    onChange={(e)=>setAuthorBgKeywords(e.target.value.split(/[、,]\s*/))} placeholder="Author Background Keywords" />
     </div>
     </div>)}
 
@@ -1056,7 +1056,7 @@ id="translatingInto"
     <div className="forty-sixty">
     {mongoAuthor[2].authorLifeWorkKeywords.join(", ")}
     <textarea className="form-control" rows={4}  form={`${author}form`}    id="authorLifeWorkKeywords" value={authorLifeWorkKeywords}
-    onChange={(e)=>setAuthorLifeWorkKeywords(e.target.value)} placeholder="Author Life Work Keywords" />
+    onChange={(e)=>setAuthorLifeWorkKeywords(e.target.value.split(/[、,]\s*/))} placeholder="Author Life Work Keywords" />
     </div>
     </div>)}
 
@@ -1077,7 +1077,7 @@ id="translatingInto"
     <div className="forty-sixty">
     {mongoAuthor[2].authorWikiCategory.join(", ")}
     <textarea className="form-control" rows={4} form={`${author}form`}   id="authorWikiCategory" value={authorWikiCategory}
-    onChange={(e)=>setAuthorWikiCategory(e.target.value)} placeholder="author categories" />
+    onChange={(e)=>setAuthorWikiCategory(e.target.value.split(/[、,]\s*/))} placeholder="author categories" />
     </div>
     </div>)}
 
