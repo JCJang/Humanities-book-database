@@ -12,7 +12,7 @@ import {Route, BrowserRouter as Router} from 'react-router-dom'
 const Access =()=>{
   const [shelfResults, setShelfResults] = useState(false)
   const [selectedShelf, setSelectedShelf] = useState(false)
-  const [shelfId,setShelfId] = useState(false)
+  const [shelfId,setShelfId] = useState('')
     const [bookIdentifier, setBookIdentifier] = useState(false);
     const [isbnOrId, setIsbnOrId] = useState(true)
     const [formToggleOn, setFormToggleOn] = useState(false)
@@ -20,6 +20,7 @@ const Access =()=>{
     const [languageSetting, setLanguageSetting] = useState('en')
     const [allShelves,setAllShelves]=useState([])
     const [shelfLanguage, setShelfLanguage] = useState(false)
+    const [columnFocus, setColumnFocus] = useState('init')
 
      const toggleForm = (e) =>{
        e.preventDefault()
@@ -47,8 +48,18 @@ const Access =()=>{
           useEffect(()=>{document.getElementById("google-script").addEventListener('load', ()=>setGoogleScriptLoaded(true))},[])
 
     useEffect(()=>{
-      
-      setSelectedShelf(shelfId)
+      if(shelfId.length<10){return}
+      Axios.post("http://localhost:3001/openedshelf",{
+        shelfLanguage:shelfLanguage[0]?stripLabels(shelfLanguage)[0]:languageSetting,
+        shelfId:shelfId
+      })
+      .then((res) => {
+setSelectedShelf([res.data[0].editions[0].details.shelfTitle, res.data[0].editions[0].details.shelfDescription, res.data[0].shelfSubjects, res.data[0]._id, res.data[0].shelfBooks.map((x) => {
+      return [[x.languageVersions, x.earliestPublicationYear, x.editions[0].details.bookTitle, x.editions[0].details.bookAuthor, x.editions[0].details.subjectLinks, x.editions[0].details.contentKeywords, x.editions[0].details.bookHighlights, x.editions[0].details.bookLength, x.editions[0].details.previewStatus], [x.editions[0].details.isbn13, x.editions[0].details.googleId]]
+    })])})
+    .then((res)=>{
+      console.log(selectedShelf)
+    })
     },[shelfId])
 
     // useEffect(()=> {
@@ -83,15 +94,15 @@ const Access =()=>{
   return (
 
     <div className="Row">
-        <div  className=" Column col-1">
+        <div  className=" Column col-1" style={{width:columnFocus==="init"?"100%":columnFocus==="shelfpanel"?"30%":"5.6rem"}} onClick={()=>setColumnFocus("shelfpanel")}>
 
-        <SearchForm allShelves={allShelves} setShelfLanguage={setShelfLanguage} shelfId={shelfId} setShelfId={setShelfId} selectedShelf={selectedShelf} shelfLanguage={shelfLanguage} setSelectedShelf={setSelectedShelf}/>
+        <SearchForm allShelves={allShelves} columnFocus={columnFocus} setShelfLanguage={setShelfLanguage} shelfId={shelfId} setShelfId={setShelfId} selectedShelf={selectedShelf} shelfLanguage={shelfLanguage} setSelectedShelf={setSelectedShelf}/>
 
         </div>
-        <div className="Column col-2">
-          <OpenedShelf selectedShelf={selectedShelf}/>
+        <div className="Column col-2"  style={{width:columnFocus==="shelfpanel"?"100%":columnFocus==="detailspanel"?"30%":"5.6rem"}} onClick={()=>setColumnFocus("shelfpanel")}>
+          {selectedShelf && <OpenedShelf selectedShelf={selectedShelf}/>}
           </div>
-        <div className="Column col-3">
+        <div className="Column col-3"  style={{width:columnFocus==="detailspanel"?"100%":"5.6rem"}} onClick={()=>setColumnFocus("detailspanel")}>
             <GoogleBooksViewer bookIdentifier={bookIdentifier} formToggleOn={formToggleOn} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId}/>
 
         </div>
