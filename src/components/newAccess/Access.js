@@ -15,17 +15,12 @@ const Access =()=>{
   const [shelfId,setShelfId] = useState('')
     const [bookIdentifier, setBookIdentifier] = useState(false);
     const [isbnOrId, setIsbnOrId] = useState(true)
-    const [formToggleOn, setFormToggleOn] = useState(false)
     const [googleScriptLoaded, setGoogleScriptLoaded] = useState(false);
     const [languageSetting, setLanguageSetting] = useState('en')
     const [allShelves,setAllShelves]=useState([])
     const [shelfLanguage, setShelfLanguage] = useState(false)
     const [columnFocus, setColumnFocus] = useState('init')
 
-     const toggleForm = (e) =>{
-       e.preventDefault()
-       setFormToggleOn(!formToggleOn)
-     }
 
      function stripLabels(a){
        const result = []
@@ -101,10 +96,10 @@ setSelectedShelf([res.data[0].editions[0].details.shelfTitle, res.data[0].editio
 
         </div>
         <div className="col-2"  style={{width:columnFocus==="shelfpanel"?"var(--focusedpanel)":columnFocus==="detailspanel"?"30vw":"5.6rem"}} onClick={()=>setColumnFocus("shelfpanel")}>
-          {selectedShelf && <OpenedShelf selectedShelf={selectedShelf}/>}
+          {selectedShelf && <OpenedShelf columnFocus={columnFocus} setIsbnOrId={setIsbnOrId} setBookIdentifier={setBookIdentifier} selectedShelf={selectedShelf}/>}
           </div>
         <div className="col-3"  style={{width:columnFocus==="detailspanel"?"var(--focusedpanel)":"5.6rem"}} onClick={()=>setColumnFocus("detailspanel")}>
-            <GoogleBooksViewer bookIdentifier={bookIdentifier} formToggleOn={formToggleOn} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId}/>
+            <GoogleBooksViewer columnFocus={columnFocus} bookIdentifier={bookIdentifier} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId}/>
 
         </div>
     </div>

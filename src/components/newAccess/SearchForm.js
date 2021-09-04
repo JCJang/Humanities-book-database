@@ -31,6 +31,7 @@ useEffect(()=>{
 
         <input className="form-control" type="text" id="shelfQuery" value={shelfQuery}
          onChange={(e)=>setShelfQuery(e.target.value)}/>
+         <div style={{height:"25rem",overflowY:"auto"}}>
 {shelfResults && shelfResults.map((shelf)=><div onClick={()=>{setShelfId(shelf[3]); setShelfTitle(shelf[0])}} key={shelf[3]}
 style={{color:"searchpaneltext", backgroundColor:shelf[3]==shelfId?"var(--shelfpanellist)":"var(--searchpanellist)",
 border:shelf[3]==shelfId?"1px solid var(--shelfpanellistborder)":"1px solid var(--searchpanellist)",
@@ -46,6 +47,7 @@ margin:"1rem 0 0 0", padding:"0.6rem 1rem"}}>
   })}
   </div>
 </div>)}
+</div>
 
     </div>
     <h6 style={{lineHeight:"0px",width:"5.6rem", height:"100vh", writingMode:"vertical-lr", transform:"rotate(180deg)", transformOrigin:"center center"}}>

@@ -1,12 +1,36 @@
 
 import './Add.css';
 import {useState,useEffect} from 'react'
-const OpenedShelf = ({selectedShelf}) => {
+const OpenedShelf = ({selectedShelf, setBookIdentifier, columnFocus,setIsbnOrId}) => {
 
   const [googleId, setGoogleId] = useState("")
   const [isbn, setIsbn] = useState("")
   const [contentOrBgKeywords,setContentOrBgKeywords]=useState(true)
   const [selectedBook,setSelectedBook] = useState([])
+
+
+  //set book identifer for GoogleBooksViewer upon book change
+    useEffect(()=>{
+        if(isbn.length>1){
+          console.log(isbn)
+          setBookIdentifier(isbn)
+          setIsbnOrId(true)
+        }else{
+          if(googleId.length>1)
+          setBookIdentifier(googleId)
+          setIsbnOrId(false)
+        }
+    },[googleId,isbn])
+
+//autoset selectedBook as first book upon shelfChange
+
+  useEffect(()=>{
+    setSelectedBook(selectedShelf[4][0][0])
+    setGoogleId(selectedShelf[4][0][1][1])
+    setIsbn(selectedShelf[4][0][1][0])
+  },[selectedShelf])
+
+
   return (
       <div style={{color:"var(--shelfpaneltext)",display:"flex"}}>
 
@@ -18,9 +42,9 @@ const OpenedShelf = ({selectedShelf}) => {
         <p onClick={()=>{setContentOrBgKeywords(true)}} style={{backgroundColor:contentOrBgKeywords?"white":"var(--shelfpanellistborder)",color:contentOrBgKeywords?"var(--shelfpanellistborder)":"white", borderRadius:"5px 0 0 5px", padding:"0 1rem"}}>Content</p>
         <p onClick={()=>{setContentOrBgKeywords(false)}} style={{backgroundColor:contentOrBgKeywords?"var(--shelfpanellistborder)":"white", color:contentOrBgKeywords?"white":"var(--shelfpanellistborder)", borderRadius:"0 5px 5px 0", padding:"0 1rem"}}>Background</p>
         </div>
-    <div style={{overflowY:"auto"}}>
+    <div style={{height:"80%",overflowY:"auto"}}>
       {selectedShelf[4].map((book)=>{
-        return <div onClick={()=>{setGoogleId(book[1][1]); setIsbn(book[1][2]);setSelectedBook(book[0])}}
+        return <div onClick={()=>{setGoogleId(book[1][1]); setIsbn(book[1][0]);setSelectedBook(book[0])}}
          style={{
         color:"searchpaneltext", backgroundColor:book[1][1]===googleId?"var(--shelfpanellistpressed)":"var(--shelfpanellist)",
         border:book[1][1]==googleId?"1px solid var(--shelfpanellistborder)":"1px solid var(--shelfpanellistpressedborder)",
@@ -34,7 +58,7 @@ const OpenedShelf = ({selectedShelf}) => {
       })}
     </div>
       </div>
-      <div className="Column" style={{padding:"0 5.6rem 0 0",flex:"2 2"}}>
+      <div className="Column" style={{visibility:columnFocus==="shelfpanel"?"visible":"hidden",padding:"0 5.6rem 0 0",flex:"2 2"}}>
       <h4>{selectedBook[2]}</h4>
       <div className="subtitle1">
       {selectedBook[3] && selectedBook[3].join(", ")}
@@ -56,7 +80,7 @@ const OpenedShelf = ({selectedShelf}) => {
       <div className="detailoverline" style={{textAlign:"center"}}>
         HIGHLIGHTS
       </div>
-      <div style={{ textAlign:"left"}}>
+      <div style={{ textAlign:"left" ,height:"20rem",overflowY:"auto"}}>
       {selectedBook[6]}
     </div>
   </div>}
