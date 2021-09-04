@@ -15,7 +15,7 @@ useEffect(()=>{
 },[shelfQuery,allShelves])
 
   return (
-    <div>
+    <div style={{color:"var(--searchpaneltext)"}}>
     <div style={{display:"flex",
     flexDirection: "row",width:"100%"}}>
     <div style={{width:"calc(100% - 8.4rem)",display:columnFocus==="detailspanel"?"none":"flex",margin:"0 0 0 2.8rem",
@@ -36,20 +36,20 @@ style={{color:"searchpaneltext", backgroundColor:shelf[3]==shelfId?"var(--shelfp
 border:shelf[3]==shelfId?"1px solid var(--shelfpanellistborder)":"1px solid var(--searchpanellist)",
 transform:shelf[3]==shelfId?"translateY(0.3rem)":"translateY(0px)",
 boxShadow:shelf[3]==shelfId?"none":"var(--heavyshadow)",
-margin:"1rem 0rem"}}>
+margin:"1rem 0 0 0", padding:"0.6rem 1rem"}}>
   <div className="subtitle1">
 {shelf[0]}
   </div>
-  <div className="Row">
+  <div>
   {shelf[2].map((tag)=>{
-  return <p style={{fontSize:"0.5rem", margin:"1rem"}}>{tag}</p>
+  return <p style={{fontSize:"0.8rem", margin:"0.5rem 0"}}>{tag.slice(2)}</p>
   })}
   </div>
 </div>)}
 
     </div>
     <h6 style={{lineHeight:"0px",width:"5.6rem", height:"100vh", writingMode:"vertical-lr", transform:"rotate(180deg)", transformOrigin:"center center"}}>
-    {shelfTitle}
+    {shelfTitle.slice(0,30)}
     </h6>
     </div>
     </div>
