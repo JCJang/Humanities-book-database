@@ -47,6 +47,7 @@ const Access =()=>{
 
           useEffect(()=>{document.getElementById("google-script").addEventListener('load', ()=>setGoogleScriptLoaded(true))},[])
 
+
     useEffect(()=>{
       if(shelfId.length<10){return}
       Axios.post("http://localhost:3001/openedshelf",{
@@ -94,15 +95,15 @@ setSelectedShelf([res.data[0].editions[0].details.shelfTitle, res.data[0].editio
   return (
 
     <div className="Row">
-        <div  className=" Column col-1" style={{width:columnFocus==="init"?"100%":columnFocus==="shelfpanel"?"30%":"5.6rem"}} onClick={()=>setColumnFocus("shelfpanel")}>
+        <div  className="col-1" style={{width:columnFocus==="init"?"var(--initpanel)":columnFocus==="shelfpanel"?"30vw":"5.6rem"}} onClick={()=>setColumnFocus("shelfpanel")}>
 
         <SearchForm allShelves={allShelves} columnFocus={columnFocus} setShelfLanguage={setShelfLanguage} shelfId={shelfId} setShelfId={setShelfId} selectedShelf={selectedShelf} shelfLanguage={shelfLanguage} setSelectedShelf={setSelectedShelf}/>
 
         </div>
-        <div className="Column col-2"  style={{width:columnFocus==="shelfpanel"?"100%":columnFocus==="detailspanel"?"30%":"5.6rem"}} onClick={()=>setColumnFocus("shelfpanel")}>
+        <div className="col-2"  style={{width:columnFocus==="shelfpanel"?"var(--focusedpanel)":columnFocus==="detailspanel"?"30vw":"5.6rem"}} onClick={()=>setColumnFocus("shelfpanel")}>
           {selectedShelf && <OpenedShelf selectedShelf={selectedShelf}/>}
           </div>
-        <div className="Column col-3"  style={{width:columnFocus==="detailspanel"?"100%":"5.6rem"}} onClick={()=>setColumnFocus("detailspanel")}>
+        <div className="col-3"  style={{width:columnFocus==="detailspanel"?"var(--focusedpanel)":"5.6rem"}} onClick={()=>setColumnFocus("detailspanel")}>
             <GoogleBooksViewer bookIdentifier={bookIdentifier} formToggleOn={formToggleOn} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId}/>
 
         </div>

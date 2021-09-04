@@ -8,10 +8,9 @@ const OpenedShelf = ({selectedShelf}) => {
   const [contentOrBgKeywords,setContentOrBgKeywords]=useState(true)
   const [selectedBook,setSelectedBook] = useState([])
   return (
-    <div>
       <div style={{color:"var(--shelfpaneltext)",display:"flex"}}>
 
-      <div style={{margin:"1rem 2.8rem", flex:"1 1"}}>
+      <div style={{padding:"1rem 2.8rem", flex:"1 1"}}>
         <div>
         <p className="subtitle1">Keyword Display</p>
         </div>
@@ -35,7 +34,7 @@ const OpenedShelf = ({selectedShelf}) => {
       })}
     </div>
       </div>
-      <div className="Column" style={{margin:"0 5.6rem 0 0",flex:"2 2"}}>
+      <div className="Column" style={{padding:"0 5.6rem 0 0",flex:"2 2"}}>
       <h4>{selectedBook[2]}</h4>
       <div className="subtitle1">
       {selectedBook[3] && selectedBook[3].join(", ")}
@@ -63,7 +62,6 @@ const OpenedShelf = ({selectedShelf}) => {
   </div>}
       </div>
       </div>
-    </div>
 
   )
 }
