@@ -1,7 +1,7 @@
 import React from 'react'
 import {useState, useEffect} from 'react'
 /*referencing Christina Sohn from https://chsohn15.medium.com/integrating-google-books-embedded-viewer-api-into-a-react-app-a81fde35c14d*/
-  const GoogleBooksViewer = ({bookIdentifier, columnFocus, isbnOrId, googleScriptLoaded}) => {
+  const GoogleBooksViewer = ({bookIdentifier, displayBookTitle,columnFocus, isbnOrId, googleScriptLoaded}) => {
      // Create alert message if book not found in Google Database
 
      //if isbn is not working, use google id as backup.
@@ -61,10 +61,16 @@ import {useState, useEffect} from 'react'
 
 
          return (
+           <div style={{color:"var(--detailspaneltext)",display:"flex",height:"var(--panelheight)"}}>
             <div  style={{display:"flex", justifyContent:"center", overflow:"hidden",position:"relative"}}>
-              <div id="viewerCanvas" style={{position:columnFocus==="detailspanel"?"relative":"absolute", height:"var(--panelheight)",width:"60vw", backgroundColor:"(var(--detailspanel))", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem"}}></div>
-              { googleScriptLoaded===false &&"loading script"}
-            </div>)
+              <div id="viewerCanvas" style={{position:columnFocus==="detailspanel"?"relative":"absolute", height:"var(--panelheight)",width:"60vw", backgroundColor:"(var(--detailspanel))", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem"}}>
+              </div>
+              { googleScriptLoaded===false &&"please reload the page"}
+              </div>
+            <h5 style={{width:"4rem", alignSelf:"center", height:"80vh", writingMode:"vertical-lr", transform:"rotate(180deg)", transformOrigin:"center center"}}>
+            {displayBookTitle}</h5>
+          </div>
+        )
   ;}
 
 

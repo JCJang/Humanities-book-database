@@ -33,18 +33,19 @@ useEffect(()=>{
         <input className="form-control" type="text" id="shelfQuery" value={shelfQuery}
          onChange={(e)=>setShelfQuery(e.target.value)}/>
          </div>
-         <div style={{overflowY:"auto"}}>
-{shelfResults && shelfResults.map((shelf)=><div onClick={()=>{setShelfId(shelf[3]); setShelfTitle(shelf[0])}} key={shelf[3]}
+         <div className="noScrollBar" style={{overflowY:"auto"}}>
+{shelfResults && shelfResults.map((shelf)=><div onClick={()=>{setShelfId(shelf[3]); setShelfTitle(shelf[0])}} className="transition" key={shelf[3]}
 style={{color:"searchpaneltext", backgroundColor:shelf[3]==shelfId?"white":"var(--searchpanellist)",
 border:shelf[3]==shelfId?"1px solid var(--searchpanellstborderpressed)":"1px solid var(--searchpanellistborder)",
 boxShadow:"var(--heavyshadow)",
 margin:"1rem 0 0 0", padding:"0.6rem 1rem"}}>
-  <div className={shelf[3]==shelfId?"h6":"subtitle1"}>
+  <div style={{fontFamily:'Jost', fontWeight:shelf[3]==shelfId?"500":"400",fontSize:shelf[3]==shelfId?"1.35rem":"1.25rem",
+  textTransform: "capitalize", letterSpacing:"0.01rem"}}>
 {shelf[0]}
   </div>
   <div>
   {shelf[2].map((tag)=>{
-  return <p className={shelf[3]==shelfId?"subtitle2":"tag"} style={{display:"inline-block", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.1rem"}}>{tag.slice(2)}</p>
+  return <p className="tag" style={{display:"inline-block", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.1rem"}}>{tag.slice(2)}</p>
   })}
   </div>
 </div>)}

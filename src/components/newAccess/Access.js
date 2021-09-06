@@ -13,7 +13,10 @@ const Access =()=>{
   const [shelfResults, setShelfResults] = useState(false)
   const [selectedShelf, setSelectedShelf] = useState(false)
   const [shelfId,setShelfId] = useState('')
+
     const [bookIdentifier, setBookIdentifier] = useState(false);
+    const [displayBookTitle,setDisplayBookTitle] = useState('');
+
     const [isbnOrId, setIsbnOrId] = useState(true)
     const [googleScriptLoaded, setGoogleScriptLoaded] = useState(false);
     const [languageSetting, setLanguageSetting] = useState('en')
@@ -96,10 +99,10 @@ setSelectedShelf([res.data[0].editions[0].details.shelfTitle, res.data[0].editio
 
         </div>
         <div className="col-2"  style={{width:columnFocus==="shelfpanel"?"var(--focusedpanel)":columnFocus==="detailspanel"?"30vw":"4rem",boxShadow:"var(--panelshadow)",height:"var(--panelheight)"}} onClick={()=>setColumnFocus("shelfpanel")}>
-          {selectedShelf && <OpenedShelf columnFocus={columnFocus} setIsbnOrId={setIsbnOrId} setBookIdentifier={setBookIdentifier} selectedShelf={selectedShelf}/>}
+          {selectedShelf && <OpenedShelf columnFocus={columnFocus} setIsbnOrId={setIsbnOrId} setBookIdentifier={setBookIdentifier} selectedShelf={selectedShelf} setDisplayBookTitle={setDisplayBookTitle}/>}
           </div>
         <div className="col-3"  style={{width:columnFocus==="detailspanel"?"var(--focusedpanel)":"4rem",boxShadow:"var(--panelshadow)",height:"var(--panelheight)"}} onClick={()=>setColumnFocus("detailspanel")}>
-            <GoogleBooksViewer columnFocus={columnFocus} bookIdentifier={bookIdentifier} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId}/>
+            <GoogleBooksViewer columnFocus={columnFocus} bookIdentifier={bookIdentifier} displayBookTitle={displayBookTitle} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId}/>
 
         </div>
     </div>
