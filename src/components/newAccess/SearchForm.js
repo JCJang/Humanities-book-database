@@ -17,9 +17,10 @@ useEffect(()=>{
   return (
     <div style={{color:"var(--searchpaneltext)"}}>
     <div style={{display:"flex",
-    flexDirection: "row",width:"100%"}}>
-    <div style={{width:"calc(100% - 8.4rem)",display:columnFocus==="detailspanel"?"none":"flex",margin:"0 0 0 2.8rem",
+    flexDirection: "row",width:"100%",height:"var(--panelheight)"}}>
+    <div style={{width:"calc(100% - 6rem)",display:columnFocus==="detailspanel"?"none":"flex",margin:"0 0 0 2rem",
     flexDirection: "column"}}>
+      <div style={{height:"minmax(150px,30vh)"}}>
     <h5 className="SearchCaption" style={{font:shelfResults?"var(--main-overline)":"var(--main-headline4)", textTransform: shelfResults?`uppercase`:'', letterSpacing: shelfResults? `0.375rem`:''}}>Ask a question</h5>
 
        <label htmlFor="shelfLanguage">search language:</label>
@@ -31,28 +32,28 @@ useEffect(()=>{
 
         <input className="form-control" type="text" id="shelfQuery" value={shelfQuery}
          onChange={(e)=>setShelfQuery(e.target.value)}/>
-         <div style={{height:"25rem",overflowY:"auto"}}>
+         </div>
+         <div style={{overflowY:"auto"}}>
 {shelfResults && shelfResults.map((shelf)=><div onClick={()=>{setShelfId(shelf[3]); setShelfTitle(shelf[0])}} key={shelf[3]}
-style={{color:"searchpaneltext", backgroundColor:shelf[3]==shelfId?"var(--shelfpanellist)":"var(--searchpanellist)",
+style={{color:"searchpaneltext", backgroundColor:shelf[3]==shelfId?"white":"var(--searchpanellist)",
 border:shelf[3]==shelfId?"1px solid var(--searchpanellstborderpressed)":"1px solid var(--searchpanellistborder)",
-transform:shelf[3]==shelfId?"translateY(0.3rem)":"translateY(0px)",
-boxShadow:shelf[3]==shelfId?"none":"var(--heavyshadow)",
+boxShadow:"var(--heavyshadow)",
 margin:"1rem 0 0 0", padding:"0.6rem 1rem"}}>
-  <div className="subtitle1">
+  <div className={shelf[3]==shelfId?"h6":"subtitle1"}>
 {shelf[0]}
   </div>
   <div>
   {shelf[2].map((tag)=>{
-  return <p style={{fontSize:"0.8rem", margin:"0.5rem 0"}}>{tag.slice(2)}</p>
+  return <p className={shelf[3]==shelfId?"subtitle2":"tag"} style={{display:"inline-block", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.1rem"}}>{tag.slice(2)}</p>
   })}
   </div>
 </div>)}
 </div>
 
     </div>
-    <h6 style={{lineHeight:"0px",width:"5.6rem", height:"100vh", writingMode:"vertical-lr", transform:"rotate(180deg)", transformOrigin:"center center"}}>
+    <h5 style={{width:"4rem", alignSelf:"center", height:"80vh", writingMode:"vertical-lr", transform:"rotate(180deg)", transformOrigin:"center center"}}>
     {shelfTitle.slice(0,30)}
-    </h6>
+    </h5>
     </div>
     </div>
 

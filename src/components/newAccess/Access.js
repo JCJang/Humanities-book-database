@@ -90,15 +90,15 @@ setSelectedShelf([res.data[0].editions[0].details.shelfTitle, res.data[0].editio
   return (
 
     <div className="Row">
-        <div  className="col-1" style={{width:columnFocus==="init"?"var(--initpanel)":columnFocus==="shelfpanel"?"30vw":"5.6rem"}} onClick={()=>setColumnFocus("shelfpanel")}>
+        <div  className="col-1" style={{width:columnFocus==="init"?"var(--initpanel)":columnFocus==="shelfpanel"?"30vw":"4rem",height:"var(--panelheight)"}} onClick={()=>setColumnFocus("shelfpanel")}>
 
         <SearchForm allShelves={allShelves} columnFocus={columnFocus} setShelfLanguage={setShelfLanguage} shelfId={shelfId} setShelfId={setShelfId} selectedShelf={selectedShelf} shelfLanguage={shelfLanguage} setSelectedShelf={setSelectedShelf}/>
 
         </div>
-        <div className="col-2"  style={{width:columnFocus==="shelfpanel"?"var(--focusedpanel)":columnFocus==="detailspanel"?"30vw":"5.6rem"}} onClick={()=>setColumnFocus("shelfpanel")}>
+        <div className="col-2"  style={{width:columnFocus==="shelfpanel"?"var(--focusedpanel)":columnFocus==="detailspanel"?"30vw":"4rem",boxShadow:"var(--panelshadow)",height:"var(--panelheight)"}} onClick={()=>setColumnFocus("shelfpanel")}>
           {selectedShelf && <OpenedShelf columnFocus={columnFocus} setIsbnOrId={setIsbnOrId} setBookIdentifier={setBookIdentifier} selectedShelf={selectedShelf}/>}
           </div>
-        <div className="col-3"  style={{width:columnFocus==="detailspanel"?"var(--focusedpanel)":"5.6rem"}} onClick={()=>setColumnFocus("detailspanel")}>
+        <div className="col-3"  style={{width:columnFocus==="detailspanel"?"var(--focusedpanel)":"4rem",boxShadow:"var(--panelshadow)",height:"var(--panelheight)"}} onClick={()=>setColumnFocus("detailspanel")}>
             <GoogleBooksViewer columnFocus={columnFocus} bookIdentifier={bookIdentifier} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId}/>
 
         </div>

@@ -1026,7 +1026,7 @@ id="previewLanguage"
        onChange={(e)=>setTitle(e.target.value)} placeholder="book title"/>
        <label htmlFor="author">Author(s):</label>
        <textarea className="form-control"  id="author" form="SubmissionForm" rows={4} value={author}
-        onChange={(e)=>setAuthor(e.target.value)} placeholder="book author(s). Should match wikipedia page title. Separate with commas"/>
+        onChange={(e)=>setAuthor(e.target.value.split(/[、,,،，]\s*/))} placeholder="book author(s). Should match wikipedia page title. Separate with commas"/>
         <label htmlFor="earliestPublicationYear">Publication Date</label>
         <input className="form-control" type="number" id="earliestPublicationYear" value={earliestPublicationYear}
          onChange={(e)=>setEarliestPublicationYear(e.target.value)} placeholder="earliest publication year"/>

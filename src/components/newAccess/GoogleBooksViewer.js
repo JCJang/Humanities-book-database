@@ -5,7 +5,7 @@ import {useState, useEffect} from 'react'
      // Create alert message if book not found in Google Database
 
      //if isbn is not working, use google id as backup.
-     function alertNotFound() { alert("preview unavailable")
+     function alertNotFound() { console.log("preview unavailable")
 }
 
 
@@ -62,7 +62,7 @@ import {useState, useEffect} from 'react'
 
          return (
             <div  style={{display:"flex", justifyContent:"center", overflow:"hidden",position:"relative"}}>
-              <div id="viewerCanvas" style={{position:columnFocus==="detailspanel"?"relative":"absolute", height:"50rem",width:"36rem", backgroundColor:"(var(--detailspanel))", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem"}}></div>
+              <div id="viewerCanvas" style={{position:columnFocus==="detailspanel"?"relative":"absolute", height:"var(--panelheight)",width:"60vw", backgroundColor:"(var(--detailspanel))", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem"}}></div>
               { googleScriptLoaded===false &&"loading script"}
             </div>)
   ;}
