@@ -39,8 +39,8 @@ const OpenedShelf = ({selectedShelf, setBookIdentifier, columnFocus,setIsbnOrId}
         <p className="subtitle1">Keyword Display</p>
         </div>
         <div className="Row">
-        <p onClick={()=>{setContentOrBgKeywords(true)}} style={{backgroundColor:contentOrBgKeywords?"white":"var(--shelfpanellistborder)",color:contentOrBgKeywords?"var(--shelfpanellistborder)":"white", borderRadius:"5px 0 0 5px", padding:"0 1rem"}}>Content</p>
-        <p onClick={()=>{setContentOrBgKeywords(false)}} style={{backgroundColor:contentOrBgKeywords?"var(--shelfpanellistborder)":"white", color:contentOrBgKeywords?"white":"var(--shelfpanellistborder)", borderRadius:"0 5px 5px 0", padding:"0 1rem"}}>Background</p>
+        <p onClick={()=>{setContentOrBgKeywords(true)}} style={{backgroundColor:contentOrBgKeywords?"white":"var(--shelfpanellistpressedborder)",color:contentOrBgKeywords?"var(--shelfpaneltext)":"white", borderLeft:"none",border:"1px solid var(--shelfpanellistpressedborder)", borderRadius:"5px 0 0 5px", padding:"0 1rem"}}>Content</p>
+        <p onClick={()=>{setContentOrBgKeywords(false)}} style={{backgroundColor:contentOrBgKeywords?"var(--shelfpaneltext)":"white", color:contentOrBgKeywords?"white":"var(--shelfpaneltext)",borderLeft:"none",border:"1px solid var(--shelfpanellistpressedborder)", borderRadius:"0 5px 5px 0", padding:"0 1rem"}}>Background</p>
         </div>
     <div style={{height:"80%",overflowY:"auto"}}>
       {selectedShelf[4].map((book)=>{

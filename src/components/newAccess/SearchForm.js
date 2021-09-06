@@ -34,7 +34,7 @@ useEffect(()=>{
          <div style={{height:"25rem",overflowY:"auto"}}>
 {shelfResults && shelfResults.map((shelf)=><div onClick={()=>{setShelfId(shelf[3]); setShelfTitle(shelf[0])}} key={shelf[3]}
 style={{color:"searchpaneltext", backgroundColor:shelf[3]==shelfId?"var(--shelfpanellist)":"var(--searchpanellist)",
-border:shelf[3]==shelfId?"1px solid var(--shelfpanellistborder)":"1px solid var(--searchpanellist)",
+border:shelf[3]==shelfId?"1px solid var(--searchpanellstborderpressed)":"1px solid var(--searchpanellistborder)",
 transform:shelf[3]==shelfId?"translateY(0.3rem)":"translateY(0px)",
 boxShadow:shelf[3]==shelfId?"none":"var(--heavyshadow)",
 margin:"1rem 0 0 0", padding:"0.6rem 1rem"}}>
