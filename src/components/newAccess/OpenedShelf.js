@@ -6,7 +6,7 @@ import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 import LaunchRoundedIcon from '@material-ui/icons/LaunchRounded';
 import ArrowForwardRoundedIcon from '@material-ui/icons/ArrowForwardRounded';
 
-import {useState,useRef,useEffect} from 'react'
+import {useState,useEffect} from 'react'
 const OpenedShelf = ({selectedShelf, setBookIdentifier, setDisplayBookTitle,columnFocus,setIsbnOrId}) => {
 
   const [googleId, setGoogleId] = useState("")
@@ -30,8 +30,8 @@ const OpenedShelf = ({selectedShelf, setBookIdentifier, setDisplayBookTitle,colu
   const [copySuccess, setCopySuccess] = useState('');
   const [toCopy, setToCopy] = useState('');
   const [showKeywords, setShowKeywords] = useState(true)
+  const [bookHighlights, setBookHightlights] = useState([])
 
-   const spanRef = useRef(null);
 
    const copyToClipboard = async copyMe => {
        try {
@@ -67,12 +67,36 @@ const OpenedShelf = ({selectedShelf, setBookIdentifier, setDisplayBookTitle,colu
 
 
 useEffect(()=>{
-  if(!selectedShelf.shelfBooks[0]){return}
   setToCopy(`${selectedShelf.shelfBooks[0].bookTitle} by ${selectedShelf.shelfBooks[0].bookAuthor.join(", ")}`)
   setSelectedBook(selectedShelf.shelfBooks[0])
   setGoogleId(selectedShelf.shelfBooks[0].googleId)
   setIsbn(selectedShelf.shelfBooks[0].isbn13)
 },[selectedShelf])
+
+//autoset bookHighlights upon shelf change
+const parseHighlights = () => {
+let  paragraphArr = selectedBook.bookHighlights.split("``")
+if(paragraphArr.length>1){
+  paragraphArr = paragraphArr.slice(1).map(a=>{return a.replace(/\n*/g,"")})
+}
+function splitArray( array ) {
+  const arrayOfArrays = [];
+
+    while (array.length > 0) {
+        let arrayElement = array.splice(0,2);
+        arrayOfArrays.push(arrayElement);
+    }
+    return arrayOfArrays;
+}
+return splitArray(paragraphArr)
+}
+
+useEffect(()=>{
+  const highlights = parseHighlights();
+  console.log(highlights)
+  setBookHightlights(highlights)
+},[selectedBook])
+
 
 
   return (
@@ -112,7 +136,7 @@ useEffect(()=>{
   <div className="Column" style={{width:"auto"}}>
       <div className="subtitle1" style={{padding:"1rem 0"}}>
       {selectedBook.bookAuthor && selectedBook.bookAuthor.join(", ")}
-      {document.queryCommandSupported('copy') && <span ref={spanRef} value={toCopy}><FileCopyOutlinedIcon  style={{margin:"0 0.5rem"}} onClick={()=>{copyToClipboard(toCopy)}}/><span className="caption" style={{color:"var(--shelfpanellistpressedborder)"}}>{copySuccess}</span>
+      {document.queryCommandSupported('copy') && <span  value={toCopy}><FileCopyOutlinedIcon  style={{margin:"0 0.5rem"}} onClick={()=>{copyToClipboard(toCopy)}}/><span className="caption" style={{color:"var(--shelfpanellistpressedborder)"}}>{copySuccess}</span>
     </span>
 }
 </div>
@@ -180,6 +204,7 @@ useEffect(()=>{
       {selectedBook.bookHighlights}
       </div>
       </div>}
+
       <div style={{display:"flex",alignItems:"center",justifyContent:"center"}}>
       <a href="#title" className="Link btn">Back to Top</a>
       </div>
