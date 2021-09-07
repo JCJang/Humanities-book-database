@@ -11,7 +11,25 @@ import {Route, BrowserRouter as Router} from 'react-router-dom'
 
 const Access =()=>{
   const [shelfResults, setShelfResults] = useState(false)
-  const [selectedShelf, setSelectedShelf] = useState(false)
+  const [selectedShelf, setSelectedShelf] = useState({
+    shelfTitle:'',
+    shelfDescription:'',
+    shelfSubjects:[],
+    shelfBooks:[{
+      languageVersions:[],
+      earliestPublicationYear:"",
+      bookTitle:"",
+      bookAuthor: [],
+      contentKeywords: [],
+      subjectLinks:[],
+      bookHighlights:"",
+      bookLength:"",
+      previewStatus:"",
+      isbn13:"",
+      googleId:""
+
+    }]
+  })
   const [shelfId,setShelfId] = useState('')
 
     const [bookIdentifier, setBookIdentifier] = useState(false);
@@ -53,9 +71,30 @@ const Access =()=>{
         shelfId:shelfId
       })
       .then((res) => {
-setSelectedShelf([res.data[0].editions[0].details.shelfTitle, res.data[0].editions[0].details.shelfDescription, res.data[0].shelfSubjects, res.data[0]._id, res.data[0].shelfBooks.map((x) => {
-      return [[x.languageVersions, x.earliestPublicationYear, x.editions[0].details.bookTitle, x.editions[0].details.bookAuthor, x.editions[0].details.subjectLinks, x.editions[0].details.contentKeywords, x.editions[0].details.bookHighlights, x.editions[0].details.bookLength, x.editions[0].details.previewStatus], [x.editions[0].details.isbn13, x.editions[0].details.googleId]]
-    })])})
+        const newSelectedShelf = {
+          shelfTitle:res.data[0].editions[0].details.shelfTitle,
+          shelfDescription:res.data[0].editions[0].details.shelfDescription,
+          shelfSubjects:res.data[0].shelfSubjects,
+          shelfId: res.data[0]._id,
+          shelfBooks:
+            res.data[0].shelfBooks.map((x) => {
+                  return {
+                    languageVersions:x.languageVersions,
+                    earliestPublicationYear:x.earliestPublicationYear,
+                    bookTitle:x.editions[0].details.bookTitle,
+                    bookAuthor: x.editions[0].details.bookAuthor,
+                    subjectLinks:x.editions[0].details.subjectLinks,
+                    contentKeywords: x.editions[0].details.contentKeywords,
+                    subjectLinks:x.editions[0].details.subjectLinks,
+                    bookHighlights:x.editions[0].details.bookHighlights,
+                    bookLength:x.editions[0].details.bookLength,
+                    previewStatus:x.editions[0].details.previewStatus,
+                    isbn13:x.editions[0].details.isbn13,
+                    googleId: x.editions[0].details.googleId}
+                })
+
+        }
+        setSelectedShelf({...newSelectedShelf})})
     .then((res)=>{
       console.log(selectedShelf)
     })

@@ -12,7 +12,21 @@ const OpenedShelf = ({selectedShelf, setBookIdentifier, setDisplayBookTitle,colu
   const [googleId, setGoogleId] = useState("")
   const [isbn, setIsbn] = useState("")
   const [contentOrBgKeywords,setContentOrBgKeywords]=useState(true)
-  const [selectedBook,setSelectedBook] = useState([])
+  const [selectedBook,setSelectedBook] = useState({
+    languageVersions:[],
+    earliestPublicationYear:"",
+    bookTitle:"",
+    bookAuthor: [],
+    subjectLinks:[],
+    contentKeywords: [],
+    subjectLinks:[],
+    bookHighlights:"",
+    bookLength:"",
+    previewStatus:"",
+    isbn13:"",
+    googleId:""
+
+  })
   const [copySuccess, setCopySuccess] = useState('');
   const [toCopy, setToCopy] = useState('');
   const [showKeywords, setShowKeywords] = useState(true)
@@ -51,12 +65,14 @@ const OpenedShelf = ({selectedShelf, setBookIdentifier, setDisplayBookTitle,colu
 
 //autoset selectedBook as first book upon shelfChange
 
-  useEffect(()=>{
-    setToCopy(`${selectedShelf[4][0][0][2]} by ${selectedShelf[4][0][0][3].join(", ")}`)
-    setSelectedBook(selectedShelf[4][0][0])
-    setGoogleId(selectedShelf[4][0][1][1])
-    setIsbn(selectedShelf[4][0][1][0])
-  },[selectedShelf])
+
+useEffect(()=>{
+  if(!selectedShelf.shelfBooks[0]){return}
+  setToCopy(`${selectedShelf.shelfBooks[0].bookTitle} by ${selectedShelf.shelfBooks[0].bookAuthor.join(", ")}`)
+  setSelectedBook(selectedShelf.shelfBooks[0])
+  setGoogleId(selectedShelf.shelfBooks[0].googleId)
+  setIsbn(selectedShelf.shelfBooks[0].isbn13)
+},[selectedShelf])
 
 
   return (
@@ -71,17 +87,17 @@ const OpenedShelf = ({selectedShelf, setBookIdentifier, setDisplayBookTitle,colu
         <p onClick={()=>{setContentOrBgKeywords(false)}} className="subtitle2" style={{backgroundColor:contentOrBgKeywords?"var(--shelfpanellistpressedborder)":"white", color:contentOrBgKeywords?"white":"var(--shelfpaneltext)",borderLeft:"none",border:"1.5px solid var(--shelfpanellistpressedborder)", borderRadius:"0 5px 5px 0", padding:"0 1rem"}}>Background</p>
         </div>
     <div className="noScrollBar" style={{height:"70vh",overflowY:"auto", marginTop:"1rem"}}>
-      {selectedShelf[4].map((book)=>{
-        return <div className="transition" onClick={()=>{setGoogleId(book[1][1]); setIsbn(book[1][0]);setSelectedBook(book[0]);setToCopy(`${book[0][2]} by ${book[0][3].join(", ")}`);console.log(selectedBook)}}
+      {selectedShelf.shelfBooks.map((book)=>{
+        return <div className="transition" onClick={()=>{setGoogleId(book.googleId); setIsbn(book.isbn13);setSelectedBook(book);setToCopy(`${book.bookTitle} by ${book.bookAuthor.join(", ")}`);console.log(selectedBook)}}
          style={{
-        color:"searchpaneltext", backgroundColor:book[1][1]===googleId?"var(--shelfpanellistpressed)":"var(--shelfpanellist)",
-        border:book[1][1]==googleId?"1.5px solid var(--shelfpanellistpressedborder)":"1.5px solid var(--shelfpanellistborder)",
-        transform:book[1][1]==googleId?"translateY(0.3rem)":"translateY(0px)",
-        boxShadow:book[1][1]==googleId?"none":"var(--heavyshadow)",
+        color:"searchpaneltext", backgroundColor:book.googleId===googleId?"var(--shelfpanellistpressed)":"var(--shelfpanellist)",
+        border:book.googleId===googleId?"1.5px solid var(--shelfpanellistpressedborder)":"1.5px solid var(--shelfpanellistborder)",
+        transform:book.googleId===googleId?"translateY(0.3rem)":"translateY(0px)",
+        boxShadow:book.googleId===googleId?"none":"var(--heavyshadow)",
        padding:"0.6rem 1rem",  margin:"1rem 0"}}>
-        <div className="subtitle1" style={{margin:"0 0 0.3rem 0"}}>{book[0][2]}</div>
-        <div className="subtitle2" style={{margin:"0 0 0.5rem 0"}}>{book[0][3].join(", ")}</div>
-        <div className="body2">{contentOrBgKeywords?book[0][5].map((tag)=>{return <p className="tag" style={{display:"inline-block", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.1rem"}}>{tag}</p>}):book[0][4].map((tag)=>{return <p className="tag" style={{display:"inline-block", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.1rem"}}>{tag}</p>})}</div>
+        <div className="subtitle1" style={{margin:"0 0 0.3rem 0"}}>{book.bookTitle}</div>
+        <div className="subtitle2" style={{margin:"0 0 0.5rem 0"}}>{book.bookAuthor.join(", ")}</div>
+        <div className="body2">{contentOrBgKeywords?book.contentKeywords.map((tag)=>{return <p className="tag" style={{display:"inline-block", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.1rem"}}>{tag}</p>}):book.BgKeywords.map((tag)=>{return <p className="tag" style={{display:"inline-block", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.1rem"}}>{tag}</p>})}</div>
         </div>
       })}
     </div>
@@ -89,44 +105,35 @@ const OpenedShelf = ({selectedShelf, setBookIdentifier, setDisplayBookTitle,colu
 
 
 <div className="Column noScrollBar" style={{display:columnFocus==="shelfpanel"?"block":"none",flex:"2 2",height:"var(--panelheight)" ,overflowY:"auto",scrollBehavior:"smooth"}}>
-      <h4 id="title" style={{paddingTop:"1.5rem"}}>{selectedBook[2]}</h4>
+      <h4 id="title" style={{paddingTop:"1.5rem"}}>{selectedBook.bookTitle}</h4>
 
 
 <div className="Row">
   <div className="Column" style={{width:"auto"}}>
       <div className="subtitle1" style={{padding:"1rem 0"}}>
-      {selectedBook[3] && selectedBook[3].join(", ")}
+      {selectedBook.bookAuthor && selectedBook.bookAuthor.join(", ")}
       {document.queryCommandSupported('copy') && <span ref={spanRef} value={toCopy}><FileCopyOutlinedIcon  style={{margin:"0 0.5rem"}} onClick={()=>{copyToClipboard(toCopy)}}/><span className="caption" style={{color:"var(--shelfpanellistpressedborder)"}}>{copySuccess}</span>
     </span>
 }
 </div>
 
-  {selectedBook[1]&&
+  {selectedBook.earliestPublicationYear &&
       <div className="Row">
       <div className="caption" style={{textAlign:"right",width:"50%",paddingRight:"0.5rem"}}>
         Publication Date:
       </div>
       <div className="subtitle2" style={{textAlign:"left",width:"50%"}}>
-        {selectedBook[1]}
+        {selectedBook.earliestPublicationYear}
       </div>
       </div>}
 
-  <div className="Row">
-  <div className="caption" style={{textAlign:"right",width:"50%",paddingRight:"0.5rem"}}>
-    Author Age at time of Publication:
-  </div>
-  <div className="subtitle2" style={{textAlign:"left",width:"50%"}}>
-    wait
-  </div>
-  </div>
-
-{selectedBook[7]&&
+{selectedBook.bookLength &&
     <div className="Row" style={{height:"auto"}}>
     <div className="caption" style={{textAlign:"right",width:"50%",paddingRight:"0.5rem"}}>
     Pages:
     </div>
     <div className="subtitle2" style={{textAlign:"left",width:"50%"}}>
-      {selectedBook[7]}
+      {selectedBook.bookLength}
     </div>
     </div>}
       </div>
@@ -134,7 +141,7 @@ const OpenedShelf = ({selectedShelf, setBookIdentifier, setDisplayBookTitle,colu
 
       <div className="Column">
         <span className="btn lightbtn" style={{width:"6rem",display:"flex",justifyContent:"center",alignItems:"center",marginTop:"1rem"}}><span  style={{width:"85%"}}>Preview</span><ArrowForwardRoundedIcon/></span>
-        {selectedBook[3] && selectedBook[3].map((a) => {
+        {selectedBook.bookAuthor && selectedBook.bookAuthor.map((a) => {
           return <span className="btn lightbtn" style={{width:"6rem", marginTop:"1rem",display:"flex",justifyContent:"center",alignItems:"center"}}><p style={{width:"85%"}}>{`About ${a}`}</p><ArrowForwardRoundedIcon/></span>
         })}
         <span className="btn" style={{width:"10rem",color:"var(--shelfpanellistpressedborder)",position:"relative"}}
@@ -146,20 +153,20 @@ const OpenedShelf = ({selectedShelf, setBookIdentifier, setDisplayBookTitle,colu
   <div style={{ borderTop: "1.5px solid var(--shelfpanellistpressedborder) ", marginTop:"0.2rem" }}></div>
 
   <div className="Row" style={{marginTop:"1rem", display:showKeywords?"flex":"none"}}>
-    {selectedBook[5] &&
+    {selectedBook.contentKeywords &&
       <div className="subtitle2" style={{width:"50%"}}>
         <div className="Row" style={{alignItems:"center"}}>
           Content Keywords <LaunchRoundedIcon style={{marginLeft:"0.5rem"}}/>
           </div>
-      <div>{selectedBook[5][0] && selectedBook[5].map((tag)=>{return <p className="tag" style={{display:"inline-block", border:"1.5px solid var(--shelfpanellistpressedborder)", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.1rem"}}>{tag}</p>})}</div>
+      <div>{selectedBook.contentKeywords[0] && selectedBook.contentKeywords.map((tag)=>{return <p className="tag" style={{display:"inline-block", border:"1.5px solid var(--shelfpanellistpressedborder)", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.1rem"}}>{tag}</p>})}</div>
   </div>}
 
-    {selectedBook[4] &&
+    {selectedBook.subjectLinks &&
       <div style={{width:"50%"}} className="subtitle2">
         <div className="Row" style={{alignItems:"center"}}>
           Background Keywords <LaunchRoundedIcon style={{marginLeft:"0.5rem"}}/>
           </div>
-      <div>{selectedBook[4][0] && selectedBook[4].map((tag)=>{return <p className="tag" style={{display:"inline-block", border:"1.5px solid var(--shelfpanellistpressedborder)", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.1rem"}}>{tag}</p>})}</div>
+      <div>{selectedBook.subjectLinks[0] && selectedBook.subjectLinks.map((tag)=>{return <p className="tag" style={{display:"inline-block", border:"1.5px solid var(--shelfpanellistpressedborder)", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.1rem"}}>{tag}</p>})}</div>
   </div>}
   </div>
 
@@ -170,7 +177,7 @@ const OpenedShelf = ({selectedShelf, setBookIdentifier, setDisplayBookTitle,colu
       </div>
 
     <div className="body1-details" style={{ textAlign:"left", height:"auto"}}>
-      {selectedBook[6]}
+      {selectedBook.bookHighlights}
       </div>
       </div>}
       <div style={{display:"flex",alignItems:"center",justifyContent:"center"}}>
@@ -178,7 +185,7 @@ const OpenedShelf = ({selectedShelf, setBookIdentifier, setDisplayBookTitle,colu
       </div>
     </div>
     <h5 style={{width:"4rem", alignSelf:"center", height:"80vh", writingMode:"vertical-lr", transform:"rotate(180deg)", transformOrigin:"center center"}}>
-    {selectedBook[2]}
+    {selectedBook.bookTitle}
     </h5>
   </div>
 
