@@ -1,6 +1,3 @@
-
-import './Add.css';
-
 //icons
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 import LaunchRoundedIcon from '@material-ui/icons/LaunchRounded';
