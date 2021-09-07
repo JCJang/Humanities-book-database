@@ -7,7 +7,7 @@ import LaunchRoundedIcon from '@material-ui/icons/LaunchRounded';
 import ArrowForwardRoundedIcon from '@material-ui/icons/ArrowForwardRounded';
 
 import {useState,useEffect} from 'react'
-const OpenedShelf = ({selectedShelf, setBookIdentifier, setDisplayBookTitle,columnFocus,setIsbnOrId}) => {
+const OpenedShelf = ({selectedShelf, setBookIdentifier, setAuthorView, setAuthorToGet, setDisplayBookTitle,columnFocus,setIsbnOrId}) => {
 
   const [googleId, setGoogleId] = useState("")
   const [isbn, setIsbn] = useState("")
@@ -74,7 +74,7 @@ useEffect(()=>{
 },[selectedShelf])
 
 //autoset bookHighlights upon shelf change
-const parseHighlights = () => {
+const parseHighlights = async() => {
 let  paragraphArr = selectedBook.bookHighlights.split("``")
 if(paragraphArr.length>1){
   paragraphArr = paragraphArr.slice(1).map(a=>{return a.replace(/\n*/g,"")})
@@ -92,9 +92,13 @@ return splitArray(paragraphArr)
 }
 
 useEffect(()=>{
-  const highlights = parseHighlights();
-  console.log(highlights)
-  setBookHightlights(highlights)
+  const getAndSet = async() =>{
+    const highlights = await parseHighlights();
+    console.log(highlights)
+    setBookHightlights(highlights)
+  }
+
+  getAndSet();
 },[selectedBook])
 
 
@@ -166,7 +170,7 @@ useEffect(()=>{
       <div className="Column">
         <span className="btn lightbtn" style={{width:"6rem",display:"flex",justifyContent:"center",alignItems:"center",marginTop:"1rem"}}><span  style={{width:"85%"}}>Preview</span><ArrowForwardRoundedIcon/></span>
         {selectedBook.bookAuthor && selectedBook.bookAuthor.map((a) => {
-          return <span className="btn lightbtn" style={{width:"6rem", marginTop:"1rem",display:"flex",justifyContent:"center",alignItems:"center"}}><p style={{width:"85%"}}>{`About ${a}`}</p><ArrowForwardRoundedIcon/></span>
+          return <span className="btn lightbtn" onClick={()=>{setAuthorView(true); setAuthorToGet(a)}} style={{width:"6rem", marginTop:"1rem",display:"flex",justifyContent:"center",alignItems:"center"}}><p style={{width:"85%"}}>{`About ${a}`}</p><ArrowForwardRoundedIcon/></span>
         })}
         <span className="btn" style={{width:"10rem",color:"var(--shelfpanellistpressedborder)",position:"relative"}}
        onClick={()=>{setShowKeywords(!showKeywords)}}><span style={{bottom:"0.5rem", position:"absolute"}}>{showKeywords?"Hide Keywords":"Show Keywords"}</span></span>

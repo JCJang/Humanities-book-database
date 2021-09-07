@@ -41,6 +41,23 @@ const Access =()=>{
     const [allShelves,setAllShelves]=useState([])
     const [shelfLanguage, setShelfLanguage] = useState(false)
     const [columnFocus, setColumnFocus] = useState('init')
+    const [authorView, setAuthorView] = useState(false)
+    const [authorToGet, setAuthorToGet] = useState('')
+    const [selectedAuthor, setSelectedAuthor]=useState({
+      authorInfluences:[],
+      authorInfluenced:[],
+      authorCountry:[],
+      authorWikiUrl:"",
+      authorWikiImage:"",
+      authorBirthDate:"",
+      authorDeathDate:"",
+      authorLifespan:"",
+      authorWikiTitle:"",
+      authorLifeWorkKeywords: [],
+      timelineLinks:[],
+      authorBgKeywords:[],
+      authorWikiExtract:"",
+    })
 
 
      function stripLabels(a){
@@ -128,6 +145,34 @@ const Access =()=>{
     },[])
 
 
+    useEffect(()=>{
+      if(authorToGet.length<2){return}
+      Axios.post("http://localhost:3001/openedauthor",{
+        authorLanguage:shelfLanguage[0]?stripLabels(shelfLanguage)[0]:languageSetting,
+        authorToGet:authorToGet
+      })
+      .then((res) => {
+        const newSelectedAuthor = {
+          authorInfluences:res.data[0].authorInfluences,
+          authorInfluenced:res.data[0].authorInfluenced,
+          authorCountry:res.data[0].authorCountry,
+          authorWikiUrl: res.data[0].authorWikiUrl,
+          authorWikiImage:res.data[0].authorWikiImage,
+          authorBirthDate:res.data[0].authorBirthDate,
+          authorDeathDate:res.data[0].authorDeathDate,
+          authorLifespan:res.data[0].authorLifespan,
+          authorWikiTitle:res.data[0].editions[0].details.bookTitle,
+          authorLifeWorkKeywords:res.data[0].editions[0].details.authorLifeWorkKeywords,
+          timelineLinks:res.data[0].editions[0].details.timelineLinks,
+          authorBgKeywords:res.data[0].editions[0].details.authorBgKeywords,
+          authorWikiExtract:res.data[0].editions[0].details.authorWikiExtract,
+          }
+        setSelectedAuthor({...newSelectedAuthor})
+      })
+    .then((res)=>{
+      console.log(selectedAuthor)
+    })
+    },[authorToGet])
 
   return (
 
@@ -138,7 +183,7 @@ const Access =()=>{
 
         </div>
         <div className="col-2"  style={{width:columnFocus==="shelfpanel"?"var(--focusedpanel)":columnFocus==="detailspanel"?"30vw":"4rem",boxShadow:"var(--panelshadow)",height:"var(--panelheight)"}} onClick={()=>setColumnFocus("shelfpanel")}>
-          {selectedShelf && <OpenedShelf columnFocus={columnFocus} setIsbnOrId={setIsbnOrId} setBookIdentifier={setBookIdentifier} selectedShelf={selectedShelf} setDisplayBookTitle={setDisplayBookTitle}/>}
+          {selectedShelf && <OpenedShelf setAuthorToGet={setAuthorToGet} setAuthorView={setAuthorView} columnFocus={columnFocus} setIsbnOrId={setIsbnOrId} setBookIdentifier={setBookIdentifier} selectedShelf={selectedShelf} setDisplayBookTitle={setDisplayBookTitle}/>}
           </div>
         <div className="col-3"  style={{width:columnFocus==="detailspanel"?"var(--focusedpanel)":"4rem",boxShadow:"var(--panelshadow)",height:"var(--panelheight)"}} onClick={()=>setColumnFocus("detailspanel")}>
             <GoogleBooksViewer columnFocus={columnFocus} bookIdentifier={bookIdentifier} displayBookTitle={displayBookTitle} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId}/>
