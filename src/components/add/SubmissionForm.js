@@ -1041,7 +1041,7 @@ id="previewLanguage"
                  onChange={(e)=>setIsbn13(e.target.value)} placeholder="isbn-13" readOnly="readOnly"/>
                   <label htmlFor="bookLength">Length (pages)</label>
                   <input className="form-control" type="text" id="bookLength" value={bookLength}
-                   onChange={(e)=>setBookLength(e.target.value)} placeholder="book length" readOnly="readOnly"/>
+                   onChange={(e)=>setBookLength(e.target.value)} placeholder="book length"/>
 
                    <label htmlFor="bookHighlights">highlights</label>
                    <textarea className="form-control" type="text" id="bookHighlights" value={bookHighlights}

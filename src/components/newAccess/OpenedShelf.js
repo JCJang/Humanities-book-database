@@ -112,7 +112,7 @@ const setNewAuthor = (author) =>{
   return (
       <div style={{color:"var(--shelfpaneltext)",display:"flex",height:"var(--panelheight)"}}>
 
-      <div style={{padding:"2rem 2rem", flex:"1 1"}}>
+      <div style={{padding:"2rem 2rem", flex:"1 1", visibility:columnFocus==="init"?"hidden":"visible"}}>
         <div>
         <p className="subtitle1">Keyword Display</p>
         </div>
@@ -219,8 +219,8 @@ const setNewAuthor = (author) =>{
       <a href="#title" className="Link btn">Back to Top</a>
       </div>
     </div>
-    <h5  onClick={()=>setColumnFocus("shelfpanel")} style={{width:"4rem", alignSelf:"center", height:"80vh", writingMode:"vertical-lr", transform:"rotate(180deg)", transformOrigin:"center center"}}>
-    {selectedBook.bookTitle}
+    <h5  onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("shelfpanel")}}} style={{width:"4rem", alignSelf:"center", height:"80vh", writingMode:"vertical-lr", transform:"rotate(180deg)", transformOrigin:"center center"}}>
+    {selectedBook? selectedBook.bookTitle:"Shelf Title"}
     </h5>
   </div>
 

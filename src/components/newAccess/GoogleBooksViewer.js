@@ -67,8 +67,8 @@ import {useEffect} from 'react'
               </div>
               { googleScriptLoaded===false &&"please reload the page"}
               </div>
-            <h5 onClick={()=>setColumnFocus("detailspanel")} style={{width:"4rem", alignSelf:"center", height:"80vh", writingMode:"vertical-lr", transform:"rotate(180deg)", transformOrigin:"center center"}}>
-            {displayBookTitle}</h5>
+            <h5 onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("detailspanel")}}}  style={{width:"4rem", alignSelf:"center", height:"80vh", writingMode:"vertical-lr", transform:"rotate(180deg)", transformOrigin:"center center"}}>
+            {displayBookTitle? displayBookTitle:"Book Details"}</h5>
           </div>
         )
   ;}
