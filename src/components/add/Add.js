@@ -1,23 +1,19 @@
 import {useState, useEffect} from 'react';
 import './Add.css';
-import Links from '../nav/Links'
 import Query from './Query'
 import SearchForm from './SearchForm'
 import SubmissionForm from './SubmissionForm'
 import TranslationForm from './TranslationForm'
 
 import GoogleBooksViewer from './GoogleBooksViewer'
-import {Route, BrowserRouter as Router} from 'react-router-dom'
 
 
-const Add =()=>{
-  const [showAddTask, setShowAddTask]=useState(false)
+const Add =({googleScriptLoaded})=>{
   const [results, setResults] = useState(false)
   const [toAdd, setToAdd] = useState(false)
     const [bookIdentifier, setBookIdentifier] = useState(false);
     const [isbnOrId, setIsbnOrId] = useState(true)
     const [formToggleOn, setFormToggleOn] = useState(false)
-    const [googleScriptLoaded, setGoogleScriptLoaded] = useState(false);
     const [languageSetting, setLanguageSetting] = useState('en')
     const [translateForm, setTranslateForm] = useState(false)
 
@@ -41,17 +37,6 @@ const Add =()=>{
      }
 
          // Was able to fix first load bug by setting google script load not within the useEffect, but as part of a component.
-        const loadGoogleBooksViewer = (() =>{
-            const scriptTag = document.createElement('script')
-            scriptTag.src= 'https://www.google.com/books/jsapi.js'
-            scriptTag.type="text/javascript"
-            scriptTag.id = "google-script"
-            document.body.appendChild(scriptTag);
-
-          })()
-
-          useEffect(()=>{document.getElementById("google-script").addEventListener('load', ()=>setGoogleScriptLoaded(true))},[])
-
 
 //get isbn
 
@@ -74,42 +59,9 @@ const Add =()=>{
         console.log(bookIdentifier);
     }}, [toAdd]);
 
-    //get book google id
-/*useEffect(() => {
-      if (toAdd !== false) {
-        const getLink = () => {
-          if (toAdd.hasOwnProperty("id")) {
-            return toAdd.id
-          } else {
-            return ""
-          }}
-
-        console.log(getLink());
-        if (getLink().length > 0) {
-          setBookIdentifier(getLink())
-        } else {
-          alert("preview unavailable")
-        }
-
-        console.log(bookIdentifier);
-      }}, [toAdd]);*/
-  //
-  //
-
-      // const onSearch = async(title, author, isbn,previewFilter)=>{
-      //   console.log("https://www.googleapis.com/books/v1/volumes?q="+(title ? "intitle:"+title : "")+ (title? "+" :"")+(author? "inauthor:"+author:"")+((title == true || author == true)?"+":"")+(isbn? ("isbn:"+isbn):"")+(previewFilter? "&filter=partial":"")+"&printType=books&maxResults=40")
-      //   const work = await fetch("https://www.googleapis.com/books/v1/volumes?q="+(title ? "intitle:"+title : "")+ (title? "+" :"")+(author? "inauthor:"+author:"")+((title == true || author == true)?"+":"")+(isbn? ("isbn:"+isbn):"")+(previewFilter? "&filter=partial":"")+"&printType=books&maxResults=40")
-      //   const data = await work.json()
-      //   if(data.totalItems===0){
-      //     alert("no results for this search.")
-      //     return;
-      //   }
-      //     setResults(data)
-      //   }
-
         const onSearch = async(title, author, isbn,previewFilter)=>{
-          console.log("https://www.googleapis.com/books/v1/volumes?q="+(title ? "intitle:"+title : "")+ (title? "+" :"")+(author? "inauthor:"+author:"")+((title == true || author == true)?"+":"")+(isbn? ("isbn:"+isbn):"")+"&printType=books&maxResults=40")
-          const work = await fetch("https://www.googleapis.com/books/v1/volumes?q="+(title ? "intitle:"+title : "")+ (title? "+" :"")+(author? "inauthor:"+author:"")+((title == true || author == true)?"+":"")+(isbn? ("isbn:"+isbn):"")+"&printType=books&maxResults=40")
+          console.log("https://www.googleapis.com/books/v1/volumes?q="+(title ? "intitle:"+title : "")+ (title? "+" :"")+(author? "inauthor:"+author:"")+((title || author)?"+":"")+(isbn? ("isbn:"+isbn):"")+"&printType=books&maxResults=40")
+          const work = await fetch("https://www.googleapis.com/books/v1/volumes?q="+(title ? "intitle:"+title : "")+ (title? "+" :"")+(author? "inauthor:"+author:"")+((title || author)?"+":"")+(isbn? ("isbn:"+isbn):"")+"&printType=books&maxResults=40")
           const data = await work.json()
           if(data.totalItems===0){
             alert("no results for this search.")

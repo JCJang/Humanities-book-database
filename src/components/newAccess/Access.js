@@ -3,11 +3,10 @@ import SearchForm from './SearchForm'
 import Axios from 'axios'
 import GoogleBooksViewer from './GoogleBooksViewer'
 import OpenedShelf from './OpenedShelf'
-import {Route, BrowserRouter as Router} from 'react-router-dom'
+import {useCallback} from 'react'
 
 
-const Access =()=>{
-  const [shelfResults, setShelfResults] = useState(false)
+const Access =({googleScriptLoaded})=>{
   const [selectedShelf, setSelectedShelf] = useState({
     shelfTitle:'',
     shelfDescription:'',
@@ -33,7 +32,6 @@ const Access =()=>{
     const [displayBookTitle,setDisplayBookTitle] = useState('');
 
     const [isbnOrId, setIsbnOrId] = useState(true)
-    const [googleScriptLoaded, setGoogleScriptLoaded] = useState(false);
     const [languageSetting, setLanguageSetting] = useState('en')
     const [allShelves,setAllShelves]=useState([])
     const [shelfLanguage, setShelfLanguage] = useState(false)
@@ -56,26 +54,16 @@ const Access =()=>{
       authorWikiExtract:"",
     })
 
+    const stripLabels = useCallback((a) => {
+        const result = []
+        a.map((a)=>{
+          result.push(a.value)
+        })
+        return result
 
-     function stripLabels(a){
-       const result = []
-       a.map((a)=>{
-         result.push(a.value)
-       })
-       return result
-     }
+    }, [])
 
-         // Was able to fix first load bug by setting google script load not within the useEffect, but as part of a component.
-        const loadGoogleBooksViewer = (() =>{
-            const scriptTag = document.createElement('script')
-            scriptTag.src= 'https://www.google.com/books/jsapi.js'
-            scriptTag.type="text/javascript"
-            scriptTag.id = "google-script"
-            document.body.appendChild(scriptTag);
 
-          })()
-
-          useEffect(()=>{document.getElementById("google-script").addEventListener('load', ()=>setGoogleScriptLoaded(true))},[])
 
 
     useEffect(()=>{
@@ -97,7 +85,6 @@ const Access =()=>{
                     earliestPublicationYear:x.earliestPublicationYear,
                     bookTitle:x.editions[0].details.bookTitle,
                     bookAuthor: x.editions[0].details.bookAuthor,
-                    subjectLinks:x.editions[0].details.subjectLinks,
                     contentKeywords: x.editions[0].details.contentKeywords,
                     subjectLinks:x.editions[0].details.subjectLinks,
                     bookHighlights:x.editions[0].details.bookHighlights,

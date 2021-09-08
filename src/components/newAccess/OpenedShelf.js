@@ -14,7 +14,6 @@ const OpenedShelf = ({selectedShelf, setBookIdentifier, setAuthorView, setAuthor
     earliestPublicationYear:"",
     bookTitle:"",
     bookAuthor: [],
-    subjectLinks:[],
     contentKeywords: [],
     subjectLinks:[],
     bookHighlights:"",
@@ -58,7 +57,7 @@ const OpenedShelf = ({selectedShelf, setBookIdentifier, setAuthorView, setAuthor
           setIsbnOrId(false)
           setDisplayBookTitle(selectedBook[2])
         }
-    },[googleId,isbn])
+    },[googleId])
 
 //autoset selectedBook as first book upon shelfChange
 
@@ -71,34 +70,37 @@ useEffect(()=>{
 },[selectedShelf])
 
 //autoset bookHighlights upon shelf change
-const parseHighlights = async() => {
-let  paragraphArr = selectedBook.bookHighlights.split("``")
-if(paragraphArr.length>1){
-  paragraphArr = paragraphArr.slice(1).map(a=>{return a.replace(/\n*/g,"")})
-}
-function splitArray( array ) {
-  const arrayOfArrays = [];
+  const setNewBook = (book) =>{
+    setGoogleId(book.googleId);
+    setIsbn(book.isbn13);
+    setSelectedBook(book);
+    setToCopy(`${book.bookTitle} by ${book.bookAuthor.join(", ")}`);
+    getAndSet();
+    console.log(selectedBook)
+  }
 
-    while (array.length > 0) {
-        let arrayElement = array.splice(0,2);
-        arrayOfArrays.push(arrayElement);
-    }
-    return arrayOfArrays;
-}
-return splitArray(paragraphArr)
-}
-
-useEffect(()=>{
   const getAndSet = async() =>{
+
+      const parseHighlights = async() => {
+      let  paragraphArr = selectedBook.bookHighlights.split("``")
+      if(paragraphArr.length>1){
+        paragraphArr = paragraphArr.slice(1).map(a=>{return a.replace(/\n*/g,"")})
+      }
+      function splitArray( array ) {
+        const arrayOfArrays = [];
+
+          while (array.length > 0) {
+              let arrayElement = array.splice(0,2);
+              arrayOfArrays.push(arrayElement);
+          }
+          return arrayOfArrays;
+      }
+      return splitArray(paragraphArr)
+      }
     const highlights = await parseHighlights();
     console.log(highlights)
     setBookHightlights(highlights)
   }
-
-  getAndSet();
-},[selectedBook])
-
-
 
   return (
       <div style={{color:"var(--shelfpaneltext)",display:"flex",height:"var(--panelheight)"}}>
@@ -113,7 +115,7 @@ useEffect(()=>{
         </div>
     <div className="noScrollBar" style={{height:"70vh",overflowY:"auto", marginTop:"1rem"}}>
       {selectedShelf.shelfBooks.map((book)=>{
-        return <div className="transition" onClick={()=>{setGoogleId(book.googleId); setIsbn(book.isbn13);setSelectedBook(book);setToCopy(`${book.bookTitle} by ${book.bookAuthor.join(", ")}`);console.log(selectedBook)}}
+        return <div className="transition" key={book.googleId} onClick={()=>{setNewBook(book)}}
          style={{
         color:"searchpaneltext", backgroundColor:book.googleId===googleId?"var(--shelfpanellistpressed)":"var(--shelfpanellist)",
         border:book.googleId===googleId?"1.5px solid var(--shelfpanellistpressedborder)":"1.5px solid var(--shelfpanellistborder)",

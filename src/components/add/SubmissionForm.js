@@ -11,7 +11,6 @@ const SubmissionForm = ({toAdd, stripLabels,onSearch, languageSetting, formToggl
   const [id, setId] =  useState('')
   const [title, setTitle] =  useState('')
   const [author, setAuthor] =  useState([])
-  const [isbn, setIsbn] = useState('')
   const [isbn10, setIsbn10] =  useState('')
   const [isbn13, setIsbn13] =  useState('')
   const [bookHighlights, setBookHighlights] = useState('')
@@ -864,7 +863,7 @@ useEffect(() => {
       alert("please fill in missing data");
       return;
     }
-    if(preventResubmitShelf==false){
+    if(preventResubmitShelf===false){
     newShelf?postShelf():addToShelf()
     setPreventResubmitShelf(true)
   }else{
@@ -975,10 +974,10 @@ setShelfLanguage([addLabel[0]])
     <form onSubmit={(e)=>validateShelf(e)} className="SubmissionForm" id="shelfform" style={{display:formToggleOn?"block":"none"}}>
       <h5>New Shelf and/or Book</h5>
       {allShelves && allShelves.map((shelf)=><div onClick={()=>{setShelfTitle(shelf[0]); setNewShelf(false); setShelfDescription(shelf[1]);setShelfId(shelf[3])}} key={shelf[3]}
-      style={{backgroundColor:shelf[3]==shelfId?"var(--shelfpanellistpressed)":"var(--shelfpanellist)",
-      border:shelf[3]==shelfId?"1px solid var(--shelfpanellistpressedborder)":"1px solid var(--shelfpanellistborder)",
-      transform:shelf[3]==shelfId?"translateY(0.3rem)":"translateY(0px)",
-      boxShadow:shelf[3]==shelfId?"none":"var(--heavyshadow)"}}>
+      style={{backgroundColor:shelf[3]===shelfId?"var(--shelfpanellistpressed)":"var(--shelfpanellist)",
+      border:shelf[3]===shelfId?"1px solid var(--shelfpanellistpressedborder)":"1px solid var(--shelfpanellistborder)",
+      transform:shelf[3]===shelfId?"translateY(0.3rem)":"translateY(0px)",
+      boxShadow:shelf[3]===shelfId?"none":"var(--heavyshadow)"}}>
         <div className="subtitle1">
       {shelf[0]}
         </div>

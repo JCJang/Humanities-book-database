@@ -1,5 +1,5 @@
 import React from 'react'
-import {useState, useEffect} from 'react'
+import {useEffect} from 'react'
 /*referencing Christina Sohn from https://chsohn15.medium.com/integrating-google-books-embedded-viewer-api-into-a-react-app-a81fde35c14d*/
   const GoogleBooksViewer = ({bookIdentifier, formToggleOn, isbnOrId, googleScriptLoaded}) => {
      // Create alert message if book not found in Google Database

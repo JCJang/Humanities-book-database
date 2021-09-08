@@ -14,7 +14,6 @@ const [timelineLinks, setTimelineLinks] = useState([])
 const [authorBgKeywords, setAuthorBgKeywords] = useState([]) //region,school
 const [authorLifeWorkKeywords, setAuthorLifeWorkKeywords] = useState([])
 const [authorWikiExtract, setAuthorWikiExtract] = useState("")
-const [authorWikiCategory, setAuthorWikiCategory] = useState([])
 const [translatingFrom, setTranslatingFrom] = useState([])
 const [translatingInto, setTranslatingInto] = useState([])
 
@@ -33,8 +32,6 @@ useEffect(() => {
 const [mongoAuthor, setMongoAuthor] = useState([])
 const [authorInfluenced, setAuthorInfluenced]=useState([])
 const [authorInfluences, setAuthorInfluences]=useState([])
-const [newAuthorInfluenced, setNewAuthorInfluenced]=useState([])
-const [newAuthorInfluences, setNewAuthorInfluences]=useState([])
 
 
 useEffect(()=>{
@@ -77,13 +74,39 @@ const influences = []
 mongoAuthor[1].forEach((author)=>fetchArticleTranslation(author, influences))
 setAuthorInfluences(influences)}
 
-},[translatingFrom,translatingInto,mongoAuthor]
+},[translatingFrom,translatingInto,mongoAuthor,stripLabels]
 
 )
 
 //get author data from wikipedia
 useEffect(()=>{
   if(!translatingInto){return}
+
+
+  const fetchAuthorWikiData = async(author) => {
+    let code= await stripLabels(translatingInto)[0]
+  if(code){if(code.length>2){code=code.slice(0,2)}}
+
+    wiki({ apiUrl: `https://${code}.wikipedia.org/w/api.php`
+      })
+      .page(author)
+      .then(page =>
+        page
+        .chain()
+        .categories()
+        .extlinks()
+        .langlinks()
+        .summary()
+        .request()
+      )
+      .then((res) => {
+        console.log(res)
+        setAuthorWikiTitle(res.title)
+        setAuthorWikiExtract(res.extract)
+      })
+
+  }
+
   fetchAuthorWikiData(author)
 }, [author, translatingInto])
 
@@ -91,7 +114,7 @@ useEffect(()=>{
 useEffect(()=>{
   setTranslatingFrom(shelfLanguage)
   setTranslatingInto(shelfTranslatingInto)
-}, [])
+}, [shelfLanguage,shelfTranslatingInto])
 
 //prevent resubmit
 useEffect(()=>{
@@ -114,7 +137,7 @@ useEffect(()=>{
     console.log(mongoAuthor)})
   .then( console.log(`loaded ${author}`))
 
-},[translatingFrom, author])
+},[translatingFrom, author,mongoAuthor,stripLabels])
 
 
   function postAuthorTranslation(){
@@ -125,7 +148,6 @@ useEffect(()=>{
       authorWikiExtract:authorWikiExtract,
       authorBgKeywords:authorBgKeywords,
       authorLifeWorkKeywords:authorLifeWorkKeywords,
-      authorWikiCategory:authorWikiCategory,
       timelineLinks:timelineLinks,
     })
     console.log("author translation posted")
@@ -937,7 +959,7 @@ const validateAuthor = (e)=>{
     return;
   }
 
-  if(preventResubmitAuthor==false){
+  if(preventResubmitAuthor===false){
       postAuthorTranslation();
       setPreventResubmitAuthor(true)
     }else{
@@ -945,30 +967,6 @@ const validateAuthor = (e)=>{
     }
 }
 
-
-const fetchAuthorWikiData = async(author) => {
-  let code= await stripLabels(translatingInto)[0]
-if(code){if(code.length>2){code=code.slice(0,2)}}
-
-  wiki({ apiUrl: `https://${code}.wikipedia.org/w/api.php`
-    })
-    .page(author)
-    .then(page =>
-      page
-      .chain()
-      .categories()
-      .extlinks()
-      .langlinks()
-      .summary()
-      .request()
-    )
-    .then((res) => {
-      console.log(res)
-      setAuthorWikiTitle(res.title)
-      setAuthorWikiExtract(res.extract)
-    })
-
-}
 
 const togglePreviewAuthorWiki= (e)=>{
   e.preventDefault()

@@ -35,11 +35,11 @@ useEffect(()=>{
          </div>
          <div className="noScrollBar" style={{overflowY:"auto"}}>
 {shelfResults && shelfResults.map((shelf)=><div onClick={()=>{setShelfId(shelf[3]); setShelfTitle(shelf[0])}} className="transition" key={shelf[3]}
-style={{color:"searchpaneltext", backgroundColor:shelf[3]==shelfId?"white":"var(--searchpanellist)",
-border:shelf[3]==shelfId?"1px solid var(--searchpanellstborderpressed)":"1px solid var(--searchpanellistborder)",
+style={{color:"searchpaneltext", backgroundColor:shelf[3]===shelfId?"white":"var(--searchpanellist)",
+border:shelf[3]===shelfId?"1px solid var(--searchpanellstborderpressed)":"1px solid var(--searchpanellistborder)",
 boxShadow:"var(--heavyshadow)",
 margin:"1rem 0 0 0", padding:"0.6rem 1rem"}}>
-  <div style={{fontFamily:'Jost', fontWeight:shelf[3]==shelfId?"500":"400",fontSize:shelf[3]==shelfId?"1.35rem":"1.25rem",
+  <div style={{fontFamily:'Jost', fontWeight:shelf[3]===shelfId?"500":"400",fontSize:shelf[3]===shelfId?"1.35rem":"1.25rem",
   textTransform: "capitalize", letterSpacing:"0.01rem"}}>
 {shelf[0]}
   </div>

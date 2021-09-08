@@ -1,4 +1,3 @@
-import {parseInfo} from 'infobox-parser'
 import wiki from 'wikijs'
 import {useEffect, useState} from 'react'
 import Axios from 'axios'
@@ -1098,7 +1097,7 @@ const validateAuthor = (e)=>{
     return;
   }
 
-  if(preventResubmitAuthor==false){
+  if(preventResubmitAuthor===false){
       postAuthor();
       setPreventResubmitAuthor(true)
     }else{
@@ -1217,7 +1216,7 @@ wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
     <input type="submit" className="btn lightbtn" value={previewAuthorWiki?"Back to Form":"Preview Author Details"} onClick={togglePreviewAuthorWiki}/>
     </div>
     {previewAuthorWiki && (<div><h4>{authorWikiTitle}</h4>
-      <div id="authorWikiImageHolder"><img src={authorWikiImage}></img></div>
+      <div id="authorWikiImageHolder"><img alt={authorWikiTitle} src={authorWikiImage}></img></div>
       <p>authorWikiExtract</p></div>)}
 
     <div className="form-section" style={{display:previewAuthorWiki?"none":"grid"}}>
