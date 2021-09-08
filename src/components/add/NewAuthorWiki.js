@@ -2,7 +2,8 @@ import {parseInfo} from 'infobox-parser'
 import wiki from 'wikijs'
 import {useEffect, useState} from 'react'
 import Axios from 'axios'
-import MultiSelect from "react-multi-select-component";
+import MultiSelect from "react-multi-select-component"
+import useDebounce from '../customHooks/useDebounce.js'
 
 
 const NewAuthorWiki = ({translation, author, toAdd, stripLabels, contentKeywords,setContentKeywords, previewLanguage, subjectLinks, formToggleOn, setSubjectLinks}) => {
@@ -1047,13 +1048,14 @@ const selectAuthorCountry = [
 //   )
 //   .then(console.log)
 
-//get data
-useEffect(()=>{
+//get author data if author title manually updated.
+useDebounce(() => {
   if(!authorWikiTitle){return}
   fetchAuthorWikiData(authorWikiTitle)
   fetchAuthorImage(authorWikiTitle)
 fetchAuthorWikiUrl(authorWikiTitle)
-}, [authorWikiTitle,previewLanguage])
+}, 1000, [authorWikiTitle,previewLanguage])
+
 
 useEffect(()=>{
   if(!author){return}
