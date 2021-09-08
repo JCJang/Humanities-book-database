@@ -1,6 +1,6 @@
 import {useState,useEffect} from 'react'
 
-const SearchForm = ({allShelves, columnFocus, setShelfLanguage,shelfLanguage, shelfId, setShelfId,selectedShelf,setSelectedShelf}) => {
+const SearchForm = ({allShelves, columnFocus, setColumnFocus, setShelfLanguage,shelfLanguage, shelfId, setShelfId,selectedShelf,setSelectedShelf}) => {
   const [shelfQuery, setShelfQuery] =  useState('')
   const [shelfResults, setShelfResults] = useState(false)
   const [shelfTitle, setShelfTitle] = useState('Shelf Title')
@@ -13,6 +13,13 @@ useEffect(()=>{
       setShelfResults(allShelves.filter((shelf)=>{return shelf[0].toLowerCase().indexOf(shelfQuery.toLowerCase())>=0}))
 
 },[shelfQuery,allShelves])
+
+const setNewShelf = (shelf) =>{
+  setShelfId(shelf[3]);
+  setShelfTitle(shelf[0]);
+  setColumnFocus("shelfpanel")
+}
+
 
   return (
     <div style={{color:"var(--searchpaneltext)"}}>
@@ -34,8 +41,8 @@ useEffect(()=>{
          onChange={(e)=>setShelfQuery(e.target.value)}/>
          </div>
          <div className="noScrollBar" style={{overflowY:"auto"}}>
-{shelfResults && shelfResults.map((shelf)=><div onClick={()=>{setShelfId(shelf[3]); setShelfTitle(shelf[0])}} className="transition" key={shelf[3]}
-style={{color:"searchpaneltext", backgroundColor:shelf[3]===shelfId?"white":"var(--searchpanellist)",
+{shelfResults && shelfResults.map((shelf)=><div onClick={()=>{setNewShelf(shelf)}} className="transition" key={shelf[3]}
+style={{color:"searchpaneltext", width:"minmax(auto,30vw)", backgroundColor:shelf[3]===shelfId?"white":"var(--searchpanellist)",
 border:shelf[3]===shelfId?"1px solid var(--searchpanellstborderpressed)":"1px solid var(--searchpanellistborder)",
 boxShadow:"var(--heavyshadow)",
 margin:"1rem 0 0 0", padding:"0.6rem 1rem"}}>
@@ -52,7 +59,7 @@ margin:"1rem 0 0 0", padding:"0.6rem 1rem"}}>
 </div>
 
     </div>
-    <h5 style={{width:"4rem", alignSelf:"center", height:"80vh", writingMode:"vertical-lr", transform:"rotate(180deg)", transformOrigin:"center center"}}>
+    <h5 onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("shelfpanel")}}} style={{width:"4rem", alignSelf:"center", height:"80vh", writingMode:"vertical-lr", transform:"rotate(180deg)", transformOrigin:"center center"}}>
     {shelfTitle.slice(0,30)}
     </h5>
     </div>

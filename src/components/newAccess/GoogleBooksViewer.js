@@ -1,7 +1,7 @@
 import React from 'react'
 import {useEffect} from 'react'
 /*referencing Christina Sohn from https://chsohn15.medium.com/integrating-google-books-embedded-viewer-api-into-a-react-app-a81fde35c14d*/
-  const GoogleBooksViewer = ({bookIdentifier, displayBookTitle,columnFocus, isbnOrId, googleScriptLoaded}) => {
+  const GoogleBooksViewer = ({bookIdentifier, displayBookTitle,columnFocus, isbnOrId,setColumnFocus, googleScriptLoaded}) => {
      // Create alert message if book not found in Google Database
 
      //if isbn is not working, use google id as backup.
@@ -67,7 +67,7 @@ import {useEffect} from 'react'
               </div>
               { googleScriptLoaded===false &&"please reload the page"}
               </div>
-            <h5 style={{width:"4rem", alignSelf:"center", height:"80vh", writingMode:"vertical-lr", transform:"rotate(180deg)", transformOrigin:"center center"}}>
+            <h5 onClick={()=>setColumnFocus("detailspanel")} style={{width:"4rem", alignSelf:"center", height:"80vh", writingMode:"vertical-lr", transform:"rotate(180deg)", transformOrigin:"center center"}}>
             {displayBookTitle}</h5>
           </div>
         )

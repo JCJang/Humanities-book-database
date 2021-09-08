@@ -2,8 +2,10 @@ import {useState, useEffect} from 'react';
 import SearchForm from './SearchForm'
 import Axios from 'axios'
 import GoogleBooksViewer from './GoogleBooksViewer'
+import OpenedAuthor from './OpenedAuthor'
 import OpenedShelf from './OpenedShelf'
 import {useCallback} from 'react'
+import {motion, AnimatePresence} from 'framer-motion'
 
 
 const Access =({googleScriptLoaded})=>{
@@ -161,18 +163,29 @@ const Access =({googleScriptLoaded})=>{
   return (
 
     <div className="Row">
-        <div  className="col-1" style={{width:columnFocus==="init"?"var(--initpanel)":columnFocus==="shelfpanel"?"30vw":"4rem",height:"var(--panelheight)"}} onClick={()=>setColumnFocus("shelfpanel")}>
+        <div  className="col-1" style={{width:columnFocus==="init"?"var(--initpanel)":columnFocus==="shelfpanel"?"30vw":"4rem",height:"var(--panelheight)"}}>
 
-        <SearchForm allShelves={allShelves} columnFocus={columnFocus} setShelfLanguage={setShelfLanguage} shelfId={shelfId} setShelfId={setShelfId} selectedShelf={selectedShelf} shelfLanguage={shelfLanguage} setSelectedShelf={setSelectedShelf}/>
+        <SearchForm allShelves={allShelves} columnFocus={columnFocus} setShelfLanguage={setShelfLanguage} setColumnFocus={setColumnFocus} shelfId={shelfId} setShelfId={setShelfId} selectedShelf={selectedShelf} shelfLanguage={shelfLanguage} setSelectedShelf={setSelectedShelf}/>
 
         </div>
-        <div className="col-2"  style={{width:columnFocus==="shelfpanel"?"var(--focusedpanel)":columnFocus==="detailspanel"?"30vw":"4rem",boxShadow:"var(--panelshadow)",height:"var(--panelheight)"}} onClick={()=>setColumnFocus("shelfpanel")}>
-          {selectedShelf && <OpenedShelf setAuthorToGet={setAuthorToGet} setAuthorView={setAuthorView} columnFocus={columnFocus} setIsbnOrId={setIsbnOrId} setBookIdentifier={setBookIdentifier} selectedShelf={selectedShelf} setDisplayBookTitle={setDisplayBookTitle}/>}
+        <div className="col-2"  style={{width:columnFocus==="shelfpanel"?"var(--focusedpanel)":columnFocus==="detailspanel"?"30vw":"4rem",boxShadow:"var(--panelshadow)",height:"var(--panelheight)"}}>
+          {selectedShelf && <OpenedShelf setAuthorToGet={setAuthorToGet} setColumnFocus={setColumnFocus} setAuthorView={setAuthorView} columnFocus={columnFocus} setIsbnOrId={setIsbnOrId} setBookIdentifier={setBookIdentifier} selectedShelf={selectedShelf} setDisplayBookTitle={setDisplayBookTitle}/>}
           </div>
-        <div className="col-3"  style={{width:columnFocus==="detailspanel"?"var(--focusedpanel)":"4rem",boxShadow:"var(--panelshadow)",height:"var(--panelheight)"}} onClick={()=>setColumnFocus("detailspanel")}>
-            <GoogleBooksViewer columnFocus={columnFocus} bookIdentifier={bookIdentifier} displayBookTitle={displayBookTitle} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId}/>
 
-        </div>
+        <AnimatePresence exitBeforeEnter>
+          {authorView===false &&
+            <motion.div exit={{y:'-100%'}} className="col-3"  style={{width:columnFocus==="detailspanel"?"var(--focusedpanel)":"4rem",boxShadow:"var(--panelshadow)",height:"var(--panelheight)"}} >
+            <GoogleBooksViewer columnFocus={columnFocus} bookIdentifier={bookIdentifier} setColumnFocus={setColumnFocus} displayBookTitle={displayBookTitle} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId}/>
+            </motion.div>
+          }
+        </AnimatePresence>
+        <AnimatePresence exitBeforeEnter>
+          {authorView===true &&
+              <motion.div exit={{y:'100%'}} className="col-3"  style={{width:columnFocus==="detailspanel"?"var(--focusedpanel)":"4rem",boxShadow:"var(--panelshadow)",height:"var(--panelheight)"}} onClick={()=>setColumnFocus("detailspanel")}>
+                <OpenedAuthor columnFocus={columnFocus} setColumnFocus={setColumnFocus} displayBookTitle={displayBookTitle} selectedAuthor={selectedAuthor}/>
+              </motion.div>
+          }
+        </AnimatePresence>
     </div>
   )
 }

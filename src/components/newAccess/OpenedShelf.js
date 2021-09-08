@@ -4,7 +4,7 @@ import LaunchRoundedIcon from '@material-ui/icons/LaunchRounded';
 import ArrowForwardRoundedIcon from '@material-ui/icons/ArrowForwardRounded';
 
 import {useState,useEffect} from 'react'
-const OpenedShelf = ({selectedShelf, setBookIdentifier, setAuthorView, setAuthorToGet, setDisplayBookTitle,columnFocus,setIsbnOrId}) => {
+const OpenedShelf = ({selectedShelf, setBookIdentifier, setColumnFocus,setAuthorView, setAuthorToGet, setDisplayBookTitle,columnFocus,setIsbnOrId}) => {
 
   const [googleId, setGoogleId] = useState("")
   const [isbn, setIsbn] = useState("")
@@ -69,7 +69,8 @@ useEffect(()=>{
   setIsbn(selectedShelf.shelfBooks[0].isbn13)
 },[selectedShelf])
 
-//autoset bookHighlights upon shelf change
+
+//onClick functions
   const setNewBook = (book) =>{
     setGoogleId(book.googleId);
     setIsbn(book.isbn13);
@@ -78,6 +79,12 @@ useEffect(()=>{
     getAndSet();
     console.log(selectedBook)
   }
+
+const setNewAuthor = (author) =>{
+  setAuthorView(true);
+  setAuthorToGet(author);
+  setColumnFocus("detailspanel");
+}
 
   const getAndSet = async() =>{
 
@@ -168,8 +175,8 @@ useEffect(()=>{
 
       <div className="Column">
         <span className="btn lightbtn" style={{width:"6rem",display:"flex",justifyContent:"center",alignItems:"center",marginTop:"1rem"}}><span  style={{width:"85%"}}>Preview</span><ArrowForwardRoundedIcon/></span>
-        {selectedBook.bookAuthor && selectedBook.bookAuthor.map((a) => {
-          return <span className="btn lightbtn" onClick={()=>{setAuthorView(true); setAuthorToGet(a)}} style={{width:"6rem", marginTop:"1rem",display:"flex",justifyContent:"center",alignItems:"center"}}><p style={{width:"85%"}}>{`About ${a}`}</p><ArrowForwardRoundedIcon/></span>
+        {selectedBook.bookAuthor && selectedBook.bookAuthor.map((author) => {
+          return <span className="btn lightbtn" onClick={()=>{setNewAuthor(author)}} style={{width:"6rem", marginTop:"1rem",display:"flex",justifyContent:"center",alignItems:"center"}}><p style={{width:"85%"}}>{`About ${author}`}</p><ArrowForwardRoundedIcon/></span>
         })}
         <span className="btn" style={{width:"10rem",color:"var(--shelfpanellistpressedborder)",position:"relative"}}
        onClick={()=>{setShowKeywords(!showKeywords)}}><span style={{bottom:"0.5rem", position:"absolute"}}>{showKeywords?"Hide Keywords":"Show Keywords"}</span></span>
@@ -212,7 +219,7 @@ useEffect(()=>{
       <a href="#title" className="Link btn">Back to Top</a>
       </div>
     </div>
-    <h5 style={{width:"4rem", alignSelf:"center", height:"80vh", writingMode:"vertical-lr", transform:"rotate(180deg)", transformOrigin:"center center"}}>
+    <h5  onClick={()=>setColumnFocus("shelfpanel")} style={{width:"4rem", alignSelf:"center", height:"80vh", writingMode:"vertical-lr", transform:"rotate(180deg)", transformOrigin:"center center"}}>
     {selectedBook.bookTitle}
     </h5>
   </div>
