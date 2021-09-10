@@ -9,16 +9,16 @@ import {useEffect, useState} from 'react'
 
 
 
-const OpenedAuthor = ({ columnFocus, setColumnFocus, displayBookTitle, selectedAuthor}) => {
+const OpenedAuthor = ({ columnFocus, setColumnFocus, displayBookTitle, authorView, setAuthorView, selectedAuthor}) => {
   return (
 
     <Router>
 
-    <div style={{color:"var(--paper)",backgroundColor:"var(--ink)",display:"flex", flex:"1 1",height:"var(--panelheight)"}}>
+    <div style={{color:"var(--paper)",backgroundColor:"var(--ink)",display:"flex", flex:"1 1",height:"var(--panelheight)",overflow:"hidden",position:"relative"}}>
     <AuthorPanel/>
 
-    <div className="Column" style={{flex:"3 3"}}>
-    <AuthorNav selectedAuthor={selectedAuthor}/>
+    <div className="Column" style={{flex:"3 3", position:columnFocus==="detailspanel"?"relative":"absolute", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem"}}>
+    <AuthorNav selectedAuthor={selectedAuthor} displayBookTitle={displayBookTitle}/>
     <Route path = "/" exact>
     <AuthorInit selectedAuthor={selectedAuthor}/>
     </Route>
@@ -30,7 +30,7 @@ const OpenedAuthor = ({ columnFocus, setColumnFocus, displayBookTitle, selectedA
     </Route>
     </div>
 
-    <div className="Column" style={{flex:"1 1"}}>
+    <div className="Column" style={{flex:"1 1", position:columnFocus==="detailspanel"?"relative":"absolute", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem"}}>
     hi
     </div>
     <h5 onClick={()=>setColumnFocus("detailspanel")} style={{width:"4rem", alignSelf:"center", height:"80vh", writingMode:"vertical-lr", transform:"rotate(180deg)", transformOrigin:"center center"}}>

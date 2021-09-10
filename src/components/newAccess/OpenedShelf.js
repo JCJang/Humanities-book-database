@@ -4,7 +4,7 @@ import LaunchRoundedIcon from '@material-ui/icons/LaunchRounded';
 import ArrowForwardRoundedIcon from '@material-ui/icons/ArrowForwardRounded';
 
 import {useState,useEffect} from 'react'
-const OpenedShelf = ({selectedShelf, setBookIdentifier, setColumnFocus,setAuthorView, setAuthorToGet, setDisplayBookTitle,columnFocus,setIsbnOrId}) => {
+const OpenedShelf = ({selectedShelf, setBookIdentifier, setColumnFocus,setAuthorView, authorView, setAuthorToGet, setDisplayBookTitle,columnFocus,setIsbnOrId}) => {
 
   const [googleId, setGoogleId] = useState("")
   const [isbn, setIsbn] = useState("")
@@ -50,12 +50,12 @@ const OpenedShelf = ({selectedShelf, setBookIdentifier, setColumnFocus,setAuthor
           console.log(isbn)
           setBookIdentifier(isbn)
           setIsbnOrId(true)
-          setDisplayBookTitle(selectedBook[2])
+          setDisplayBookTitle(selectedBook.bookTitle)
         }else{
           if(googleId.length>1)
           setBookIdentifier(googleId)
           setIsbnOrId(false)
-          setDisplayBookTitle(selectedBook[2])
+          setDisplayBookTitle(selectedBook.bookTitle)
         }
     },[googleId])
 
@@ -65,6 +65,7 @@ const OpenedShelf = ({selectedShelf, setBookIdentifier, setColumnFocus,setAuthor
 useEffect(()=>{
   setToCopy(`${selectedShelf.shelfBooks[0].bookTitle} by ${selectedShelf.shelfBooks[0].bookAuthor.join(", ")}`)
   setSelectedBook(selectedShelf.shelfBooks[0])
+  setDisplayBookTitle(selectedShelf.shelfBooks[0].bookTitle)
   setGoogleId(selectedShelf.shelfBooks[0].googleId)
   setIsbn(selectedShelf.shelfBooks[0].isbn13)
 },[selectedShelf])
@@ -75,6 +76,7 @@ useEffect(()=>{
     setGoogleId(book.googleId);
     setIsbn(book.isbn13);
     setSelectedBook(book);
+    setDisplayBookTitle(book.bookTitle)
     setToCopy(`${book.bookTitle} by ${book.bookAuthor.join(", ")}`);
     getAndSet();
     console.log(selectedBook)
@@ -83,6 +85,11 @@ useEffect(()=>{
 const setNewAuthor = (author) =>{
   setAuthorView(true);
   setAuthorToGet(author);
+  setColumnFocus("detailspanel");
+}
+
+const setNewPreview = () =>{
+  setAuthorView(false);
   setColumnFocus("detailspanel");
 }
 
@@ -112,7 +119,7 @@ const setNewAuthor = (author) =>{
   return (
       <div style={{color:"var(--shelfpaneltext)",display:"flex",height:"var(--panelheight)"}}>
 
-      <div style={{padding:"2rem 2rem", flex:"1 1", visibility:columnFocus==="init"?"hidden":"visible"}}>
+      <div style={{padding:"2rem 2rem", flex:"1 1", display:columnFocus==="init"?"none":columnFocus==="shelfpanel"?"block":authorView===true?"none":"block"}}>
         <div>
         <p className="subtitle1">Keyword Display</p>
         </div>
@@ -174,7 +181,7 @@ const setNewAuthor = (author) =>{
 
 
       <div className="Column">
-        <span className="btn lightbtn" style={{width:"6rem",display:"flex",justifyContent:"center",alignItems:"center",marginTop:"1rem"}}><span  style={{width:"85%"}}>Preview</span><ArrowForwardRoundedIcon/></span>
+        <span className="btn lightbtn"  onClick={()=>{setNewPreview()}} style={{width:"6rem",display:"flex",justifyContent:"center",alignItems:"center",marginTop:"1rem"}}><span  style={{width:"85%"}}>Preview</span><ArrowForwardRoundedIcon/></span>
         {selectedBook.bookAuthor && selectedBook.bookAuthor.map((author) => {
           return <span className="btn lightbtn" onClick={()=>{setNewAuthor(author)}} style={{width:"6rem", marginTop:"1rem",display:"flex",justifyContent:"center",alignItems:"center"}}><p style={{width:"85%"}}>{`About ${author}`}</p><ArrowForwardRoundedIcon/></span>
         })}
@@ -220,7 +227,7 @@ const setNewAuthor = (author) =>{
       </div>
     </div>
     <h5  onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("shelfpanel")}}} style={{width:"4rem", alignSelf:"center", height:"80vh", writingMode:"vertical-lr", transform:"rotate(180deg)", transformOrigin:"center center"}}>
-    {selectedBook? selectedBook.bookTitle:"Shelf Title"}
+    {selectedBook.bookTitle? selectedBook.bookTitle:"Book Title"}
     </h5>
   </div>
 

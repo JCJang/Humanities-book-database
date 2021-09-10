@@ -1,7 +1,8 @@
 
 const AuthorBg = ({selectedAuthor}) => {
   return (
-    <div className="body2-details">Background page</div>
+    <div className="body2-details">background page</div>
+
   )
 }
 

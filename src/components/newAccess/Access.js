@@ -147,7 +147,7 @@ const Access =({googleScriptLoaded})=>{
           authorBirthDate:res.data[0].authorBirthDate,
           authorDeathDate:res.data[0].authorDeathDate,
           authorLifespan:res.data[0].authorLifespan,
-          authorWikiTitle:res.data[0].editions[0].details.bookTitle,
+          authorWikiTitle:res.data[0].editions[0].details.authorWikiTitle,
           authorLifeWorkKeywords:res.data[0].editions[0].details.authorLifeWorkKeywords,
           timelineLinks:res.data[0].editions[0].details.timelineLinks,
           authorBgKeywords:res.data[0].editions[0].details.authorBgKeywords,
@@ -168,21 +168,21 @@ const Access =({googleScriptLoaded})=>{
         <SearchForm allShelves={allShelves} columnFocus={columnFocus} setShelfLanguage={setShelfLanguage} setColumnFocus={setColumnFocus} shelfId={shelfId} setShelfId={setShelfId} selectedShelf={selectedShelf} shelfLanguage={shelfLanguage} setSelectedShelf={setSelectedShelf}/>
 
         </div>
-        <div className="col-2"  style={{width:columnFocus==="shelfpanel"?"var(--focusedpanel)":columnFocus==="detailspanel"?"30vw":"4rem",boxShadow:"var(--panelshadow)",height:"var(--panelheight)"}}>
-          {selectedShelf && <OpenedShelf setAuthorToGet={setAuthorToGet} setColumnFocus={setColumnFocus} setAuthorView={setAuthorView} columnFocus={columnFocus} setIsbnOrId={setIsbnOrId} setBookIdentifier={setBookIdentifier} selectedShelf={selectedShelf} setDisplayBookTitle={setDisplayBookTitle}/>}
+        <div className="col-2"  style={{width:columnFocus==="shelfpanel"?"var(--focusedpanel)":columnFocus==="init"?"4rem":authorView===true?"4rem":"30vw",boxShadow:"var(--panelshadow)",height:"var(--panelheight)"}}>
+          {selectedShelf && <OpenedShelf setAuthorToGet={setAuthorToGet} setColumnFocus={setColumnFocus} authorView={authorView} setAuthorView={setAuthorView} columnFocus={columnFocus} setIsbnOrId={setIsbnOrId} setBookIdentifier={setBookIdentifier} selectedShelf={selectedShelf} setDisplayBookTitle={setDisplayBookTitle}/>}
           </div>
 
         <AnimatePresence exitBeforeEnter>
           {authorView===false &&
             <motion.div exit={{y:'-100%'}} className="col-3"  style={{width:columnFocus==="detailspanel"?"var(--focusedpanel)":"4rem",boxShadow:"var(--panelshadow)",height:"var(--panelheight)"}} >
-            <GoogleBooksViewer columnFocus={columnFocus} bookIdentifier={bookIdentifier} setColumnFocus={setColumnFocus} displayBookTitle={displayBookTitle} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId}/>
+            <GoogleBooksViewer columnFocus={columnFocus} authorView={authorView} setAuthorView={setAuthorView} bookIdentifier={bookIdentifier} setColumnFocus={setColumnFocus} displayBookTitle={displayBookTitle} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId}/>
             </motion.div>
           }
         </AnimatePresence>
         <AnimatePresence exitBeforeEnter>
           {authorView===true &&
-              <motion.div exit={{y:'100%'}} className="col-3"  style={{width:columnFocus==="detailspanel"?"var(--focusedpanel)":"4rem",boxShadow:"var(--panelshadow)",height:"var(--panelheight)"}} onClick={()=>setColumnFocus("detailspanel")}>
-                <OpenedAuthor columnFocus={columnFocus} setColumnFocus={setColumnFocus} displayBookTitle={displayBookTitle} selectedAuthor={selectedAuthor}/>
+              <motion.div exit={{y:'100%'}} className="col-3"  style={{width:columnFocus!=="detailspanel"?"4rem":authorView===true?"var(--initpanel)":"var(--focusedpanel)",boxShadow:"var(--panelshadow)",height:"var(--panelheight)"}} onClick={()=>setColumnFocus("detailspanel")}>
+                <OpenedAuthor columnFocus={columnFocus} authorView={authorView} setAuthorView={setAuthorView} setColumnFocus={setColumnFocus} displayBookTitle={displayBookTitle} selectedAuthor={selectedAuthor}/>
               </motion.div>
           }
         </AnimatePresence>
