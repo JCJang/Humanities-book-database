@@ -1,5 +1,7 @@
 import React from 'react'
 import {useEffect} from 'react'
+import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
+
 /*referencing Christina Sohn from https://chsohn15.medium.com/integrating-google-books-embedded-viewer-api-into-a-react-app-a81fde35c14d*/
   const GoogleBooksViewer = ({bookIdentifier, displayBookTitle,columnFocus, isbnOrId,setColumnFocus, googleScriptLoaded}) => {
      // Create alert message if book not found in Google Database
@@ -62,12 +64,13 @@ import {useEffect} from 'react'
 
          return (
            <div style={{color:"var(--detailspaneltext)",display:"flex",height:"var(--panelheight)"}}>
-            <div  style={{display:"flex", justifyContent:"center", overflow:"hidden",position:"relative"}}>
+            <div className="Column" style={{display:"flex", justifyContent:"center", overflow:"hidden",position:"relative"}}>
+                <span className="btn darkbtn" style={{width:"6rem",display:"flex",justifyContent:"center",alignItems:"center",marginTop:"1rem"}}><ArrowBackRoundedIcon/><span  style={{width:"85%", padding:"0 0.5rem"}} onClick={()=>{setColumnFocus("shelfpanel")}}>Back to Shelf</span></span>
               <div id="viewerCanvas" style={{position:columnFocus==="detailspanel"?"relative":"absolute", height:"var(--panelheight)",width:"60vw", backgroundColor:"(var(--detailspanel))", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem"}}>
               </div>
               { googleScriptLoaded===false &&"please reload the page"}
               </div>
-            <h5 onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("detailspanel")}}}  style={{width:"4rem", alignSelf:"center", height:"80vh", writingMode:"vertical-lr", transform:"rotate(180deg)", transformOrigin:"center center"}}>
+            <h5 onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("detailspanel")}}}  style={{width:"4rem", alignSelf:"center", height:"70vh", writingMode:"vertical-lr", transform:"rotate(180deg)", transformOrigin:"center center"}}>
             {displayBookTitle? displayBookTitle:"Book Details"}</h5>
           </div>
         )
