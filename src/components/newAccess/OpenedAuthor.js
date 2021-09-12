@@ -10,7 +10,7 @@ import {useEffect, useState} from 'react'
 
 
 
-const OpenedAuthor = ({ columnFocus, setColumnFocus, displayBookTitle, authorView, setAuthorView, languageSetting,selectedAuthor}) => {
+const OpenedAuthor = ({ columnFocus, setColumnFocus, displayBookTitle, authorView, setAuthorView, languageSetting,selectedAuthor, displayEarliestPublicationYear}) => {
   return (
 
     <Router>
@@ -21,7 +21,7 @@ const OpenedAuthor = ({ columnFocus, setColumnFocus, displayBookTitle, authorVie
     <div className="Column" style={{flex:"3 3", position:columnFocus==="detailspanel"?"relative":"absolute", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem"}}>
     <AuthorNav selectedAuthor={selectedAuthor} displayBookTitle={displayBookTitle}/>
     <Route path = "/" exact>
-    <AuthorInit selectedAuthor={selectedAuthor} languageSetting={languageSetting}/>
+    <AuthorInit selectedAuthor={selectedAuthor} displayBookTitle={displayBookTitle} displayEarliestPublicationYear={displayEarliestPublicationYear} languageSetting={languageSetting}/>
     </Route>
     <Route path = "/bio">
     <AuthorBio selectedAuthor={selectedAuthor}/>

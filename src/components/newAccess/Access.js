@@ -32,6 +32,7 @@ const Access =({googleScriptLoaded})=>{
 
     const [bookIdentifier, setBookIdentifier] = useState(false);
     const [displayBookTitle,setDisplayBookTitle] = useState('');
+    const [displayEarliestPublicationYear, setDisplayEarliestPublicationYear] = useState('')
 
     const [isbnOrId, setIsbnOrId] = useState(true)
     const [languageSetting, setLanguageSetting] = useState('en')
@@ -169,7 +170,7 @@ const Access =({googleScriptLoaded})=>{
 
         </div>
         <div className="col-2"  style={{width:columnFocus==="shelfpanel"?"var(--focusedpanel)":columnFocus==="init"?"4rem":authorView===true?"4rem":"30vw",boxShadow:"var(--panelshadow)",height:"var(--panelheight)"}}>
-          {selectedShelf && <OpenedShelf setAuthorToGet={setAuthorToGet} setColumnFocus={setColumnFocus} authorView={authorView} setAuthorView={setAuthorView} columnFocus={columnFocus} setIsbnOrId={setIsbnOrId} setBookIdentifier={setBookIdentifier} selectedShelf={selectedShelf} setDisplayBookTitle={setDisplayBookTitle}/>}
+          {selectedShelf && <OpenedShelf setAuthorToGet={setAuthorToGet} setDisplayEarliestPublicationYear={setDisplayEarliestPublicationYear} setColumnFocus={setColumnFocus} authorView={authorView} setAuthorView={setAuthorView} columnFocus={columnFocus} setIsbnOrId={setIsbnOrId} setBookIdentifier={setBookIdentifier} selectedShelf={selectedShelf} setDisplayBookTitle={setDisplayBookTitle}/>}
           </div>
 
         <AnimatePresence exitBeforeEnter>
@@ -182,7 +183,7 @@ const Access =({googleScriptLoaded})=>{
         <AnimatePresence exitBeforeEnter>
           {authorView===true &&
               <motion.div exit={{y:'100%'}} className="col-3"  style={{width:columnFocus!=="detailspanel"?"4rem":authorView===true?"var(--initpanel)":"var(--focusedpanel)",boxShadow:"var(--panelshadow)",height:"var(--panelheight)"}} onClick={()=>setColumnFocus("detailspanel")}>
-                <OpenedAuthor  languageSetting={languageSetting} columnFocus={columnFocus} authorView={authorView} setAuthorView={setAuthorView} setColumnFocus={setColumnFocus} displayBookTitle={displayBookTitle} selectedAuthor={selectedAuthor}/>
+                <OpenedAuthor  languageSetting={languageSetting} displayEarliestPublicationYear={displayEarliestPublicationYear} columnFocus={columnFocus} authorView={authorView} setAuthorView={setAuthorView} setColumnFocus={setColumnFocus} displayBookTitle={displayBookTitle} selectedAuthor={selectedAuthor}/>
               </motion.div>
           }
         </AnimatePresence>

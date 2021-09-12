@@ -1,7 +1,7 @@
 import Axios from 'axios'
 import {useEffect, useState} from 'react'
 
-const AuthorInit = ({selectedAuthor,languageSetting}) => {
+const AuthorInit = ({selectedAuthor,languageSetting, displayBookTitle, displayEarliestPublicationYear}) => {
 
 const [fullTimelines, setFullTimelines] = useState([{
   details:{},
@@ -85,24 +85,48 @@ useEffect(()=>{
 
 },[selectedAuthor])
 
+const getKeyValueArr = (obj)=>{
+  const keys = Object.keys(obj);
+  const values = Object.values(obj);
+  const keyValueArr=[]
+  for(let i = 0; i< keys.length; i++){
+    keyValueArr.push([parseFloat(keys[i].match(/^\d*/)[0]),keys[i],values[i]])
+  }
+  keyValueArr.push([displayEarliestPublicationYear, `icon${displayEarliestPublicationYear}`, `${selectedAuthor.authorWikiTitle} published ${displayBookTitle}`])
+  if(selectedAuthor.authorBirthDate){
+    keyValueArr.push([parseFloat(selectedAuthor.authorBirthDate.match(/^\d*/)[0]), selectedAuthor.authorBirthDate.match(/^\d*/)[0], `Birth of ${selectedAuthor.authorWikiTitle}`])
+  }
+  if(selectedAuthor.authorDeathDate){
+    keyValueArr.push([parseFloat(selectedAuthor.authorDeathDate.match(/^\d*/)[0]),selectedAuthor.authorDeathDate.match(/^\d*/)[0], `Death of ${selectedAuthor.authorWikiTitle}`])
+  }
+  const sorted = keyValueArr.sort(function(a,b){return a[0] - b[0]})
+  const filtered = keyValueArr.filter((keyValue)=>{return keyValue[0] >= parseFloat(selectedAuthor.authorBirthDate.match(/^\d*/)[0])})
+                              .filter((keyValue)=>{return keyValue[0] <= parseFloat(selectedAuthor.authorDeathDate.match(/^\d*/)[0])})
+
+  return filtered
+}
+
   return (
     <div>
     <h4 className="h4-details">Learn More</h4>
     <div className="Row">
 
       <div className="Column" style={{flex:"1 1"}}>
-        <div  style={{flex:"4 4"}}><div  style={{maxHeight:"20rem", width:"auto"}}>{fullTimelines[0] &&
-
-            <div>hi</div>
-
-
+        <div  style={{flex:"4 4"}}>
+          { <div  style={{maxHeight:"30rem", width:"auto"}}>{fullTimelines[0] &&
+          <div>
+          <h4>{fullTimelines[0][0] && fullTimelines[0][0].timelineWikiTitle}</h4>
+          <div className="gradient">{fullTimelines[0][0] && getKeyValueArr(fullTimelines[0][0].details).map((keyValue)=>{
+            return <div key={keyValue[1]} style={{paddingLeft:keyValue[1]===`icon${displayEarliestPublicationYear}`?"2rem":"5rem"}} className={keyValue[1]===`icon${displayEarliestPublicationYear}`?"subtitle1-details":"body1-details"}>{keyValue[1]===`icon${displayEarliestPublicationYear}`?keyValue[0]:keyValue[1]} : {keyValue[2]}</div>
+          })}</div>
+          </div>
 
           }
-          </div></div>
+          </div> }
       <h5  style={{flex:"1 1"}} className="h5-details">Historical Background</h5>
       <h6  style={{flex:"1 1"}} className="subtitle1-details">{selectedAuthor.timelineLinks?selectedAuthor.timelineLinks.map((timeline)=>{return timeline.slice(11)}):"Not Available for this Author"}</h6>
       </div>
-
+    </div>
       <div className="Column" style={{flex:"1 1",justifyContent:"center",alignItems:"center",marginTop:"1rem"}}>
         <div  style={{flex:"4 4"}}><img  style={{maxHeight:"20rem", width:"auto"}} src={selectedAuthor.authorWikiImage}></img></div>
         <h5  style={{flex:"1 1"}} className="h5-details">{selectedAuthor.authorWikiTitle}</h5>

@@ -4,7 +4,7 @@ import LaunchRoundedIcon from '@material-ui/icons/LaunchRounded';
 import ArrowForwardRoundedIcon from '@material-ui/icons/ArrowForwardRounded';
 
 import {useState,useEffect} from 'react'
-const OpenedShelf = ({selectedShelf, setBookIdentifier, setColumnFocus,setAuthorView, authorView, setAuthorToGet, setDisplayBookTitle,columnFocus,setIsbnOrId}) => {
+const OpenedShelf = ({selectedShelf, setBookIdentifier, setDisplayEarliestPublicationYear, setColumnFocus,setAuthorView, authorView, setAuthorToGet, setDisplayBookTitle,columnFocus,setIsbnOrId}) => {
 
   const [googleId, setGoogleId] = useState("")
   const [isbn, setIsbn] = useState("")
@@ -28,7 +28,6 @@ const OpenedShelf = ({selectedShelf, setBookIdentifier, setColumnFocus,setAuthor
   const [showKeywords, setShowKeywords] = useState(true)
   const [bookHighlights, setBookHightlights] = useState([])
 
-
    const copyToClipboard = async copyMe => {
        try {
          await navigator.clipboard.writeText(copyMe);
@@ -51,11 +50,14 @@ const OpenedShelf = ({selectedShelf, setBookIdentifier, setColumnFocus,setAuthor
           setBookIdentifier(isbn)
           setIsbnOrId(true)
           setDisplayBookTitle(selectedBook.bookTitle)
+          setDisplayEarliestPublicationYear(selectedBook.earliestPublicationYear)
         }else{
           if(googleId.length>1)
           setBookIdentifier(googleId)
           setIsbnOrId(false)
           setDisplayBookTitle(selectedBook.bookTitle)
+          setDisplayEarliestPublicationYear(selectedBook.earliestPublicationYear)
+
         }
     },[googleId])
 
