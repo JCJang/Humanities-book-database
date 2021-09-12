@@ -11,24 +11,17 @@ import {useEffect, useState} from 'react'
 
 
 const OpenedAuthor = ({ columnFocus, setColumnFocus, displayBookTitle, authorView, setAuthorView, languageSetting,selectedAuthor, displayEarliestPublicationYear}) => {
+
+  const [authorFocus, setAuthorFocus] = useState('init')
   return (
-
-    <Router>
-
     <div style={{color:"var(--paper)",backgroundColor:"var(--ink)",display:"flex", flex:"1 1",height:"var(--panelheight)",overflow:"hidden",position:"relative"}}>
     <AuthorPanel/>
 
     <div className="Column" style={{flex:"3 3", position:columnFocus==="detailspanel"?"relative":"absolute", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem"}}>
     <AuthorNav selectedAuthor={selectedAuthor} displayBookTitle={displayBookTitle}/>
-    <Route path = "/" exact>
-    <AuthorInit selectedAuthor={selectedAuthor} displayBookTitle={displayBookTitle} displayEarliestPublicationYear={displayEarliestPublicationYear} languageSetting={languageSetting}/>
-    </Route>
-    <Route path = "/bio">
-    <AuthorBio selectedAuthor={selectedAuthor}/>
-    </Route>
-    <Route path = "/background">
-    <AuthorBg selectedAuthor={selectedAuthor}/>
-    </Route>
+
+
+  <AuthorInit selectedAuthor={selectedAuthor} authorFocus={authorFocus} setAuthorFocus={setAuthorFocus} displayBookTitle={displayBookTitle} displayEarliestPublicationYear={displayEarliestPublicationYear} languageSetting={languageSetting}/>
     </div>
 
     <div className="Column" style={{position:columnFocus==="detailspanel"?"relative":"absolute", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem", marginTop:"1rem"}}>
@@ -37,7 +30,6 @@ const OpenedAuthor = ({ columnFocus, setColumnFocus, displayBookTitle, authorVie
     <h5 onClick={()=>setColumnFocus("detailspanel")} style={{width:"4rem", alignSelf:"center", height:"80vh", writingMode:"vertical-lr", transform:"rotate(180deg)", transformOrigin:"center center"}}>
     {selectedAuthor.authorWikiTitle}</h5>
     </div>
-    </Router>
 
   )
 }

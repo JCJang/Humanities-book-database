@@ -182,7 +182,7 @@ const Access =({googleScriptLoaded})=>{
         </AnimatePresence>
         <AnimatePresence exitBeforeEnter>
           {authorView===true &&
-              <motion.div exit={{y:'100%'}} className="col-3"  style={{width:columnFocus!=="detailspanel"?"4rem":authorView===true?"var(--initpanel)":"var(--focusedpanel)",boxShadow:"var(--panelshadow)",height:"var(--panelheight)"}} onClick={()=>setColumnFocus("detailspanel")}>
+              <motion.div exit={{y:'100%'}} className="col-3"  style={{width:columnFocus!=="detailspanel"?"4rem":authorView===true?"var(--initpanel)":"var(--focusedpanel)",boxShadow:"var(--panelshadow)",height:"var(--panelheight)"}}>
                 <OpenedAuthor  languageSetting={languageSetting} displayEarliestPublicationYear={displayEarliestPublicationYear} columnFocus={columnFocus} authorView={authorView} setAuthorView={setAuthorView} setColumnFocus={setColumnFocus} displayBookTitle={displayBookTitle} selectedAuthor={selectedAuthor}/>
               </motion.div>
           }
