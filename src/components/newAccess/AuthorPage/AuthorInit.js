@@ -3,10 +3,7 @@ import {useEffect, useState} from 'react'
 
 const AuthorInit = ({selectedAuthor,languageSetting, displayBookTitle, displayEarliestPublicationYear}) => {
 
-const [fullTimelines, setFullTimelines] = useState([{
-  details:{},
-  timelineWikiTitle:""
-}])
+const [fullTimelines, setFullTimelines] = useState([])
 
   const getYear = (date)=> {
     if(!date){return "undefined"}
@@ -100,34 +97,47 @@ const getKeyValueArr = (obj)=>{
     keyValueArr.push([parseFloat(selectedAuthor.authorDeathDate.match(/^\d*/)[0]),selectedAuthor.authorDeathDate.match(/^\d*/)[0], `Death of ${selectedAuthor.authorWikiTitle}`])
   }
   const sorted = keyValueArr.sort(function(a,b){return a[0] - b[0]})
-  const filtered = keyValueArr.filter((keyValue)=>{return keyValue[0] >= parseFloat(selectedAuthor.authorBirthDate.match(/^\d*/)[0])})
-                              .filter((keyValue)=>{return keyValue[0] <= parseFloat(selectedAuthor.authorDeathDate.match(/^\d*/)[0])})
+  return sorted
+}
+const filterAroundLifeTime = (arr)=>{
+  const filtered = arr.filter((keyValue)=>{return keyValue[0] >= parseFloat(selectedAuthor.authorBirthDate.match(/^\d*/)[0])})
+                      .filter((keyValue)=>{return keyValue[0] <= parseFloat(selectedAuthor.authorDeathDate.match(/^\d*/)[0])})
+  return filtered
+}
+const filterAroundPublicationDate = (arr)=>{
+    let filtered = arr
+  for(let i=15; i>5; i--){
+    filtered = arr.filter((keyValue)=>{return keyValue[0] >= displayEarliestPublicationYear-i+5})
+                        .filter((keyValue)=>{return keyValue[0] <= displayEarliestPublicationYear+i})
 
+    if(filtered.length<10){return filtered}
+  }
   return filtered
 }
 
   return (
-    <div>
+    <div style={{marginLeft:"3rem"}}>
     <h4 className="h4-details">Learn More</h4>
-    <div className="Row">
+    <div className="Row" style={{position:"relative"}}>
 
-      <div className="Column" style={{flex:"1 1"}}>
-        <div  style={{flex:"4 4"}}>
-          { <div  style={{maxHeight:"30rem", width:"auto"}}>{fullTimelines[0] &&
-          <div>
-          <h4>{fullTimelines[0][0] && fullTimelines[0][0].timelineWikiTitle}</h4>
-          <div className="gradient">{fullTimelines[0][0] && getKeyValueArr(fullTimelines[0][0].details).map((keyValue)=>{
-            return <div key={keyValue[1]} style={{paddingLeft:keyValue[1]===`icon${displayEarliestPublicationYear}`?"2rem":"5rem"}} className={keyValue[1]===`icon${displayEarliestPublicationYear}`?"subtitle1-details":"body1-details"}>{keyValue[1]===`icon${displayEarliestPublicationYear}`?keyValue[0]:keyValue[1]} : {keyValue[2]}</div>
-          })}</div>
-          </div>
-
-          }
-          </div> }
-      <h5  style={{flex:"1 1"}} className="h5-details">Historical Background</h5>
-      <h6  style={{flex:"1 1"}} className="subtitle1-details">{selectedAuthor.timelineLinks?selectedAuthor.timelineLinks.map((timeline)=>{return timeline.slice(11)}):"Not Available for this Author"}</h6>
+      <div className="Column" style={{flex:"1 1 50%"}}>
+        <div  style={{flex:"4 4", maxHeight:"2rem"}}>
+           <div  style={{maxHeight:"2rem"}}>{fullTimelines[0] &&
+          <div className="gradient">{fullTimelines[0][0] && filterAroundPublicationDate(getKeyValueArr(fullTimelines[0][0].details)).map((keyValue)=>{
+            return <div key={keyValue[1]} style={{display:"grid",  gridTemplateColumns:"10rem auto", gridRowGap:"1rem",
+width:"40rem",paddingLeft:keyValue[1]===`icon${displayEarliestPublicationYear}`?"0":"1rem"}}>
+<div style={{marginTop:"0.5rem",display:"inline",fontWeight:"bold", margin:keyValue[1]===`icon${displayEarliestPublicationYear}`&&"2rem 0"}} className={keyValue[1]===`icon${displayEarliestPublicationYear}`?"subtitle1-details":"subtitle2-details"}>
+  {keyValue[1]===`icon${displayEarliestPublicationYear}`?keyValue[0]:keyValue[1]}</div>
+<div style={{marginTop:"0.5rem",display:"inline",margin:keyValue[1]===`icon${displayEarliestPublicationYear}`&&"2rem 0"}} className={keyValue[1]===`icon${displayEarliestPublicationYear}`?"subtitle1-details":"body2-details"}>  {keyValue[2]}</div>
       </div>
+          })}</div>
+          }
+          </div>
+        </div>
+      <h5  className="h5-details">Historical Background</h5>
+      <h6  className="subtitle1-details">{selectedAuthor.timelineLinks?selectedAuthor.timelineLinks.map((timeline)=>{return timeline.slice(11)}):"Not Available for this Author"}</h6>
     </div>
-      <div className="Column" style={{flex:"1 1",justifyContent:"center",alignItems:"center",marginTop:"1rem"}}>
+      <div className="Column" style={{flex:"1 1 50%",position:"absolute",justifyContent:"center",alignItems:"center",marginTop:"1rem",right:"0"}}>
         <div  style={{flex:"4 4"}}><img  style={{maxHeight:"20rem", width:"auto"}} src={selectedAuthor.authorWikiImage}></img></div>
         <h5  style={{flex:"1 1"}} className="h5-details">{selectedAuthor.authorWikiTitle}</h5>
         <h6  style={{flex:"1 1"}} className="subtitle1-details">{`${getYear(selectedAuthor.authorBirthDate)} - ${getYear(selectedAuthor.authorDeathDate)}`}</h6>

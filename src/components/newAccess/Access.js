@@ -140,19 +140,19 @@ const Access =({googleScriptLoaded})=>{
       })
       .then((res) => {
         const newSelectedAuthor = {
-          authorInfluences:res.data[0].authorInfluences,
-          authorInfluenced:res.data[0].authorInfluenced,
-          authorCountry:res.data[0].authorCountry,
-          authorWikiUrl: res.data[0].authorWikiUrl,
-          authorWikiImage:res.data[0].authorWikiImage,
-          authorBirthDate:res.data[0].authorBirthDate,
-          authorDeathDate:res.data[0].authorDeathDate,
-          authorLifespan:res.data[0].authorLifespan,
-          authorWikiTitle:res.data[0].editions[0].details.authorWikiTitle,
-          authorLifeWorkKeywords:res.data[0].editions[0].details.authorLifeWorkKeywords,
-          timelineLinks:res.data[0].editions[0].details.timelineLinks,
-          authorBgKeywords:res.data[0].editions[0].details.authorBgKeywords,
-          authorWikiExtract:res.data[0].editions[0].details.authorWikiExtract,
+          authorCountry:res.data.authorCountry,
+          authorInfluenced:res.data.authorInfluenced,
+          authorInfluences:res.data.authorInfluences,
+          authorWikiUrl: res.data.authorWikiUrl,
+          authorWikiImage:res.data.authorWikiImage,
+          authorBirthDate:res.data.authorBirthDate,
+          authorDeathDate:res.data.authorDeathDate,
+          authorLifespan:res.data.authorLifespan,
+          authorWikiTitle:res.data.editions[0].details.authorWikiTitle,
+          authorLifeWorkKeywords:res.data.editions[0].details.authorLifeWorkKeywords,
+          timelineLinks:res.data.editions[0].details.timelineLinks,
+          authorBgKeywords:res.data.editions[0].details.authorBgKeywords,
+          authorWikiExtract:res.data.editions[0].details.authorWikiExtract,
           }
         setSelectedAuthor({...newSelectedAuthor})
       })

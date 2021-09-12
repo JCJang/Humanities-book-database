@@ -133,7 +133,7 @@ html { font-size: 14px;}
   --details-body1:  1rem/1.5 "Amiri",serif;
   --details-body2:  0.9rem/1.5 "Amiri",serif;
   --details-subtitle1:  1.06rem/1.5 "Amiri",serif;
-  --details-subtitle2: 500 0.95rem/1.5 "Amiri",serif;
+  --details-subtitle2: bold 0.95rem/1.5 "Amiri",serif;
   --details-button: bold 0.95rem/1.5 "Amiri",serif;
   --details-overline:  0.65rem/1.5 "Amiri",serif;
   --details-caption:  0.8rem/1.5 "Amiri",serif;
@@ -389,4 +389,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f6f0', end
 
 -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.timeline{
+  display:grid;
+grid-template-rows:auto;
+  grid-template-columns: 30% 70%;
+  grid-row-gap:0.5em;
 }
