@@ -1,7 +1,8 @@
 import Axios from 'axios'
 import {useEffect, useState} from 'react'
+import LaunchRoundedIcon from '@material-ui/icons/LaunchRounded';
 
-const AuthorInit = ({selectedAuthor,languageSetting, displayBookTitle, displayEarliestPublicationYear}) => {
+const AuthorInit = ({selectedAuthor, authorFocus, setAuthorFocus, languageSetting, displayBookTitle, displayEarliestPublicationYear}) => {
 
 const [fullTimelines, setFullTimelines] = useState([])
 
@@ -117,10 +118,11 @@ const filterAroundPublicationDate = (arr)=>{
 
   return (
     <div style={{marginLeft:"3rem"}}>
-    <h4 className="h4-details">Learn More</h4>
+    <h4 className="h4-details">{authorFocus==='init'?"Learn More":authorFocus==='bg'?"Historical Timeline":`${selectedAuthor.authorWikiTitle} ${getYear(selectedAuthor.authorBirthDate)} - ${getYear(selectedAuthor.authorDeathDate)}`}</h4>
     <div className="Row" style={{position:"relative"}}>
 
       <div className="Column" style={{flex:"1 1 50%"}}>
+
         <div  style={{flex:"4 4", maxHeight:"2rem"}}>
            <div  style={{maxHeight:"2rem"}}>{fullTimelines[0] &&
           <div className="gradient">{fullTimelines[0][0] && filterAroundPublicationDate(getKeyValueArr(fullTimelines[0][0].details)).map((keyValue)=>{
@@ -134,18 +136,49 @@ width:"40rem",paddingLeft:keyValue[1]===`icon${displayEarliestPublicationYear}`?
           }
           </div>
         </div>
+
+
+
+    {authorFocus==="init" &&
+    <>
       <h5  className="h5-details">Historical Background</h5>
-      <h6  className="subtitle1-details">{selectedAuthor.timelineLinks?selectedAuthor.timelineLinks.map((timeline)=>{return timeline.slice(11)}):"Not Available for this Author"}</h6>
+      <h6  className="subtitle1-details">{selectedAuthor.timelineLinks?selectedAuthor.timelineLinks.map((timeline)=>{return timeline.slice(11)}):"Not Available for this Author"}</h6></>}
     </div>
       <div className="Column" style={{flex:"1 1 50%",position:"absolute",justifyContent:"center",alignItems:"center",marginTop:"1rem",right:"0"}}>
-        <div  style={{flex:"4 4"}}><img  style={{maxHeight:"20rem", width:"auto"}} src={selectedAuthor.authorWikiImage}></img></div>
+        <div className={authorFocus==="bio"?"upwardsGradient":""} style={{flex:"4 4"}}><img  style={{maxHeight:"20rem", width:"auto"}} src={selectedAuthor.authorWikiImage}></img></div>
+        {authorFocus==="init" &&
+        <>
         <h5  style={{flex:"1 1"}} className="h5-details">{selectedAuthor.authorWikiTitle}</h5>
-        <h6  style={{flex:"1 1"}} className="subtitle1-details">{`${getYear(selectedAuthor.authorBirthDate)} - ${getYear(selectedAuthor.authorDeathDate)}`}</h6>
-      </div>
+        <h6  style={{flex:"1 1"}} className="subtitle1-details">{`${getYear(selectedAuthor.authorBirthDate)} - ${getYear(selectedAuthor.authorDeathDate)}`}</h6></>}
+
+
+
+        {authorFocus==="bio" &&
+        <>
+            {selectedAuthor.authorBgKeywords &&
+              <div className="subtitle2" style={{width:"50%"}}>
+                <div className="Row" style={{alignItems:"center"}}>
+                  Academic Background <LaunchRoundedIcon style={{marginLeft:"0.5rem"}}/>
+                  </div>
+              <div>{selectedAuthor.authorBgKeywords[0] && selectedAuthor.authorBgKeywords.map((tag)=>{return <p className="tag" style={{display:"inline-block", border:"1.5px solid var(--paper)", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.1rem"}}>{tag}</p>})}</div>
+            </div>
+          }
+
+            {selectedAuthor.authorLifeWorkKeywords  &&
+              <div style={{width:"50%"}} className="subtitle2">
+                <div className="Row" style={{alignItems:"center"}}>
+                  Life Work <LaunchRoundedIcon style={{marginLeft:"0.5rem"}}/>
+                  </div>
+              <div>{selectedAuthor.authorLifeWorkKeywords[0] && selectedAuthor.authorLifeWorkKeywords.map((tag)=>{return <p className="tag" style={{display:"inline-block", border:"1.5px solid var(--paper)", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.1rem"}}>{tag}</p>})}</div>
+            </div>
+          }
+        </>
+      }
 
 
     </div>
     </div>
+  </div>
 
   )
 }

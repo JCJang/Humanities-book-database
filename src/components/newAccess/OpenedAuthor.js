@@ -18,7 +18,7 @@ const OpenedAuthor = ({ columnFocus, setColumnFocus, displayBookTitle, authorVie
     <AuthorPanel/>
 
     <div className="Column" style={{flex:"3 3", position:columnFocus==="detailspanel"?"relative":"absolute", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem"}}>
-    <AuthorNav selectedAuthor={selectedAuthor} displayBookTitle={displayBookTitle}/>
+    <AuthorNav selectedAuthor={selectedAuthor} setAuthorFocus={setAuthorFocus} displayBookTitle={displayBookTitle}/>
 
 
   <AuthorInit selectedAuthor={selectedAuthor} authorFocus={authorFocus} setAuthorFocus={setAuthorFocus} displayBookTitle={displayBookTitle} displayEarliestPublicationYear={displayEarliestPublicationYear} languageSetting={languageSetting}/>

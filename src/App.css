@@ -391,9 +391,20 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f6f0', end
   -webkit-text-fill-color: transparent;
 }
 
-.timeline{
-  display:grid;
-grid-template-rows:auto;
-  grid-template-columns: 30% 70%;
-  grid-row-gap:0.5em;
+.upwardsGradient {
+  position: relative;
+}
+
+.upwardsGradient:after {
+  position: absolute;
+  bottom: 0;
+  left:0;
+  content:'';
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(to top,
+     rgba(17, 17, 17, 0.8) 20%,
+     rgba(17, 17, 17, 0.2) 80%
+  );
+  pointer-events: none; /* so the text is still selectable */
 }
