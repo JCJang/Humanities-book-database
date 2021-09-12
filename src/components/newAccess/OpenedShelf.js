@@ -198,7 +198,7 @@ const setNewPreview = () =>{
   <div className="Row" style={{marginTop:"1rem", display:showKeywords?"flex":"none"}}>
     {selectedBook.contentKeywords &&
       <div className="subtitle2" style={{width:"50%"}}>
-        <div className="Row" style={{alignItems:"center"}}>
+        <div className="Row" style={{alignItems:"center",marginBottom:"0.5rem"}}>
           Content Keywords <LaunchRoundedIcon style={{marginLeft:"0.5rem"}}/>
           </div>
       <div>{selectedBook.contentKeywords[0] && selectedBook.contentKeywords.map((tag)=>{return <p className="tag" style={{display:"inline-block", border:"1.5px solid var(--shelfpanellistpressedborder)", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.1rem"}}>{tag}</p>})}</div>
@@ -206,7 +206,7 @@ const setNewPreview = () =>{
 
     {selectedBook.subjectLinks &&
       <div style={{width:"50%"}} className="subtitle2">
-        <div className="Row" style={{alignItems:"center"}}>
+        <div className="Row" style={{alignItems:"center",marginBottom:"0.5rem"}}>
           Background Keywords <LaunchRoundedIcon style={{marginLeft:"0.5rem"}}/>
           </div>
       <div>{selectedBook.subjectLinks[0] && selectedBook.subjectLinks.map((tag)=>{return <p className="tag" style={{display:"inline-block", border:"1.5px solid var(--shelfpanellistpressedborder)", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.1rem"}}>{tag}</p>})}</div>

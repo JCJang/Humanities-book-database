@@ -117,15 +117,18 @@ const filterAroundPublicationDate = (arr)=>{
 }
 
   return (
-    <div style={{marginLeft:"3rem"}}>
-    <h4 className="h4-details">{authorFocus==='init'?"Learn More":authorFocus==='bg'?"Historical Timeline":`${selectedAuthor.authorWikiTitle} ${getYear(selectedAuthor.authorBirthDate)} - ${getYear(selectedAuthor.authorDeathDate)}`}</h4>
+    <div className="noScrollBar" style={{marginLeft:"3rem", overflowY:authorFocus==='init'?'':'auto'}}>
+    <div className="Row" style={{alignItems:"center"}}>
+      <h4 className="h4-details" style={{margin:"2rem 0 1rem 0",display:"inlineBlock"}}>{authorFocus==='init'?"Learn More":authorFocus==='bg'?"Historical Timeline":selectedAuthor.authorWikiTitle}</h4>
+    {authorFocus==='bio' && <span  className="subtitle1-details" style={{margin:"2rem 1rem 1rem 1rem", display:"inlineBlock"}}>{`${getYear(selectedAuthor.authorBirthDate)} - ${getYear(selectedAuthor.authorDeathDate)}`}</span>}
+  </div>
     <div className="Row" style={{position:"relative"}}>
 
       <div className="Column" style={{flex:"1 1 50%"}}>
 
-        <div  style={{flex:"4 4", maxHeight:"2rem"}}>
-           <div  style={{maxHeight:"2rem"}}>{fullTimelines[0] &&
-          <div className="gradient">{fullTimelines[0][0] && filterAroundPublicationDate(getKeyValueArr(fullTimelines[0][0].details)).map((keyValue)=>{
+      {authorFocus!=="bio" &&  <div  style={{flex:"4 4"}}>
+           <div  style={{maxHeight:authorFocus==='init'?"2rem":""}}>{fullTimelines[0] &&
+          <div className={authorFocus==='init'?"gradient":""}>{fullTimelines[0][0] && filterAroundPublicationDate(getKeyValueArr(fullTimelines[0][0].details)).map((keyValue)=>{
             return <div key={keyValue[1]} style={{display:"grid",  gridTemplateColumns:"10rem auto", gridRowGap:"1rem",
 width:"40rem",paddingLeft:keyValue[1]===`icon${displayEarliestPublicationYear}`?"0":"1rem"}}>
 <div style={{marginTop:"0.5rem",display:"inline",fontWeight:"bold", margin:keyValue[1]===`icon${displayEarliestPublicationYear}`&&"2rem 0"}} className={keyValue[1]===`icon${displayEarliestPublicationYear}`?"subtitle1-details":"subtitle2-details"}>
@@ -136,6 +139,17 @@ width:"40rem",paddingLeft:keyValue[1]===`icon${displayEarliestPublicationYear}`?
           }
           </div>
         </div>
+      }
+    {authorFocus==="bio" &&
+        <div style={{backgroundColor:"var(--paper)", color:"var(--ink)",padding:"1rem",border:"1.5px solid #C4C4C4", marginTop:"1rem", boxShadow:"var(--heavyshadow)"}}>
+            <div className="overline-details" style={{textAlign:"center"}}>
+                  SHORT BIOGRAPHY
+          </div>
+
+        <div className="body1-details" style={{ textAlign:"left", height:"auto"}}>
+          {selectedAuthor.authorWikiExtract}
+          </div>
+          </div>}
 
 
 
@@ -143,36 +157,40 @@ width:"40rem",paddingLeft:keyValue[1]===`icon${displayEarliestPublicationYear}`?
     <>
       <h5  className="h5-details">Historical Background</h5>
       <h6  className="subtitle1-details">{selectedAuthor.timelineLinks?selectedAuthor.timelineLinks.map((timeline)=>{return timeline.slice(11)}):"Not Available for this Author"}</h6></>}
+
     </div>
-      <div className="Column" style={{flex:"1 1 50%",position:"absolute",justifyContent:"center",alignItems:"center",marginTop:"1rem",right:"0"}}>
-        <div className={authorFocus==="bio"?"upwardsGradient":""} style={{flex:"4 4"}}><img  style={{maxHeight:"20rem", width:"auto"}} src={selectedAuthor.authorWikiImage}></img></div>
+
+      <div className="Column" style={{flex:"1 1 50%",position:authorFocus==="init"?"absolute":"relative",justifyContent:"center",alignItems:"center",marginTop:"1rem",right:"0"}}>
+
+        {authorFocus!=="bg" && <div className={authorFocus==="bio"?"upwardsGradient":""} style={{flex:"4 4"}}><img  style={{maxHeight:"20rem", width:"auto"}} src={selectedAuthor.authorWikiImage}></img></div>
+      }
+
         {authorFocus==="init" &&
         <>
         <h5  style={{flex:"1 1"}} className="h5-details">{selectedAuthor.authorWikiTitle}</h5>
         <h6  style={{flex:"1 1"}} className="subtitle1-details">{`${getYear(selectedAuthor.authorBirthDate)} - ${getYear(selectedAuthor.authorDeathDate)}`}</h6></>}
 
 
-
         {authorFocus==="bio" &&
-        <>
+        <div style={{position:"absolute",marginLeft:"4rem",top:"16rem"}}>
             {selectedAuthor.authorBgKeywords &&
-              <div className="subtitle2" style={{width:"50%"}}>
-                <div className="Row" style={{alignItems:"center"}}>
+              <div className="subtitle2">
+                <div className="Row" style={{alignItems:"center", margin:"1rem"}}>
                   Academic Background <LaunchRoundedIcon style={{marginLeft:"0.5rem"}}/>
                   </div>
-              <div>{selectedAuthor.authorBgKeywords[0] && selectedAuthor.authorBgKeywords.map((tag)=>{return <p className="tag" style={{display:"inline-block", border:"1.5px solid var(--paper)", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.1rem"}}>{tag}</p>})}</div>
+              <div>{selectedAuthor.authorBgKeywords[0] && selectedAuthor.authorBgKeywords.map((tag)=>{return <p className="tag AuthorLink" style={{display:"inline-block", border:"1.5px solid var(--paper)", margin:"0 0.5rem 0.5rem 0", padding:"0.2rem 0.3rem"}}>{tag}</p>})}</div>
             </div>
           }
 
             {selectedAuthor.authorLifeWorkKeywords  &&
-              <div style={{width:"50%"}} className="subtitle2">
-                <div className="Row" style={{alignItems:"center"}}>
+              <div className="subtitle2">
+                <div className="Row" style={{alignItems:"center", margin:"1rem"}}>
                   Life Work <LaunchRoundedIcon style={{marginLeft:"0.5rem"}}/>
                   </div>
-              <div>{selectedAuthor.authorLifeWorkKeywords[0] && selectedAuthor.authorLifeWorkKeywords.map((tag)=>{return <p className="tag" style={{display:"inline-block", border:"1.5px solid var(--paper)", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.1rem"}}>{tag}</p>})}</div>
+              <div>{selectedAuthor.authorLifeWorkKeywords[0] && selectedAuthor.authorLifeWorkKeywords.map((tag)=>{return <p className="tag AuthorLink" style={{display:"inline-block", border:"1.5px solid var(--paper)", margin:"0 0.5rem 0.5rem 0", padding:"0.2rem 0.3rem"}}>{tag}</p>})}</div>
             </div>
           }
-        </>
+        </div>
       }
 
 

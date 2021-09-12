@@ -6,11 +6,11 @@ const Nav = ({selectedAuthor, setAuthorFocus, displayBookTitle}) => {
     <nav className="body2-details Row" style={{ height:"3.5rem", alignItems: "center", display:"flex",color:"var(--paper)", justifyContent:"center",backgroundColor:"var(--ink)"}}>
 
 
-    <span  onClick={()=>{setAuthorFocus("bg")}} style={{cursor:"pointer"}} className="AuthorLink">
+    <span  onClick={()=>{setAuthorFocus("bg")}} className="AuthorLink">
     Historical Background
     </span>
     <div style={{width:"0.1px",height:"1.5rem",borderLeft:"1px solid var(--paper)"}}></div>
-    <span onClick={()=>{setAuthorFocus("bio")}} style={{cursor:"pointer"}}  className="AuthorLink">
+    <span onClick={()=>{setAuthorFocus("bio")}} className="AuthorLink">
     Author's Biography
     </span>
   </nav>
