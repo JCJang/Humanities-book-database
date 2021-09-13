@@ -8,7 +8,7 @@ const OpenedShelf = ({selectedShelf, setBookIdentifier, setDisplayEarliestPublic
 
   const [googleId, setGoogleId] = useState("")
   const [isbn, setIsbn] = useState("")
-  const [contentOrBgKeywords,setContentOrBgKeywords]=useState(true)
+  const [contentOrSubjectKeywords,setContentOrSubjectKeywords]=useState(true)
   const [selectedBook,setSelectedBook] = useState({
     languageVersions:[],
     earliestPublicationYear:"",
@@ -126,8 +126,8 @@ const setNewPreview = () =>{
         <p className="subtitle1">Keyword Display</p>
         </div>
         <div className="Row" style={{marginTop:"0.5rem"}}>
-        <p onClick={()=>{setContentOrBgKeywords(true)}} className="subtitle2" style={{backgroundColor:contentOrBgKeywords?"white":"var(--shelfpanellistpressedborder)",color:contentOrBgKeywords?"var(--shelfpaneltext)":"white", borderLeft:"none",border:"1.5px solid var(--shelfpanellistpressedborder)", borderRadius:"5px 0 0 5px", padding:"0 1rem"}}>Content</p>
-        <p onClick={()=>{setContentOrBgKeywords(false)}} className="subtitle2" style={{backgroundColor:contentOrBgKeywords?"var(--shelfpanellistpressedborder)":"white", color:contentOrBgKeywords?"white":"var(--shelfpaneltext)",borderLeft:"none",border:"1.5px solid var(--shelfpanellistpressedborder)", borderRadius:"0 5px 5px 0", padding:"0 1rem"}}>Background</p>
+        <p onClick={()=>{setContentOrSubjectKeywords(true)}} className="subtitle2" style={{backgroundColor:contentOrSubjectKeywords?"white":"var(--shelfpanellistpressedborder)",color:contentOrSubjectKeywords?"var(--shelfpaneltext)":"white", borderLeft:"none",border:"1.5px solid var(--shelfpanellistpressedborder)", borderRadius:"5px 0 0 5px", padding:"0 1rem"}}>Content</p>
+        <p onClick={()=>{setContentOrSubjectKeywords(false)}} className="subtitle2" style={{backgroundColor:contentOrSubjectKeywords?"var(--shelfpanellistpressedborder)":"white", color:contentOrSubjectKeywords?"white":"var(--shelfpaneltext)",borderLeft:"none",border:"1.5px solid var(--shelfpanellistpressedborder)", borderRadius:"0 5px 5px 0", padding:"0 1rem"}}>Background</p>
         </div>
     <div className="noScrollBar" style={{height:"70vh",overflowY:"auto", marginTop:"1rem"}}>
       {selectedShelf.shelfBooks.map((book)=>{
@@ -140,7 +140,7 @@ const setNewPreview = () =>{
        padding:"0.6rem 1rem",  margin:"1rem 0"}}>
         <div className="subtitle1" style={{margin:"0 0 0.3rem 0"}}>{book.bookTitle}</div>
         <div className="subtitle2" style={{margin:"0 0 0.5rem 0"}}>{book.bookAuthor.join(", ")}</div>
-        <div className="body2">{contentOrBgKeywords?book.contentKeywords.map((tag)=>{return <p className="tag" style={{display:"inline-block", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.1rem"}}>{tag}</p>}):book.BgKeywords.map((tag)=>{return <p className="tag" style={{display:"inline-block", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.1rem"}}>{tag}</p>})}</div>
+        <div className="body2">{contentOrSubjectKeywords?book.contentKeywords.map((tag)=>{return <p className="tag" style={{display:"inline-block", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.1rem"}}>{tag}</p>}):book.subjectLinks.map((tag)=>{return <p className="tag" style={{display:"inline-block", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.1rem"}}>{tag}</p>})}</div>
         </div>
       })}
     </div>

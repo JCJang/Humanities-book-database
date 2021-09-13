@@ -10,7 +10,7 @@ import {useEffect, useState} from 'react'
 
 
 
-const OpenedAuthor = ({ columnFocus, setColumnFocus, displayBookTitle, authorView, setAuthorView, languageSetting,selectedAuthor, displayEarliestPublicationYear}) => {
+const OpenedAuthor = ({ columnFocus, setColumnFocus, displayBookTitle, languageSetting, authorView, setAuthorView, selectedAuthor, displayEarliestPublicationYear}) => {
 
   const [authorFocus, setAuthorFocus] = useState('init')
   return (

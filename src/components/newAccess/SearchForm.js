@@ -1,6 +1,6 @@
 import {useState,useEffect} from 'react'
 
-const SearchForm = ({allShelves, columnFocus, setColumnFocus, setShelfLanguage,shelfLanguage, shelfId, setShelfId,selectedShelf,setSelectedShelf}) => {
+const SearchForm = ({allShelves, columnFocus, setColumnFocus, setLanguageSetting, languageSetting, shelfId, setShelfId,selectedShelf,setSelectedShelf}) => {
   const [shelfQuery, setShelfQuery] =  useState('')
   const [shelfResults, setShelfResults] = useState(false)
   const [shelfTitle, setShelfTitle] = useState('Shelf Title')
@@ -30,11 +30,12 @@ const setNewShelf = (shelf) =>{
       <div style={{height:"minmax(150px,30vh)"}}>
     <h5 className="SearchCaption" style={{font:shelfResults?"var(--main-overline)":"var(--main-headline4)", textTransform: shelfResults?`uppercase`:'', letterSpacing: shelfResults? `0.375rem`:''}}>Ask a question</h5>
 
-       <label htmlFor="shelfLanguage">search language:</label>
-       <select className="form-control" id="shelfLanguage" value={shelfLanguage}
-        onChange={(e)=>setShelfLanguage(e.target.value)} placeholder="toggles auto input settings">
+       <label htmlFor="languageSetting">search language:</label>
+       <select className="form-control" id="languageSetting" value={languageSetting}
+        onChange={(e)=>setLanguageSetting(e.target.value)} placeholder="toggles auto input settings">
         <option value="en">English</option>
         <option value="zh-tw">Traditional Chinese</option>
+        <option value="zh-cn">Simplified Chinese</option>
         </select>
 
         <input className="form-control" type="text" id="shelfQuery" value={shelfQuery}
@@ -52,7 +53,7 @@ margin:"1rem 0 0 0", padding:"0.6rem 1rem"}}>
   </div>
   <div>
   {shelf[2].map((tag)=>{
-  return <p className="tag" style={{display:"inline-block", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.1rem"}}>{tag.slice(2)}</p>
+  return <p className="tag" key={tag.slice(2)} style={{display:"inline-block", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.1rem"}}>{tag.slice(2)}</p>
   })}
   </div>
 </div>)}
