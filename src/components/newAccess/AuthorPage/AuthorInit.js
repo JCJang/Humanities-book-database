@@ -117,7 +117,7 @@ const filterAroundPublicationDate = (arr)=>{
 }
 
   return (
-    <div className="noScrollBar" style={{marginLeft:"3rem", overflowY:authorFocus==='init'?'':'auto'}}>
+    <div className="noScrollBar" style={{marginLeft:"3rem", overflowY:authorFocus==='init'?'':'auto',maxWidth:"100%"}}>
     <div className="Row" style={{alignItems:"center"}}>
       <h4 className="h4-details" style={{margin:"2rem 0 1rem 0",display:"inlineBlock"}}>{authorFocus==='init'?"Learn More":authorFocus==='bg'?"Historical Timeline":selectedAuthor.authorWikiTitle}</h4>
     {authorFocus==='bio' && <span  className="subtitle1-details" style={{margin:"2rem 1rem 1rem 1rem", display:"inlineBlock"}}>{`${getYear(selectedAuthor.authorBirthDate)} - ${getYear(selectedAuthor.authorDeathDate)}`}</span>}
@@ -145,7 +145,7 @@ width:"40rem",paddingLeft:keyValue[1]===`icon${displayEarliestPublicationYear}`?
            <div>{fullTimelines[0] &&
           <div>{fullTimelines[0][0] && filterAroundLifeTime(getKeyValueArr(fullTimelines[0][0].details)).map((keyValue)=>{
             return <div key={keyValue[1]} style={{paddingTop:"2rem", display:"grid", gridTemplateColumns:"10rem auto", gridRowGap:"1rem",
-width:"40rem",paddingLeft:keyValue[1]===`icon${displayEarliestPublicationYear}`?"0":"1rem"}}>
+width:"100%",paddingLeft:keyValue[1]===`icon${displayEarliestPublicationYear}`?"0":"1rem"}}>
 <div style={{lineHeight:"2.5",marginTop:"0.5rem", display:"inline",fontWeight:"bold", margin:keyValue[1]===`icon${displayEarliestPublicationYear}`&&"2rem 0"}} className={keyValue[1]===`icon${displayEarliestPublicationYear}`?"subtitle1-details":"subtitle2-details"}>
   {keyValue[1]===`icon${displayEarliestPublicationYear}`?keyValue[0]:keyValue[1]}</div>
 <div style={{lineHeight:"2.5",letterSpacing: "0.05rem",
@@ -177,6 +177,7 @@ width:"40rem",paddingLeft:keyValue[1]===`icon${displayEarliestPublicationYear}`?
 
     </div>
 
+    {authorFocus!=="bg" &&
       <div className="Column" style={{flex:"1 1 30%",position:authorFocus==="init"?"absolute":"relative",justifyContent:"center",alignItems:"center",marginTop:"1rem",right:"0", marginLeft:"3rem"}}>
 
         {authorFocus!=="bg" && <div className={authorFocus==="bio"?"upwardsGradient":""} style={{flex:"4 4"}}><img  style={{maxHeight:"18rem", width:"auto"}} src={selectedAuthor.authorWikiImage}></img></div>
@@ -210,8 +211,7 @@ width:"40rem",paddingLeft:keyValue[1]===`icon${displayEarliestPublicationYear}`?
         </div>
       }
 
-
-    </div>
+    </div>}
     </div>
   </div>
 

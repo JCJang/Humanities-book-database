@@ -108,7 +108,6 @@ html { font-size: 14px;}
 --heavyshadow:0px 6px 8px rgba(0, 0, 0, 0.15);
 
 --panelshadow:6px 0px 8px rgba(0, 0, 0, 0.15) inset;
---panelshadowdarker:7px 0px 8px blue inset;
 
 
   --main-headline1: 300 6.5rem/1.5 "Jost", "Palanquin", sans-serif;
@@ -405,9 +404,24 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f6f0', end
   height: 100%;
   width: 100%;
   background: linear-gradient(to top,
-     rgba(17, 17, 17, 0.9) 50%,
-     rgba(17, 17, 17, 0.8) 65%,
+     rgba(17, 17, 17, 0.9) 30%,
      rgba(17, 17, 17, 0.1) 80%
   );
   pointer-events: none; /* so the text is still selectable */
+}
+
+.h5tab{
+width:4rem;
+align-self:center;
+height:80vh;
+transform:rotate(180deg);
+transform-origin:center center;
+}
+
+.tab-lr{
+  writing-mode:vertical-lr;
+}
+
+.tab-rl{
+  writing-mode:vertical-rl;
 }

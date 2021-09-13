@@ -240,14 +240,14 @@ const Access =({googleScriptLoaded})=>{
           {selectedShelf && <OpenedShelf setAuthorFocus={setAuthorFocus} setAuthorToGet={setAuthorToGet} setDisplayEarliestPublicationYear={setDisplayEarliestPublicationYear} setColumnFocus={setColumnFocus} authorView={authorView} setAuthorView={setAuthorView} columnFocus={columnFocus} setIsbnOrId={setIsbnOrId} setBookIdentifier={setBookIdentifier} selectedShelf={selectedShelf} setDisplayBookTitle={setDisplayBookTitle}/>}
           </div>
 
-        <AnimatePresence exitBeforeEnter>
+        <AnimatePresence>
           {authorView===false &&
             <motion.div exit={{y:'-100%'}} className="col-3"  style={{width:columnFocus==="detailspanel"?"var(--focusedpanel)":"4rem",boxShadow:"var(--panelshadow)",height:"var(--panelheight)"}} >
             <GoogleBooksViewer columnFocus={columnFocus} authorView={authorView} setAuthorView={setAuthorView} bookIdentifier={bookIdentifier} setColumnFocus={setColumnFocus} displayBookTitle={displayBookTitle} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId}/>
             </motion.div>
           }
         </AnimatePresence>
-        <AnimatePresence exitBeforeEnter>
+        <AnimatePresence>
           {authorView===true &&
               <motion.div exit={{y:'100%'}} className="col-3"  style={{width:columnFocus!=="detailspanel"?"4rem":authorView===true?"var(--initpanel)":"var(--focusedpanel)",boxShadow:"var(--panelshadow)",height:"var(--panelheight)"}}>
                 <OpenedAuthor  languageSetting={languageSetting} authorFocus={authorFocus} setAuthorFocus={setAuthorFocus} displayEarliestPublicationYear={displayEarliestPublicationYear} columnFocus={columnFocus} authorView={authorView} setAuthorView={setAuthorView} setColumnFocus={setColumnFocus} displayBookTitle={displayBookTitle} selectedAuthor={selectedAuthor}/>

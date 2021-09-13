@@ -61,11 +61,11 @@ margin:"1rem 0 0 0", padding:"0.6rem 1rem"}}>
 </div>
 
     </div>
-    <h5 onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("shelfpanel")}}} style={{width:"4rem", alignSelf:"center", height:"80vh", writingMode:"vertical-lr", transform:"rotate(180deg)", transformOrigin:"center center"}}>
+    <h5 className="tab-lr h5tab" style={{cursor:columnFocus!=="shelfpanel"?"pointer":""}} onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("shelfpanel")}}}>
     {shelfTitle.slice(0,30)}
     {columnFocus!=="shelfpanel"&&
     <span className="subtitle2" style={{textTransform: "none"
-,position:"absolute", bottom:"4rem"}}>expand <AddCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem"}}/></span>}
+,position:"absolute", bottom:"0"}}>expand <AddCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem"}}/></span>}
     </h5>
     </div>
     </div>

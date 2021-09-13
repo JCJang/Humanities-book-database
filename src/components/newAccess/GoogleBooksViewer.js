@@ -68,13 +68,13 @@ import AddCircleIcon from '@material-ui/icons/AddCircle'
             <div className="Row" style={{overflow:"hidden",position:"relative"}}>
               <div id="viewerCanvas" style={{position:columnFocus==="detailspanel"?"relative":"absolute", height:"var(--panelheight)",width:"60vw", paddingLeft:"3rem",backgroundColor:"(var(--detailspanel))", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem"}}>
               </div>
-              <span className="btn darkbtn" style={{width:"6rem",display:"flex",justifyContent:"center", alignSelf:"flex-start",alignItems:"center",marginTop:"2rem",marginLeft:"3rem"}}><ArrowBackRoundedIcon/><span style={{width:"85%", padding:"0 0.5rem"}} onClick={()=>{setColumnFocus("shelfpanel")}}>Back to Shelf</span></span>
+              <span className="btn darkbtn" onClick={()=>{setColumnFocus("shelfpanel")}} style={{width:"6rem",display:"flex",justifyContent:"center", alignSelf:"flex-start",alignItems:"center",marginTop:"2rem",marginLeft:"3rem"}}><ArrowBackRoundedIcon/><span style={{width:"85%", padding:"0 0.5rem"}}>Back to Shelf</span></span>
               </div>
-              <h5 onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("detailspanel")}}}  style={{width:"4rem", alignSelf:"center", height:"70vh", writingMode:"vertical-lr", transform:"rotate(180deg)", transformOrigin:"center center"}}>
+              <h5 onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("detailspanel")}}}  style={{width:"4rem", alignSelf:"center", height:"80vh", writingMode:"vertical-lr", transform:"rotate(180deg)", transformOrigin:"center center"}}>
               {displayBookTitle? displayBookTitle:"Book Details"}
               {columnFocus!=="detailspanel"&&
               <span className="subtitle2" style={{textTransform: "none"
-          ,position:"absolute", bottom:"4rem"}}>expand <AddCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem"}}/></span>}
+          ,position:"absolute", bottom:"0"}}>expand <AddCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem"}}/></span>}
               </h5>
           </div>
         )
