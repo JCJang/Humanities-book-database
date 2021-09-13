@@ -124,12 +124,12 @@ const filterAroundPublicationDate = (arr)=>{
   </div>
     <div className="Row" style={{position:"relative"}}>
 
-      <div className="Column" style={{flex:"1 1 50%"}}>
+      <div className="Column" style={{flex:"1 1 70%"}}>
 
-      {authorFocus!=="bio" &&  <div  style={{flex:"4 4"}}>
-           <div  style={{maxHeight:authorFocus==='init'?"2rem":""}}>{fullTimelines[0] &&
-          <div className={authorFocus==='init'?"gradient":""}>{fullTimelines[0][0] && filterAroundPublicationDate(getKeyValueArr(fullTimelines[0][0].details)).map((keyValue)=>{
-            return <div key={keyValue[1]} style={{display:"grid",  gridTemplateColumns:"10rem auto", gridRowGap:"1rem",
+      {authorFocus==="init" &&  <div  style={{flex:"4 4"}}>
+           <div  style={{maxHeight:"2rem"}}>{fullTimelines[0] &&
+          <div className="gradient">{fullTimelines[0][0] && filterAroundPublicationDate(getKeyValueArr(fullTimelines[0][0].details)).map((keyValue)=>{
+            return <div key={keyValue[1]} style={{display:"grid", gridTemplateColumns:"10rem auto", gridRowGap:"1rem",
 width:"40rem",paddingLeft:keyValue[1]===`icon${displayEarliestPublicationYear}`?"0":"1rem"}}>
 <div style={{marginTop:"0.5rem",display:"inline",fontWeight:"bold", margin:keyValue[1]===`icon${displayEarliestPublicationYear}`&&"2rem 0"}} className={keyValue[1]===`icon${displayEarliestPublicationYear}`?"subtitle1-details":"subtitle2-details"}>
   {keyValue[1]===`icon${displayEarliestPublicationYear}`?keyValue[0]:keyValue[1]}</div>
@@ -140,6 +140,23 @@ width:"40rem",paddingLeft:keyValue[1]===`icon${displayEarliestPublicationYear}`?
           </div>
         </div>
       }
+
+      {authorFocus==="bg" &&  <div  style={{flex:"4 4"}}>
+           <div>{fullTimelines[0] &&
+          <div>{fullTimelines[0][0] && filterAroundLifeTime(getKeyValueArr(fullTimelines[0][0].details)).map((keyValue)=>{
+            return <div key={keyValue[1]} style={{paddingTop:"2rem", display:"grid", gridTemplateColumns:"10rem auto", gridRowGap:"1rem",
+width:"40rem",paddingLeft:keyValue[1]===`icon${displayEarliestPublicationYear}`?"0":"1rem"}}>
+<div style={{lineHeight:"2.5",marginTop:"0.5rem", display:"inline",fontWeight:"bold", margin:keyValue[1]===`icon${displayEarliestPublicationYear}`&&"2rem 0"}} className={keyValue[1]===`icon${displayEarliestPublicationYear}`?"subtitle1-details":"subtitle2-details"}>
+  {keyValue[1]===`icon${displayEarliestPublicationYear}`?keyValue[0]:keyValue[1]}</div>
+<div style={{lineHeight:"2.5",letterSpacing: "0.05rem",
+ marginTop:"0.5rem",display:"inline",margin:keyValue[1]===`icon${displayEarliestPublicationYear}`&&"2rem 0"}} className={keyValue[1]===`icon${displayEarliestPublicationYear}`?"subtitle1-details":"body1-details"}>  {keyValue[2]}</div>
+      </div>
+          })}</div>
+          }
+          </div>
+        </div>
+      }
+
     {authorFocus==="bio" &&
         <div style={{backgroundColor:"var(--paper)", color:"var(--ink)",padding:"1rem",border:"1.5px solid #C4C4C4", marginTop:"1rem", boxShadow:"var(--heavyshadow)"}}>
             <div className="overline-details" style={{textAlign:"center"}}>
@@ -160,9 +177,9 @@ width:"40rem",paddingLeft:keyValue[1]===`icon${displayEarliestPublicationYear}`?
 
     </div>
 
-      <div className="Column" style={{flex:"1 1 50%",position:authorFocus==="init"?"absolute":"relative",justifyContent:"center",alignItems:"center",marginTop:"1rem",right:"0"}}>
+      <div className="Column" style={{flex:"1 1 30%",position:authorFocus==="init"?"absolute":"relative",justifyContent:"center",alignItems:"center",marginTop:"1rem",right:"0", marginLeft:"3rem"}}>
 
-        {authorFocus!=="bg" && <div className={authorFocus==="bio"?"upwardsGradient":""} style={{flex:"4 4"}}><img  style={{maxHeight:"20rem", width:"auto"}} src={selectedAuthor.authorWikiImage}></img></div>
+        {authorFocus!=="bg" && <div className={authorFocus==="bio"?"upwardsGradient":""} style={{flex:"4 4"}}><img  style={{maxHeight:"18rem", width:"auto"}} src={selectedAuthor.authorWikiImage}></img></div>
       }
 
         {authorFocus==="init" &&
@@ -172,7 +189,7 @@ width:"40rem",paddingLeft:keyValue[1]===`icon${displayEarliestPublicationYear}`?
 
 
         {authorFocus==="bio" &&
-        <div style={{position:"absolute",marginLeft:"4rem",top:"16rem"}}>
+        <div style={{position:"absolute", margin:"0 0.5rem 0 0.5rem", top:"14rem"}}>
             {selectedAuthor.authorBgKeywords &&
               <div className="subtitle2">
                 <div className="Row" style={{alignItems:"center", margin:"1rem"}}>

@@ -2,7 +2,7 @@ import {useState} from 'react'
 
 const AuthorPanel = ({selectedAuthor}) => {
   const [expandFurtherReading, setExpandFurtherReading] = useState(false)
-  
+
   return (
     <div style={{color:"var(--authorpaneltext)",backgroundColor:"var(--authorpanel)",display:"flex",height:"var(--panelheight)"}}>
     {expandFurtherReading &&

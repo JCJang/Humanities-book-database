@@ -106,7 +106,9 @@ html { font-size: 14px;}
 
 --lightshadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
 --heavyshadow:0px 6px 8px rgba(0, 0, 0, 0.15);
+
 --panelshadow:6px 0px 8px rgba(0, 0, 0, 0.15) inset;
+--panelshadowdarker:7px 0px 8px blue inset;
 
 
   --main-headline1: 300 6.5rem/1.5 "Jost", "Palanquin", sans-serif;

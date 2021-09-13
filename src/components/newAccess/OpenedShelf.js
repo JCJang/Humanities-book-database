@@ -2,9 +2,11 @@
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 import LaunchRoundedIcon from '@material-ui/icons/LaunchRounded';
 import ArrowForwardRoundedIcon from '@material-ui/icons/ArrowForwardRounded';
+import AddCircleIcon from '@material-ui/icons/AddCircle'
+
 
 import {useState,useEffect} from 'react'
-const OpenedShelf = ({selectedShelf, setBookIdentifier, setDisplayEarliestPublicationYear, setColumnFocus,setAuthorView, authorView, setAuthorToGet, setDisplayBookTitle,columnFocus,setIsbnOrId}) => {
+const OpenedShelf = ({selectedShelf, setBookIdentifier, setAuthorFocus, setDisplayEarliestPublicationYear, setColumnFocus,setAuthorView, authorView, setAuthorToGet, setDisplayBookTitle,columnFocus,setIsbnOrId}) => {
 
   const [googleId, setGoogleId] = useState("")
   const [isbn, setIsbn] = useState("")
@@ -37,6 +39,18 @@ const OpenedShelf = ({selectedShelf, setBookIdentifier, setDisplayEarliestPublic
        }
      };
 
+       const getYear = (date)=> {
+         if(!date){return "undefined"}
+         const newDate = date.toString()
+         if(newDate.slice(0,1)==="-"){
+           const year = `${newDate.slice(1,5)} B.C.`
+           return year;
+
+         }else{
+           const year = newDate.match(/^\d*/);
+           return year;
+         }
+       }
  //reset copy success message upon book change
 
        useEffect(()=>{
@@ -151,8 +165,8 @@ const setNewPreview = () =>{
       <h4 id="title" style={{paddingTop:"1.5rem"}}>{selectedBook.bookTitle}</h4>
 
 
-<div className="Row">
-  <div className="Column" style={{width:"auto"}}>
+<div className="Row" style={{justifyContent:"spaceBetween"}}>
+  <div className="Column" style={{width:"auto",flex:"1 1"}}>
       <div className="subtitle1" style={{padding:"1rem 0"}}>
       {selectedBook.bookAuthor && selectedBook.bookAuthor.join(", ")}
       {document.queryCommandSupported('copy') && <span  value={toCopy}><FileCopyOutlinedIcon  style={{margin:"0 0.5rem"}} onClick={()=>{copyToClipboard(toCopy)}}/><span className="caption" style={{color:"var(--shelfpanellistpressedborder)"}}>{copySuccess}</span>
@@ -166,7 +180,7 @@ const setNewPreview = () =>{
         Publication Date:
       </div>
       <div className="subtitle2" style={{textAlign:"left",width:"50%"}}>
-        {selectedBook.earliestPublicationYear}
+        {getYear(selectedBook.earliestPublicationYear)}
       </div>
       </div>}
 
@@ -181,11 +195,10 @@ const setNewPreview = () =>{
     </div>}
       </div>
 
-
-      <div className="Column">
+      <div className="Column" style={{flex:"1 1"}}>
         <span className="btn lightbtn"  onClick={()=>{setNewPreview()}} style={{width:"6rem",display:"flex",justifyContent:"center",alignItems:"center",marginTop:"1rem"}}><span  style={{width:"85%"}}>Preview</span><ArrowForwardRoundedIcon/></span>
         {selectedBook.bookAuthor && selectedBook.bookAuthor.map((author) => {
-          return <span className="btn lightbtn" onClick={()=>{setNewAuthor(author)}} style={{width:"6rem", marginTop:"1rem",display:"flex",justifyContent:"center",alignItems:"center"}}><p style={{width:"85%"}}>{`About ${author}`}</p><ArrowForwardRoundedIcon/></span>
+          return <span className="btn lightbtn" onClick={()=>{setNewAuthor(author);setAuthorFocus("init")}} style={{width:"6rem", marginTop:"1rem",display:"flex",justifyContent:"center",alignItems:"center"}}><p style={{width:"85%"}}>{`About ${author}`}</p><ArrowForwardRoundedIcon/></span>
         })}
         <span className="btn" style={{width:"10rem",color:"var(--shelfpanellistpressedborder)",position:"relative"}}
        onClick={()=>{setShowKeywords(!showKeywords)}}><span style={{bottom:"0.5rem", position:"absolute"}}>{showKeywords?"Hide Keywords":"Show Keywords"}</span></span>
@@ -230,6 +243,9 @@ const setNewPreview = () =>{
     </div>
     <h5  onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("shelfpanel")}}} style={{width:"4rem", alignSelf:"center", height:"80vh", writingMode:"vertical-lr", transform:"rotate(180deg)", transformOrigin:"center center"}}>
     {selectedBook.bookTitle? selectedBook.bookTitle:"Book Title"}
+    {columnFocus!=="shelfpanel"&&
+    <span className="subtitle2" style={{textTransform: "none"
+,position:"absolute", bottom:"4rem"}}>expand <AddCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem"}}/></span>}
     </h5>
   </div>
 

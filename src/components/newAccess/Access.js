@@ -9,35 +9,38 @@ import {motion, AnimatePresence} from 'framer-motion'
 
 
 const Access =({googleScriptLoaded})=>{
-  const [selectedShelf, setSelectedShelf] = useState({
-    shelfTitle:'',
-    shelfDescription:'',
-    shelfSubjects:[],
-    shelfBooks:[{
-      languageVersions:[],
-      earliestPublicationYear:"",
-      bookTitle:"",
-      bookAuthor: [],
-      contentKeywords: [],
-      subjectLinks:[],
-      bookHighlights:"",
-      bookLength:"",
-      previewStatus:"",
-      isbn13:"",
-      googleId:""
 
-    }]
-  })
-  const [shelfId,setShelfId] = useState('')
-
-    const [bookIdentifier, setBookIdentifier] = useState(false);
-    const [displayBookTitle,setDisplayBookTitle] = useState('');
-    const [displayEarliestPublicationYear, setDisplayEarliestPublicationYear] = useState('')
-
-    const [isbnOrId, setIsbnOrId] = useState(true)
+//search panel
     const [languageSetting, setLanguageSetting] = useState('en')
     const [allShelves,setAllShelves]=useState([])
     const [columnFocus, setColumnFocus] = useState('init')
+
+//shelf panel
+    const [shelfId,setShelfId] = useState('')
+    const [displayBookTitle,setDisplayBookTitle] = useState('');
+    const [displayEarliestPublicationYear, setDisplayEarliestPublicationYear] = useState('')
+    const [selectedShelf, setSelectedShelf] = useState({
+      shelfTitle:'',
+      shelfDescription:'',
+      shelfSubjects:[],
+      shelfBooks:[{
+        languageVersions:[],
+        earliestPublicationYear:"",
+        bookTitle:"",
+        bookAuthor: [],
+        contentKeywords: [],
+        subjectLinks:[],
+        bookHighlights:"",
+        bookLength:"",
+        previewStatus:"",
+        isbn13:"",
+        googleId:""
+
+      }]
+    })
+
+//author panel
+    const [authorFocus, setAuthorFocus] = useState('init')
     const [authorView, setAuthorView] = useState(false)
     const [authorToGet, setAuthorToGet] = useState('')
     const [selectedAuthor, setSelectedAuthor]=useState({
@@ -55,6 +58,10 @@ const Access =({googleScriptLoaded})=>{
       authorBgKeywords:[],
       authorWikiExtract:"",
     })
+
+//Google Books viewer
+    const [bookIdentifier, setBookIdentifier] = useState(false);
+    const [isbnOrId, setIsbnOrId] = useState(true)
 
     const stripLabels = useCallback((a) => {
       if(Array.isArray(a)){
@@ -175,11 +182,30 @@ const Access =({googleScriptLoaded})=>{
 
     useEffect(()=>{
       if(authorToGet.length<2){return}
+      setSelectedAuthor({
+        authorInfluences:[],
+        authorInfluenced:[],
+        authorCountry:[],
+        authorWikiUrl:"",
+        authorWikiImage:"",
+        authorBirthDate:"",
+        authorDeathDate:"",
+        authorLifespan:"",
+        authorWikiTitle:"",
+        authorLifeWorkKeywords: [],
+        timelineLinks:[],
+        authorBgKeywords:[],
+        authorWikiExtract:"",
+      })
       Axios.post("http://localhost:3001/openedauthor",{
         authorLanguage:languageSetting,
         authorToGet:authorToGet
       })
       .then((res) => {
+          if(res.data===""){
+            console.log(`no author page found for ${authorToGet}`);
+            return;
+          }
         const newSelectedAuthor = {
           authorCountry:res.data.authorCountry,
           authorInfluenced:res.data.authorInfluenced,
@@ -211,7 +237,7 @@ const Access =({googleScriptLoaded})=>{
 
         </div>
         <div className="col-2"  style={{width:columnFocus==="shelfpanel"?"var(--focusedpanel)":columnFocus==="init"?"4rem":authorView===true?"4rem":"30vw",boxShadow:"var(--panelshadow)",height:"var(--panelheight)"}}>
-          {selectedShelf && <OpenedShelf setAuthorToGet={setAuthorToGet} setDisplayEarliestPublicationYear={setDisplayEarliestPublicationYear} setColumnFocus={setColumnFocus} authorView={authorView} setAuthorView={setAuthorView} columnFocus={columnFocus} setIsbnOrId={setIsbnOrId} setBookIdentifier={setBookIdentifier} selectedShelf={selectedShelf} setDisplayBookTitle={setDisplayBookTitle}/>}
+          {selectedShelf && <OpenedShelf setAuthorFocus={setAuthorFocus} setAuthorToGet={setAuthorToGet} setDisplayEarliestPublicationYear={setDisplayEarliestPublicationYear} setColumnFocus={setColumnFocus} authorView={authorView} setAuthorView={setAuthorView} columnFocus={columnFocus} setIsbnOrId={setIsbnOrId} setBookIdentifier={setBookIdentifier} selectedShelf={selectedShelf} setDisplayBookTitle={setDisplayBookTitle}/>}
           </div>
 
         <AnimatePresence exitBeforeEnter>
@@ -224,7 +250,7 @@ const Access =({googleScriptLoaded})=>{
         <AnimatePresence exitBeforeEnter>
           {authorView===true &&
               <motion.div exit={{y:'100%'}} className="col-3"  style={{width:columnFocus!=="detailspanel"?"4rem":authorView===true?"var(--initpanel)":"var(--focusedpanel)",boxShadow:"var(--panelshadow)",height:"var(--panelheight)"}}>
-                <OpenedAuthor  languageSetting={languageSetting} displayEarliestPublicationYear={displayEarliestPublicationYear} columnFocus={columnFocus} authorView={authorView} setAuthorView={setAuthorView} setColumnFocus={setColumnFocus} displayBookTitle={displayBookTitle} selectedAuthor={selectedAuthor}/>
+                <OpenedAuthor  languageSetting={languageSetting} authorFocus={authorFocus} setAuthorFocus={setAuthorFocus} displayEarliestPublicationYear={displayEarliestPublicationYear} columnFocus={columnFocus} authorView={authorView} setAuthorView={setAuthorView} setColumnFocus={setColumnFocus} displayBookTitle={displayBookTitle} selectedAuthor={selectedAuthor}/>
               </motion.div>
           }
         </AnimatePresence>
