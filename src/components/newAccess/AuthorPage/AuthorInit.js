@@ -117,9 +117,9 @@ const filterAroundPublicationDate = (arr)=>{
 }
 
   return (
-    <div className="noScrollBar" style={{marginLeft:"3rem", overflowY:authorFocus==='init'?'':'auto',maxWidth:"100%"}}>
+    <div className="noScrollBar OpenedAuthor" style={{marginLeft:"3rem", overflowY:authorFocus==='init'?'':'auto',maxWidth:"100%", height:"var(--authorheight)"}}>
     <div className="Row" style={{alignItems:"center"}}>
-      <h4 className="h4-details" style={{margin:"2rem 0 1rem 0",display:"inlineBlock"}}>{authorFocus==='init'?"Learn More":authorFocus==='bg'?"Historical Timeline":selectedAuthor.authorWikiTitle}</h4>
+      <h4 className="h4-details" style={{margin:"2rem 0 1rem 0",display:"inlineBlock"}} id="authorTitle">{authorFocus==='init'?"Learn More":authorFocus==='bg'?"Historical Timeline":selectedAuthor.authorWikiTitle}</h4>
     {authorFocus==='bio' && <span  className="subtitle1-details" style={{margin:"2rem 1rem 1rem 1rem", display:"inlineBlock"}}>{`${getYear(selectedAuthor.authorBirthDate)} - ${getYear(selectedAuthor.authorDeathDate)}`}</span>}
   </div>
     <div className="Row" style={{position:"relative"}}>
@@ -166,9 +166,13 @@ width:"100%",paddingLeft:keyValue[1]===`icon${displayEarliestPublicationYear}`?"
         <div className="body1-details" style={{ textAlign:"left", height:"auto"}}>
           {selectedAuthor.authorWikiExtract}
           </div>
+
           </div>}
 
-
+  {authorFocus!=="init" &&
+      <div style={{display:"flex",alignItems:"center", justifyContent:"center",marginTop:"1rem"}}>
+        <a style={{textDecoration:"none",color:"var(--paper)"}} href="#authorTitle" className="btn">Back to Top</a>
+          </div>}
 
     {authorFocus==="init" &&
     <>
@@ -208,6 +212,7 @@ width:"100%",paddingLeft:keyValue[1]===`icon${displayEarliestPublicationYear}`?"
               <div>{selectedAuthor.authorLifeWorkKeywords[0] && selectedAuthor.authorLifeWorkKeywords.map((tag)=>{return <p className="tag AuthorLink" style={{display:"inline-block", border:"1.5px solid var(--paper)", margin:"0 0.5rem 0.5rem 0", padding:"0.2rem 0.3rem"}}>{tag}</p>})}</div>
             </div>
           }
+
         </div>
       }
 

@@ -44,7 +44,7 @@ const setNewShelf = (shelf) =>{
          </div>
          <div className="noScrollBar" style={{overflowY:"auto"}}>
 {shelfResults && shelfResults.map((shelf)=><div onClick={()=>{setNewShelf(shelf)}} className="transition" key={shelf[3]}
-style={{color:"searchpaneltext", width:"minmax(auto,30vw)", backgroundColor:shelf[3]===shelfId?"white":"var(--searchpanellist)",
+style={{cursor:shelf[3]===shelfId?"":"pointer",color:"searchpaneltext", width:"minmax(auto,30vw)", backgroundColor:shelf[3]===shelfId?"white":"var(--searchpanellist)",
 border:shelf[3]===shelfId?"1px solid var(--searchpanellstborderpressed)":"1px solid var(--searchpanellistborder)",
 boxShadow:"var(--heavyshadow)",
 margin:"1rem 0 0 0", padding:"0.6rem 1rem"}}>
@@ -61,8 +61,8 @@ margin:"1rem 0 0 0", padding:"0.6rem 1rem"}}>
 </div>
 
     </div>
-    <h5 className="tab-lr h5tab" style={{cursor:columnFocus!=="shelfpanel"?"pointer":""}} onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("shelfpanel")}}}>
-    {shelfTitle.slice(0,30)}
+    <h5 className="tab-lr h5tab tabsearch" style={{opacity:"0.8",cursor:columnFocus!=="shelfpanel"?"pointer":""}} onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("shelfpanel")}}}>
+    <span>{shelfTitle.slice(0,35)}</span>
     {columnFocus!=="shelfpanel"&&
     <span className="subtitle2" style={{textTransform: "none"
 ,position:"absolute", bottom:"0"}}>expand <AddCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem"}}/></span>}

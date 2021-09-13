@@ -57,6 +57,10 @@ html{
     scroll-behavior: smooth;
 }
 
+.OpenedAuthor{
+  scroll-behavior: smooth;
+}
+
 @media screen and (max-width: 1200px) {
 html { font-size: 14px;}
 }
@@ -101,6 +105,7 @@ html { font-size: 14px;}
 --focusedpanel:calc(70vw - 4rem);
 --initpanel:calc(100vw - 8rem);
 --panelheight:calc(100vh - 3.5rem);
+--authorheight:calc(100vh - 10.5rem);
 
 
 
@@ -416,6 +421,69 @@ align-self:center;
 height:80vh;
 transform:rotate(180deg);
 transform-origin:center center;
+}
+
+
+.tabsearch:after {
+  position: absolute;
+  bottom: 5rem;
+  left:0;
+  content:'';
+  height: 30%;
+  width: 60%;
+  opacity:0.9;
+  background: linear-gradient(to top,
+     var(--searchpanel) 10%,
+     rgba(0, 0, 0, 0) 90%
+  );
+  pointer-events: none; /* so the text is still selectable */
+}
+
+
+.tabshelf:after {
+  position: absolute;
+  bottom: 5rem;
+  left:0;
+  content:'';
+  height: 30%;
+  width: 60%;
+  opacity:0.9;
+  background: linear-gradient(to top,
+     var(--shelfpanel) 10%,
+     rgba(0, 0, 0, 0) 90%
+  );
+  pointer-events: none; /* so the text is still selectable */
+}
+
+
+.tabbook:after {
+  position: absolute;
+  bottom:  5rem;
+  left:0;
+  content:'';
+  height: 30%;
+  width: 60%;
+  opacity:0.9;
+  background: linear-gradient(to top,
+     var(--detailspanel) 10%,
+     rgba(0, 0, 0, 0) 90%
+  );
+  pointer-events: none; /* so the text is still selectable */
+}
+
+.tabauthor:after {
+  position: absolute;
+  bottom: 5rem;
+  left:0;
+  content:'';
+  height: 30%;
+  width: 60%;
+  opacity:0.9;
+  background: linear-gradient(to top,
+     var(--ink) 10%,
+     rgba(0, 0, 0, 0) 90%
+  );
+  pointer-events: none; /* so the text is still selectable */
 }
 
 .tab-lr{

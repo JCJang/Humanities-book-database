@@ -70,8 +70,8 @@ import AddCircleIcon from '@material-ui/icons/AddCircle'
               </div>
               <span className="btn darkbtn" onClick={()=>{setColumnFocus("shelfpanel")}} style={{width:"6rem",display:"flex",justifyContent:"center", alignSelf:"flex-start",alignItems:"center",marginTop:"2rem",marginLeft:"3rem"}}><ArrowBackRoundedIcon/><span style={{width:"85%", padding:"0 0.5rem"}}>Back to Shelf</span></span>
               </div>
-              <h5 onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("detailspanel")}}}  style={{width:"4rem", alignSelf:"center", height:"80vh", writingMode:"vertical-lr", transform:"rotate(180deg)", transformOrigin:"center center"}}>
-              {displayBookTitle? displayBookTitle:"Book Details"}
+              <h5 className="tabbook tab-lr h5tab" style={{opacity:"0.9"}} onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("detailspanel")}}}>
+              {displayBookTitle? displayBookTitle.slice(0,35):"Book Details"}
               {columnFocus!=="detailspanel"&&
               <span className="subtitle2" style={{textTransform: "none"
           ,position:"absolute", bottom:"0"}}>expand <AddCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem"}}/></span>}

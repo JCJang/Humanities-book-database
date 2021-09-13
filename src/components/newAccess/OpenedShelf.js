@@ -146,7 +146,7 @@ const setNewPreview = () =>{
     <div className="noScrollBar" style={{height:"70vh",overflowY:"auto", marginTop:"1rem"}}>
       {selectedShelf.shelfBooks.map((book)=>{
         return <div className="transition" key={book.googleId} onClick={()=>{setNewBook(book)}}
-         style={{
+         style={{cursor:book.googleId===googleId?"":"pointer",
         color:"searchpaneltext", backgroundColor:book.googleId===googleId?"var(--shelfpanellistpressed)":"var(--shelfpanellist)",
         border:book.googleId===googleId?"1.5px solid var(--shelfpanellistpressedborder)":"1.5px solid var(--shelfpanellistborder)",
         transform:book.googleId===googleId?"translateY(0.3rem)":"translateY(0px)",
@@ -169,7 +169,7 @@ const setNewPreview = () =>{
   <div className="Column" style={{width:"auto",flex:"1 1"}}>
       <div className="subtitle1" style={{padding:"1rem 0"}}>
       {selectedBook.bookAuthor && selectedBook.bookAuthor.join(", ")}
-      {document.queryCommandSupported('copy') && <span  value={toCopy}><FileCopyOutlinedIcon  style={{margin:"0 0.5rem"}} onClick={()=>{copyToClipboard(toCopy)}}/><span className="caption" style={{color:"var(--shelfpanellistpressedborder)"}}>{copySuccess}</span>
+      {document.queryCommandSupported('copy') && <span  value={toCopy}><FileCopyOutlinedIcon  style={{margin:"0 0.5rem", cursor:"pointer"}} onClick={()=>{copyToClipboard(toCopy)}}/><span className="caption" style={{color:"var(--shelfpanellistpressedborder)"}}>{copySuccess}</span>
     </span>
 }
 </div>
@@ -196,7 +196,7 @@ const setNewPreview = () =>{
       </div>
 
       <div className="Column" style={{flex:"1 1"}}>
-        <span className="btn lightbtn"  onClick={()=>{setNewPreview()}} style={{width:"6rem",display:"flex",justifyContent:"center",alignItems:"center",marginTop:"1rem"}}><span  style={{width:"85%"}}>Preview</span><ArrowForwardRoundedIcon/></span>
+        <span className="btn lightbtn" onClick={()=>{setNewPreview()}} style={{width:"6rem", display:"flex",justifyContent:"center",alignItems:"center",marginTop:"1rem"}}><span  style={{width:"85%"}}>Preview</span><ArrowForwardRoundedIcon/></span>
         {selectedBook.bookAuthor && selectedBook.bookAuthor.map((author) => {
           return <span className="btn lightbtn" onClick={()=>{setNewAuthor(author);setAuthorFocus("init")}} style={{width:"6rem", marginTop:"1rem",display:"flex",justifyContent:"center",alignItems:"center"}}><p style={{width:"85%"}}>{`About ${author}`}</p><ArrowForwardRoundedIcon/></span>
         })}
@@ -241,8 +241,8 @@ const setNewPreview = () =>{
       <a style={{textDecoration:"none",color:"var(--shelfpanellistpressedborder)"}} href="#title" className="btn">Back to Top</a>
       </div>
     </div>
-    <h5 className="tab-lr h5tab" style={{cursor:columnFocus!=="shelfpanel"?"pointer":""}} onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("shelfpanel")}}}>
-    {selectedBook.bookTitle? selectedBook.bookTitle:"Book Title"}
+    <h5 className="tab-lr h5tab tabshelf" style={{opacity:"0.8", cursor:columnFocus!=="shelfpanel"?"pointer":""}} onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("shelfpanel")}}}>
+    {selectedBook.bookTitle? selectedBook.bookTitle.slice(0,35):"Book Title"}
     {columnFocus!=="shelfpanel"&&
     <span className="subtitle2" style={{textTransform: "none"
 ,position:"absolute", bottom:"0"}}>expand <AddCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem"}}/></span>}

@@ -25,8 +25,9 @@ const OpenedAuthor = ({ columnFocus, setColumnFocus, authorFocus, setAuthorFocus
     <div className="Column" style={{position:columnFocus==="detailspanel"?"relative":"absolute", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem", marginTop:"1rem"}}>
     <span className="btn darkbtn" onClick={()=>{setColumnFocus("shelfpanel")}} style={{width:"6rem",display:"flex",justifyContent:"center",alignItems:"center",marginTop:"1rem"}}><ArrowBackRoundedIcon/><span  style={{width:"85%", padding:"0 0.5rem"}}>Back to Shelf</span></span>
     </div>
-    <h5  className="tab-lr h5tab" style={{cursor:columnFocus==="shelfpanel"?"pointer":""}} onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("detailspanel")}}}>
-    {selectedAuthor.authorWikiTitle?selectedAuthor.authorWikiTitle:"Author Details"}    {columnFocus!=="detailspanel"&&
+    
+    <h5  className="tab-lr tabauthor h5tab" style={{opacity:"0.9",cursor:columnFocus==="shelfpanel"?"pointer":""}} onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("detailspanel")}}}>
+    {selectedAuthor.authorWikiTitle?selectedAuthor.authorWikiTitle.slice(0,35):"Author Details"}    {columnFocus!=="detailspanel"&&
     <span className="subtitle2" style={{textTransform: "none"
 ,position:"absolute", bottom:"0"}}>expand <AddCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem"}}/></span>}
     </h5>
