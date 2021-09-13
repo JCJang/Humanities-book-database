@@ -36,79 +36,32 @@ const [authorInfluences, setAuthorInfluences]=useState([])
 
 useEffect(()=>{
 
-  const fetchArticleTranslation = async(author, arr) => {
-
-    if(translatingInto.length===0){return}
-
-    const getLanguage = async() =>{ let language = await stripLabels(translatingInto)[0];
-       return language.slice(0,2)
-      }
-    const getTranslation = async() =>{
-        const language = await getLanguage();
-
-            wiki({  apiUrl: `https://${language}.wikipedia.org/w/api.php`
-              })
-              .page(author)
-              .then(page =>
-                page
-                .chain()
-                .summary()
-                .request()
-              )
-              .then((res) => {
-                arr.push(res.title)
-              })
-          }
-          getTranslation()
-
-  }
-
-
-if(!translatingInto || !mongoAuthor[0]){return}else{
-const influenced = []
-mongoAuthor[0].forEach((author)=>fetchArticleTranslation(author, influenced))
-setAuthorInfluenced(influenced)}
-
-if(!translatingInto || !mongoAuthor[1]){return}else{
-const influences = []
-mongoAuthor[1].forEach((author)=>fetchArticleTranslation(author, influences))
-setAuthorInfluences(influences)}
-
-},[translatingFrom,translatingInto,mongoAuthor,stripLabels]
-
-)
-
-//get author data from wikipedia
-useEffect(()=>{
+  if(mongoAuthor.length<1){return}
   if(!translatingInto){return}
 
-
-  const fetchAuthorWikiData = async(author) => {
-    let code= await stripLabels(translatingInto)[0]
-  if(code){if(code.length>2){code=code.slice(0,2)}}
-
-    wiki({ apiUrl: `https://${code}.wikipedia.org/w/api.php`
-      })
-      .page(author)
-      .then(page =>
-        page
-        .chain()
-        .categories()
+    const fetchAuthorWikiData = async(author) => {
+      let code= await stripLabels(translatingInto)[0]
+      if(code){if(code.length>2){code=code.slice(0,2)}}
+      console.log(code)
+    wiki({ apiUrl: `https://${code}.wikipedia.org/w/api.php` })
+    	.page(author)
+    	.then(page =>
+    		page
+    			.chain()
         .extlinks()
-        .langlinks()
         .summary()
         .request()
-      )
-      .then((res) => {
+    	)
+      .then((res)=>{
         console.log(res)
         setAuthorWikiTitle(res.title)
         setAuthorWikiExtract(res.extract)
       })
 
   }
+  fetchAuthorWikiData(mongoAuthor[2].authorWikiTitle)
 
-  fetchAuthorWikiData(author)
-}, [author, translatingInto])
+},[translatingInto,mongoAuthor])
 
 //autofill all target languages based on the one selected for Shelf
 useEffect(()=>{
@@ -137,7 +90,7 @@ useEffect(()=>{
     console.log(mongoAuthor)})
   .then( console.log(`loaded ${author}`))
 
-},[translatingFrom, author,mongoAuthor,stripLabels])
+},[translatingFrom, author,stripLabels])
 
 
   function postAuthorTranslation(){

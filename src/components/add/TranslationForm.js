@@ -15,6 +15,7 @@ const TranslationForm = ({toAdd, stripLabels,onSearch, languageSetting, translat
   const [bookAuthorDisplay, setBookAuthorDisplay] = useState('')
   const [bookSubjectLinksDisplay, setBookSubjectLinksDisplay] = useState([])
   const [bookContentKeywordsDisplay, setBookContentKeywordsDisplay] = useState([])
+  const [bookHighlightsDisplay, setBookHighlightsDisplay] = useState("")
 
   const [id, setId] =  useState('')
   const [title, setTitle] =  useState('')
@@ -934,7 +935,7 @@ setPreventResubmitBook(false)
 //shelfLanguage
   useEffect(()=>{
     Axios.post("http://localhost:3001/allshelves",{
-      shelfLanguage:shelfTranslatingFrom[0]?stripLabels(shelfTranslatingFrom)[0]:languageSetting
+      languageSetting:shelfTranslatingFrom[0]?stripLabels(shelfTranslatingFrom)[0]:languageSetting
     }).then((res)=>{
       setAllShelves(res.data.map((x)=>{ return [x.editions[0].details.shelfTitle, x.editions[0].details.shelfDescription, x.shelfSubjects, x._id]}))
     }).then( console.log("reloaded shelves"))
@@ -959,7 +960,8 @@ setPreventResubmitBook(false)
       bookTranslatingFrom:bookTranslatingFrom[0]?stripLabels(bookTranslatingFrom)[0]:languageSetting,
       shelfId:shelfId
     }).then((res)=>{
-      setAllBooks(res.data[0].shelfBooks.map((book)=>{return [book._id, book.editions[0].details.bookTitle,book.editions[0].details.bookAuthor,book.editions[0].details.subjectLinks,book.editions[0].details.contentKeywords ]}))
+      console.log(res)
+      setAllBooks(res.data[0].shelfBooks.map((book)=>{return [book._id, book.editions[0].details.bookTitle,book.editions[0].details.bookAuthor,book.editions[0].details.subjectLinks,book.editions[0].details.contentKeywords,book.editions[0].details.bookHighlights]}))
     }).then( console.log("reloaded books"))
   },[bookTranslatingFrom,shelfId])
 
@@ -1053,7 +1055,7 @@ setPreventResubmitBook(false)
              hasSelectAll={false}
              />
              </div>
-             {allBooks && allBooks.map((book)=><div onClick={()=>{setBookTitleDisplay(book[1]); setBookAuthorDisplay(book[2]);setBookId(book[0]);setBookSubjectLinksDisplay(book[3]); setBookContentKeywordsDisplay(book[4])}} key={book[0]}
+             {allBooks && allBooks.map((book)=><div onClick={()=>{setBookTitleDisplay(book[1]); setBookAuthorDisplay(book[2]);setBookId(book[0]);setBookSubjectLinksDisplay(book[3]); setBookContentKeywordsDisplay(book[4]);setBookHighlightsDisplay(book[5])}} key={book[0]}
              style={{backgroundColor:book[0]===bookId?"var(--shelfpanellistpressed)":"var(--shelfpanellist)",
              border:book[0]===bookId?"1px solid var(--shelfpanellistpressedborder)":"1px solid var(--shelfpanellistborder)",
              transform:book[0]===bookId?"translateY(0.3rem)":"translateY(0px)",
@@ -1089,6 +1091,12 @@ setPreventResubmitBook(false)
        <textarea className="form-control" rows={4} form={`${author}form`}    id="contentKeywords" value={contentKeywords} onChange={(e)=>setContentKeywords(e.target.value.split(/[、,,،，]\s*/))} placeholder="content keywords"/>
        </div>
 
+       <label htmlFor="bookHighlights">highlights</label>
+       <div className="forty-sixty">
+       {bookHighlightsDisplay}
+       <textarea className="form-control" type="text" id="bookHighlights" value={bookHighlights}
+        onChange={(e)=>setBookHighlights(e.target.value)} placeholder="one or two paragraphs from the book"/>
+      </div>
     </div>
            <div className="translation-section">
                <label htmlFor="isbn10">Isbn-10:</label>
@@ -1101,10 +1109,8 @@ setPreventResubmitBook(false)
                   <input className="form-control" type="text" id="bookLength" value={bookLength}
                    onChange={(e)=>setBookLength(e.target.value)} placeholder="book length" />
 
-                   <label htmlFor="bookHighlights">highlights</label>
-                   <textarea className="form-control" type="text" id="bookHighlights" value={bookHighlights}
-                    onChange={(e)=>setBookHighlights(e.target.value)} placeholder="one or two paragraphs from the book"/>
-                    <label htmlFor="subtmitbooktranslation"></label>
+
+                    <label htmlFor="submitbooktranslation"></label>
                     <input  className="btn lightbtn" type="submit" style={{ backgroundColor:preventResubmitBook?"var(--inactive)":"var(--lightactionbtn)", color:preventResubmitBook?"var(--shelfpanellistborder)":"var(--lightactionbtntext)",boxShadow:preventResubmitBook?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateBookTranslation(e)}} value="Submit Book Translation"/>
                  </div>
 </div>

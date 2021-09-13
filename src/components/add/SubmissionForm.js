@@ -917,7 +917,7 @@ setShelfLanguage([addLabel[0]])
 //shelfLanguage
   useEffect(()=>{
     Axios.post("http://localhost:3001/allshelves",{
-      shelfLanguage:shelfLanguage[0]?stripLabels(shelfLanguage)[0]:languageSetting
+      languageSetting:shelfLanguage[0]?stripLabels(shelfLanguage)[0]:languageSetting
     }).then((res)=>{
       setAllShelves(res.data.map((x)=>{ return [x.editions[0].details.shelfTitle, x.editions[0].details.shelfDescription,  x.shelfSubjects, x._id]}))
     }).then( console.log("reloaded shelves"))
