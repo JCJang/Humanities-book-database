@@ -13,7 +13,7 @@ const OpenedAuthor = ({ columnFocus, setColumnFocus, authorFocus, setAuthorFocus
 
   return (
     <div style={{color:"var(--paper)",backgroundColor:"var(--ink)",display:"flex", flex:"1 1",height:"var(--panelheight)",overflow:"hidden",position:"relative"}}>
-    {columnFocus==="detailspanel" && <AuthorPanel selectedAuthor={selectedAuthor}/>}
+    {columnFocus==="detailspanel" && <AuthorPanel selectedAuthor={selectedAuthor} languageSetting={languageSetting}/>}
 
   <div className="Column" style={{flex:"3 3", position:columnFocus==="detailspanel"?"relative":"absolute", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem"}}>
     <AuthorNav selectedAuthor={selectedAuthor} setAuthorFocus={setAuthorFocus} displayBookTitle={displayBookTitle}/>
@@ -25,7 +25,7 @@ const OpenedAuthor = ({ columnFocus, setColumnFocus, authorFocus, setAuthorFocus
     <div className="Column" style={{position:columnFocus==="detailspanel"?"relative":"absolute", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem", marginTop:"1rem"}}>
     <span className="btn darkbtn" onClick={()=>{setColumnFocus("shelfpanel")}} style={{width:"6rem",display:"flex",justifyContent:"center",alignItems:"center",marginTop:"1rem"}}><ArrowBackRoundedIcon/><span  style={{width:"85%", padding:"0 0.5rem"}}>Back to Shelf</span></span>
     </div>
-    
+
     <h5  className="tab-lr tabauthor h5tab" style={{opacity:"0.9",cursor:columnFocus==="shelfpanel"?"pointer":""}} onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("detailspanel")}}}>
     {selectedAuthor.authorWikiTitle?selectedAuthor.authorWikiTitle.slice(0,35):"Author Details"}    {columnFocus!=="detailspanel"&&
     <span className="subtitle2" style={{textTransform: "none"
