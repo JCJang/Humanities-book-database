@@ -271,6 +271,21 @@ margin-left: 1rem;
 
 }
 
+.authorpanelbtn{
+  background: var(--darkactionbtn);
+  color: var(--authorpaneltext);
+  transition-duration: 0.3s;
+  box-shadow: var(--heavyshadow) inset;
+}
+
+.authorpanelbtn:hover{
+  background: var(--inactive);
+  transition-duration: 0.3s;
+  color: var(--authorpanel);
+  box-shadow: none;
+  font-size:1rem;
+}
+
 .btn:active {
   transform: scale(0.98);
 }
@@ -378,6 +393,7 @@ font:var(--body1);
 
 }
 
+
 .authorPanelLink{
   color: var(--detailspaneltext);
   text-decoration: none;
@@ -393,6 +409,11 @@ font:var(--body1);
   background: linear-gradient( rgba(107,107,107,0) 0%, rgba(107,107,107,1) 100%);
   opacity:1;
 
+}
+
+.authorPanelLinkActive{
+  background: linear-gradient( rgba(107,107,107,0) 0%, rgba(107,107,107,1) 100%);
+  opacity:1;
 }
 
 .gradient{

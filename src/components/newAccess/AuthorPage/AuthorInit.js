@@ -2,7 +2,7 @@ import Axios from 'axios'
 import {useEffect, useState} from 'react'
 import LaunchRoundedIcon from '@material-ui/icons/LaunchRounded';
 
-const AuthorInit = ({selectedAuthor, authorFocus, setAuthorFocus, languageSetting, displayBookTitle, displayEarliestPublicationYear}) => {
+const AuthorInit = ({expandFurtherReading, selectedAuthor, authorFocus, setAuthorFocus, languageSetting, displayBookTitle, displayEarliestPublicationYear}) => {
 
 const [fullTimelines, setFullTimelines] = useState([])
 
@@ -171,7 +171,7 @@ width:"100%",paddingLeft:keyValue[1]===`icon${displayEarliestPublicationYear}`?"
 
   {authorFocus!=="init" &&
       <div style={{display:"flex",alignItems:"center", justifyContent:"center",marginTop:"1rem"}}>
-        <a style={{textDecoration:"none",color:"var(--paper)"}} href="#authorTitle" className="btn">Back to Top</a>
+        <a style={{textDecoration:"none",color:"var(--paper)",padding:"2rem"}} href="#authorTitle" className="btn">Back to Top</a>
           </div>}
 
     {authorFocus==="init" &&
@@ -184,7 +184,7 @@ width:"100%",paddingLeft:keyValue[1]===`icon${displayEarliestPublicationYear}`?"
     {authorFocus!=="bg" &&
       <div className="Column" style={{flex:"1 1 30%",position:authorFocus==="init"?"absolute":"relative",justifyContent:"center",alignItems:"center",marginTop:"1rem",right:"0", marginLeft:"3rem"}}>
 
-        {authorFocus!=="bg" && <div className={authorFocus==="bio"?"upwardsGradient":""} style={{flex:"4 4"}}><img  style={{maxHeight:"18rem", width:"auto"}} src={selectedAuthor.authorWikiImage}></img></div>
+        {authorFocus!=="bg" && <div className={authorFocus==="bio"?"upwardsGradient":""} style={{flex:"4 4"}}><img  style={{maxHeight:authorFocus==="init"?"18rem":expandFurtherReading?"13rem":"18rem", width:"auto"}} src={selectedAuthor.authorWikiImage}></img></div>
       }
 
         {authorFocus==="init" &&

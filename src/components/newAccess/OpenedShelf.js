@@ -237,8 +237,8 @@ const setNewPreview = () =>{
       </div>
       </div>}
 
-      <div style={{display:"flex",alignItems:"center", justifyContent:"center",marginTop:"1rem"}}>
-      <a style={{textDecoration:"none",color:"var(--shelfpanellistpressedborder)"}} href="#title" className="btn">Back to Top</a>
+      <div style={{display:"flex",alignItems:"center", justifyContent:"center",marginBottom:"2rem"}}>
+      <a style={{textDecoration:"none",color:"var(--shelfpanellistpressedborder)",padding:"1.5rem"}} href="#title" className="btn">Back to Top</a>
       </div>
     </div>
     <h5 className="tab-lr h5tab tabshelf" style={{opacity:"0.8", cursor:columnFocus!=="shelfpanel"?"pointer":""}} onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("shelfpanel")}}}>
