@@ -378,6 +378,23 @@ font:var(--body1);
 
 }
 
+.authorPanelLink{
+  color: var(--detailspaneltext);
+  text-decoration: none;
+  padding:0 3rem;
+  text-decoration: none;
+  padding:0.5rem 2rem;
+  transition-duration: 0.6s;
+  background: inherit;
+  opacity:0.6;
+}
+
+.authorPanelLink:hover{
+  background: linear-gradient( rgba(107,107,107,0) 0%, rgba(107,107,107,1) 100%);
+  opacity:1;
+
+}
+
 .gradient{
 height: 100%;
 width: 100%;

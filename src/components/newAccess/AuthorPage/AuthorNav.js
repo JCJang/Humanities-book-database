@@ -2,7 +2,7 @@ import {Link} from 'react-router-dom'
 import {motion} from 'framer-motion'
 const Nav = ({selectedAuthor, setAuthorFocus, displayBookTitle}) => {
   return (
-    <div  className="Column" style={{ height:"7rem", alignItems: "center", display:"flex",color:"var(--paper)", justifyContent:"center",backgroundColor:"var(--ink)"}}>
+    <div  className="Column" style={{ height:"7rem", alignItems: "center", display:"flex",color:"var(--paper)", justifyContent:"center",backgroundColor:"var(--ink)",padding:"0 2rem"}}>
     <nav className="body2-details Row" style={{ height:"3.5rem", alignItems: "center", display:"flex",color:"var(--paper)", justifyContent:"center",backgroundColor:"var(--ink)"}}>
 
 
