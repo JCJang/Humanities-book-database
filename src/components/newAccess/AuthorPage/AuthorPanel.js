@@ -28,12 +28,12 @@ const AuthorPanel = ({selectedAuthor, expandFurtherReading, setExpandFurtherRead
   const [accordionFocusInfluenced, setAccordionFocusInfluenced] = useState("")
 
   const onChangeInfluencedAccordion = (author) =>{
-    if(author.shelfId===[]){
-      return;
-    }else if(accordionFocusInfluenced===author.authorWikiTitle){
-      setAccordionFocusInfluenced("")
-    }else{
-      setAccordionFocusInfluenced(author.authorWikiTitle)
+    if(author.shelfId.length>0){
+    if(accordionFocusInfluenced===author.authorWikiTitle){
+        setAccordionFocusInfluenced("")
+      }else{
+        setAccordionFocusInfluenced(author.authorWikiTitle)
+      }
     }
   }
   const openLinkedShelf = () =>{
@@ -154,6 +154,7 @@ const AuthorPanel = ({selectedAuthor, expandFurtherReading, setExpandFurtherRead
                 }
                 setAuthorInfluencedBooks((prev)=>[...prev,newInfluencedBooks])
         }})
+
       })
     )
     },[selectedAuthor,languageSetting])
@@ -173,7 +174,9 @@ const AuthorPanel = ({selectedAuthor, expandFurtherReading, setExpandFurtherRead
 
               {authorInfluencedBooks[0] ?
 
-                authorInfluencedBooks.map((author)=>{return <div className="Column">
+
+
+            authorInfluencedBooks.sort((a, b) => {return a.authorWikiTitle.localeCompare(b.authorWikiTitle)}).map((author)=>{return <div className="Column">
                 <div className={accordionFocusInfluenced===author.authorWikiTitle?"authorPanelLinkActive tag authorPanelLink":"tag authorPanelLink"} onClick={()=>{onChangeInfluencedAccordion(author)}}
                 style={{display:"flex", cursor:author.shelfId[0]?"pointer":"",border:"1.5px solid var(--paper)", margin:"0 0.5rem 0.5rem 0", padding:"0.2rem 0.3rem",justifyContent:"center",alignItems:"center"}}>
                 <span style={{display:"inline-block",width:"85%",padding:"0 0.5rem"}}>{author.authorWikiTitle}</span>
@@ -197,7 +200,7 @@ const AuthorPanel = ({selectedAuthor, expandFurtherReading, setExpandFurtherRead
                 }
                 </div>})
                 :
-                authorInfluenced.map((tag)=>{return <div className="tag authorPanelLink" style={{border:"1.5px solid var(--paper)", margin:"0 0.5rem 0.5rem 0", padding:"0.2rem 0.3rem"}}>{tag}</div>})}
+                authorInfluenced.sort((a,b)=>{return a.localeCompare(b)}).map((tag)=>{return <div className="tag authorPanelLink" style={{border:"1.5px solid var(--paper)", margin:"0 0.5rem 0.5rem 0", padding:"0.2rem 0.3rem"}}>{tag}</div>})}
 
               </div>
               </div>
@@ -216,7 +219,7 @@ const AuthorPanel = ({selectedAuthor, expandFurtherReading, setExpandFurtherRead
 
           {authorInfluencesBooks[0] ?
 
-            authorInfluencesBooks.map((author)=>{return <div className="Column">
+            authorInfluencesBooks.sort((a, b) => {return a.authorWikiTitle.localeCompare(b.authorWikiTitle)}).map((author)=>{return <div className="Column">
             <div className={accordionFocusInfluences===author.authorWikiTitle?"authorPanelLinkActive tag authorPanelLink":"tag authorPanelLink"} onClick={()=>{onChangeInfluencesAccordion(author)}}
             style={{display:"flex", cursor:author.shelfId[0]?"pointer":"",border:"1.5px solid var(--paper)", margin:"0 0.5rem 0.5rem 0", padding:"0.2rem 0.3rem",justifyContent:"center",alignItems:"center"}}>
             <span style={{display:"inline-block",width:"85%",padding:"0 0.5rem"}}>{author.authorWikiTitle}</span>
@@ -241,7 +244,7 @@ const AuthorPanel = ({selectedAuthor, expandFurtherReading, setExpandFurtherRead
             }
             </div>})
             :
-            authorInfluences.map((tag)=>{return <div className="tag authorPanelLink" style={{border:"1.5px solid var(--paper)", margin:"0 0.5rem 0.5rem 0", padding:"0.2rem 0.3rem"}}>{tag}</div>})}
+            authorInfluences.sort((a,b)=>{return a.localeCompare(b)}).map((tag)=>{return <div className="tag authorPanelLink" style={{border:"1.5px solid var(--paper)", margin:"0 0.5rem 0.5rem 0", padding:"0.2rem 0.3rem"}}>{tag}</div>})}
 
           </div>
           </div>
