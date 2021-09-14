@@ -192,21 +192,21 @@ width:"100%",paddingLeft:keyValue[1]===`icon${displayEarliestPublicationYear}`?"
 
     {authorFocus==="init" &&
     <>
-      <h5  className="h5-details">Historical Background</h5>
-      <h6  className="subtitle1-details">{selectedAuthor.timelineLinks?selectedAuthor.timelineLinks.map((timeline)=>{return timeline.slice(11)}):"Not Available for this Author"}</h6></>}
+      <h5  className="h5-details" style={{textShadow:"0 0 7px var(--ink)"}}>Historical Background</h5>
+      <h6  className="subtitle1-details" style={{textShadow:"0 0 7px var(--ink)"}}>{selectedAuthor.timelineLinks?selectedAuthor.timelineLinks.map((timeline)=>{return timeline.slice(11)}):"Not Available for this Author"}</h6></>}
 
     </div>
 
     {authorFocus!=="bg" &&
-      <div className="Column" style={{flex:"1 1 30%",position:authorFocus==="init"?"absolute":"relative",justifyContent:"center",alignItems:"center",marginTop:"1rem",right:"0", marginLeft:"3rem"}}>
+      <div className="Column" style={{flex:"1 1 30%",position:authorFocus==="init"?"absolute":"relative",justifyContent:"center",alignItems:"center",marginTop:"1rem",right:expandFurtherReading?"0":authorFocus==="init"?"10rem":"0", marginLeft:"3rem"}}>
 
-        {authorFocus!=="bg" && <div className={authorFocus==="bio"?"upwardsGradient":""} style={{flex:"4 4"}}><img  style={{maxHeight:authorFocus==="init"?"18rem":expandFurtherReading?"13rem":"18rem", width:"auto"}} src={selectedAuthor.authorWikiImage}></img></div>
+        {authorFocus!=="bg" && <div className={authorFocus==="bio"?"upwardsGradient":""} style={{flex:"4 4"}}><img  style={{maxHeight:authorFocus==="init"?"18rem":expandFurtherReading?"13rem":"18rem", width:"auto",boxShadow:"var(--heavyshadow)"}} src={selectedAuthor.authorWikiImage}></img></div>
       }
 
         {authorFocus==="init" &&
         <>
-        <h5  style={{flex:"1 1"}} className="h5-details">{selectedAuthor.authorWikiTitle}</h5>
-        <h6  style={{flex:"1 1"}} className="subtitle1-details">{`${getYear(selectedAuthor.authorBirthDate)} - ${getYear(selectedAuthor.authorDeathDate)}`}</h6></>}
+        <h5  style={{flex:"1 1",textShadow:"0 0 7px var(--ink)"}} className="h5-details">{selectedAuthor.authorWikiTitle}</h5>
+        <h6  style={{flex:"1 1",textShadow:"0 0 7px var(--ink)"}} className="subtitle1-details">{`${getYear(selectedAuthor.authorBirthDate)} - ${getYear(selectedAuthor.authorDeathDate)}`}</h6></>}
 
 
         {authorFocus==="bio" &&

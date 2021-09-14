@@ -17,6 +17,7 @@ const OpenedAuthor = ({ columnFocus, setColumnFocus, authorFocus, setAuthorFocus
 
   return (
     <div style={{color:"var(--paper)",backgroundColor:"var(--ink)",display:"flex",height:"var(--panelheight)",overflow:"hidden",position:"relative"}}>
+
     {columnFocus==="detailspanel" && <AuthorPanel expandFurtherReading={expandFurtherReading} setExpandFurtherReading={setExpandFurtherReading} selectedAuthor={selectedAuthor} languageSetting={languageSetting}/>}
 
   <div className="Column" style={{flex:"4 4", maxWidth:"100%", position:columnFocus==="detailspanel"?"relative":"absolute", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem"}}>
