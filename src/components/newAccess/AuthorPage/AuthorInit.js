@@ -5,6 +5,8 @@ import LaunchRoundedIcon from '@material-ui/icons/LaunchRounded';
 const AuthorInit = ({expandFurtherReading, selectedAuthor, authorFocus, setAuthorFocus, languageSetting, displayBookTitle, displayEarliestPublicationYear}) => {
 
 const [fullTimelines, setFullTimelines] = useState([])
+const [authorBirthYear, setAuthorBirthYear] = useState([])
+const [authorAgeHover, setAuthorAgeHover] = useState(false)
 
   const getYear = (date)=> {
     if(!date){return "undefined"}
@@ -57,6 +59,8 @@ const [fullTimelines, setFullTimelines] = useState([])
 
 
 useEffect(()=>{
+  if(selectedAuthor.authorBirthDate){
+    setAuthorBirthYear(parseFloat(selectedAuthor.authorBirthDate.match(/^\d*/)[0]))}
   setFullTimelines([])
   selectedAuthor.timelineLinks.forEach((timeline)=>{
 
@@ -90,12 +94,12 @@ const getKeyValueArr = (obj)=>{
   for(let i = 0; i< keys.length; i++){
     keyValueArr.push([parseFloat(keys[i].match(/^\d*/)[0]),keys[i],values[i]])
   }
-  keyValueArr.push([displayEarliestPublicationYear, `icon${displayEarliestPublicationYear}`, `${selectedAuthor.authorWikiTitle} published ${displayBookTitle}`])
+  keyValueArr.push([displayEarliestPublicationYear, `icon${displayEarliestPublicationYear}`, `${selectedAuthor.authorWikiTitle} published ${displayBookTitle} at age ${displayEarliestPublicationYear-parseFloat(selectedAuthor.authorBirthDate.match(/^\d*/)[0])}`])
   if(selectedAuthor.authorBirthDate){
     keyValueArr.push([parseFloat(selectedAuthor.authorBirthDate.match(/^\d*/)[0]), selectedAuthor.authorBirthDate.match(/^\d*/)[0], `Birth of ${selectedAuthor.authorWikiTitle}`])
   }
   if(selectedAuthor.authorDeathDate){
-    keyValueArr.push([parseFloat(selectedAuthor.authorDeathDate.match(/^\d*/)[0]),selectedAuthor.authorDeathDate.match(/^\d*/)[0], `Death of ${selectedAuthor.authorWikiTitle}`])
+    keyValueArr.push([parseFloat(selectedAuthor.authorDeathDate.match(/^\d*/)[0]),selectedAuthor.authorDeathDate.match(/^\d*/)[0], `Death of ${selectedAuthor.authorWikiTitle}, age ${parseFloat(selectedAuthor.authorDeathDate.match(/^\d*/)[0])-parseFloat(selectedAuthor.authorBirthDate.match(/^\d*/)[0])}`])
   }
   const sorted = keyValueArr.sort(function(a,b){return a[0] - b[0]})
   return sorted
@@ -146,12 +150,24 @@ width:"40rem",paddingLeft:keyValue[1]===`icon${displayEarliestPublicationYear}`?
           <div>{fullTimelines[0][0] && filterAroundLifeTime(getKeyValueArr(fullTimelines[0][0].details)).map((keyValue)=>{
             return <div key={keyValue[1]} style={{paddingTop:"2rem", display:"grid", gridTemplateColumns:"10rem auto", gridRowGap:"1rem",
 width:"100%",paddingLeft:keyValue[1]===`icon${displayEarliestPublicationYear}`?"0":"1rem"}}>
-<div style={{lineHeight:"2.5",marginTop:"0.5rem", display:"inline",fontWeight:"bold", margin:keyValue[1]===`icon${displayEarliestPublicationYear}`&&"2rem 0"}} className={keyValue[1]===`icon${displayEarliestPublicationYear}`?"subtitle1-details":"subtitle2-details"}>
-  {keyValue[1]===`icon${displayEarliestPublicationYear}`?keyValue[0]:keyValue[1]}</div>
-<div style={{lineHeight:"2.5",letterSpacing: "0.05rem",
- marginTop:"0.5rem",display:"inline",margin:keyValue[1]===`icon${displayEarliestPublicationYear}`&&"2rem 0"}} className={keyValue[1]===`icon${displayEarliestPublicationYear}`?"subtitle1-details":"body1-details"}>  {keyValue[2]}</div>
-      </div>
-          })}</div>
+
+        <div style={{lineHeight:"2.5",marginTop:"0.5rem", display:"inline",fontWeight:"bold", margin:keyValue[1]===`icon${displayEarliestPublicationYear}`&&"2rem 0"}} className={keyValue[1]===`icon${displayEarliestPublicationYear}`?"subtitle1-details":"subtitle2-details"}
+        onMouseEnter={() => setAuthorAgeHover(keyValue[1])}
+        onMouseLeave={() => setAuthorAgeHover(false)}>
+
+  {keyValue[1]===`icon${displayEarliestPublicationYear}`?keyValue[0]:keyValue[1]}
+   <div style={{position:"absolute",opacity:authorAgeHover===keyValue[1]?"0.8":"0"}} className="transition subtitle1-details">{keyValue[0]-authorBirthYear} years old</div>
+
+        </div>
+
+        <div style={{lineHeight:"2.5",letterSpacing: "0.05rem", marginTop:"0.5rem",display:"inline",margin:keyValue[1]===`icon${displayEarliestPublicationYear}`&&"2rem 0"}} className={keyValue[1]===`icon${displayEarliestPublicationYear}`?"subtitle1-details":"body1-details"}>
+  {keyValue[2]}
+
+        </div>
+
+        </div>
+          })}
+          </div>
           }
           </div>
         </div>
