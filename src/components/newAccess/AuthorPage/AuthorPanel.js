@@ -1,4 +1,4 @@
-import {useState,useEffect} from 'react'
+import {useState,useEffect,useCallback} from 'react'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle'
 import LaunchRoundedIcon from '@material-ui/icons/LaunchRounded'
@@ -8,45 +8,22 @@ import Axios from 'axios'
 const AuthorPanel = ({selectedAuthor,languageSetting}) => {
   const [expandFurtherReading, setExpandFurtherReading] = useState(false)
   const [authorInfluences, setAuthorInfluences] = useState([])
-  const [authorInfluencesBooks, setAuthorInfluencesBooks] = useState([{
-    authorWikiTitle:"",
-    shelf_Id:"",
-    shelfTitle:"",
-    bookTitle:"",
-    arrNumber:""
-  }])
+  const [authorInfluencesBooks, setAuthorInfluencesBooks] = useState([])
 
   const [authorInfluenced, setAuthorInfluenced] = useState([])
-  const [authorInfluencedBooks, setAuthorInfluencedBooks] = useState([{
-    authorWikiTitle:"",
-    shelf_Id:"",
-    shelfTitle:"",
-    bookTitle:"",
-    arrNumber:""
-  }])
+  const [authorInfluencedBooks, setAuthorInfluencedBooks] = useState([])
 
 
       useEffect(()=>{
+
         setAuthorInfluences(selectedAuthor.authorInfluences)
         setAuthorInfluenced(selectedAuthor.authorInfluenced)
 
         const influences = selectedAuthor.authorInfluences
         const influenced = selectedAuthor.authorInfluenced
 
-        setAuthorInfluencesBooks([{
-          authorWikiTitle:"",
-          shelf_Id:"",
-          shelfTitle:"",
-          bookTitle:"",
-          arrNumber:""
-        }])
-        setAuthorInfluencedBooks([{
-         authorWikiTitle:"",
-         shelf_Id:"",
-         shelfTitle:"",
-         bookTitle:"",
-         arrNumber:""
-       }])
+        setAuthorInfluencesBooks([])
+        setAuthorInfluencedBooks([])
 
       Axios.post("http://localhost:3001/influences",{
           languageSetting:languageSetting,
@@ -56,17 +33,93 @@ const AuthorPanel = ({selectedAuthor,languageSetting}) => {
         res.data.map((book)=>influences.indexOf(book.editions[0].details.authorWikiTitle) === -1 && influences.push(book.editions[0].details.authorWikiTitle))
         setAuthorInfluences(influences)
       })
-
+      .then(
+        influences.map((author)=>{
+          Axios.post("http://localhost:3001/influencesbooks",{
+              languageSetting:languageSetting,
+              authorWikiTitle:author
+            })
+          .then((res)=>{
+            if(res.data===[]){
+              setAuthorInfluencesBooks((prev)=>[...prev,{
+                authorWikiTitle:author,
+                shelf_Id:[],
+                shelfTitle:[],
+                bookTitle:[],
+                arrNumber:[]
+              }])
+            }else{
+              let newInfluencesBooks = {
+                authorWikiTitle:author,
+                shelf_Id:res.data.map((shelf)=>{return shelf._id}),
+                shelfTitle:res.data.map((shelf)=>{return shelf.editions[0].details.shelfTitle}),
+                bookTitle:res.data.map((shelf)=>{
+                    const books = shelf.shelfBooks.filter(book=>{
+                    return book.editions[0].details.bookAuthor.indexOf(author)!==-1
+                  })
+                  return books.map((book)=>{return book.editions[0].details.bookTitle})
+                }),
+                arrNumber:res.data.map((shelf)=>{
+                  const books = shelf.shelfBooks.filter(book=>{
+                  return book.editions[0].details.bookAuthor.indexOf(author)!==-1
+                })
+                    return books.map((book)=>{
+                     return shelf.shelfBooks.indexOf(book)
+                    })
+                  })
+                }
+                setAuthorInfluencesBooks((prev)=>[...prev,newInfluencesBooks])
+        }})
+      })
+    )
 
       Axios.post("http://localhost:3001/influenced",{
           languageSetting:languageSetting,
           authorWikiTitle:selectedAuthor.authorWikiTitle
         })
       .then((res)=>{
-        res.data.map((book)=>influences.indexOf(book.editions[0].details.authorWikiTitle) === -1 && influenced.push(book.editions[0].details.authorWikiTitle))
+        res.data.map((book)=>influenced.indexOf(book.editions[0].details.authorWikiTitle) === -1 && influenced.push(book.editions[0].details.authorWikiTitle))
         setAuthorInfluenced(influenced)
       })
-
+      .then(
+        influenced.map((author)=>{
+          Axios.post("http://localhost:3001/influencedbooks",{
+              languageSetting:languageSetting,
+              authorWikiTitle:author
+            })
+          .then((res)=>{
+            if(res.data===[]){
+              setAuthorInfluencedBooks((prev)=>[...prev,{
+                authorWikiTitle:author,
+                shelf_Id:[],
+                shelfTitle:[],
+                bookTitle:[],
+                arrNumber:[]
+              }])
+            }else{
+              let newInfluencedBooks = {
+                authorWikiTitle:author,
+                shelf_Id:res.data.map((shelf)=>{return shelf._id}),
+                shelfTitle:res.data.map((shelf)=>{return shelf.editions[0].details.shelfTitle}),
+                bookTitle:res.data.map((shelf)=>{
+                    const books = shelf.shelfBooks.filter(book=>{
+                    return book.editions[0].details.bookAuthor.indexOf(author)!==-1
+                  })
+                  return books.map((book)=>{return book.editions[0].details.bookTitle})
+                }),
+                arrNumber:res.data.map((shelf)=>{
+                  const books = shelf.shelfBooks.filter(book=>{
+                  return book.editions[0].details.bookAuthor.indexOf(author)!==-1
+                })
+                    return books.map((book)=>{
+                     return shelf.shelfBooks.indexOf(book)
+                    })
+                  })
+                }
+                setAuthorInfluencedBooks((prev)=>[...prev,newInfluencedBooks])
+        }})
+      })
+    )
     },[selectedAuthor,languageSetting])
 
 
