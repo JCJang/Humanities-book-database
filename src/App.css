@@ -459,6 +459,7 @@ align-self:center;
 height:80vh;
 transform:rotate(180deg);
 transform-origin:center center;
+padding: 0.5rem;
 }
 
 

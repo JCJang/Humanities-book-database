@@ -1,7 +1,7 @@
 import {useState,useEffect} from 'react'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 
-const SearchForm = ({allShelves, columnFocus, setColumnFocus, setLanguageSetting, languageSetting, shelfId, setShelfId,selectedShelf,setSelectedShelf}) => {
+const SearchForm = ({allShelves, columnFocus, setColumnFocus, setLanguageSetting, languageSetting, shelfId, setShelfId,selectedShelf,setSelectedShelf, setBookNumber}) => {
   const [shelfQuery, setShelfQuery] =  useState('')
   const [shelfResults, setShelfResults] = useState(false)
   const [shelfTitle, setShelfTitle] = useState('Shelf Title')
@@ -16,6 +16,7 @@ useEffect(()=>{
 },[shelfQuery,allShelves])
 
 const setNewShelf = (shelf) =>{
+  setBookNumber('0')
   setShelfId(shelf[3]);
   setShelfTitle(shelf[0]);
   setColumnFocus("shelfpanel")

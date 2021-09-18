@@ -6,7 +6,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle'
 
 
 import {useState,useEffect} from 'react'
-const OpenedShelf = ({selectedShelf, setBookIdentifier, setAuthorFocus, setDisplayEarliestPublicationYear, setColumnFocus,setAuthorView, authorView, setAuthorToGet, setDisplayBookTitle,columnFocus,setIsbnOrId}) => {
+const OpenedShelf = ({selectedShelf, setBookIdentifier, setAuthorFocus, bookNumber, setDisplayEarliestPublicationYear, setColumnFocus,setAuthorView, authorView, setAuthorToGet, setDisplayBookTitle,columnFocus,setIsbnOrId}) => {
 
   const [googleId, setGoogleId] = useState("")
   const [isbn, setIsbn] = useState("")
@@ -79,12 +79,12 @@ const OpenedShelf = ({selectedShelf, setBookIdentifier, setAuthorFocus, setDispl
 
 
 useEffect(()=>{
-  setToCopy(`${selectedShelf.shelfBooks[0].bookTitle} by ${selectedShelf.shelfBooks[0].bookAuthor.join(", ")}`)
-  setSelectedBook(selectedShelf.shelfBooks[0])
-  setDisplayBookTitle(selectedShelf.shelfBooks[0].bookTitle)
-  setGoogleId(selectedShelf.shelfBooks[0].googleId)
-  setIsbn(selectedShelf.shelfBooks[0].isbn13)
-},[selectedShelf])
+  setToCopy(`${selectedShelf.shelfBooks[bookNumber].bookTitle} by ${selectedShelf.shelfBooks[bookNumber].bookAuthor.join(", ")}`)
+  setSelectedBook(selectedShelf.shelfBooks[bookNumber])
+  setDisplayBookTitle(selectedShelf.shelfBooks[bookNumber].bookTitle)
+  setGoogleId(selectedShelf.shelfBooks[bookNumber].googleId)
+  setIsbn(selectedShelf.shelfBooks[bookNumber].isbn13)
+},[selectedShelf, bookNumber])
 
 
 //onClick functions
