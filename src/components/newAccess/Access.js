@@ -186,8 +186,9 @@ const Access =({googleScriptLoaded, languageSetting, setLanguageSetting})=>{
              const authors = book.editions[0].details.bookAuthor.join(' ')
              const subjects = book.editions[0].details.subjectLinks.join(' ')
              const content = book.editions[0].details.contentKeywords.join(' ')
+             const title = book.editions[0].details.bookTitle
              const highlights = book.editions[0].details.bookHighlights
-          return `${authors} ${subjects} ${content} ${highlights}`
+          return `${authors} ${subjects} ${content} ${title} ${highlights}`
           }).join(' ')
       }})
 

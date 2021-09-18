@@ -167,7 +167,7 @@ width:"100%",paddingLeft:keyValue[1]===`icon${authorPublicationYear}`?"0":"1rem"
 
         <div style={{lineHeight:"2.5",letterSpacing: "0.05rem", marginTop:"1rem",display:"block",margin:keyValue[1]===`icon${authorPublicationYear}`&&"2rem 0"}} className={keyValue[1]===`icon${authorPublicationYear}`?"subtitle1-details":"body1-details"}>
 
-        {keyValue[2].split(/(?<!([A-Z]|Inc|St))\.\s(?=[A-Z])/).filter((event)=>{return event}).map((event)=>{return <div style={{marginBottom:"1rem",opacity:authorAgeHover===keyValue[1]?"1":"0.7"}} className="transition">- {event}.</div>})}
+        {keyValue[2].split(/(?<!([A-Z]|Inc|St))\.\s(?=[A-Z])/).filter((event)=>{return event}).map((event)=>{return <div style={{marginBottom:"1rem",opacity:authorAgeHover===keyValue[1]?"1":"0.7"}} className="transition">- {event}{/\.$/.test(event)?"":"."}</div>})}
 
         </div>
 
