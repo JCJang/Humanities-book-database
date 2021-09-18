@@ -12,14 +12,15 @@ useEffect(()=>{
       if(!shelfQuery){
         setShelfResults(allShelves)
       }
-      setShelfResults(allShelves.filter((shelf)=>{return shelf[0].toLowerCase().indexOf(shelfQuery.toLowerCase())>=0}))
+      console.log(allShelves)
+      setShelfResults(allShelves.filter((shelf)=>{return shelf.shelfText.toLowerCase().indexOf(shelfQuery.toLowerCase())>=0}))
 
 },[shelfQuery,allShelves])
 
 const setNewShelf = (shelf) =>{
   setBookNumber('0')
-  setShelfId(shelf[3]);
-  setShelfTitle(shelf[0]);
+  setShelfId(shelf.shelfId);
+  setShelfTitle(shelf.shelfTitle);
   setColumnFocus("shelfpanel")
 }
 
@@ -30,23 +31,23 @@ const setNewShelf = (shelf) =>{
     flexDirection: "row",width:"100%",height:"var(--panelheight)"}}>
     <div style={{width:"calc(100% - 6rem)",alignItems:"center",display:columnFocus==="detailspanel"?"none":"flex",margin:"0 0 0 2rem",
     flexDirection: "column"}}>
-      <div className="Row" style={{maxWidth:"30rem", margin:"4rem 2rem 2rem 2rem"}}>
-      <label htmlFor="searchForm" style={{marginRight:"3rem"}}>query:</label>
+      <div className={columnFocus==="init"?"Row":"Column"} style={{maxWidth:"30rem", margin:"2rem"}}>
+      <label htmlFor="searchForm" style={{marginRight:columnFocus==="init"?"3rem":""}}>query:</label>
       <input className="form-control" type="text" id="shelfQuery" placeholder="enter some keywords" value={shelfQuery}
        onChange={(e)=>setShelfQuery(e.target.value)}/>
          </div>
          <div className="noScrollBar" style={{overflowY:"auto"}}>
-{shelfResults && shelfResults.map((shelf)=><div onClick={()=>{setNewShelf(shelf)}} className="transition" key={shelf[3]}
-style={{cursor:shelf[3]===shelfId?"":"pointer",color:"searchpaneltext",maxWidth:"30rem", backgroundColor:shelf[3]===shelfId?"white":"var(--searchpanellist)",
-border:shelf[3]===shelfId?"1px solid var(--searchpanellstborderpressed)":"1px solid var(--searchpanellistborder)",
+{shelfResults && shelfResults.map((shelf)=><div onClick={()=>{setNewShelf(shelf)}} className="transition" key={shelf.shelfId}
+style={{cursor:shelf.shelfId===shelfId?"":"pointer",color:"searchpaneltext",maxWidth:"30rem", backgroundColor:shelf.shelfId===shelfId?"white":"var(--searchpanellist)",
+border:shelf.shelfId===shelfId?"1px solid var(--searchpanellstborderpressed)":"1px solid var(--searchpanellistborder)",
 boxShadow:"var(--heavyshadow)",
 margin:"1rem 0 0 0", padding:"0.6rem 1rem"}}>
-  <div style={{fontFamily:'Jost', fontWeight:shelf[3]===shelfId?"500":"400",fontSize:shelf[3]===shelfId?"1.35rem":"1.25rem",
+  <div style={{fontFamily:'Jost', fontWeight:shelf.shelfId===shelfId?"500":"400",fontSize:shelf.shelfId===shelfId?"1.35rem":"1.25rem",
   textTransform: "capitalize", letterSpacing:"0.01rem"}}>
-{shelf[0]}
+{shelf.shelfTitle}
   </div>
   <div>
-  {shelf[2].map((tag)=>{
+  {shelf.shelfSubjects.map((tag)=>{
   return <p className="tag" key={tag.slice(2)} style={{display:"inline-block", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.1rem"}}>{tag.slice(2)}</p>
   })}
   </div>

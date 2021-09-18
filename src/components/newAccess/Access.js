@@ -175,7 +175,24 @@ const Access =({googleScriptLoaded, languageSetting, setLanguageSetting})=>{
       Axios.post("http://localhost:3001/allshelves",{
         languageSetting:languageSetting
       }).then((res)=>{
-        setAllShelves(res.data.map((x)=>{ return [x.editions[0].details.shelfTitle, x.editions[0].details.shelfDescription,  x.shelfSubjects, x._id]}))
+
+          const allShelves = res.data.map((shelf)=>{
+
+          return {
+          shelfTitle:shelf.editions[0].details.shelfTitle, shelfDescription:shelf.editions[0].details.shelfDescription,
+          shelfSubjects:shelf.shelfSubjects,
+          shelfId:shelf._id,
+          shelfText: shelf.shelfBooks.map((book)=>{
+             const authors = book.editions[0].details.bookAuthor.join(' ')
+             const subjects = book.editions[0].details.subjectLinks.join(' ')
+             const content = book.editions[0].details.contentKeywords.join(' ')
+             const highlights = book.editions[0].details.bookHighlights
+          return `${authors} ${subjects} ${content} ${highlights}`
+          }).join(' ')
+      }})
+
+      setAllShelves(allShelves)
+
       }).then( console.log("reloaded shelves"))
     },[languageSetting])
 
