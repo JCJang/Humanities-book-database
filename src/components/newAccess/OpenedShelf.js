@@ -28,7 +28,7 @@ const OpenedShelf = ({selectedShelf, setBookIdentifier, setAuthorFocus, bookNumb
   const [copySuccess, setCopySuccess] = useState('');
   const [toCopy, setToCopy] = useState('');
   const [showKeywords, setShowKeywords] = useState(true)
-  const [bookHighlights, setBookHightlights] = useState([])
+  const [bookHighlights, setBookHighlights] = useState([])
 
    const copyToClipboard = async copyMe => {
        try {
@@ -84,6 +84,8 @@ useEffect(()=>{
   setDisplayBookTitle(selectedShelf.shelfBooks[bookNumber].bookTitle)
   setGoogleId(selectedShelf.shelfBooks[bookNumber].googleId)
   setIsbn(selectedShelf.shelfBooks[bookNumber].isbn13)
+  getAndSet(selectedShelf.shelfBooks[bookNumber].bookHighlights);
+
 },[selectedShelf, bookNumber])
 
 
@@ -94,7 +96,7 @@ useEffect(()=>{
     setSelectedBook(book);
     setDisplayBookTitle(book.bookTitle)
     setToCopy(`${book.bookTitle} by ${book.bookAuthor.join(", ")}`);
-    getAndSet();
+    getAndSet(book.bookHighlights);
     console.log(selectedBook)
   }
 
@@ -109,16 +111,15 @@ const setNewPreview = () =>{
   setColumnFocus("detailspanel");
 }
 
-  const getAndSet = async() =>{
-
+const getAndSet = async(highlights) =>{
+    if(highlights.length===0){setBookHighlights([]); return}
       const parseHighlights = async() => {
-      let  paragraphArr = selectedBook.bookHighlights.split("``")
+      let  paragraphArr = highlights.split("``")
       if(paragraphArr.length>1){
         paragraphArr = paragraphArr.slice(1).map(a=>{return a.replace(/\n*/g,"")})
       }
       function splitArray( array ) {
-        const arrayOfArrays = [];
-
+      const arrayOfArrays = [];
           while (array.length > 0) {
               let arrayElement = array.splice(0,2);
               arrayOfArrays.push(arrayElement);
@@ -127,10 +128,22 @@ const setNewPreview = () =>{
       }
       return splitArray(paragraphArr)
       }
-    const highlights = await parseHighlights();
-    console.log(highlights)
-    setBookHightlights(highlights)
+    await parseHighlights().then((res)=>{
+      setBookHighlights(res)
+      console.log(res)
+    })
   }
+
+  const splitSections = (section) => {
+    let sectionfy = section
+    .match(/(?<!\/)`([^`]|`\/`)+?`(?!\/)/g)
+    if(sectionfy === null || sectionfy === undefined){return}else{
+      return sectionfy.map((subsection)=>{return subsection.replace(/`/g,"").trim()})
+    }
+  }
+
+
+
 
   return (
       <div style={{color:"var(--shelfpaneltext)",display:"flex",height:"var(--panelheight)"}}>
@@ -226,16 +239,30 @@ const setNewPreview = () =>{
   </div>}
   </div>
 
-  {selectedBook &&
-    <div style={{backgroundColor:"var(--paper)", color:"var(--ink)",padding:"1rem",border:"1.5px solid #C4C4C4", marginTop:"1rem", boxShadow:"var(--heavyshadow)"}}>
-        <div className="overline-details" style={{textAlign:"center"}}>
-              HIGHLIGHTS
+  {bookHighlights[0] ? bookHighlights.map((section)=>{
+    return <div style={{backgroundColor:"var(--paper)", color:"var(--ink)",padding:"1rem",border:"1.5px solid #C4C4C4", marginTop:"1rem", boxShadow:"var(--heavyshadow)"}}>
+    <div className="overline-details" style={{textAlign:"center", marginTop:"0.5rem"}}>
+        {section[1]? section[0]:"HIGHLIGHTS"}
       </div>
 
-    <div className="body1-details" style={{ textAlign:"left", height:"auto"}}>
-      {selectedBook.bookHighlights}
+    <div className="body1-details" style={{ textAlign:"justify", height:"auto"}}>
+      {section[1]?splitSections(section[1]).map((subsection, index)=>{
+        return <div style={{margin:index===0?"1rem 1rem":"1.5rem 1rem"}}>
+        {subsection.split("/").map((x, index)=>{return <div style={{textIndent:index===0?"":"2rem"}}>{x}</div>})}
+        </div>})
+        :
+        splitSections(section[0]).map((subsection, index)=>{
+          return <div style={{margin:index===0?"1rem 1rem":"1.5rem 1rem"}}>
+          {subsection.split("/").map((x, index)=>{return <div style={{textIndent:index===0?"":"2rem"}}>{x}</div>})}
+          </div>})}
       </div>
-      </div>}
+      </div>
+  }):
+      <div className="body1-details" style={{backgroundColor:"var(--paper)", color:"var(--ink)",padding:"1rem",border:"1.5px solid #C4C4C4", marginTop:"1rem", padding:"1rem 3rem", boxShadow:"var(--heavyshadow)",textAlign:"justify", height:"auto"}}>
+      No Highlights yet for this book.
+      </div>
+    }
+
 
       <div style={{display:"flex",alignItems:"center", justifyContent:"center",marginBottom:"2rem"}}>
       <a style={{textDecoration:"none",color:"var(--shelfpanellistpressedborder)",padding:"1.5rem"}} href="#title" className="btn">Back to Top</a>

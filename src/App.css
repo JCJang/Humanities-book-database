@@ -455,6 +455,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f6f0', end
 }
 
 .h5tab{
+font-size:1.3rem;
 width:4rem;
 align-self:center;
 height:80vh;

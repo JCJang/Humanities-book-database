@@ -77,7 +77,6 @@ useEffect(()=>{
 
     }).then((res)=>{
       if(res.data.editions===undefined){console.log(`${timeline} not in database`); return;}else{
-        console.log(res.data)
         setFullTimelines([...fullTimelines, res.data.editions])
         console.log(`author Timeline ${capitalize(timeline)} retrieved`)
       }
@@ -104,6 +103,7 @@ const getKeyValueArr = (obj)=>{
   const sorted = keyValueArr.sort(function(a,b){return a[0] - b[0]})
   return sorted
 }
+
 const filterAroundLifeTime = (arr)=>{
   if(getYear(selectedAuthor.authorDeathDate)==="undefined"){
     const filtered = arr.filter((keyValue)=>{return keyValue[0] >= parseFloat(selectedAuthor.authorBirthDate.match(/^\d*/)[0])})
@@ -167,7 +167,7 @@ width:"100%",paddingLeft:keyValue[1]===`icon${authorPublicationYear}`?"0":"1rem"
 
         <div style={{lineHeight:"2.5",letterSpacing: "0.05rem", marginTop:"1rem",display:"block",margin:keyValue[1]===`icon${authorPublicationYear}`&&"2rem 0"}} className={keyValue[1]===`icon${authorPublicationYear}`?"subtitle1-details":"body1-details"}>
 
-        {keyValue[2].split(/(?<!([A-Z]|Inc|St))\.\s(?=[A-Z])/).filter((event)=>{return event}).map((event)=>{return <div style={{marginBottom:"1rem",opacity:authorAgeHover===keyValue[1]?"1":"0.7"}} className="transition">- {event}{/\.$/.test(event)?"":"."}</div>})}
+        {keyValue[2].split(/(?<!([A-Z]|Inc|St|\sv))\.\s(?=[A-Z])/).filter((event)=>{return event}).map((event)=>{return <div style={{marginBottom:"1rem",opacity:authorAgeHover===keyValue[1]?"1":"0.7"}} className="transition">- {event}{/\.$/.test(event)?"":"."}</div>})}
 
         </div>
 
