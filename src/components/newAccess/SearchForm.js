@@ -12,7 +12,6 @@ useEffect(()=>{
       if(!shelfQuery){
         setShelfResults(allShelves)
       }
-      console.log(allShelves)
       setShelfResults(allShelves.filter((shelf)=>{return shelf.shelfText.toLowerCase().indexOf(shelfQuery.toLowerCase())>=0}))
 
 },[shelfQuery,allShelves])
@@ -56,7 +55,7 @@ margin:"1rem 0 0 0", padding:"0.6rem 1rem"}}>
 
     </div>
     <h5 className="tab-lr h5tab tabsearch" style={{opacity:"0.8",cursor:columnFocus!=="shelfpanel"?"pointer":""}} onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("shelfpanel")}}}>
-    <span>{shelfTitle.slice(0,35)}</span>
+    <span>{shelfTitle.slice(0,45)}</span>
     {columnFocus!=="shelfpanel"&&
     <span className="subtitle2" style={{textTransform: "none"
 ,position:"absolute", bottom:"0"}}>expand <AddCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem"}}/></span>}

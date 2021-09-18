@@ -60,7 +60,6 @@ const OpenedShelf = ({selectedShelf, setBookIdentifier, setAuthorFocus, bookNumb
   //set book identifer for GoogleBooksViewer upon book change
     useEffect(()=>{
         if(isbn.length>1){
-          console.log(isbn)
           setBookIdentifier(isbn)
           setIsbnOrId(true)
           setDisplayBookTitle(selectedBook.bookTitle)
@@ -246,7 +245,8 @@ const getAndSet = async(highlights) =>{
       </div>
 
     <div className="body1-details" style={{ textAlign:"justify", height:"auto"}}>
-      {section[1]?splitSections(section[1]).map((subsection, index)=>{
+      {section[1]?
+        splitSections(section[1]).map((subsection, index)=>{
         return <div style={{margin:index===0?"1rem 1rem":"1.5rem 1rem"}}>
         {subsection.split("/").map((x, index)=>{return <div style={{textIndent:index===0?"":"2rem"}}>{x}</div>})}
         </div>})
@@ -269,7 +269,7 @@ const getAndSet = async(highlights) =>{
       </div>
     </div>
     <h5 className="tab-lr h5tab tabshelf" style={{opacity:"0.8", cursor:columnFocus!=="shelfpanel"?"pointer":""}} onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("shelfpanel")}}}>
-    {selectedBook.bookTitle? selectedBook.bookTitle.slice(0,35):"Book Title"}
+    {selectedBook.bookTitle? selectedBook.bookTitle.slice(0,45):"Book Title"}
     {columnFocus!=="shelfpanel"&&
     <span className="subtitle2" style={{textTransform: "none"
 ,position:"absolute", bottom:"0"}}>expand <AddCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem"}}/></span>}

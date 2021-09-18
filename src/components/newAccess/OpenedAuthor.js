@@ -41,7 +41,7 @@ const OpenedAuthor = ({ columnFocus, setColumnFocus, authorFocus, setAuthorFocus
 
 
     <h5  className="tab-lr tabauthor h5tab" style={{opacity:"0.9",cursor:columnFocus==="shelfpanel"?"pointer":""}} onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("detailspanel")}}}>
-    {selectedAuthor.authorWikiTitle?selectedAuthor.authorWikiTitle.slice(0,35):"Author Details"}    {columnFocus!=="detailspanel"&&
+    {selectedAuthor.authorWikiTitle?selectedAuthor.authorWikiTitle.slice(0,45):"Author Details"}    {columnFocus!=="detailspanel"&&
     <span className="subtitle2" style={{textTransform: "none"
 ,position:"absolute", bottom:"0"}}>expand <AddCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem"}}/></span>}
     </h5>
