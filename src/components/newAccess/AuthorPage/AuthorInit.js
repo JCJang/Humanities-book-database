@@ -105,10 +105,15 @@ const getKeyValueArr = (obj)=>{
   return sorted
 }
 const filterAroundLifeTime = (arr)=>{
+  if(getYear(selectedAuthor.authorDeathDate)==="undefined"){
+    const filtered = arr.filter((keyValue)=>{return keyValue[0] >= parseFloat(selectedAuthor.authorBirthDate.match(/^\d*/)[0])})
+    return filtered
+  }else{
   const filtered = arr.filter((keyValue)=>{return keyValue[0] >= parseFloat(selectedAuthor.authorBirthDate.match(/^\d*/)[0])})
                       .filter((keyValue)=>{return keyValue[0] <= parseFloat(selectedAuthor.authorDeathDate.match(/^\d*/)[0])})
-  return filtered
+  return filtered}
 }
+
 const filterAroundPublicationDate = (arr)=>{
     let filtered = arr
   for(let i=15; i>5; i--){
@@ -151,17 +156,18 @@ width:"40rem",paddingLeft:keyValue[1]===`icon${authorPublicationYear}`?"0":"1rem
             return <div key={keyValue[1]} style={{paddingTop:"2rem", display:"grid", gridTemplateColumns:"10rem auto", gridRowGap:"1rem",
 width:"100%",paddingLeft:keyValue[1]===`icon${authorPublicationYear}`?"0":"1rem"}}>
 
-        <div style={{lineHeight:"2.5",marginTop:"0.5rem", display:"inline",fontWeight:"bold", margin:keyValue[1]===`icon${authorPublicationYear}`&&"2rem 0"}} className={keyValue[1]===`icon${authorPublicationYear}`?"subtitle1-details":"subtitle2-details"}
+        <div style={{lineHeight:"2.5",marginTop:"1rem", display:"inline",fontWeight:"bold",opacity:authorAgeHover===keyValue[1]?"1":"0.7", margin:keyValue[1]===`icon${authorPublicationYear}`&&"2rem 0"}} className={keyValue[1]===`icon${authorPublicationYear}`?"transition subtitle1-details":"subtitle2-details transition"}
         onMouseEnter={() => setAuthorAgeHover(keyValue[1])}
         onMouseLeave={() => setAuthorAgeHover(false)}>
 
   {keyValue[1]===`icon${authorPublicationYear}`?keyValue[0]:keyValue[1]}
-   <div style={{position:"absolute",opacity:authorAgeHover===keyValue[1]?"0.8":"0"}} className="transition subtitle1-details">{keyValue[0]-authorBirthYear} years old</div>
+   <div style={{position:"absolute",opacity:authorAgeHover===keyValue[1]?"1":"0"}} className="transition subtitle1-details">{keyValue[0]-authorBirthYear} years old</div>
 
         </div>
 
-        <div style={{lineHeight:"2.5",letterSpacing: "0.05rem", marginTop:"0.5rem",display:"inline",margin:keyValue[1]===`icon${authorPublicationYear}`&&"2rem 0"}} className={keyValue[1]===`icon${authorPublicationYear}`?"subtitle1-details":"body1-details"}>
-  {keyValue[2]}
+        <div style={{lineHeight:"2.5",letterSpacing: "0.05rem", marginTop:"1rem",display:"block",margin:keyValue[1]===`icon${authorPublicationYear}`&&"2rem 0"}} className={keyValue[1]===`icon${authorPublicationYear}`?"subtitle1-details":"body1-details"}>
+
+        {keyValue[2].split(/(?<!([A-Z]|Inc|St))\.\s(?=[A-Z])/).filter((event)=>{return event}).map((event)=>{return <div style={{marginBottom:"1rem",opacity:authorAgeHover===keyValue[1]?"1":"0.7"}} className="transition">- {event}.</div>})}
 
         </div>
 
