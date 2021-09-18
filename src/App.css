@@ -299,6 +299,7 @@ box-sizing: border-box;
 border-radius: 4px;
 font:var(--body1);
 }
+
 .Nav {
   background: var(--nav);
   color: var(--nav-text);

@@ -7,6 +7,7 @@ import {useEffect, useState, useCallback} from 'react'
 
 const App = () => {
   const [googleScriptLoaded, setGoogleScriptLoaded] = useState(false);
+  const [languageSetting, setLanguageSetting] = useState('en')
 
   const loadGoogleBooksViewer = useCallback(() => {
     const scriptTag = document.createElement('script')
@@ -26,12 +27,12 @@ const App = () => {
   return (
     <Router>
     <div>
-    <Nav/>
+    <Nav languageSetting={languageSetting} setLanguageSetting={setLanguageSetting}/>
     <Route path = "/" exact>
-    <Access googleScriptLoaded={googleScriptLoaded}/>
+    <Access googleScriptLoaded={googleScriptLoaded} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting}/>
     </Route>
     <Route path = "/add" exact>
-    <Add googleScriptLoaded={googleScriptLoaded} />
+    <Add googleScriptLoaded={googleScriptLoaded} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting} />
     </Route>
     </div>
     </Router>

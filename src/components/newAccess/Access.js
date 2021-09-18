@@ -8,10 +8,9 @@ import {useCallback} from 'react'
 import {motion, AnimatePresence} from 'framer-motion'
 
 
-const Access =({googleScriptLoaded})=>{
+const Access =({googleScriptLoaded, languageSetting, setLanguageSetting})=>{
 
 //search panel
-    const [languageSetting, setLanguageSetting] = useState('en')
     const [allShelves,setAllShelves]=useState([])
     const [columnFocus, setColumnFocus] = useState('init')
     const [bookNumber, setBookNumber] = useState('0')
