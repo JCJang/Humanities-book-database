@@ -185,8 +185,11 @@ const AuthorPanel = ({selectedAuthor, expandFurtherReading, setExpandFurtherRead
               {authorInfluencedBooks[0] ?
 
 
-
-            authorInfluencedBooks.sort((a, b) => {return a.authorWikiTitle.localeCompare(b.authorWikiTitle)}).map((author)=>{return <div className="Column">
+            authorInfluencedBooks.sort((a, b) => {
+              return b.shelfAndBook.length - a.shelfAndBook.length ||
+                    a.authorWikiTitle.localeCompare(b.authorWikiTitle);
+                })
+                .map((author)=>{return <div className="Column">
                 <div className={accordionFocusInfluenced===author.authorWikiTitle?"authorPanelLinkActive tag authorPanelLink":"tag authorPanelLink"} onClick={()=>{onChangeInfluencedAccordion(author)}}
                 style={{display:"flex", cursor:author.shelfId[0]?"pointer":"",border:"1.5px solid var(--paper)", margin:"0 0.5rem 0.5rem 0", padding:"0.2rem 0.4rem",justifyContent:"space-between",width:"100%",alignItems:"center"}}>
                 <span style={{display:"inline-block", width:"90%",padding:"0 0.5rem"}}>{author.authorWikiTitle}</span>
@@ -210,7 +213,7 @@ const AuthorPanel = ({selectedAuthor, expandFurtherReading, setExpandFurtherRead
                 }
                 </div>})
                 :
-                authorInfluenced.sort((a,b)=>{return a.localeCompare(b)}).map((tag)=>{return <div className="tag authorPanelLink" style={{display:"flex",border:"1.5px solid var(--paper)", margin:"0 0.5rem 0.5rem 0", padding:"0.2rem 0.4rem",width:"100%"}}>
+                authorInfluenced.sort((a,b)=>{return a.localeCompare(b)}).map((tag)=>{return <div className="tag authorPanelLink" style={{border:"1.5px solid var(--paper)", margin:"0 0.5rem 0.5rem 0", padding:"0.2rem 0.4rem",width:"100%"}}>
                 <span style={{display:"inline-block", width:"90%",padding:"0 0.5rem"}}>{tag}</span>
                 <ExpandLessRoundedIcon style={{visibility:"hidden"}}/>
                 </div>})}
@@ -232,7 +235,11 @@ const AuthorPanel = ({selectedAuthor, expandFurtherReading, setExpandFurtherRead
 
           {authorInfluencesBooks[0] ?
 
-            authorInfluencesBooks.sort((a, b) => {return a.authorWikiTitle.localeCompare(b.authorWikiTitle)}).map((author)=>{return <div className="Column">
+            authorInfluencesBooks.sort((a, b) => {
+              return b.shelfAndBook.length - a.shelfAndBook.length ||
+                    a.authorWikiTitle.localeCompare(b.authorWikiTitle);
+            })
+            .map((author)=>{return <div className="Column">
             <div className={accordionFocusInfluences===author.authorWikiTitle?"authorPanelLinkActive tag authorPanelLink":"tag authorPanelLink"} onClick={()=>{onChangeInfluencesAccordion(author)}}
             style={{display:"flex", cursor:author.shelfId[0]?"pointer":"",border:"1.5px solid var(--paper)", margin:"0 0.5rem 0.5rem 0", padding:"0.2rem 0.4rem",justifyContent:"space-between",width:"100%",alignItems:"center"}}>
             <span style={{display:"inline-block", width:"90%",padding:"0 0.5rem"}}>{author.authorWikiTitle}</span>
