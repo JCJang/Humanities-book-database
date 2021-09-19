@@ -1,11 +1,33 @@
 import Links from './Links'
 
-const Nav = ({languageSetting, setLanguageSetting}) => {
+
+const Nav = ({xs, s, m, l, xl, languageSetting, setLanguageSetting}) => {
+
+  const navMobile = () => {
+    return {
+    width: "100vw",
+    background: "var(--nav-text)",
+    color: "var(--nav)",
+    height: "2rem",
+    alignItems: "center",
+    display: "flex"}
+  }
+
+  const navWebsite = () => {
+    return {
+    width: "100vw",
+    background: "var(--nav)",
+    color: "var(--nav-text)",
+    height: "3.5rem",
+    alignItems: "center",
+    display: "flex"}
+  }
+
   return (
-    <nav className="Nav">
+    <nav className={m?"Row":"Column"} style={m?navWebsite():navMobile()}>
     <Links routeName="/" label="home"/>
     <Links routeName="/add" label="add"/>
-    <label htmlFor="languageSetting">site language:</label>
+    <label htmlFor="languageSetting" className="subtitle2">site language:</label>
     <select className="form-control" id="languageSetting" value={languageSetting}
      onChange={(e)=>setLanguageSetting(e.target.value)} placeholder="toggles auto input settings">
      <option value="en">English</option>

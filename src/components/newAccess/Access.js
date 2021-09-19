@@ -6,9 +6,11 @@ import OpenedAuthor from './OpenedAuthor'
 import OpenedShelf from './OpenedShelf'
 import {useCallback} from 'react'
 import {motion, AnimatePresence} from 'framer-motion'
+import useMediaQuery from "../customHooks/useMediaQuery";
 
 
-const Access =({googleScriptLoaded, languageSetting, setLanguageSetting})=>{
+const Access =({x,s,m,l,xl,googleScriptLoaded, languageSetting, setLanguageSetting})=>{
+
 
 //search panel
     const [allShelves,setAllShelves]=useState([])
@@ -72,7 +74,6 @@ const Access =({googleScriptLoaded, languageSetting, setLanguageSetting})=>{
         return result
       }
     }, [])
-
 
 
 
@@ -246,10 +247,33 @@ const Access =({googleScriptLoaded, languageSetting, setLanguageSetting})=>{
     })
   },[authorToGet,languageSetting])
 
+
+  const col1widthM = () => {
+
+    if(columnFocus === "init"){
+      return "var(--initpanel)";
+    }else if(columnFocus === "shelfpanel"){
+      return "30vw";
+    }else{
+      return "4rem";
+    }
+  }
+
+  const col1heightM = () => {
+
+    if(columnFocus === "init"){
+      return "var(--initpanel)";
+    }else if(columnFocus === "shelfpanel"){
+      return "30vh";
+    }else{
+      return "2rem";
+    }
+  }
+
   return (
 
-    <div className="Row">
-        <div  className="col-1" style={{width:columnFocus==="init"?"var(--initpanel)":columnFocus==="shelfpanel"?"30vw":"4rem",height:"var(--panelheight)"}}>
+    <div className={m?"Row":"Column"}>
+        <div  className="col-1" style={{width:m?col1widthM():"100vw",height:m?"var(--panelheight)":col1heightM()}}>
 
         <SearchForm allShelves={allShelves} columnFocus={columnFocus} setLanguageSetting={setLanguageSetting} languageSetting={languageSetting} setColumnFocus={setColumnFocus} shelfId={shelfId} setShelfId={setShelfId} selectedShelf={selectedShelf} setSelectedShelf={setSelectedShelf} setBookNumber={setBookNumber}/>
 

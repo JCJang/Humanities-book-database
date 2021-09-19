@@ -61,7 +61,11 @@ html{
   scroll-behavior: smooth;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 600px) {
+html { font-size: 12px;}
+}
+
+@media screen and (min-width: 1200px) {
 html { font-size: 14px;}
 }
 
@@ -300,14 +304,6 @@ border-radius: 4px;
 font:var(--body1);
 }
 
-.Nav {
-  background: var(--nav);
-  color: var(--nav-text);
-  height:3.5rem;
-  align-items: center;
-  display:flex;
-}
-
 .Header{
   align-self: center;
   margin:20px;
@@ -533,4 +529,31 @@ padding: 0.5rem;
 
 .tab-rl{
   writing-mode:vertical-rl;
+}
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+
 }
