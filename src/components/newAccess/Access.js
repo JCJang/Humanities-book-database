@@ -12,6 +12,82 @@ import useMediaQuery from "../customHooks/useMediaQuery";
 const Access =({x,s,m,l,xl,googleScriptLoaded, languageSetting, setLanguageSetting})=>{
 
 
+    const col1heightL = () => {
+
+      if(columnFocus === "init"){
+        return "var(--focusedpanelmobile)";
+      }else{
+        return "2rem";
+      }
+    }
+
+    const col2heightL = () => {
+
+      if(columnFocus === "shelfpanel"){
+        return "var(--focusedpanelmobile)";
+      }else {
+        return "2rem";
+      }
+    }
+
+    const col3heightLpreview = () => {
+      if(columnFocus === "detailspanel"){
+        return "var(--focusedpanelmobile)";
+      }else{
+        return "2rem";
+      }
+    }
+
+    const col3heightLauthor = () => {
+      if(columnFocus === "detailspanel"){
+        return "var(--focusedpanelmobile)";
+      }else{
+        return "2rem";
+      }
+    }
+
+    const col1widthL = () => {
+
+      if(columnFocus === "init"){
+        return "var(--initpanel)";
+      }else if(columnFocus === "shelfpanel"){
+        return "30vw";
+      }else{
+        return "4rem";
+      }
+    }
+
+    const col2widthL = () => {
+
+    if(columnFocus === "shelfpanel"){
+      return "var(--focusedpanel)";
+    }else if(columnFocus === "init"){
+      return "4rem";
+    }else if(authorView === true){
+      return "4rem";
+    }else{
+      return "30vw";
+    }
+  }
+
+    const col3widthLpreview = () => {
+      if(columnFocus === "detailspanel"){
+        return "var(--focusedpanel)";
+      }else{
+        return "4rem";
+      }
+    }
+
+    const col3widthLauthor = () => {
+      if(columnFocus !== "detailspanel"){
+        return "4rem";
+      }else if(authorView===true){
+        return "var(--initpanel)";
+      }else{
+        return "var(--focusedpanel)";
+      }
+    }
+
 //search panel
     const [allShelves,setAllShelves]=useState([])
     const [columnFocus, setColumnFocus] = useState('init')
@@ -247,51 +323,30 @@ const Access =({x,s,m,l,xl,googleScriptLoaded, languageSetting, setLanguageSetti
     })
   },[authorToGet,languageSetting])
 
-
-  const col1widthM = () => {
-
-    if(columnFocus === "init"){
-      return "var(--initpanel)";
-    }else if(columnFocus === "shelfpanel"){
-      return "30vw";
-    }else{
-      return "4rem";
-    }
-  }
-
-  const col1heightM = () => {
-
-    if(columnFocus === "init"){
-      return "var(--initpanel)";
-    }else if(columnFocus === "shelfpanel"){
-      return "30vh";
-    }else{
-      return "2rem";
-    }
-  }
-
   return (
 
-    <div className={m?"Row":"Column"}>
-        <div  className="col-1" style={{width:m?col1widthM():"100vw",height:m?"var(--panelheight)":col1heightM()}}>
+    <div className={l?"Row":"column"}>
+        <div  className="col-1" style={{width:l?col1widthL():"100vw",height:l?"var(--panelheight)":col1heightL()}}>
 
         <SearchForm allShelves={allShelves} columnFocus={columnFocus} setLanguageSetting={setLanguageSetting} languageSetting={languageSetting} setColumnFocus={setColumnFocus} shelfId={shelfId} setShelfId={setShelfId} selectedShelf={selectedShelf} setSelectedShelf={setSelectedShelf} setBookNumber={setBookNumber}/>
 
         </div>
-        <div className="col-2"  style={{width:columnFocus==="shelfpanel"?"var(--focusedpanel)":columnFocus==="init"?"4rem":authorView===true?"4rem":"30vw",boxShadow:"var(--panelshadow)",height:"var(--panelheight)"}}>
+        <div className="col-2"  style={{width:l?col2widthL():"100vw",boxShadow:"var(--panelshadow)",height:l?"var(--panelheight)":col2heightL()}}>
           {selectedShelf && <OpenedShelf setAuthorFocus={setAuthorFocus} setAuthorToGet={setAuthorToGet} setDisplayEarliestPublicationYear={setDisplayEarliestPublicationYear} setColumnFocus={setColumnFocus} authorView={authorView} setAuthorView={setAuthorView} columnFocus={columnFocus} setIsbnOrId={setIsbnOrId} setBookIdentifier={setBookIdentifier} selectedShelf={selectedShelf} setDisplayBookTitle={setDisplayBookTitle} bookNumber={bookNumber}/>}
           </div>
 
         <AnimatePresence>
           {authorView===false &&
-            <motion.div className="col-3"  style={{width:columnFocus==="detailspanel"?"var(--focusedpanel)":"4rem",boxShadow:"var(--panelshadow)",height:"var(--panelheight)"}} >
+            <motion.div className="col-3"   style={{width:l?col3widthLpreview():"100vw",boxShadow:"var(--panelshadow)",height:l?"var(--panelheight)":col3heightLpreview()}}
+            >
             <GoogleBooksViewer columnFocus={columnFocus} authorView={authorView} setAuthorView={setAuthorView} bookIdentifier={bookIdentifier} setColumnFocus={setColumnFocus} displayBookTitle={displayBookTitle} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId}/>
             </motion.div>
           }
         </AnimatePresence>
         <AnimatePresence>
           {authorView===true &&
-              <motion.div className="col-3"  style={{width:columnFocus!=="detailspanel"?"4rem":authorView===true?"var(--initpanel)":"var(--focusedpanel)",boxShadow:"var(--panelshadow)",height:"var(--panelheight)"}}>
+              <motion.div className="col-3"   style={{width:l?col3widthLauthor():"100vw",boxShadow:"var(--panelshadow)",height:l?"var(--panelheight)":col3heightLauthor()}}
+              >
                 <OpenedAuthor  languageSetting={languageSetting} authorFocus={authorFocus} setAuthorFocus={setAuthorFocus} displayEarliestPublicationYear={displayEarliestPublicationYear} columnFocus={columnFocus} authorView={authorView} setAuthorView={setAuthorView} setColumnFocus={setColumnFocus} displayBookTitle={displayBookTitle} selectedAuthor={selectedAuthor} setShelfId={setShelfId} setBookNumber={setBookNumber} bookNumber={bookNumber}/>
               </motion.div>
           }
