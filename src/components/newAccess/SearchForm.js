@@ -1,7 +1,7 @@
 import {useState,useEffect} from 'react'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 
-const SearchForm = ({allShelves, columnFocus, setColumnFocus, setLanguageSetting, languageSetting, shelfId, setShelfId,selectedShelf,setSelectedShelf, setBookNumber}) => {
+const SearchForm = ({xs,s,m,l,xl,allShelves, columnFocus, setColumnFocus, setLanguageSetting, languageSetting, shelfId, setShelfId,selectedShelf,setSelectedShelf, setBookNumber}) => {
   const [shelfQuery, setShelfQuery] =  useState('')
   const [shelfResults, setShelfResults] = useState(false)
   const [shelfTitle, setShelfTitle] = useState('Shelf Title')
@@ -23,19 +23,28 @@ const setNewShelf = (shelf) =>{
   setColumnFocus("shelfpanel")
 }
 
+const searchFormDisplay = () =>{
+  if(columnFocus==="init"){
+    return "flex"
+  }else if(l && columnFocus==="shelfpanel"){
+    return "flex"
+  }else{
+    return "none"
+  }
+}
+
 
   return (
     <div style={{color:"var(--searchpaneltext)"}}>
-    <div style={{display:"flex",
-    flexDirection: "row",width:"100%",height:"var(--panelheight)"}}>
-    <div style={{width:"calc(100% - 6rem)",alignItems:"center",display:columnFocus==="detailspanel"?"none":"flex",margin:"0 0 0 2rem",
+    <div className="Row" style={{width:"100%",height:l?"var(--panelheight)":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)"}}>
+    <div style={{width:"calc(100% - 6rem)",alignItems:"center",display:searchFormDisplay(),margin:"0 0 0 2rem",
     flexDirection: "column"}}>
       <div className={columnFocus==="init"?"Row":"Column"} style={{maxWidth:"30rem", margin:"2rem"}}>
       <label htmlFor="searchForm" style={{marginRight:columnFocus==="init"?"3rem":""}}>query:</label>
       <input className="form-control" type="text" id="shelfQuery" placeholder="enter some keywords" value={shelfQuery}
        onChange={(e)=>setShelfQuery(e.target.value)}/>
          </div>
-         <div className="noScrollBar" style={{overflowY:"auto"}}>
+         <div className="noScrollBar" style={{overflowY:"auto", height:"70vh"}}>
 {shelfResults && shelfResults.map((shelf)=><div onClick={()=>{setNewShelf(shelf)}} className="transition" key={shelf.shelfId}
 style={{cursor:shelf.shelfId===shelfId?"":"pointer",color:"searchpaneltext",maxWidth:"30rem", backgroundColor:shelf.shelfId===shelfId?"white":"var(--searchpanellist)",
 border:shelf.shelfId===shelfId?"1px solid var(--searchpanellstborderpressed)":"1px solid var(--searchpanellistborder)",
@@ -54,7 +63,7 @@ margin:"1rem 0 0 0", padding:"0.6rem 1rem"}}>
 </div>
 
     </div>
-    <h5 className="tab-lr h5tab tabsearch" style={{opacity:"0.8",cursor:columnFocus!=="shelfpanel"?"pointer":""}} onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("shelfpanel")}}}>
+    <h5 className={l?"tabsearch tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.8",cursor:columnFocus!=="shelfpanel"?"pointer":columnFocus!=="init"?"pointer":""}} onClick={()=>{if(columnFocus==="init"){return}else if(l){setColumnFocus("init")}else{setColumnFocus("shelfpanel")}}}>
     <span>{shelfTitle.slice(0,45)}</span>
     {columnFocus!=="shelfpanel"&&
     <span className="subtitle2" style={{textTransform: "none"

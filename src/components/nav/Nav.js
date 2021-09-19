@@ -24,7 +24,7 @@ const Nav = ({xs, s, m, l, xl, languageSetting, setLanguageSetting}) => {
   }
 
   return (
-    <nav className={m?"Row":"Column"} style={m?navWebsite():navMobile()}>
+    <nav className={m?"Row":"Column"} style={!m?navMobile():navWebsite()}>
     <Links routeName="/" label="home"/>
     <Links routeName="/add" label="add"/>
     <label htmlFor="languageSetting" className="subtitle2">site language:</label>

@@ -4,7 +4,7 @@ import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 
 /*referencing Christina Sohn from https://chsohn15.medium.com/integrating-google-books-embedded-viewer-api-into-a-react-app-a81fde35c14d*/
-  const GoogleBooksViewer = ({bookIdentifier, displayBookTitle,columnFocus, isbnOrId,setColumnFocus, googleScriptLoaded}) => {
+  const GoogleBooksViewer = ({xs,s,m,l,xl,bookIdentifier, displayBookTitle,columnFocus, isbnOrId,setColumnFocus, googleScriptLoaded}) => {
      // Create alert message if book not found in Google Database
 
      //if isbn is not working, use google id as backup.
@@ -64,13 +64,13 @@ import AddCircleIcon from '@material-ui/icons/AddCircle'
 
 
          return (
-           <div style={{color:"var(--detailspaneltext)",display:"flex",height:"var(--panelheight)"}}>
-            <div className="Row" style={{overflow:"hidden",position:"relative"}}>
+           <div style={{color:"var(--detailspaneltext)",display:"flex",height:l?"var(--panelheight)":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)"}}>
+            <div className={l?"Row":"Column"} style={{overflow:"hidden",position:"relative"}}>
               <div id="viewerCanvas" style={{position:columnFocus==="detailspanel"?"relative":"absolute", height:"var(--panelheight)",width:"60vw", paddingLeft:"3rem",backgroundColor:"(var(--detailspanel))", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem"}}>
               </div>
               <span className="btn darkbtn" onClick={()=>{setColumnFocus("shelfpanel")}} style={{width:"6rem",display:"flex",justifyContent:"center", alignSelf:"flex-start",alignItems:"center",marginTop:"2rem",marginLeft:"3rem"}}><ArrowBackRoundedIcon/><span style={{width:"85%", padding:"0 0.5rem"}}>Back to Shelf</span></span>
               </div>
-              <h5 className="tabbook tab-lr h5tab" style={{opacity:"0.9"}} onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("detailspanel")}}}>
+              <h5 className={l?"tabbook tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.9"}} onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("detailspanel")}}}>
               {displayBookTitle? displayBookTitle.slice(0,45):"Book Details"}
               {columnFocus!=="detailspanel"&&
               <span className="subtitle2" style={{textTransform: "none"

@@ -9,7 +9,7 @@ import {useEffect, useState} from 'react'
 
 
 
-const OpenedAuthor = ({ columnFocus, setColumnFocus, authorFocus, setAuthorFocus, displayBookTitle, languageSetting, authorView, setAuthorView, selectedAuthor, displayEarliestPublicationYear, setShelfId, setBookNumber}) => {
+const OpenedAuthor = ({xs,s,m,l,xl,columnFocus, setColumnFocus, authorFocus, setAuthorFocus, displayBookTitle, languageSetting, authorView, setAuthorView, selectedAuthor, displayEarliestPublicationYear, setShelfId, setBookNumber}) => {
 
 
   const [expandFurtherReading, setExpandFurtherReading] = useState(false)
@@ -26,7 +26,7 @@ const OpenedAuthor = ({ columnFocus, setColumnFocus, authorFocus, setAuthorFocus
 
 
   return (
-    <div style={{color:"var(--paper)",backgroundColor:"var(--ink)",display:"flex",height:"var(--panelheight)",overflow:"hidden",position:"relative"}}>
+    <div className={l?"Row":"Column"} style={{color:"var(--paper)",backgroundColor:"var(--ink)",height:l?"var(--panelheight)":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)",overflow:"hidden",position:"relative"}}>
 
   <div className="Column" style={{maxWidth:"100%", position:columnFocus==="detailspanel"?"relative":"absolute", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem"}}>
   <AuthorPanel expandFurtherReading={expandFurtherReading} setExpandFurtherReading={setExpandFurtherReading} selectedAuthor={selectedAuthor} languageSetting={languageSetting} setShelfId={setShelfId} setBookNumber={setBookNumber} setColumnFocus={setColumnFocus}/>
@@ -40,7 +40,7 @@ const OpenedAuthor = ({ columnFocus, setColumnFocus, authorFocus, setAuthorFocus
     </div>
 
 
-    <h5  className="tab-lr tabauthor h5tab" style={{opacity:"0.9",cursor:columnFocus==="shelfpanel"?"pointer":""}} onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("detailspanel")}}}>
+    <h5 className={l?"tabauthor tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.9",cursor:columnFocus==="shelfpanel"?"pointer":""}} onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("detailspanel")}}}>
     {selectedAuthor.authorWikiTitle?selectedAuthor.authorWikiTitle.slice(0,45):"Author Details"}    {columnFocus!=="detailspanel"&&
     <span className="subtitle2" style={{textTransform: "none"
 ,position:"absolute", bottom:"0"}}>expand <AddCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem"}}/></span>}

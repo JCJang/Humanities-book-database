@@ -6,43 +6,79 @@ import OpenedAuthor from './OpenedAuthor'
 import OpenedShelf from './OpenedShelf'
 import {useCallback} from 'react'
 import {motion, AnimatePresence} from 'framer-motion'
-import useMediaQuery from "../customHooks/useMediaQuery";
+import ArrowLeftRoundedIcon from '@material-ui/icons/ArrowLeftRounded';
+import ArrowRightRoundedIcon from '@material-ui/icons/ArrowRightRounded';
 
 
-const Access =({x,s,m,l,xl,googleScriptLoaded, languageSetting, setLanguageSetting})=>{
+const Access =({xs,s,m,l,xl,googleScriptLoaded, languageSetting, setLanguageSetting})=>{
 
+  const [slideOut, setSlideOut] = useState(false)
 
-    const col1heightL = () => {
+  const col1heightS = () => {
+
+    if(columnFocus === "init"){
+      return "var(--focusedpanelmobile)";
+    }else{
+      return "2rem";
+    }
+  }
+
+  const col2heightS = () => {
+
+    if(columnFocus === "shelfpanel"){
+      return "var(--focusedpanelmobile)";
+    }else {
+      return "2rem";
+    }
+  }
+
+  const col3heightSpreview = () => {
+    if(columnFocus === "detailspanel"){
+      return "var(--focusedpanelmobile)";
+    }else{
+      return "2rem";
+    }
+  }
+
+  const col3heightSauthor = () => {
+    if(columnFocus === "detailspanel"){
+      return "var(--focusedpanelmobile)";
+    }else{
+      return "2rem";
+    }
+  }
+
+    const col1heightM = () => {
 
       if(columnFocus === "init"){
-        return "var(--focusedpanelmobile)";
+        return "var(--focusedpaneltablet)";
       }else{
-        return "2rem";
+        return "4rem";
       }
     }
 
-    const col2heightL = () => {
+    const col2heightM = () => {
 
       if(columnFocus === "shelfpanel"){
-        return "var(--focusedpanelmobile)";
+        return "var(--focusedpaneltablet)";
       }else {
-        return "2rem";
+        return "4rem";
       }
     }
 
-    const col3heightLpreview = () => {
+    const col3heightMpreview = () => {
       if(columnFocus === "detailspanel"){
-        return "var(--focusedpanelmobile)";
+        return "var(--focusedpaneltablet)";
       }else{
-        return "2rem";
+        return "4rem";
       }
     }
 
-    const col3heightLauthor = () => {
+    const col3heightMauthor = () => {
       if(columnFocus === "detailspanel"){
-        return "var(--focusedpanelmobile)";
+        return "var(--focusedpaneltablet)";
       }else{
-        return "2rem";
+        return "4rem";
       }
     }
 
@@ -323,31 +359,58 @@ const Access =({x,s,m,l,xl,googleScriptLoaded, languageSetting, setLanguageSetti
     })
   },[authorToGet,languageSetting])
 
+
+  const prevBook = () =>{
+  if(parseFloat(bookNumber)===0){
+    return;
+  }else{
+    const prev = parseFloat(bookNumber)-1
+    setBookNumber(prev)
+  }
+  }
+
+  const nextBook = () =>{
+  if(parseFloat(bookNumber)===parseFloat(selectedShelf.shelfBooks.length)-1){
+    return;
+  }else{
+    const next = parseFloat(bookNumber)+1
+    setBookNumber(next)
+  }
+  }
+
   return (
 
     <div className={l?"Row":"column"}>
-        <div  className="col-1" style={{width:l?col1widthL():"100vw",height:l?"var(--panelheight)":col1heightL()}}>
+    {!l &&
+    <div id="shelfNav" className={m?"Column transition":"Row transition"} style={{zIndex:"5",position:"absolute", left:columnFocus==="init"?"-100%":authorView===true?"-100%":"0px", height:m?"70vh":"4rem", width:m?"4rem":"var(--mobileWidth)", justifyContent:"center"}}>
+    {!m && <div className={m?"shelfNav lightbtn":"greybtn shelfNav"} style={{height:"4rem", width:"4rem"}} onClick={()=>{prevBook()}}><ArrowLeftRoundedIcon/>prev</div>}
+    <div className={m?"shelfNav lightbtn tab-lr mirror": "shelfNav greybtn"} style={{height:m?"50%":"4rem", width:m?"4rem":"50%"}} onClick={()=>{setSlideOut(!slideOut)}}>SHELF</div>
+    {m && <div className={m?"shelfNav lightbtn":"greybtn shelfNav"} style={{height:"4rem", width:"4rem"}} onClick={()=>{prevBook()}}><ArrowLeftRoundedIcon/>prev</div>}
+    <div className={m?"shelfNav lightbtn":"greybtn shelfNav"} style={{height:"4rem", width:"4rem"}} onClick={()=>{nextBook()}}><ArrowRightRoundedIcon/>next</div>
+    </div>}
 
-        <SearchForm allShelves={allShelves} columnFocus={columnFocus} setLanguageSetting={setLanguageSetting} languageSetting={languageSetting} setColumnFocus={setColumnFocus} shelfId={shelfId} setShelfId={setShelfId} selectedShelf={selectedShelf} setSelectedShelf={setSelectedShelf} setBookNumber={setBookNumber}/>
+        <div  className="col-1" style={{width:l?col1widthL():"100vw",height:l?"var(--panelheight)":m?col1heightM():col1heightS()}}>
+
+        <SearchForm allShelves={allShelves} xs={xs} s={s} m={m} l={l} xl={xl} columnFocus={columnFocus} setLanguageSetting={setLanguageSetting} languageSetting={languageSetting} setColumnFocus={setColumnFocus} shelfId={shelfId} setShelfId={setShelfId} selectedShelf={selectedShelf} setSelectedShelf={setSelectedShelf} setBookNumber={setBookNumber}/>
 
         </div>
-        <div className="col-2"  style={{width:l?col2widthL():"100vw",boxShadow:"var(--panelshadow)",height:l?"var(--panelheight)":col2heightL()}}>
-          {selectedShelf && <OpenedShelf setAuthorFocus={setAuthorFocus} setAuthorToGet={setAuthorToGet} setDisplayEarliestPublicationYear={setDisplayEarliestPublicationYear} setColumnFocus={setColumnFocus} authorView={authorView} setAuthorView={setAuthorView} columnFocus={columnFocus} setIsbnOrId={setIsbnOrId} setBookIdentifier={setBookIdentifier} selectedShelf={selectedShelf} setDisplayBookTitle={setDisplayBookTitle} bookNumber={bookNumber}/>}
+        <div className="col-2"  style={{width:l?col2widthL():"100vw",boxShadow:l?"var(--panelshadow)":"var(--panelshadowtop)",height:l?"var(--panelheight)":m?col2heightM():col2heightS()}}>
+          {selectedShelf && <OpenedShelf xs={xs} s={s} m={m} l={l} xl={xl} setAuthorFocus={setAuthorFocus} setAuthorToGet={setAuthorToGet} setDisplayEarliestPublicationYear={setDisplayEarliestPublicationYear} setColumnFocus={setColumnFocus} authorView={authorView} setAuthorView={setAuthorView} columnFocus={columnFocus} setIsbnOrId={setIsbnOrId} setBookIdentifier={setBookIdentifier} selectedShelf={selectedShelf} setDisplayBookTitle={setDisplayBookTitle} bookNumber={bookNumber} setBookNumber={setBookNumber} slideOut={slideOut} setSlideOut={setSlideOut}/>}
           </div>
 
         <AnimatePresence>
           {authorView===false &&
-            <motion.div className="col-3"   style={{width:l?col3widthLpreview():"100vw",boxShadow:"var(--panelshadow)",height:l?"var(--panelheight)":col3heightLpreview()}}
+            <motion.div className="col-3" style={{width:l?col3widthLpreview():"100vw",boxShadow:l?"var(--panelshadow)":"var(--panelshadowtop)",height:l?"var(--panelheight)":m?col3heightMpreview():col3heightSpreview()}}
             >
-            <GoogleBooksViewer columnFocus={columnFocus} authorView={authorView} setAuthorView={setAuthorView} bookIdentifier={bookIdentifier} setColumnFocus={setColumnFocus} displayBookTitle={displayBookTitle} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId}/>
+            <GoogleBooksViewer xs={xs} s={s} m={m} l={l} xl={xl} columnFocus={columnFocus} authorView={authorView} setAuthorView={setAuthorView} bookIdentifier={bookIdentifier} setColumnFocus={setColumnFocus} displayBookTitle={displayBookTitle} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId} slideOut={slideOut} setSlideOut={setSlideOut}/>
             </motion.div>
           }
         </AnimatePresence>
         <AnimatePresence>
           {authorView===true &&
-              <motion.div className="col-3"   style={{width:l?col3widthLauthor():"100vw",boxShadow:"var(--panelshadow)",height:l?"var(--panelheight)":col3heightLauthor()}}
+              <motion.div className="col-3" style={{width:l?col3widthLauthor():"100vw",boxShadow:l?"var(--panelshadow)":"var(--panelshadowtop)",height:l?"var(--panelheight)":m?col3heightMauthor():col3heightSauthor()}}
               >
-                <OpenedAuthor  languageSetting={languageSetting} authorFocus={authorFocus} setAuthorFocus={setAuthorFocus} displayEarliestPublicationYear={displayEarliestPublicationYear} columnFocus={columnFocus} authorView={authorView} setAuthorView={setAuthorView} setColumnFocus={setColumnFocus} displayBookTitle={displayBookTitle} selectedAuthor={selectedAuthor} setShelfId={setShelfId} setBookNumber={setBookNumber} bookNumber={bookNumber}/>
+                <OpenedAuthor xs={xs} s={s} m={m} l={l} xl={xl} languageSetting={languageSetting} authorFocus={authorFocus} setAuthorFocus={setAuthorFocus} displayEarliestPublicationYear={displayEarliestPublicationYear} columnFocus={columnFocus} authorView={authorView} setAuthorView={setAuthorView} setColumnFocus={setColumnFocus} displayBookTitle={displayBookTitle} selectedAuthor={selectedAuthor} setShelfId={setShelfId} setBookNumber={setBookNumber} bookNumber={bookNumber}/>
               </motion.div>
           }
         </AnimatePresence>

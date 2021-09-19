@@ -50,9 +50,6 @@
   scrollbar-width: none;  /* Firefox */
 }
 
-html { font-size: 16px;
-  }
-
 html{
     scroll-behavior: smooth;
 }
@@ -65,8 +62,11 @@ html{
 html { font-size: 12px;}
 }
 
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 600px) {
 html { font-size: 14px;}
+}
+@media screen and (min-width: 1200px) {
+html { font-size: 16px;}
 }
 
 :root{
@@ -111,17 +111,18 @@ html { font-size: 14px;}
 --panelheight:calc(100vh - 3.5rem);
 --authorheight:calc(100vh - 10.5rem);
 
---focusedpaneltablet:calc(100vh - 8rem);
+--mobileWidth:calc(100vw - 4rem);
+--tabletWidth:calc(100vw - 10rem);
 
---focusedpanelmobile:calc(70vh - 4rem);
---initpanelmobile:calc(100vh - 6rem);
---panelheightmobile:calc(100vh - 6rem);
---authorheightmobile:calc(100vh - 6rem);
+--shelfoverlaytablet:calc(100vh - 13.5rem);
+--focusedpaneltablet:calc(100vh - 11.5rem);
+--focusedpanelmobile:calc(100vh - 6rem);
 
 --lightshadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
 --heavyshadow:0px 6px 8px rgba(0, 0, 0, 0.15);
 
 --panelshadow:6px 0px 8px rgba(0, 0, 0, 0.15) inset;
+--panelshadowtop:0px 6px 8px rgba(0, 0, 0, 0.15) inset;
 
 
   --main-headline1: 300 6.5rem/1.5 "Jost", "Palanquin", sans-serif;
@@ -455,78 +456,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f6f0', end
   pointer-events: none; /* so the text is still selectable */
 }
 
-.h5tab{
-font-size:1.3rem;
-width:4rem;
-align-self:center;
-height:80vh;
-transform:rotate(180deg);
-transform-origin:center center;
-padding: 0.5rem;
-}
-
-
-.tabsearch:after {
-  position: absolute;
-  bottom: 5rem;
-  left:0;
-  content:'';
-  height: 30%;
-  width: 60%;
-  opacity:0.9;
-  background: linear-gradient(to top,
-     var(--searchpanel) 10%,
-     rgba(0, 0, 0, 0) 90%
-  );
-  pointer-events: none; /* so the text is still selectable */
-}
-
-
-.tabshelf:after {
-  position: absolute;
-  bottom: 5rem;
-  left:0;
-  content:'';
-  height: 30%;
-  width: 60%;
-  opacity:0.9;
-  background: linear-gradient(to top,
-     var(--shelfpanel) 10%,
-     rgba(0, 0, 0, 0) 90%
-  );
-  pointer-events: none; /* so the text is still selectable */
-}
-
-
-.tabbook:after {
-  position: absolute;
-  bottom:  5rem;
-  left:0;
-  content:'';
-  height: 30%;
-  width: 60%;
-  opacity:0.9;
-  background: linear-gradient(to top,
-     var(--detailspanel) 10%,
-     rgba(0, 0, 0, 0) 90%
-  );
-  pointer-events: none; /* so the text is still selectable */
-}
-
-.tabauthor:after {
-  position: absolute;
-  bottom: 5rem;
-  left:0;
-  content:'';
-  height: 30%;
-  width: 60%;
-  opacity:0.9;
-  background: linear-gradient(to top,
-     var(--ink) 10%,
-     rgba(0, 0, 0, 0) 90%
-  );
-  pointer-events: none; /* so the text is still selectable */
-}
 
 .tab-lr{
   writing-mode:vertical-lr;
@@ -537,28 +466,117 @@ padding: 0.5rem;
 }
 
 
-/* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {
-
-
+.h5tab-s{
+  font-size:1.3rem;
+  height:2rem;
+  align-self:center;
+  width:80vh;
+  padding: 0.5rem;
 }
 
-/* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 600px) {
-
+.h5tab-m{
+  font-size:1.3rem;
+  height:4rem;
+  align-self:center;
+  width:80vh;
+  padding: 0.5rem;
 }
 
-/* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {
+.h5tab-l{
+  font-size:1.3rem;
+  width:4rem;
+  align-self:center;
+  height:80vh;
+  transform:rotate(180deg);
+  transform-origin:center center;
+  padding: 0.5rem;
+  }
 
+
+  .tabsearch:after {
+    position: absolute;
+    bottom: 5rem;
+    left:0;
+    content:'';
+    height: 30%;
+    width: 60%;
+    opacity:0.9;
+    background: linear-gradient(to top,
+       var(--searchpanel) 10%,
+       rgba(0, 0, 0, 0) 90%
+    );
+    pointer-events: none; /* so the text is still selectable */
+  }
+
+
+  .tabshelf:after {
+    position: absolute;
+    bottom: 5rem;
+    left:0;
+    content:'';
+    height: 30%;
+    width: 60%;
+    opacity:0.9;
+    background: linear-gradient(to top,
+       var(--shelfpanel) 10%,
+       rgba(0, 0, 0, 0) 90%
+    );
+    pointer-events: none; /* so the text is still selectable */
+  }
+
+
+  .tabbook:after {
+    position: absolute;
+    bottom:  5rem;
+    left:0;
+    content:'';
+    height: 30%;
+    width: 60%;
+    opacity:0.9;
+    background: linear-gradient(to top,
+       var(--detailspanel) 10%,
+       rgba(0, 0, 0, 0) 90%
+    );
+    pointer-events: none; /* so the text is still selectable */
+  }
+
+  .tabauthor:after {
+    position: absolute;
+    bottom: 5rem;
+    left:0;
+    content:'';
+    height: 30%;
+    width: 60%;
+    opacity:0.9;
+    background: linear-gradient(to top,
+       var(--ink) 10%,
+       rgba(0, 0, 0, 0) 90%
+    );
+    pointer-events: none; /* so the text is still selectable */
+  }
+
+.greybtn{
+ background-color: var(--shelfpanellist);
+ color:var(--shelfText);
 }
 
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
-
+.shelfNav{
+  display:flex;
+  flex-direction: column;
+  border: none;
+  align-self: center;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.078rem;
+  text-decoration: none;
+  font: var(--main-button);
+  align-items:center;
+  justify-content: center;
+  margin:0.2rem;
+  box-shadow: var(--heavyshadow);
 }
 
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
-
+.mirror{
+  transform:rotate(180deg);
+  transform-origin:center center;
 }

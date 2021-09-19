@@ -2,11 +2,9 @@
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 import LaunchRoundedIcon from '@material-ui/icons/LaunchRounded';
 import ArrowForwardRoundedIcon from '@material-ui/icons/ArrowForwardRounded';
-import AddCircleIcon from '@material-ui/icons/AddCircle'
-
-
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import {useState,useEffect} from 'react'
-const OpenedShelf = ({selectedShelf, setBookIdentifier, setAuthorFocus, bookNumber, setDisplayEarliestPublicationYear, setColumnFocus,setAuthorView, authorView, setAuthorToGet, setDisplayBookTitle,columnFocus,setIsbnOrId}) => {
+const OpenedShelf = ({xs,s,m,l,xl,selectedShelf, setBookIdentifier, setAuthorFocus, slideOut, setSlideOut, bookNumber, setDisplayEarliestPublicationYear, setColumnFocus,setAuthorView, authorView, setAuthorToGet, setDisplayBookTitle,columnFocus,setIsbnOrId}) => {
 
   const [googleId, setGoogleId] = useState("")
   const [isbn, setIsbn] = useState("")
@@ -142,12 +140,10 @@ const getAndSet = async(highlights) =>{
   }
 
 
-
-
   return (
-      <div style={{color:"var(--shelfpaneltext)",display:"flex",height:"var(--panelheight)"}}>
+      <div className={l?"Row":"Column"} style={{color:"var(--shelfpaneltext)",height:l?"var(--panelheight)":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)"}}>
 
-      <div style={{padding:"2rem 2rem", flex:"1 1", display:columnFocus==="init"?"none":columnFocus==="shelfpanel"?"block":authorView===true?"none":"block"}}>
+      <div className="transition" style={{flex:"1 1", position:l?"":"absolute", left:l?"":slideOut?"0px":m?"-100vw":"0px", top:l?"":m?"":slideOut?"6rem":"-100vh",height:l?"":m?"var(--shelfoverlaytablet)":"var(--focusedpanelmobile)", display:columnFocus==="init"?"none":columnFocus==="shelfpanel"?"block":authorView===true?"none":"block", background:"var(--shelfpanel)", width:l?"":"100vw", margin:l?"2rem 2rem":"0", padding:l?"0":m?"2rem 5rem":"2rem", boxShadow:!l&&"var(--panelshadowtop)"}}>
         <div>
         <p className="subtitle1">Keyword Display</p>
         </div>
@@ -173,7 +169,7 @@ const getAndSet = async(highlights) =>{
       </div>
 
 
-<div className="Column noScrollBar" style={{display:columnFocus==="shelfpanel"?"block":"none",flex:"2 2",height:"var(--panelheight)" ,overflowY:"auto",scrollBehavior:"smooth"}}>
+<div className="Column noScrollBar" style={{display:columnFocus==="shelfpanel"?"block":"none",flex:"2 2",height:l?"var(--panelheight)":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)",width:l?"":m?"var(--tabletWidth)":"var(--mobileWidth)", overflowY:"auto",scrollBehavior:"smooth", margin:!m?"0 2rem":!l?"0 5rem":""}}>
       <h4 id="title" style={{paddingTop:"1.5rem"}}>{selectedBook.bookTitle}</h4>
 
 
@@ -268,11 +264,11 @@ const getAndSet = async(highlights) =>{
       <a style={{textDecoration:"none",color:"var(--shelfpanellistpressedborder)",padding:"1.5rem"}} href="#title" className="btn">Back to Top</a>
       </div>
     </div>
-    <h5 className="tab-lr h5tab tabshelf" style={{opacity:"0.8", cursor:columnFocus!=="shelfpanel"?"pointer":""}} onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("shelfpanel")}}}>
+    <h5 className={l?"tabshelf tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.8", cursor:columnFocus!=="shelfpanel"?"pointer":""}} onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("shelfpanel")}}}>
     {selectedBook.bookTitle? selectedBook.bookTitle.slice(0,45):"Book Title"}
-    {columnFocus!=="shelfpanel"&&
+    {columnFocus!=="shelfpanel" ? l &&
     <span className="subtitle2" style={{textTransform: "none"
-,position:"absolute", bottom:"0"}}>expand <AddCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem"}}/></span>}
+,position:"absolute", bottom:"0"}}>expand <AddCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem"}}/></span>:""}
     </h5>
   </div>
 

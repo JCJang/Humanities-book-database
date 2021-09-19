@@ -41,12 +41,13 @@ const App = () => {
   return (
     <Router>
     <div>
-    <Nav xs={xs} s={s} m={m} l={l} xl={xl} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting}/>
+    {m && <Nav xs={xs} s={s} m={m} l={l} xl={xl} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting}/>}
     <Route path = "/" exact>
     <Access xs={xs} s={s} m={m} l={l} xl={xl} googleScriptLoaded={googleScriptLoaded} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting}/>
     </Route>
     <Route path = "/add" exact>
-    <Add googleScriptLoaded={googleScriptLoaded} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting} />
+    <Add xs={xs} s={s} m={m} l={l} xl={xl} googleScriptLoaded={googleScriptLoaded} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting} />
+    {!m && <Nav xs={xs} s={s} m={m} l={l} xl={xl} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting}/>}
     </Route>
     </div>
     </Router>
