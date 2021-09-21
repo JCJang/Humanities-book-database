@@ -411,10 +411,11 @@ const Access =({xs,s,m,l,xl,googleScriptLoaded, languageSetting, setLanguageSett
       justifyContent: "center"
     }
   } >
-    {!m && <div className={m?"shelfNav lightbtn":"greybtn shelfNav"} style={{height:"4rem", width:"4rem"}} onClick={()=>{prevBook()}}><ArrowLeftRoundedIcon/>prev</div>}
+    <div className="shelfNav" style={{height:"4rem", width:"4rem", order:m?"2":"1", background:parseFloat(bookNumber)===0?"var(--inactive)":"var(--lightactionbtn)"}} onClick={()=>{prevBook()}}><ArrowLeftRoundedIcon/>prev</div>
+
     <div className={m?"shelfNav tab-lr mirror": "shelfNav"} style={{height:m?"50%":"4rem", width:m?"4rem":"50%", background:selectedShelf.shelfBooks.length===1?"var(--inactive)":"var(--lightactionbtn)"}} onClick={()=>{if(selectedShelf.shelfBooks.length===1){return;}else{ setSlideOut(!slideOut)}}}>SHELF</div>
-    {m && <div className={m?"shelfNav lightbtn":"greybtn shelfNav"} style={{height:"4rem", width:"4rem"}} onClick={()=>{prevBook()}}><ArrowLeftRoundedIcon/>prev</div>}
-    <div className={m?"shelfNav lightbtn":"greybtn shelfNav"} style={{height:"4rem", width:"4rem"}} onClick={()=>{nextBook()}}><ArrowRightRoundedIcon/>next</div>
+
+    <div className="shelfNav" style={{background:parseFloat(bookNumber)===parseFloat(selectedShelf.shelfBooks.length)-1?"var(--inactive)":"var(--lightactionbtn)",height:"4rem", width:"4rem"}} onClick={()=>{nextBook()}}><ArrowRightRoundedIcon/>next</div>
     </div>}
 
         <div  className="col-1" style={{width:l?col1widthL():"100vw",height:l?"var(--panelheight)":m?col1heightM():col1heightS()}}>
