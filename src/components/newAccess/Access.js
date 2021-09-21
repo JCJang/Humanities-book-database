@@ -405,6 +405,7 @@ const Access =({xs,s,m,l,xl,googleScriptLoaded, languageSetting, setLanguageSett
       zIndex: "10",
       position: "absolute",
       left: columnFocus === "shelfpanel" ? "0px" : columnFocus === "init" ? "-100%" : authorView === true ? "-100%" : "0px",
+      bottom: "2rem",
       height: m ? "70vh" : "4rem",
       width: m ? "4rem" : "var(--mobileWidth)",
       justifyContent: "center"

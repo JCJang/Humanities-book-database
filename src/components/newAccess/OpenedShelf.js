@@ -128,7 +128,7 @@ const getAndSet = async(highlights) =>{
 
 
   return (
-      <div className={l?"Row":"Column"} style={{color:"var(--shelfpaneltext)",height:l?"var(--panelheight)":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)"}}>
+      <div className={l?"Row":"Column"} style={{color:"var(--shelfpaneltext)",height:l?"var(--panelheight)":columnFocus!=="shelfpanel"?"4rem":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)"}}>
 
       <div className="transition" style={{zIndex:"4", flex:"1 1", position:l?"":"absolute", left:l?"":slideOut?"0px":m?"-100vw":"0px", top:l?"":m?"":slideOut?"6rem":"-100vh",height:l?"":m?"var(--shelfoverlaytablet)":"var(--focusedpanelmobile)", display:columnFocus==="init"?"none":columnFocus==="shelfpanel"?"block":authorView===true?"none":"block", background:"var(--shelfpanel)", width:l?"":"100vw", margin:l?"2rem 2rem":"0", padding:l?"0":m?"2rem 5rem":"2rem", boxShadow:!l&&"var(--panelshadowtop)"}}>
         <div>
