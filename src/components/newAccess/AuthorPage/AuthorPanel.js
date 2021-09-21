@@ -8,7 +8,7 @@ import ArrowForwardRoundedIcon from '@material-ui/icons/ArrowForwardRounded';
 import Axios from 'axios'
 
 
-const AuthorPanel = ({selectedAuthor, expandFurtherReading, setExpandFurtherReading, languageSetting, setShelfId, setBookNumber, setColumnFocus}) => {
+const AuthorPanel = ({xs,s,m,l,xl, selectedAuthor, expandFurtherReading, setExpandFurtherReading, languageSetting, setShelfId, setBookNumber, setColumnFocus}) => {
   const [authorInfluences, setAuthorInfluences] = useState([])
   const [authorInfluencesBooks, setAuthorInfluencesBooks] = useState([])
 
@@ -175,10 +175,23 @@ const AuthorPanel = ({selectedAuthor, expandFurtherReading, setExpandFurtherRead
 
 
   return (
-    <div style={{color:"var(--authorpaneltext)",backgroundColor:"var(--authorpanel)",display:"flex",boxShadow:expandFurtherReading?"var(--heavyshadow) inset":"", marginLeft:expandFurtherReading?"2rem":"3rem", maxWidth:"20rem",height:"var(--panelheight)"}}>
-    <div className="Column noScrollBar" style={{overflowY:"auto"}}>
+    <div className={
+          l?"Row":"Column"
+        }
+      style = {
+        {
+          color: "var(--authorpaneltext)",
+          backgroundColor: "var(--authorpanel)",
+          boxShadow: expandFurtherReading ? "var(--heavyshadow) inset" : "",
+          marginLeft: !l?"":expandFurtherReading ? "2rem" : "3rem",
+          maxWidth: !l?"100%":"20rem",
+          height: l?"var(--panelheight)":expandFurtherReading ? "30vh" : "4rem"
+        }
+      }>
 
-    <div style={{paddingLeft:"1rem",display:expandFurtherReading?"flex":"none"}}>
+    <div className={l?"Column noScrollBar":"Row noScrollBar"} style={{overflowY:"auto", order:l?"":"2"}}>
+
+    <div style={{paddingLeft:"1rem",display:expandFurtherReading?"flex":"none", width:l?"":"50%", justifyContent:"center",padding:l?"0 2rem":""}}>
         {selectedAuthor.authorInfluences &&
           <div className="subtitle2">
           {authorInfluencesBooks[0] ?
@@ -229,7 +242,7 @@ const AuthorPanel = ({selectedAuthor, expandFurtherReading, setExpandFurtherRead
       }
     </div>
 
-    <div style={{paddingLeft:"1rem", display:expandFurtherReading?"flex":"none"}}>
+    <div style={{paddingLeft:"1rem", display:expandFurtherReading?"flex":"none", width:l?"":"50%",justifyContent:"center",padding:l?"0 2rem":""}}>
         {selectedAuthor.authorInfluenced &&
           <div className="subtitle2">
           {authorInfluencedBooks[0] ?
@@ -280,15 +293,15 @@ const AuthorPanel = ({selectedAuthor, expandFurtherReading, setExpandFurtherRead
     </div>
 
     </div>
-    <h5 className="tab-lr h5tab" style={{cursor:"pointer"}}
+    <h5 className={l?"tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{order:l?"":"1",cursor:"pointer",display:l?"":"flex",alignItems:"center",justifyContent:"space-between",padding:l?"":"2rem"}}
     onClick={()=>{setExpandFurtherReading(!expandFurtherReading)}}>
     Further Reading
     {expandFurtherReading?
-       <span className="subtitle2" style={{textTransform: "none"
-   ,position:"absolute", bottom:"0"}}>collapse <RemoveCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem"}}/></span>
+      <span className="subtitle2" style={{display:"flex",textTransform: "none"
+  ,position:l?"absolute":"relative", left:l?"1rem":"", bottom:l?"0":""}}><p>collapse</p><RemoveCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem",marginLeft:!l&&"0.5rem",marginTop:l&&"0.5rem"}}/></span>
       :
-      <span className="subtitle2" style={{textTransform: "none"
-  ,position:"absolute", bottom:"0"}}>expand <AddCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem"}}/></span>
+      <span className="subtitle2" style={{display:"flex",textTransform: "none"
+  ,position:l?"absolute":"relative", left:l?"1rem":"", bottom:l?"0":""}}><p>expand</p><AddCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem",marginLeft:!l&&"0.5rem",marginTop:l&&"0.5rem"}}/></span>
       }
       </h5>
     </div>

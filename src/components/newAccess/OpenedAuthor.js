@@ -29,21 +29,25 @@ const OpenedAuthor = ({xs,s,m,l,xl,columnFocus, setColumnFocus, authorFocus, set
     <div className={l?"Row":"Column"} style={{color:"var(--paper)",backgroundColor:"var(--ink)",height:l?"var(--panelheight)":columnFocus!=="detailspanel"?"4rem":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)",overflow:"hidden",position:"relative"}}>
 
   <div className="Column" style={{maxWidth:"100%", position:columnFocus==="detailspanel"?"relative":"absolute", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem"}}>
-  <AuthorPanel expandFurtherReading={expandFurtherReading} setExpandFurtherReading={setExpandFurtherReading} selectedAuthor={selectedAuthor} languageSetting={languageSetting} setShelfId={setShelfId} setBookNumber={setBookNumber} setColumnFocus={setColumnFocus}/>
+  <AuthorPanel xs={xs} s={s} m={m} l={l} xl={xl} expandFurtherReading={expandFurtherReading} setExpandFurtherReading={setExpandFurtherReading} selectedAuthor={selectedAuthor} languageSetting={languageSetting} setShelfId={setShelfId} setBookNumber={setBookNumber} setColumnFocus={setColumnFocus}/>
   </div>
 
   <div className="Column" style={{flex:"4 4", maxWidth:"100%", position:columnFocus==="detailspanel"?"relative":"absolute", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem"}}>
-    <AuthorNav selectedAuthor={selectedAuthor} setColumnFocus={setColumnFocus} setAuthorFocus={setAuthorFocus} authorBookTitle={authorBookTitle}/>
+    <AuthorNav xs={xs} s={s} m={m} l={l} xl={xl} selectedAuthor={selectedAuthor} setColumnFocus={setColumnFocus} setAuthorFocus={setAuthorFocus} authorBookTitle={authorBookTitle}/>
 
 
-  <AuthorInit selectedAuthor={selectedAuthor} authorFocus={authorFocus} expandFurtherReading={expandFurtherReading} setAuthorFocus={setAuthorFocus} authorBookTitle={authorBookTitle} authorPublicationYear={authorPublicationYear} languageSetting={languageSetting} setShelfId={setShelfId}/>
+  <AuthorInit xs={xs} s={s} m={m} l={l} xl={xl} selectedAuthor={selectedAuthor} authorFocus={authorFocus} expandFurtherReading={expandFurtherReading} setAuthorFocus={setAuthorFocus} authorBookTitle={authorBookTitle} authorPublicationYear={authorPublicationYear} languageSetting={languageSetting} setShelfId={setShelfId}/>
     </div>
 
+    <h5 className={l?"tabauthor tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.9",cursor:columnFocus==="shelfpanel"?"pointer":"",display:l?"":columnFocus==="detailspanel"?"none":"flex",
+    alignItems:"center",justifyContent:"space-between",padding:l?"":"2rem"}} onClick={()=>{if(l && columnFocus==="init"){return;}else{setColumnFocus("detailspanel")}}}>
 
-    <h5 className={l?"tabauthor tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.9",cursor:columnFocus==="shelfpanel"?"pointer":"",display:l?"":columnFocus==="detailspanel"?"none":""}} onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("detailspanel")}}}>
-    {selectedAuthor.authorWikiTitle?selectedAuthor.authorWikiTitle.slice(0,45):"Author Details"}    {columnFocus!=="detailspanel"&&
-    <span className="subtitle2" style={{textTransform: "none"
-,position:"absolute", bottom:"0"}}>expand <AddCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem"}}/></span>}
+    {selectedAuthor.authorWikiTitle?selectedAuthor.authorWikiTitle.slice(0,45):"Author Details"}
+
+    {columnFocus!=="detailspanel"&&
+    <span className="subtitle2" style={{display:"flex",textTransform: "none"
+,position:l?"absolute":"relative", left:l?"1rem":"", bottom:l?"0":""}}><p>expand</p><AddCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem",marginLeft:!l&&"0.5rem",marginTop:l&&"0.5rem"}}/></span>}
+
     </h5>
     </div>
 

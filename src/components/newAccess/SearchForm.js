@@ -63,11 +63,17 @@ margin:"1rem 0 0 0", padding:"0.6rem 1rem"}}>
 </div>
 
     </div>
-    <h5 className={l?"tabsearch tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.8",cursor:columnFocus!=="shelfpanel"?"pointer":columnFocus!=="init"?"pointer":"",display:l?"":columnFocus==="init"?"none":""}} onClick={()=>{if(columnFocus==="init"){return}else if(!l){setColumnFocus("init")}else{setColumnFocus("shelfpanel")}}}>
+    <h5 className={l?"tabsearch tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.8",cursor:columnFocus!=="shelfpanel"?"pointer":columnFocus!=="init"?"pointer":"",display:l?"":columnFocus==="init"?"none":"flex",alignItems:"center",justifyContent:"space-between",padding:l?"":"2rem"}} onClick={()=>{if(l && columnFocus==="init"){return}else if(!l){setColumnFocus("init")}else{setColumnFocus("shelfpanel")}}}>
     <span>{shelfTitle.slice(0,45)}</span>
-    {columnFocus!=="shelfpanel"&&
-    <span className="subtitle2" style={{textTransform: "none"
-,position:"absolute", bottom:"0"}}>expand <AddCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem"}}/></span>}
+    {columnFocus!=="init" && l?
+    columnFocus==="shelfpanel" &&
+    <span className="subtitle2" style={{display:"flex",textTransform: "none"
+,position:l?"absolute":"relative", left:l?"1rem":"", bottom:l?"0":""}}><p>expand</p><AddCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem",marginLeft:!l&&"0.5rem",marginTop:l&&"0.5rem"}}/></span>
+    :
+    <span className="subtitle2" style={{display:"flex",textTransform: "none"
+,position:l?"absolute":"relative", left:l?"1rem":"", bottom:l?"0":""}}><p>expand</p><AddCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem",marginLeft:!l&&"0.5rem",marginTop:l&&"0.5rem"}}/></span>
+
+    }
     </h5>
     </div>
     </div>

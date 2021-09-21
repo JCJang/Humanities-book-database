@@ -3,6 +3,7 @@ import Links from './Links'
 const Nav = ({languageSetting, setLanguageSetting}) => {
   return (
     <nav className="Nav">
+    <div class="overline-details">HUMANITIESDB</div>
     <Links routeName="/" label="home"/>
     <Links routeName="/add" label="add"/>
     <label htmlFor="languageSetting">site language:</label>

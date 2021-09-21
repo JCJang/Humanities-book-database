@@ -291,11 +291,10 @@ const getAndSet = async(highlights) =>{
       <a style={{textDecoration:"none",color:"var(--shelfpanellistpressedborder)",padding:"1.5rem"}} href="#title" className="btn">Back to Top</a>
       </div>
     </div>
-    <h5 className={l?"tabshelf tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.8", cursor:columnFocus!=="shelfpanel"?"pointer":"",display:l?"":columnFocus==="shelfpanel"?"none":""}} onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("shelfpanel")}}}>
+    <h5 className={l?"tabshelf tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.8", cursor:columnFocus!=="shelfpanel"?"pointer":"",display:l?"":columnFocus==="shelfpanel"?"none":"flex",alignItems:"center",justifyContent:"space-between",padding:l?"":"2rem"}} onClick={()=>{if(l && columnFocus==="init"){return;}else{setColumnFocus("shelfpanel")}}}>
     {selectedBook.bookTitle? selectedBook.bookTitle.slice(0,45):"Book Title"}
-    {columnFocus!=="shelfpanel" ? l &&
-    <span className="subtitle2" style={{textTransform: "none"
-,position:"absolute", bottom:"0"}}>expand <AddCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem"}}/></span>:""}
+    {columnFocus!=="shelfpanel" &&  <span className="subtitle2" style={{display:"flex",textTransform: "none"
+,position:l?"absolute":"relative", left:l?"1rem":"", bottom:l?"0":""}}><p>expand</p><AddCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem",marginLeft:!l&&"0.5rem",marginTop:l&&"0.5rem"}}/></span>}
     </h5>
   </div>
 
