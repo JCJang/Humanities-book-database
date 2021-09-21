@@ -152,7 +152,20 @@ const Access =({xs,s,m,l,xl,googleScriptLoaded, languageSetting, setLanguageSett
 
       }]
     })
+    const [selectedBook,setSelectedBook] = useState({
+      languageVersions:[],
+      earliestPublicationYear:"",
+      bookTitle:"",
+      bookAuthor: [],
+      contentKeywords: [],
+      subjectLinks:[],
+      bookHighlights:"",
+      bookLength:"",
+      previewStatus:"",
+      isbn13:"",
+      googleId:""
 
+    })
 //author panel
     const [authorFocus, setAuthorFocus] = useState('init')
     const [authorView, setAuthorView] = useState(false)
@@ -306,8 +319,9 @@ const Access =({xs,s,m,l,xl,googleScriptLoaded, languageSetting, setLanguageSett
       }})
 
       setAllShelves(allShelves)
+      console.log(res.data)
 
-      }).then( console.log("reloaded shelves"))
+    }).then( console.log(`reloaded shelves in ${languageSetting}`))
     },[languageSetting])
 
 
@@ -382,9 +396,22 @@ const Access =({xs,s,m,l,xl,googleScriptLoaded, languageSetting, setLanguageSett
 
     <div className={l?"Row":"column"}>
     {!l &&
-    <div id="shelfNav" className={m?"Column transition":"Row transition"} style={{zIndex:"5",position:"absolute", left:columnFocus==="init"?"-100%":authorView===true?"-100%":"0px", height:m?"70vh":"4rem", width:m?"4rem":"var(--mobileWidth)", justifyContent:"center"}}>
+    < div id = "shelfNav"
+  className = {
+    m ? "Column transition" : "Row transition"
+  }
+  style = {
+    {
+      zIndex: "10",
+      position: "absolute",
+      left: columnFocus === "shelfpanel" ? "0px" : columnFocus === "init" ? "-100%" : authorView === true ? "-100%" : "0px",
+      height: m ? "70vh" : "4rem",
+      width: m ? "4rem" : "var(--mobileWidth)",
+      justifyContent: "center"
+    }
+  } >
     {!m && <div className={m?"shelfNav lightbtn":"greybtn shelfNav"} style={{height:"4rem", width:"4rem"}} onClick={()=>{prevBook()}}><ArrowLeftRoundedIcon/>prev</div>}
-    <div className={m?"shelfNav lightbtn tab-lr mirror": "shelfNav greybtn"} style={{height:m?"50%":"4rem", width:m?"4rem":"50%"}} onClick={()=>{setSlideOut(!slideOut)}}>SHELF</div>
+    <div className={m?"shelfNav tab-lr mirror": "shelfNav"} style={{height:m?"50%":"4rem", width:m?"4rem":"50%", background:selectedShelf.shelfBooks.length===1?"var(--inactive)":"var(--lightactionbtn)"}} onClick={()=>{if(selectedShelf.shelfBooks.length===1){return;}else{ setSlideOut(!slideOut)}}}>SHELF</div>
     {m && <div className={m?"shelfNav lightbtn":"greybtn shelfNav"} style={{height:"4rem", width:"4rem"}} onClick={()=>{prevBook()}}><ArrowLeftRoundedIcon/>prev</div>}
     <div className={m?"shelfNav lightbtn":"greybtn shelfNav"} style={{height:"4rem", width:"4rem"}} onClick={()=>{nextBook()}}><ArrowRightRoundedIcon/>next</div>
     </div>}
@@ -395,14 +422,14 @@ const Access =({xs,s,m,l,xl,googleScriptLoaded, languageSetting, setLanguageSett
 
         </div>
         <div className="col-2"  style={{width:l?col2widthL():"100vw",boxShadow:l?"var(--panelshadow)":"var(--panelshadowtop)",height:l?"var(--panelheight)":m?col2heightM():col2heightS()}}>
-          {selectedShelf && <OpenedShelf xs={xs} s={s} m={m} l={l} xl={xl} setAuthorFocus={setAuthorFocus} setAuthorToGet={setAuthorToGet} setDisplayEarliestPublicationYear={setDisplayEarliestPublicationYear} setColumnFocus={setColumnFocus} authorView={authorView} setAuthorView={setAuthorView} columnFocus={columnFocus} setIsbnOrId={setIsbnOrId} setBookIdentifier={setBookIdentifier} selectedShelf={selectedShelf} setDisplayBookTitle={setDisplayBookTitle} bookNumber={bookNumber} setBookNumber={setBookNumber} slideOut={slideOut} setSlideOut={setSlideOut}/>}
+          {selectedShelf && <OpenedShelf xs={xs} s={s} m={m} l={l} xl={xl} setAuthorFocus={setAuthorFocus} setAuthorToGet={setAuthorToGet} setDisplayEarliestPublicationYear={setDisplayEarliestPublicationYear} setColumnFocus={setColumnFocus} authorView={authorView} setAuthorView={setAuthorView} columnFocus={columnFocus} setIsbnOrId={setIsbnOrId} setBookIdentifier={setBookIdentifier} selectedShelf={selectedShelf} setDisplayBookTitle={setDisplayBookTitle} bookNumber={bookNumber} setBookNumber={setBookNumber} slideOut={slideOut} setSlideOut={setSlideOut} selectedBook={selectedBook} setSelectedBook={setSelectedBook}/>}
           </div>
 
         <AnimatePresence>
           {authorView===false &&
-            <motion.div className="col-3" style={{width:l?col3widthLpreview():"100vw",boxShadow:l?"var(--panelshadow)":"var(--panelshadowtop)",height:l?"var(--panelheight)":m?col3heightMpreview():col3heightSpreview()}}
+            <motion.div className="col-3" style={{overflow:"hidden",width:l?col3widthLpreview():"100vw",boxShadow:l?"var(--panelshadow)":"var(--panelshadowtop)",height:l?"var(--panelheight)":m?col3heightMpreview():col3heightSpreview()}}
             >
-            <GoogleBooksViewer xs={xs} s={s} m={m} l={l} xl={xl} columnFocus={columnFocus} authorView={authorView} setAuthorView={setAuthorView} bookIdentifier={bookIdentifier} setColumnFocus={setColumnFocus} displayBookTitle={displayBookTitle} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId} slideOut={slideOut} setSlideOut={setSlideOut}/>
+            <GoogleBooksViewer xs={xs} s={s} m={m} l={l} xl={xl} authorView={authorView} columnFocus={columnFocus} authorView={authorView} setAuthorView={setAuthorView} authors={selectedBook.bookAuthor} bookIdentifier={bookIdentifier} setColumnFocus={setColumnFocus} displayBookTitle={displayBookTitle} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId} slideOut={slideOut} setSlideOut={setSlideOut}/>
             </motion.div>
           }
         </AnimatePresence>

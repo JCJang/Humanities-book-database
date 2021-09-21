@@ -1,11 +1,22 @@
 import React from 'react'
-import {useEffect} from 'react'
+import {useEffect, useState} from 'react'
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 
 /*referencing Christina Sohn from https://chsohn15.medium.com/integrating-google-books-embedded-viewer-api-into-a-react-app-a81fde35c14d*/
-  const GoogleBooksViewer = ({xs,s,m,l,xl,bookIdentifier, displayBookTitle,columnFocus, isbnOrId,setColumnFocus, googleScriptLoaded}) => {
-     // Create alert message if book not found in Google Database
+  const GoogleBooksViewer = ({xs,s,m,l,xl,bookIdentifier,authors,authorView, displayBookTitle,columnFocus, isbnOrId,setColumnFocus, googleScriptLoaded}) => {
+
+    const [authorBookTitle, setAuthorBookTitle] = useState('')
+    const [author, setAuthor] = useState('')
+
+    useEffect(()=>{
+      setAuthorBookTitle(displayBookTitle)
+    },[bookIdentifier])
+
+    useEffect(()=>{
+      const newAuthor = authors.join(", ")
+      setAuthor(newAuthor)
+    },[bookIdentifier])
 
      //if isbn is not working, use google id as backup.
      function alertNotFound() { console.log("preview unavailable")
@@ -64,13 +75,40 @@ import AddCircleIcon from '@material-ui/icons/AddCircle'
 
 
          return (
-           <div style={{color:"var(--detailspaneltext)",display:"flex",height:l?"var(--panelheight)":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)"}}>
-            <div className={l?"Row":"Column"} style={{overflow:"hidden",position:"relative"}}>
-              <div id="viewerCanvas" style={{position:columnFocus==="detailspanel"?"relative":"absolute", height:"var(--panelheight)",width:"60vw", paddingLeft:"3rem",backgroundColor:"(var(--detailspanel))", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem"}}>
-              </div>
-              <span className="btn darkbtn" onClick={()=>{setColumnFocus("shelfpanel")}} style={{width:"6rem",display:"flex",justifyContent:"center", alignSelf:"flex-start",alignItems:"center",marginTop:"2rem",marginLeft:"3rem"}}><ArrowBackRoundedIcon/><span style={{width:"85%", padding:"0 0.5rem"}}>Back to Shelf</span></span>
-              </div>
-              <h5 className={l?"tabbook tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.9"}} onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("detailspanel")}}}>
+           <div style={{zIndex:"3",background:"var(--detailspanel)", position:"relative",color:"var(--detailspaneltext)",display:"flex",height:l?"var(--panelheight)":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)",justifyContent:l?"":"center"}}>
+
+            <div className={l?"Row":"Column"} style={{position:columnFocus!=="detailspanel"?"absolute":authorView?"absolute":"relative",margin:"2rem 0 2rem 2rem",border:"1px solid var(--paper)",visibility:columnFocus!=="detailspanel"?"hidden":authorView?"hidden":""}}>
+
+            <div  className="Column" style={{overflow:"hidden",width:"100%", alignItems: "center", display:"flex",color:"var(--paper)", justifyContent:"center",backgroundColor:"var(--detailspanel)",padding:"0 2rem"}}>
+
+          {!l &&
+                <span className="btn darkbtn" onClick={()=>{setColumnFocus("shelfpanel")}} style={{width:l?"6rem":"auto",display:"flex",justifyContent:"center", alignSelf:"flex-start",alignItems:"center",marginTop:"2rem",marginLeft:"3rem"}}><ArrowBackRoundedIcon/><span style={{width:"85%", padding:"0 0.5rem"}}>Back to Shelf</span></span>
+
+            }
+            <div style={{width:"100vw",marginTop:"1rem",borderTop:"1px solid var(--paper)"}}></div>
+            <div style={{width:"100vw",margin:"0.5rem 0",borderTop:"1px solid var(--paper)"}}></div>
+          <div>
+          <div className="subtitle1-details">{`${displayBookTitle} // By ${author}`}</div>
+          </div>
+          <div style={{width:"100vw",margin:"0.5rem 0",borderTop:"1px solid var(--paper)"}}></div>
+          <div>
+          <div className="overline-details">{displayBookTitle}</div>
+          </div>
+
+          <div style={{overflow:"hidden",position:"relative"}}>
+          <div id="viewerCanvas" style={{position:columnFocus==="detailspanel"?"relative":"absolute", height:"var(--panelheight)",width:l?"60vw":"90vw", paddingLeft:l?"3rem":"",backgroundColor:"(var(--detailspanel))", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem"}}>
+          </div>
+          </div>
+
+          </div>
+          </div>
+
+              {l &&
+                 <span className="btn darkbtn" onClick={()=>{setColumnFocus("shelfpanel")}} style={{display:columnFocus!=="detailspanel"?"none":authorView?"none":"flex", width:"6rem",justifyContent:"center", alignSelf:"flex-start",alignItems:"center",marginTop:"2rem",marginLeft:"3rem"}}><ArrowBackRoundedIcon/><span style={{width:"85%", padding:"0 0.5rem"}}>Back to Shelf</span></span>
+              }
+
+
+              <h5 className={l?"tabbook tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.9",cursor:columnFocus==="shelfpanel"?"pointer":"",display:l?"":columnFocus==="detailspanel"?"none":""}} onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("detailspanel")}}}>
               {displayBookTitle? displayBookTitle.slice(0,45):"Book Details"}
               {columnFocus!=="detailspanel"&&
               <span className="subtitle2" style={{textTransform: "none"

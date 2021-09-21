@@ -4,25 +4,12 @@ import LaunchRoundedIcon from '@material-ui/icons/LaunchRounded';
 import ArrowForwardRoundedIcon from '@material-ui/icons/ArrowForwardRounded';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import {useState,useEffect} from 'react'
-const OpenedShelf = ({xs,s,m,l,xl,selectedShelf, setBookIdentifier, setAuthorFocus, slideOut, setSlideOut, bookNumber, setDisplayEarliestPublicationYear, setColumnFocus,setAuthorView, authorView, setAuthorToGet, setDisplayBookTitle,columnFocus,setIsbnOrId}) => {
+const OpenedShelf = ({xs,s,m,l,xl,selectedShelf, selectedBook, setSelectedBook, setBookIdentifier, setAuthorFocus, slideOut, setSlideOut, bookNumber, setDisplayEarliestPublicationYear, setColumnFocus,setAuthorView, authorView, setAuthorToGet, setDisplayBookTitle,columnFocus,setIsbnOrId}) => {
 
   const [googleId, setGoogleId] = useState("")
   const [isbn, setIsbn] = useState("")
   const [contentOrSubjectKeywords,setContentOrSubjectKeywords]=useState(true)
-  const [selectedBook,setSelectedBook] = useState({
-    languageVersions:[],
-    earliestPublicationYear:"",
-    bookTitle:"",
-    bookAuthor: [],
-    contentKeywords: [],
-    subjectLinks:[],
-    bookHighlights:"",
-    bookLength:"",
-    previewStatus:"",
-    isbn13:"",
-    googleId:""
 
-  })
   const [copySuccess, setCopySuccess] = useState('');
   const [toCopy, setToCopy] = useState('');
   const [showKeywords, setShowKeywords] = useState(true)
@@ -143,7 +130,7 @@ const getAndSet = async(highlights) =>{
   return (
       <div className={l?"Row":"Column"} style={{color:"var(--shelfpaneltext)",height:l?"var(--panelheight)":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)"}}>
 
-      <div className="transition" style={{flex:"1 1", position:l?"":"absolute", left:l?"":slideOut?"0px":m?"-100vw":"0px", top:l?"":m?"":slideOut?"6rem":"-100vh",height:l?"":m?"var(--shelfoverlaytablet)":"var(--focusedpanelmobile)", display:columnFocus==="init"?"none":columnFocus==="shelfpanel"?"block":authorView===true?"none":"block", background:"var(--shelfpanel)", width:l?"":"100vw", margin:l?"2rem 2rem":"0", padding:l?"0":m?"2rem 5rem":"2rem", boxShadow:!l&&"var(--panelshadowtop)"}}>
+      <div className="transition" style={{zIndex:"4", flex:"1 1", position:l?"":"absolute", left:l?"":slideOut?"0px":m?"-100vw":"0px", top:l?"":m?"":slideOut?"6rem":"-100vh",height:l?"":m?"var(--shelfoverlaytablet)":"var(--focusedpanelmobile)", display:columnFocus==="init"?"none":columnFocus==="shelfpanel"?"block":authorView===true?"none":"block", background:"var(--shelfpanel)", width:l?"":"100vw", margin:l?"2rem 2rem":"0", padding:l?"0":m?"2rem 5rem":"2rem", boxShadow:!l&&"var(--panelshadowtop)"}}>
         <div>
         <p className="subtitle1">Keyword Display</p>
         </div>
@@ -264,7 +251,7 @@ const getAndSet = async(highlights) =>{
       <a style={{textDecoration:"none",color:"var(--shelfpanellistpressedborder)",padding:"1.5rem"}} href="#title" className="btn">Back to Top</a>
       </div>
     </div>
-    <h5 className={l?"tabshelf tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.8", cursor:columnFocus!=="shelfpanel"?"pointer":""}} onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("shelfpanel")}}}>
+    <h5 className={l?"tabshelf tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.8", cursor:columnFocus!=="shelfpanel"?"pointer":"",display:l?"":columnFocus==="shelfpanel"?"none":""}} onClick={()=>{if(columnFocus==="init"){return;}else{setColumnFocus("shelfpanel")}}}>
     {selectedBook.bookTitle? selectedBook.bookTitle.slice(0,45):"Book Title"}
     {columnFocus!=="shelfpanel" ? l &&
     <span className="subtitle2" style={{textTransform: "none"

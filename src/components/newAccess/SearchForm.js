@@ -37,14 +37,14 @@ const searchFormDisplay = () =>{
   return (
     <div style={{color:"var(--searchpaneltext)"}}>
     <div className="Row" style={{width:"100%",height:l?"var(--panelheight)":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)"}}>
-    <div style={{width:"calc(100% - 6rem)",alignItems:"center",display:searchFormDisplay(),margin:"0 0 0 2rem",
+    <div style={{width:l?"calc(100% - 6rem)":"100%",alignItems:"center",display:searchFormDisplay(),margin:l?"0 0 0 2rem":"",
     flexDirection: "column"}}>
       <div className={columnFocus==="init"?"Row":"Column"} style={{maxWidth:"30rem", margin:"2rem"}}>
       <label htmlFor="searchForm" style={{marginRight:columnFocus==="init"?"3rem":""}}>query:</label>
       <input className="form-control" type="text" id="shelfQuery" placeholder="enter some keywords" value={shelfQuery}
        onChange={(e)=>setShelfQuery(e.target.value)}/>
          </div>
-         <div className="noScrollBar" style={{overflowY:"auto", height:"70vh"}}>
+         <div className="noScrollBar" style={{overflowY:"auto", marginBottom:"0.1rem"}}>
 {shelfResults && shelfResults.map((shelf)=><div onClick={()=>{setNewShelf(shelf)}} className="transition" key={shelf.shelfId}
 style={{cursor:shelf.shelfId===shelfId?"":"pointer",color:"searchpaneltext",maxWidth:"30rem", backgroundColor:shelf.shelfId===shelfId?"white":"var(--searchpanellist)",
 border:shelf.shelfId===shelfId?"1px solid var(--searchpanellstborderpressed)":"1px solid var(--searchpanellistborder)",
@@ -63,7 +63,7 @@ margin:"1rem 0 0 0", padding:"0.6rem 1rem"}}>
 </div>
 
     </div>
-    <h5 className={l?"tabsearch tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.8",cursor:columnFocus!=="shelfpanel"?"pointer":columnFocus!=="init"?"pointer":""}} onClick={()=>{if(columnFocus==="init"){return}else if(l){setColumnFocus("init")}else{setColumnFocus("shelfpanel")}}}>
+    <h5 className={l?"tabsearch tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.8",cursor:columnFocus!=="shelfpanel"?"pointer":columnFocus!=="init"?"pointer":"",display:l?"":columnFocus==="init"?"none":""}} onClick={()=>{if(columnFocus==="init"){return}else if(!l){setColumnFocus("init")}else{setColumnFocus("shelfpanel")}}}>
     <span>{shelfTitle.slice(0,45)}</span>
     {columnFocus!=="shelfpanel"&&
     <span className="subtitle2" style={{textTransform: "none"

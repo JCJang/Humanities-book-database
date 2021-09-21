@@ -469,7 +469,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f6f0', end
 .h5tab-s{
   font-size:1.3rem;
   height:2rem;
-  align-self:center;
   width:80vh;
   padding: 0.5rem;
 }
@@ -477,7 +476,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f6f0', end
 .h5tab-m{
   font-size:1.3rem;
   height:4rem;
-  align-self:center;
   width:80vh;
   padding: 0.5rem;
 }
