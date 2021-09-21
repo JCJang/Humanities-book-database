@@ -126,11 +126,45 @@ const getAndSet = async(highlights) =>{
     }
   }
 
+//if tablet, do nothing. If mobile, slide out from top. stop at shelf if toggling from shelfpanel. Stop at bottom is toggling from preview panel.
+  const shelfNavTop = () =>{
+    if(m){
+       if(columnFocus === "shelfpanel"){
+        return "7.5rem"
+       }else if(columnFocus === "detailspanel"){
+        return "11.5rem"
+       }
+    } else if(!m && slideOut){
+       if(columnFocus === "shelfpanel"){
+         return "6rem"
+       }else if(columnFocus === "detailspanel"){
+         return "8rem"
+       }
+   } else if (!m){
+       return "-100vh"
+     }
+  }
 
   return (
       <div className={l?"Row":"Column"} style={{color:"var(--shelfpaneltext)",height:l?"var(--panelheight)":columnFocus!=="shelfpanel"?"4rem":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)"}}>
 
-      <div className="transition" style={{zIndex:"4", flex:"1 1", position:l?"":"absolute", left:l?"":slideOut?"0px":m?"-100vw":"0px", top:l?"":m?"":slideOut?"6rem":"-100vh",height:l?"":m?"var(--shelfoverlaytablet)":"var(--focusedpanelmobile)", display:columnFocus==="init"?"none":columnFocus==="shelfpanel"?"block":authorView===true?"none":"block", background:"var(--shelfpanel)", width:l?"":"100vw", margin:l?"2rem 2rem":"0", padding:l?"0":m?"2rem 5rem":"2rem", boxShadow:!l&&"var(--panelshadowtop)"}}>
+      < div className = "transition"
+            style = {
+              {
+                zIndex: "4",
+                flex: "1 1",
+                position: l ? "" : "absolute",
+                left: l ? "" : slideOut ? "0px" : m ? "-100vw" : "0px",
+                top: shelfNavTop(),
+                height: l ? "" : m ? "var(--focusedpaneltablet)" : "var(--focusedpanelmobile)",
+                display: columnFocus === "init" ? "none" : columnFocus === "shelfpanel" ? "block" : authorView === true ? "none" : "block",
+                background: "var(--shelfpanel)",
+                width: l ? "" : "100vw",
+                margin: l ? "2rem 2rem" : "0",
+                padding: l ? "0" : m ? "2rem 5rem" : "2rem",
+                boxShadow: !l && "var(--panelshadowtop)",
+              }
+            } >
         <div>
         <p className="subtitle1">Keyword Display</p>
         </div>
@@ -141,12 +175,18 @@ const getAndSet = async(highlights) =>{
     <div className="noScrollBar" style={{height:"70vh",overflowY:"auto", marginTop:"1rem"}}>
       {selectedShelf.shelfBooks.map((book)=>{
         return <div className="transition" key={book.googleId} onClick={()=>{setNewBook(book)}}
-         style={{cursor:book.googleId===googleId?"":"pointer",
-        color:"searchpaneltext", backgroundColor:book.googleId===googleId?"var(--shelfpanellistpressed)":"var(--shelfpanellist)",
-        border:book.googleId===googleId?"1.5px solid var(--shelfpanellistpressedborder)":"1.5px solid var(--shelfpanellistborder)",
-        transform:book.googleId===googleId?"translateY(0.3rem)":"translateY(0px)",
-        boxShadow:book.googleId===googleId?"none":"var(--heavyshadow)",
-       padding:"0.6rem 1rem",  margin:"1rem 0"}}>
+         style = {
+             {
+               cursor: book.googleId === googleId ? "" : "pointer",
+               color: "searchpaneltext",
+               backgroundColor: book.googleId === googleId ? "var(--shelfpanellistpressed)" : "var(--shelfpanellist)",
+               border: book.googleId === googleId ? "1.5px solid var(--shelfpanellistpressedborder)" : "1.5px solid var(--shelfpanellistborder)",
+               transform: book.googleId === googleId ? "translateY(0.3rem)" : "translateY(0px)",
+               boxShadow: book.googleId === googleId ? "none" : "var(--heavyshadow)",
+               padding: "0.6rem 1rem",
+               margin: "1rem 0"
+             }
+           }>
         <div className="subtitle1" style={{margin:"0 0 0.3rem 0"}}>{book.bookTitle}</div>
         <div className="subtitle2" style={{margin:"0 0 0.5rem 0"}}>{book.bookAuthor.join(", ")}</div>
         <div className="body2">{contentOrSubjectKeywords?book.contentKeywords.map((tag)=>{return <p className="tag" style={{display:"inline-block", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.1rem"}}>{tag}</p>}):book.subjectLinks.map((tag)=>{return <p className="tag" style={{display:"inline-block", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.1rem"}}>{tag}</p>})}</div>

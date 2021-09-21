@@ -395,28 +395,29 @@ const Access =({xs,s,m,l,xl,googleScriptLoaded, languageSetting, setLanguageSett
   return (
 
     <div className={l?"Row":"column"}>
-    {!l &&
-    < div id = "shelfNav"
-  className = {
-    m ? "Column transition" : "Row transition"
-  }
-  style = {
-    {
-      zIndex: "10",
-      position: "absolute",
-      left: columnFocus === "shelfpanel" ? "0px" : columnFocus === "init" ? "-100%" : authorView === true ? "-100%" : "0px",
-      bottom: "2rem",
-      height: m ? "70vh" : "4rem",
-      width: m ? "4rem" : "var(--mobileWidth)",
-      justifyContent: "center"
-    }
-  } >
-    <div className="shelfNav" style={{height:"4rem", width:"4rem", order:m?"2":"1", background:parseFloat(bookNumber)===0?"var(--inactive)":"var(--lightactionbtn)"}} onClick={()=>{prevBook()}}><ArrowLeftRoundedIcon/>prev</div>
+                {!l &&
+                < div id = "shelfNav"
+              className = {
+                m ? "Column transition" : "Row transition"
+              }
+              style = {
+                {
+                  zIndex: "10",
+                  position: "absolute",
+                  left: columnFocus === "shelfpanel" ? "0px" : columnFocus === "init" ? "-100%" : authorView === true ? "-100%" : "0px",
+                  bottom: "2rem",
+                  height: m ? "70vh" : "4rem",
+                  width: m ? "4rem" : "var(--mobileWidth)",
+                  justifyContent: "center"
+                }
+              } >
+                <div className="shelfNav" style={{height:"4rem", width:"4rem", order:m?"2":"1", background:parseFloat(bookNumber)===0?"var(--inactive)":columnFocus==="shelfpanel"?"var(--lightactionbtn)":"var(--darkactionbtn)"}} onClick={()=>{prevBook()}}><ArrowLeftRoundedIcon/>prev</div>
 
-    <div className={m?"shelfNav tab-lr mirror": "shelfNav"} style={{height:m?"50%":"4rem", width:m?"4rem":"50%", background:selectedShelf.shelfBooks.length===1?"var(--inactive)":"var(--lightactionbtn)"}} onClick={()=>{if(selectedShelf.shelfBooks.length===1){return;}else{ setSlideOut(!slideOut)}}}>SHELF</div>
+                <div className={m?"shelfNav tab-lr mirror": "shelfNav"} style={{height:m?"50%":"4rem", width:m?"4rem":"50%", background:selectedShelf.shelfBooks.length===1?"var(--inactive)":columnFocus==="shelfpanel"?"var(--lightactionbtn)":"var(--darkactionbtn)"}} onClick={()=>{if(selectedShelf.shelfBooks.length===1){return;}else{ setSlideOut(!slideOut)}}}>SHELF</div>
 
-    <div className="shelfNav" style={{background:parseFloat(bookNumber)===parseFloat(selectedShelf.shelfBooks.length)-1?"var(--inactive)":"var(--lightactionbtn)",height:"4rem", width:"4rem"}} onClick={()=>{nextBook()}}><ArrowRightRoundedIcon/>next</div>
-    </div>}
+                <div className="shelfNav" style={{background:parseFloat(bookNumber)===parseFloat(selectedShelf.shelfBooks.length)-1?"var(--inactive)":columnFocus==="shelfpanel"?"var(--lightactionbtn)":"var(--darkactionbtn)",height:"4rem", width:"4rem"}} onClick={()=>{nextBook()}}><ArrowRightRoundedIcon/>next</div>
+                </div>
+              }
 
         <div  className="col-1" style={{width:l?col1widthL():"100vw",height:l?"var(--panelheight)":m?col1heightM():col1heightS()}}>
 

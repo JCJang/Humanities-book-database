@@ -82,7 +82,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle'
             <div  className="Column" style={{overflow:"hidden",width:!l?"100%":"", alignItems: "center", flex:"1", display:"flex",color:"var(--paper)", justifyContent:"center",backgroundColor:"var(--detailspanel)"}}>
 
           {!l &&
-                <span className="btn darkbtn" onClick={()=>{setColumnFocus("shelfpanel")}} style={{width:l?"6rem":"auto",display:"flex",justifyContent:"center", alignSelf:"flex-start",alignItems:"center",marginTop:"2rem",marginLeft:l?"":m?"3rem":""}}><ArrowBackRoundedIcon/><span style={{width:"85%", padding:"0 0.5rem"}}>Back to Shelf</span></span>
+                <span className="btn darkbtn" onClick={()=>{setColumnFocus("shelfpanel")}} style={{width:l?"6rem":"auto",display:"flex",justifyContent:"center", alignSelf:"flex-start",alignItems:"center",marginTop:"1rem",marginLeft:l?"":m?"3rem":""}}><ArrowBackRoundedIcon/><span style={{width:"85%", padding:"0 0.5rem"}}>Back to Shelf</span></span>
 
             }
             {!l && <div style={{width:"100vw",marginTop:"1rem",borderTop:"1px solid var(--paper)"}}></div>}
