@@ -115,7 +115,7 @@ const filterAroundPublicationDate = (arr)=>{
 }
 
   return (
-    <div className="noScrollBar OpenedAuthor" style={{marginLeft:l?"3rem":"", overflowY:authorFocus==='init'?'':'auto',maxWidth:"100%", height:"var(--authorheight)"}}>
+    <div className="noScrollBar OpenedAuthor" style={{ overflowY:authorFocus==='init'?'':'auto',maxWidth:"100%", height:"var(--authorheight)"}}>
 
       < div id = "shelfNav"
     className = "Row transition"
@@ -129,22 +129,20 @@ const filterAroundPublicationDate = (arr)=>{
     } >
       <div className="authorNav" style={{height:"4rem", width:"4rem",color:"var(--paper)"}} onClick={()=>{setAuthorNavFocus("bg")}}><ChevronLeftOutlinedIcon/>Prev</div>
 
-      <div className="Column" style={{alignItems:"center"}}>
-      <div>{authorNavLinks.map((link)=>{if(link===authorNavFocus){return <CircleIcon/>}else{return <CircleOutlinedIcon/>}})}</div>
-      <div className="overline-details">LEARN MORE</div>
+      <div className="Column" style={{justifyContent:"center",alignItems:"center"}}>
+        <div>{authorNavLinks.map((link)=>{if(link===authorNavFocus){return <CircleIcon/>}else{return <CircleOutlinedIcon/>}})}</div>
+        <div className="overline-details">LEARN MORE</div>
       </div>
 
       <div className="authorNav" style={{height:"4rem", width:"4rem",color:"var(--paper)"}} onClick={()=>{setAuthorNavFocus("bio")}}><ChevronRightOutlinedIcon/>Next</div>
+      
       </div>
-
-
-<div className="Row" style={{display:"flex", justifyContent:"center"}}>
 
 
   {authorFocus==="init" &&
 
     <>
-    <div className="Column" className="transition"  style={{flex:"1 1 70%", position:l?"":"absolute", left:getPosition("bg"), width:"100vw", padding:l?"":m?"0 3rem":"0 2rem"}}>
+    <div className="Column" className="transition"  style={{flex:"1 1 70%", position:l?"":"absolute", left:getPosition("bg"), width:"100%", padding:l?"":m?"0 3rem":"0 2rem"}}>
       <div style={{flex:"4 4"}}>
            <div  style={{maxHeight:"2rem"}}>
            {fullTimelines[0] &&
@@ -164,7 +162,7 @@ const filterAroundPublicationDate = (arr)=>{
       <h6  className="subtitle1-details" style={{textShadow:"0 0 7px var(--ink)"}}>{selectedAuthor.timelineLinks?selectedAuthor.timelineLinks.map((timeline)=>{return timeline.slice(11)}):"Not Available for this Author"}</h6>
       </div>
 
-      <div className="Column" className="transition"  style={{flex:"1 1 70%", position:l?"":"absolute", left:getPosition("bio"), width:"100vw", padding:l?"":m?"0 3rem":"0 2rem"}}>
+      <div className="Column" className="transition"  style={{flex:"1 1 70%", position:l?"":"absolute", left:getPosition("bio"), width:"100%", padding:l?"":m?"0 3rem":"0 2rem"}}>
       <div style={{flex:"4 4"}}>
       <img  style={{maxHeight:"18rem", width:"auto",boxShadow:"var(--heavyshadow)"}} src={selectedAuthor.authorWikiImage}></img>
       </div>
@@ -185,9 +183,8 @@ const filterAroundPublicationDate = (arr)=>{
     "Historical Timeline"
     </h4>
 
-  <div className="Column" className="transition"  style={{flex:"1 1 70%", position:l?"":"absolute", left:getPosition("bg"), width:"100vw", padding:l?"":m?"0 3rem":"0 2rem"}}>
-      <div  style={{flex:"4 4"}}>
-           <div>
+  <div className="Column">
+
            {fullTimelines[0] &&
               <div>
               {fullTimelines[0][0] &&
@@ -215,10 +212,9 @@ const filterAroundPublicationDate = (arr)=>{
                         })}
                         </div>
           }
-            </div>
-          </div>
       </div>
-      <div style={{display:"flex",alignItems:"center", justifyContent:"center",marginTop:"1rem"}}>
+
+    <div style={{display:"flex",alignItems:"center", justifyContent:"center",marginTop:"1rem"}}>
         <a style={{textDecoration:"none",color:"var(--paper)",padding:"2rem"}} href="#authorTitle" className="btn">Back to Top</a>
     </div>
     </>
