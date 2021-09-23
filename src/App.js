@@ -48,8 +48,8 @@ const App = () => {
     </Route>
     <Route path = "/add" exact>
     <Add xs={xs} s={s} m={m} l={l} xl={xl} googleScriptLoaded={googleScriptLoaded} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting} />
-    {!m && <NavMobile xs={xs} s={s} m={m} l={l} xl={xl} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting}/>}
     </Route>
+    {!m && <NavMobile xs={xs} s={s} m={m} l={l} xl={xl} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting}/>}
     </div>
     </Router>
   )

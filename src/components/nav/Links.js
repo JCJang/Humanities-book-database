@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom'
-const Links = ({routeName, label}) => {
+const Links = ({m, routeName, label}) => {
   return (
-    <Link to={routeName} className="Link">
+    <Link to={routeName} className={m?"WebNavLink":"MobileNavLink"}>
     {label}
     </Link>
   )

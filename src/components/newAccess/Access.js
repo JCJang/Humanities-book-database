@@ -28,7 +28,7 @@ const Access =({xs,s,m,l,xl,googleScriptLoaded, languageSetting, setLanguageSett
     if(columnFocus === "shelfpanel"){
       return "var(--focusedpanelmobile)";
     }else {
-      return "2rem";
+      return "3rem";
     }
   }
 
@@ -36,7 +36,7 @@ const Access =({xs,s,m,l,xl,googleScriptLoaded, languageSetting, setLanguageSett
     if(columnFocus === "detailspanel"){
       return "var(--focusedpanelmobile)";
     }else{
-      return "2rem";
+      return "3rem";
     }
   }
 
@@ -44,7 +44,7 @@ const Access =({xs,s,m,l,xl,googleScriptLoaded, languageSetting, setLanguageSett
     if(columnFocus === "detailspanel"){
       return "var(--focusedpanelmobile)";
     }else{
-      return "2rem";
+      return "3rem";
     }
   }
 

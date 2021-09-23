@@ -373,10 +373,17 @@ font:var(--body1);
   width: minmax(33vw,400px);
 }
 
-.Link{
+.WebNavLink{
   color: var(--detailspaneltext);
   text-decoration: none;
   padding:0 3rem;
+}
+
+.MobileNavLink{
+  color: var(--nav);
+  text-decoration: none;
+  justify-content: center;
+  align-items: center;
 }
 
 .AuthorLink{

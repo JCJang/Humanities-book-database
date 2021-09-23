@@ -25,8 +25,8 @@ const Nav = ({xs, s, m, l, xl, languageSetting, setLanguageSetting}) => {
 
   return (
     <nav className={m?"Row":"Column"} style={!m?navMobile():navWebsite()}>
-    <Links routeName="/" label="home"/>
-    <Links routeName="/add" label="add"/>
+    <Links m={m} routeName="/" label="home"/>
+    <Links m={m} routeName="/add" label="add"/>
     <label htmlFor="languageSetting" className="subtitle2">site language:</label>
     <select className="form-control" id="languageSetting" value={languageSetting}
      onChange={(e)=>setLanguageSetting(e.target.value)} placeholder="toggles auto input settings">
