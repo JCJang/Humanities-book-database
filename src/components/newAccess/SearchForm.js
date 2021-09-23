@@ -63,7 +63,7 @@ margin:"1rem 0 0 0", padding:"0.6rem 1rem"}}>
 </div>
 
     </div>
-    <h5 className={l?"tabsearch tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.8",cursor:columnFocus!=="shelfpanel"?"pointer":columnFocus!=="init"?"pointer":"",display:l?"":columnFocus==="init"?"none":"flex",alignItems:"center",justifyContent:"space-between",padding:l?"":"2rem"}} onClick={()=>{if(l && columnFocus==="init"){return}else if(!l){setColumnFocus("init")}else{setColumnFocus("shelfpanel")}}}>
+    <h5 className={l?"tabsearch tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.8",cursor:columnFocus!=="shelfpanel"?"pointer":columnFocus!=="init"?"pointer":"",display:l?"":columnFocus==="init"?"none":"flex",alignItems:"center",justifyContent:"space-between",padding:l?"":m?"2rem":"1.5rem"}} onClick={()=>{if(l && columnFocus==="init"){return}else if(!l){setColumnFocus("init")}else{setColumnFocus("shelfpanel")}}}>
     <span>{shelfTitle.slice(0,45)}</span>
     {columnFocus!=="init" && l?
     columnFocus==="shelfpanel" &&

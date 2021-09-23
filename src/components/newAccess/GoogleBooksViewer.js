@@ -74,8 +74,9 @@ import AddCircleIcon from '@material-ui/icons/AddCircle'
 }, [googleScriptLoaded, isbnOrId, bookIdentifier])
 
 
+
          return (
-           <div style={{zIndex:"3",background:"var(--detailspanel)", position:"relative",color:"var(--detailspaneltext)",display:"flex",height:l?"var(--panelheight)":columnFocus!=="detailspanel"?"4rem":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)"}}>
+           <div style={{zIndex:"3",background:"var(--detailspanel)", position:"relative",color:"var(--detailspaneltext)",display:"flex",height:l?"var(--panelheight)":columnFocus!=="detailspanel"?"4rem":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)", paddingTop:!m && "5rem"}}>
 
             <div className={l?"Row":"Column"} style={{flex:"1",position:columnFocus!=="detailspanel"?"absolute":authorView?"absolute":"relative",margin:l?"2rem 0 2rem 2rem":"",border:l?"1px solid var(--paper)":"none",visibility:columnFocus!=="detailspanel"?"hidden":authorView?"hidden":""}}>
 
@@ -108,7 +109,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle'
               }
 
 
-              <h5 className={l?"tabbook tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{width:l?"4rem":"",opacity:"0.9",cursor:columnFocus==="shelfpanel"?"pointer":"",display:l?"":columnFocus==="detailspanel"?"none":"flex",alignItems:"center",justifyContent:"space-between",padding:l?"":"2rem"}} onClick={()=>{if(l && columnFocus==="init"){return;}else{setColumnFocus("detailspanel")}}}>
+              <h5 className={l?"tabbook tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{width:l?"4rem":"",opacity:"0.9",cursor:columnFocus==="shelfpanel"?"pointer":"",display:l?"":columnFocus==="detailspanel"?"none":"flex",alignItems:"center",justifyContent:"space-between",padding:l?"":m?"2rem":"1.5rem"}} onClick={()=>{if(l && columnFocus==="init"){return;}else{setColumnFocus("detailspanel")}}}>
               {displayBookTitle? displayBookTitle.slice(0,45):"Book Details"}
 
               {columnFocus!=="detailspanel"&&

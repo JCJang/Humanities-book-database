@@ -138,15 +138,34 @@ const getAndSet = async(highlights) =>{
        if(columnFocus === "shelfpanel"){
          return "6rem"
        }else if(columnFocus === "detailspanel"){
-         return "8rem"
+         return "9rem"
        }
    } else if (!m){
        return "-100vh"
      }
   }
 
+
+  const openedShelfHeight = () =>{
+    if(l){
+      return "var(--panelheight)";
+    } else if (m){
+      if(columnFocus!=="shelfpanel"){
+        return "4rem"
+      }else{
+        return "var(--focusedpaneltablet)"
+      }
+    }else if (!m){
+      if(columnFocus!=="shelfpanel"){
+        return "3rem"
+      }else{
+        return "var(--focusedpanelmobile)"
+      }
+    }
+  }
+
   return (
-      <div className={l?"Row":"Column"} style={{color:"var(--shelfpaneltext)",height:l?"var(--panelheight)":columnFocus!=="shelfpanel"?"4rem":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)"}}>
+      <div className={l?"Row":"Column"} style={{color:"var(--shelfpaneltext)",height:openedShelfHeight()}}>
 
       < div className = "transition"
             style = {
@@ -196,11 +215,11 @@ const getAndSet = async(highlights) =>{
       </div>
 
 
-<div className="Column noScrollBar" style={{display:columnFocus==="shelfpanel"?"block":"none",flex:"2 2",height:l?"var(--panelheight)":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)",width:l?"":m?"var(--tabletWidth)":"var(--mobileWidth)", overflowY:"auto",scrollBehavior:"smooth", margin:!m?"0 2rem":!l?"0 5rem":""}}>
+<div className="Column noScrollBar" style={{display:columnFocus==="shelfpanel"?"":"none",flex:"2 2",height:l?"var(--panelheight)":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)",width:l?"":m?"var(--tabletWidth)":"var(--mobileWidth)", overflowY:"auto",scrollBehavior:"smooth", margin:!m?"0 2rem":!l?"0 5rem":"", paddingTop:!m && "5rem"}}>
       <h4 id="title" style={{paddingTop:"1.5rem"}}>{selectedBook.bookTitle}</h4>
 
 
-<div className="Row" style={{justifyContent:"spaceBetween"}}>
+<div className="Row" style={{justifyContent:"space-between"}}>
   <div className="Column" style={{width:"auto",flex:"1 1"}}>
       <div className="subtitle1" style={{padding:"1rem 0"}}>
       {selectedBook.bookAuthor && selectedBook.bookAuthor.join(", ")}
@@ -291,7 +310,7 @@ const getAndSet = async(highlights) =>{
       <a style={{textDecoration:"none",color:"var(--shelfpanellistpressedborder)",padding:"1.5rem"}} href="#title" className="btn">Back to Top</a>
       </div>
     </div>
-    <h5 className={l?"tabshelf tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.8", cursor:columnFocus!=="shelfpanel"?"pointer":"",display:l?"":columnFocus==="shelfpanel"?"none":"flex",alignItems:"center",justifyContent:"space-between",padding:l?"":"2rem"}} onClick={()=>{if(l && columnFocus==="init"){return;}else{setColumnFocus("shelfpanel")}}}>
+    <h5 className={l?"tabshelf tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.8", cursor:columnFocus!=="shelfpanel"?"pointer":"",display:l?"":columnFocus==="shelfpanel"?"none":"flex",alignItems:"center",justifyContent:"space-between",padding:l?"":m?"2rem":"1.6rem"}} onClick={()=>{if(l && columnFocus==="init"){return;}else{setColumnFocus("shelfpanel")}}}>
     {selectedBook.bookTitle? selectedBook.bookTitle.slice(0,45):"Book Title"}
     {columnFocus!=="shelfpanel" &&  <span className="subtitle2" style={{display:"flex",textTransform: "none"
 ,position:l?"absolute":"relative", left:l?"1rem":"", bottom:l?"0":""}}><p>expand</p><AddCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem",marginLeft:!l&&"0.5rem",marginTop:l&&"0.5rem"}}/></span>}

@@ -24,6 +24,16 @@ const OpenedAuthor = ({xs,s,m,l,xl,columnFocus, setColumnFocus, authorFocus, set
   setAuthorPublicationYear(displayEarliestPublicationYear)
 },[selectedAuthor])
 
+const h5tabstyle = () => {
+  return {
+    opacity: "0.9",
+    cursor: columnFocus === "shelfpanel" ? "pointer" : "",
+    display: l ? "" : columnFocus === "detailspanel" ? "none" : "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: l ? "" : m ? "2rem" : "1.5rem"
+  }
+}
 
   return (
     <div className={l?"Row":"Column"} style={{color:"var(--paper)",backgroundColor:"var(--ink)",height:l?"var(--panelheight)":columnFocus!=="detailspanel"?"4rem":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)",overflow:"hidden",position:"relative"}}>
@@ -39,8 +49,7 @@ const OpenedAuthor = ({xs,s,m,l,xl,columnFocus, setColumnFocus, authorFocus, set
   <AuthorInit xs={xs} s={s} m={m} l={l} xl={xl} selectedAuthor={selectedAuthor} authorFocus={authorFocus} expandFurtherReading={expandFurtherReading} setAuthorFocus={setAuthorFocus} authorBookTitle={authorBookTitle} authorPublicationYear={authorPublicationYear} languageSetting={languageSetting} setShelfId={setShelfId}/>
     </div>
 
-    <h5 className={l?"tabauthor tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.9",cursor:columnFocus==="shelfpanel"?"pointer":"",display:l?"":columnFocus==="detailspanel"?"none":"flex",
-    alignItems:"center",justifyContent:"space-between",padding:l?"":"2rem"}} onClick={()=>{if(l && columnFocus==="init"){return;}else{setColumnFocus("detailspanel")}}}>
+    <h5 className={l?"tabauthor tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style = {h5tabstyle()} onClick={()=>{if(l && columnFocus==="init"){return;}else{setColumnFocus("detailspanel")}}}>
 
     {selectedAuthor.authorWikiTitle?selectedAuthor.authorWikiTitle.slice(0,45):"Author Details"}
 
