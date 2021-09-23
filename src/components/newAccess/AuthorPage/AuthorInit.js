@@ -1,12 +1,24 @@
 import Axios from 'axios'
 import {useEffect, useState} from 'react'
 import LaunchRoundedIcon from '@material-ui/icons/LaunchRounded';
+import createSvgIcon from "@material-ui/icons/utils/createSvgIcon";
+import ChevronRightOutlinedIcon from '@material-ui/icons/ChevronRightOutlined';
+import ChevronLeftOutlinedIcon from '@material-ui/icons/ChevronLeftOutlined';
 
-const AuthorInit = ({expandFurtherReading, selectedAuthor, authorFocus, setAuthorFocus, languageSetting, authorBookTitle, authorPublicationYear}) => {
+const CircleIcon = createSvgIcon(
+  <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="1"/>
+);
+const CircleOutlinedIcon = createSvgIcon(
+  <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="1" fill="none"/>
+);
+
+const AuthorInit = ({xs, s, m, l, xl, expandFurtherReading, selectedAuthor, authorFocus, setAuthorFocus, languageSetting, authorBookTitle, authorPublicationYear}) => {
 
 const [fullTimelines, setFullTimelines] = useState([])
 const [authorBirthYear, setAuthorBirthYear] = useState([])
 const [authorAgeHover, setAuthorAgeHover] = useState(false)
+const [authorNavFocus, setAuthorNavFocus] = useState("bg")
+const authorNavLinks = ["bg", "bio"]
 
   const getYear = (date)=> {
     if(!date){return "undefined"}
@@ -127,57 +139,100 @@ const filterAroundPublicationDate = (arr)=>{
 
   return (
     <div className="noScrollBar OpenedAuthor" style={{marginLeft:"3rem", overflowY:authorFocus==='init'?'':'auto',maxWidth:"100%", height:"var(--authorheight)"}}>
-    <div className="Row" style={{alignItems:"center"}}>
-      <h4 className="h4-details" style={{margin:"2rem 0 1rem 0",display:"inlineBlock"}} id="authorTitle">{authorFocus==='init'?"Learn More":authorFocus==='bg'?"Historical Timeline":selectedAuthor.authorWikiTitle}</h4>
-    {authorFocus==='bio' && <span  className="subtitle1-details" style={{margin:"2rem 1rem 1rem 1rem", display:"inlineBlock"}}>{`${getYear(selectedAuthor.authorBirthDate)} - ${getYear(selectedAuthor.authorDeathDate)}`}</span>}
-  </div>
-    <div className="Row" style={{position:"relative"}}>
 
-      <div className="Column" style={{flex:"1 1 70%"}}>
+    {!l &&
+      < div id = "shelfNav"
+    className = "Row transition"
+    style = {
+      {
+        height:"4rem",
+        width: "100vw",
+        justifyContent: "center"
+      }
+    } >
+      <div className="authorNav" style={{height:"4rem", width:"4rem",color:"var(--paper)"}} onClick={()=>{setAuthorNavFocus("bg")}}><ChevronLeftOutlinedIcon/>Prev</div>
+
+      <div className="Column">
+      <div>{authorNavLinks.map((link)=>{if(link===authorNavFocus){return <CircleIcon/>}else{return <CircleOutlinedIcon/>}})}</div>
+      <div className="overline-details">LEARN MORE</div>
+      </div>
+
+      <div className="authorNav" style={{height:"4rem", width:"4rem",color:"var(--paper)"}} onClick={()=>{setAuthorNavFocus("bio")}}><ChevronRightOutlinedIcon/>Next</div>
+      </div>
+    }
+
+<div className="Row" style={{alignItems:"center"}}>
+
+      <h4 className="h4-details" style={{margin:"2rem 0 1rem 0",display:"inlineBlock"}} id="authorTitle">{authorFocus==='init'?"Learn More":authorFocus==='bg'?"Historical Timeline":selectedAuthor.authorWikiTitle}</h4>
+
+      {authorFocus==='bio' && <span  className="subtitle1-details" style={{margin:"2rem 1rem 1rem 1rem", display:"inlineBlock"}}>{`${getYear(selectedAuthor.authorBirthDate)} - ${getYear(selectedAuthor.authorDeathDate)}`}</span>}
+</div>
+
+
+<div className="Row" style={{position:"relative"}}>
+
+  <div className="Column" style={{flex:"1 1 70%"}}>
 
       {authorFocus==="init" &&  <div  style={{flex:"4 4"}}>
-           <div  style={{maxHeight:"2rem"}}>{fullTimelines[0] &&
-          <div className="gradient">{fullTimelines[0][0] && filterAroundPublicationDate(getKeyValueArr(fullTimelines[0][0].details)).map((keyValue)=>{
-            return <div key={keyValue[1]} style={{display:"grid", gridTemplateColumns:"10rem auto", gridRowGap:"1rem",
-width:"40rem",paddingLeft:keyValue[1]===`icon${authorPublicationYear}`?"0":"1rem"}}>
-<div style={{marginTop:"0.5rem",display:"inline",fontWeight:"bold", margin:keyValue[1]===`icon${authorPublicationYear}`&&"2rem 0"}} className={keyValue[1]===`icon${authorPublicationYear}`?"subtitle1-details":"subtitle2-details"}>
-  {keyValue[1]===`icon${authorPublicationYear}`?keyValue[0]:keyValue[1]}</div>
-<div style={{marginTop:"0.5rem",display:"inline",margin:keyValue[1]===`icon${authorPublicationYear}`&&"2rem 0"}} className={keyValue[1]===`icon${authorPublicationYear}`?"subtitle1-details":"body2-details"}>  {keyValue[2]}</div>
+           <div  style={{maxHeight:"2rem"}}>
+           {fullTimelines[0] &&
+              <div className="gradient">
+                  {fullTimelines[0][0] && filterAroundPublicationDate(getKeyValueArr(fullTimelines[0][0].details)).map((keyValue)=>{
+                      return <div key={keyValue[1]} style={{display:"grid", gridTemplateColumns:"10rem auto", gridRowGap:"1rem",
+                      width:"40rem",paddingLeft:keyValue[1]===`icon${authorPublicationYear}`?"0":"1rem"}}>
+                      <div style={{marginTop:"0.5rem",display:"inline",fontWeight:"bold", margin:keyValue[1]===`icon${authorPublicationYear}`&&"2rem 0"}} className={keyValue[1]===`icon${authorPublicationYear}`?"subtitle1-details":"subtitle2-details"}>
+                      {keyValue[1]===`icon${authorPublicationYear}`?keyValue[0]:keyValue[1]}</div>
+                      <div style={{marginTop:"0.5rem",display:"inline",margin:keyValue[1]===`icon${authorPublicationYear}`&&"2rem   0"}} className={keyValue[1]===`icon${authorPublicationYear}`?"subtitle1-details":"body2-details"}>  {keyValue[2]}</div>
+                      </div>
+                      })}</div>
+            }
+          </div>
+        </div>
+      }
+
+      {authorFocus!=="init" &&
+        <div style={{display:"flex",alignItems:"center", justifyContent:"center",marginTop:"1rem"}}>
+          <a style={{textDecoration:"none",color:"var(--paper)",padding:"2rem"}} href="#authorTitle" className="btn">Back to Top</a>
+            </div>}
+
+      {authorFocus==="init" &&
+      <>
+        <h5  className="h5-details" style={{textShadow:"0 0 7px var(--ink)"}}>Historical Background</h5>
+        <h6  className="subtitle1-details" style={{textShadow:"0 0 7px var(--ink)"}}>{selectedAuthor.timelineLinks?selectedAuthor.timelineLinks.map((timeline)=>{return timeline.slice(11)}):"Not Available for this Author"}</h6></>}
+
+
+    {authorFocus==="bg" &&  <div  style={{flex:"4 4"}}>
+           <div>
+           {fullTimelines[0] &&
+              <div>
+              {fullTimelines[0][0] &&
+                filterAroundLifeTime(getKeyValueArr(fullTimelines[0][0].details)).map((keyValue)=>{
+                    return <div key={keyValue[1]} style={{paddingTop:"2rem", display:"grid", gridTemplateColumns:"10rem auto", gridRowGap:"1rem",
+                      width:"100%",paddingLeft:keyValue[1]===`icon${authorPublicationYear}`?"0":"1rem"}}>
+
+                        <div style={{lineHeight:"2.5",marginTop:"1rem", display:"inline",fontWeight:"bold",opacity:authorAgeHover===keyValue[1]?"1":"0.7", margin:keyValue[1]===`icon${authorPublicationYear}`&&"2rem 0"}} className={keyValue[1]===`icon${authorPublicationYear}`?"transition subtitle1-details":"subtitle2-details transition"}
+
+                        onMouseEnter={() => setAuthorAgeHover(keyValue[1])}
+                        onMouseLeave={() => setAuthorAgeHover(false)}>
+
+                          {keyValue[1]===`icon${authorPublicationYear}`?keyValue[0]:keyValue[1]}
+                        <div style={{position:"absolute",opacity:authorAgeHover===keyValue[1]?"1":"0"}} className="transition subtitle1-details">{keyValue[0]-authorBirthYear} years old</div>
+
+                        </div>
+
+                        <div style={{lineHeight:"2.5",letterSpacing: "0.05rem", marginTop:"1rem",display:"block",margin:keyValue[1]===`icon${authorPublicationYear}`&&"2rem 0"}} className={keyValue[1]===`icon${authorPublicationYear}`?"subtitle1-details":"body1-details"}>
+
+                        {keyValue[2].split(/(?<!([A-Z]|Inc|St|\sv))\.\s(?=[A-Z])/).filter((event)=>{return event}).map((event)=>{return <div style={{marginBottom:"1rem",opacity:authorAgeHover===keyValue[1]?"1":"0.7"}} className="transition">- {event}{/\.$/.test(event)?"":"."}</div>})}
+
+                        </div>
+
+                          </div>
+                        })}
+                        </div>
+          }
+          </div>
       </div>
-          })}</div>
-          }
-          </div>
-        </div>
-      }
-
-      {authorFocus==="bg" &&  <div  style={{flex:"4 4"}}>
-           <div>{fullTimelines[0] &&
-          <div>{fullTimelines[0][0] && filterAroundLifeTime(getKeyValueArr(fullTimelines[0][0].details)).map((keyValue)=>{
-            return <div key={keyValue[1]} style={{paddingTop:"2rem", display:"grid", gridTemplateColumns:"10rem auto", gridRowGap:"1rem",
-width:"100%",paddingLeft:keyValue[1]===`icon${authorPublicationYear}`?"0":"1rem"}}>
-
-        <div style={{lineHeight:"2.5",marginTop:"1rem", display:"inline",fontWeight:"bold",opacity:authorAgeHover===keyValue[1]?"1":"0.7", margin:keyValue[1]===`icon${authorPublicationYear}`&&"2rem 0"}} className={keyValue[1]===`icon${authorPublicationYear}`?"transition subtitle1-details":"subtitle2-details transition"}
-        onMouseEnter={() => setAuthorAgeHover(keyValue[1])}
-        onMouseLeave={() => setAuthorAgeHover(false)}>
-
-  {keyValue[1]===`icon${authorPublicationYear}`?keyValue[0]:keyValue[1]}
-   <div style={{position:"absolute",opacity:authorAgeHover===keyValue[1]?"1":"0"}} className="transition subtitle1-details">{keyValue[0]-authorBirthYear} years old</div>
-
-        </div>
-
-        <div style={{lineHeight:"2.5",letterSpacing: "0.05rem", marginTop:"1rem",display:"block",margin:keyValue[1]===`icon${authorPublicationYear}`&&"2rem 0"}} className={keyValue[1]===`icon${authorPublicationYear}`?"subtitle1-details":"body1-details"}>
-
-        {keyValue[2].split(/(?<!([A-Z]|Inc|St|\sv))\.\s(?=[A-Z])/).filter((event)=>{return event}).map((event)=>{return <div style={{marginBottom:"1rem",opacity:authorAgeHover===keyValue[1]?"1":"0.7"}} className="transition">- {event}{/\.$/.test(event)?"":"."}</div>})}
-
-        </div>
-
-        </div>
-          })}
-          </div>
-          }
-          </div>
-        </div>
-      }
+    }
 
     {authorFocus==="bio" &&
         <div style={{backgroundColor:"var(--paper)", color:"var(--ink)",padding:"1rem",border:"1.5px solid #C4C4C4", marginTop:"1rem", boxShadow:"var(--heavyshadow)"}}>
@@ -185,23 +240,15 @@ width:"100%",paddingLeft:keyValue[1]===`icon${authorPublicationYear}`?"0":"1rem"
                   SHORT BIOGRAPHY
           </div>
 
-        <div className="body1-details" style={{ textAlign:"left", height:"auto"}}>
+          <div className="body1-details" style={{ textAlign:"left", height:"auto"}}>
           {selectedAuthor.authorWikiExtract}
-          </div>
+            </div>
 
           </div>}
 
-  {authorFocus!=="init" &&
-      <div style={{display:"flex",alignItems:"center", justifyContent:"center",marginTop:"1rem"}}>
-        <a style={{textDecoration:"none",color:"var(--paper)",padding:"2rem"}} href="#authorTitle" className="btn">Back to Top</a>
-          </div>}
 
-    {authorFocus==="init" &&
-    <>
-      <h5  className="h5-details" style={{textShadow:"0 0 7px var(--ink)"}}>Historical Background</h5>
-      <h6  className="subtitle1-details" style={{textShadow:"0 0 7px var(--ink)"}}>{selectedAuthor.timelineLinks?selectedAuthor.timelineLinks.map((timeline)=>{return timeline.slice(11)}):"Not Available for this Author"}</h6></>}
 
-    </div>
+</div>
 
     {authorFocus!=="bg" &&
       <div className="Column" style={{flex:"1 1 30%",position:authorFocus==="init"?"absolute":"relative",justifyContent:"center",alignItems:"center",marginTop:"1rem",right:expandFurtherReading?"0":authorFocus==="init"?"10rem":"0", marginLeft:"3rem"}}>
@@ -216,7 +263,9 @@ width:"100%",paddingLeft:keyValue[1]===`icon${authorPublicationYear}`?"0":"1rem"
 
 
         {authorFocus==="bio" &&
-        <div style={{position:"absolute", margin:"0 0.5rem 0 0.5rem", top:"14rem"}}>
+
+            <div style={{position:"absolute", margin:"0 0.5rem 0 0.5rem", top:"14rem"}}>
+
             {selectedAuthor.authorBgKeywords &&
               <div className="subtitle2">
                 <div className="Row" style={{alignItems:"center", margin:"1rem"}}>
@@ -224,7 +273,7 @@ width:"100%",paddingLeft:keyValue[1]===`icon${authorPublicationYear}`?"0":"1rem"
                   </div>
               <div>{selectedAuthor.authorBgKeywords[0] && selectedAuthor.authorBgKeywords.map((tag)=>{return <p className="tag AuthorLink" style={{display:"inline-block", border:"1.5px solid var(--paper)", margin:"0 0.5rem 0.5rem 0", padding:"0.2rem 0.3rem"}}>{tag}</p>})}</div>
             </div>
-          }
+            }
 
             {selectedAuthor.authorLifeWorkKeywords  &&
               <div className="subtitle2">
@@ -233,9 +282,9 @@ width:"100%",paddingLeft:keyValue[1]===`icon${authorPublicationYear}`?"0":"1rem"
                   </div>
               <div>{selectedAuthor.authorLifeWorkKeywords[0] && selectedAuthor.authorLifeWorkKeywords.map((tag)=>{return <p className="tag AuthorLink" style={{display:"inline-block", border:"1.5px solid var(--paper)", margin:"0 0.5rem 0.5rem 0", padding:"0.2rem 0.3rem"}}>{tag}</p>})}</div>
             </div>
-          }
+              }
 
-        </div>
+            </div>
       }
 
     </div>}

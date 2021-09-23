@@ -10,6 +10,7 @@ import ArrowLeftRoundedIcon from '@material-ui/icons/ArrowLeftRounded';
 import ArrowRightRoundedIcon from '@material-ui/icons/ArrowRightRounded';
 
 
+
 const Access =({xs,s,m,l,xl,googleScriptLoaded, languageSetting, setLanguageSetting})=>{
 
   const [slideOut, setSlideOut] = useState(false)
@@ -428,7 +429,7 @@ const Access =({xs,s,m,l,xl,googleScriptLoaded, languageSetting, setLanguageSett
                 {
                   zIndex: "10",
                   position: "absolute",
-                  top: columnFocus === "shelfpanel"?"7rem":columnFocus === "detailspanel" ? "10rem" : "-100vh",
+                  top: columnFocus === "shelfpanel"?"7rem":columnFocus === "detailspanel" && authorView === false ? "10rem" : "-100vh",
                   height:"4rem",
                   width: "100vw",
                   justifyContent: "center"

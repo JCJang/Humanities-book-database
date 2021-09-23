@@ -1,9 +1,19 @@
 //icons
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 import LaunchRoundedIcon from '@material-ui/icons/LaunchRounded';
-import ArrowForwardRoundedIcon from '@material-ui/icons/ArrowForwardRounded';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
 import {useState,useEffect} from 'react'
+import createSvgIcon from "@material-ui/icons/utils/createSvgIcon";
+import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
+
+
+const ArrowForwardCircleIcon = createSvgIcon(
+  <>
+  <rect x="0" y="0" width="24" height="24" fill="none" stroke="none" />
+  <path d="M11.999 1.993c-5.514.001-10 4.487-10 10.001s4.486 10 10.001 10c5.513 0 9.999-4.486 10-10c0-5.514-4.486-10-10.001-10.001zM12 19.994c-4.412 0-8.001-3.589-8.001-8s3.589-8 8-8.001C16.411 3.994 20 7.583 20 11.994c-.001 4.411-3.59 8-8 8z" fill="currentColor"/>
+  <path d="M12 10.994H8v2h4V16l4.005-4.005L12 7.991z" fill="currentColor"/>
+  </>
+);
+
 const OpenedShelf = ({xs,s,m,l,xl,selectedShelf, selectedBook, setSelectedBook, setBookIdentifier, setAuthorFocus, slideOut, setSlideOut, bookNumber, setDisplayEarliestPublicationYear, setColumnFocus,setAuthorView, authorView, setAuthorToGet, setDisplayBookTitle,columnFocus,setIsbnOrId}) => {
 
   const [googleId, setGoogleId] = useState("")
@@ -193,7 +203,7 @@ const getAndSet = async(highlights) =>{
         </div>
     <div className="noScrollBar" style={{height:"70vh",overflowY:"auto", marginTop:"1rem"}}>
       {selectedShelf.shelfBooks.map((book)=>{
-        return <div className="transition" key={book.googleId} onClick={()=>{setNewBook(book)}}
+        return <div className="transition" key={book.googleId} onClick={()=>{setNewBook(book); setSlideOut(false)}}
          style = {
              {
                cursor: book.googleId === googleId ? "" : "pointer",
@@ -250,9 +260,9 @@ const getAndSet = async(highlights) =>{
       </div>
 
       <div className="Column" style={{flex:"1 1"}}>
-        <span className="btn lightbtn" onClick={()=>{setNewPreview()}} style={{width:"6rem", display:"flex",justifyContent:"center",alignItems:"center",marginTop:"1rem"}}><span  style={{width:"85%"}}>Preview</span><ArrowForwardRoundedIcon/></span>
+        <span className="btn lightbtn" onClick={()=>{setNewPreview()}} style={{width:"6rem", display:"flex",justifyContent:"center",alignItems:"center",marginTop:"1rem"}}><span  style={{width:"85%"}}>Preview</span><ArrowForwardCircleIcon/></span>
         {selectedBook.bookAuthor && selectedBook.bookAuthor.map((author) => {
-          return <span className="btn lightbtn" onClick={()=>{setNewAuthor(author);setAuthorFocus("init")}} style={{width:"6rem", marginTop:"1rem",display:"flex",justifyContent:"center",alignItems:"center"}}><p style={{width:"85%"}}>{`About ${author}`}</p><ArrowForwardRoundedIcon/></span>
+          return <span className="btn lightbtn" onClick={()=>{setNewAuthor(author);setAuthorFocus("init")}} style={{width:"6rem", marginTop:"1rem",display:"flex",justifyContent:"center",alignItems:"center"}}><p style={{width:"85%"}}>{`About ${author}`}</p><ArrowForwardCircleIcon/></span>
         })}
         <span className="btn" style={{width:"10rem",color:"var(--shelfpanellistpressedborder)",position:"relative"}}
        onClick={()=>{setShowKeywords(!showKeywords)}}><span style={{bottom:"0.5rem", position:"absolute"}}>{showKeywords?"Hide Keywords":"Show Keywords"}</span></span>
@@ -313,7 +323,7 @@ const getAndSet = async(highlights) =>{
     <h5 className={l?"tabshelf tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.8", cursor:columnFocus!=="shelfpanel"?"pointer":"",display:l?"":columnFocus==="shelfpanel"?"none":"flex",alignItems:"center",justifyContent:"space-between",padding:l?"":m?"2rem":"1.6rem"}} onClick={()=>{if(l && columnFocus==="init"){return;}else{setColumnFocus("shelfpanel")}}}>
     {selectedBook.bookTitle? selectedBook.bookTitle.slice(0,45):"Book Title"}
     {columnFocus!=="shelfpanel" &&  <span className="subtitle2" style={{display:"flex",textTransform: "none"
-,position:l?"absolute":"relative", left:l?"1rem":"", bottom:l?"0":""}}><p>expand</p><AddCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem",marginLeft:!l&&"0.5rem",marginTop:l&&"0.5rem"}}/></span>}
+,position:l?"absolute":"relative", left:l?"1rem":"", bottom:l?"0":""}}><p>expand</p><AddCircleOutlineOutlinedIcon style={{alignSelf:"center",width:"1rem",height:"1rem",marginLeft:!l&&"0.5rem",marginTop:l&&"0.5rem"}}/></span>}
     </h5>
   </div>
 

@@ -1,5 +1,5 @@
 import {useState,useEffect} from 'react'
-import AddCircleIcon from '@material-ui/icons/AddCircle'
+import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 
 const SearchForm = ({xs,s,m,l,xl,allShelves, columnFocus, setColumnFocus, setLanguageSetting, languageSetting, shelfId, setShelfId,selectedShelf,setSelectedShelf, setBookNumber}) => {
   const [shelfQuery, setShelfQuery] =  useState('')
@@ -68,10 +68,10 @@ margin:"1rem 0 0 0", padding:"0.6rem 1rem"}}>
     {columnFocus!=="init" && l?
     columnFocus==="shelfpanel" &&
     <span className="subtitle2" style={{display:"flex",textTransform: "none"
-,position:l?"absolute":"relative", left:l?"1rem":"", bottom:l?"0":""}}><p>expand</p><AddCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem",marginLeft:!l&&"0.5rem",marginTop:l&&"0.5rem"}}/></span>
+,position:l?"absolute":"relative", left:l?"1rem":"", bottom:l?"0":""}}><p>expand</p><AddCircleOutlineOutlinedIcon style={{alignSelf:"center",width:"1rem",height:"1rem",marginLeft:!l&&"0.5rem",marginTop:l&&"0.5rem"}}/></span>
     :
     <span className="subtitle2" style={{display:"flex",textTransform: "none"
-,position:l?"absolute":"relative", left:l?"1rem":"", bottom:l?"0":""}}><p>expand</p><AddCircleIcon style={{alignSelf:"center",width:"1rem",height:"1rem",marginLeft:!l&&"0.5rem",marginTop:l&&"0.5rem"}}/></span>
+,position:l?"absolute":"relative", left:l?"1rem":"", bottom:l?"0":""}}><p>expand</p><AddCircleOutlineOutlinedIcon style={{alignSelf:"center",width:"1rem",height:"1rem",marginLeft:!l&&"0.5rem",marginTop:l&&"0.5rem"}}/></span>
 
     }
     </h5>

@@ -583,6 +583,23 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f6f0', end
   box-shadow: var(--heavyshadow);
 }
 
+
+.authorNav{
+  display:flex;
+  flex-direction: column;
+  border: none;
+  align-self: center;
+  cursor: pointer;
+  letter-spacing: 0.078rem;
+  text-decoration: none;
+  font: var(--main-caption);
+  align-items:center;
+  justify-content: center;
+  margin:0.2rem;
+  box-shadow: var(--heavyshadow);
+}
+
+
 .mirror{
   transform:rotate(180deg);
   transform-origin:center center;
