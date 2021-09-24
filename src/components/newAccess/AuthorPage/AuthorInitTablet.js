@@ -183,15 +183,16 @@ const filterAroundPublicationDate = (arr)=>{
 
     <>
     <h4 className="h4-details" style={{margin:"2rem 0 1rem 0"}} id="authorTitle">
-    Historical Timeline
+    Historical Timeline of {selectedAuthor.timelineLinks[1].slice(11)}
     </h4>
 
   <div className="Column">
 
+      {m?
+        <>
            {fullTimelines[0] &&
               <div>
-              {fullTimelines[0][0] && m?
-                filterAroundLifeTime(getKeyValueArr(fullTimelines[0][0].details)).map((keyValue)=>{
+              {fullTimelines[0][0] &&  filterAroundLifeTime(getKeyValueArr(fullTimelines[0][0].details)).map((keyValue)=>{
                     return <div key={keyValue[1]} style={{paddingTop:"2rem", display:"grid", gridTemplateColumns:"10rem auto", gridRowGap:"1rem",
                       width:"100%",paddingLeft:keyValue[1]===`icon${authorPublicationYear}`?"0":"1rem"}}>
 
@@ -213,32 +214,44 @@ const filterAroundPublicationDate = (arr)=>{
 
                           </div>
                         })
-                        :
-                  filterAroundLifeTime(getKeyValueArr(fullTimelines[0][0].details)).map((keyValue)=>{
-                      return <div key={keyValue[1]} style={{paddingTop:"2rem", display:"grid", gridTemplateColumns:"10rem auto", gridRowGap:"1rem",
-                        width:"100%",paddingLeft:keyValue[1]===`icon${authorPublicationYear}`?"0":"1rem"}}>
-
-                          <div style={{lineHeight:"2.5",marginTop:"1rem", display:"inline",fontWeight:"bold",opacity:authorAgeHover===keyValue[1]?"1":"0.7", margin:keyValue[1]===`icon${authorPublicationYear}`&&"2rem 0"}} className={keyValue[1]===`icon${authorPublicationYear}`?"transition subtitle1-details":"subtitle2-details transition"}
-
-                          onMouseEnter={() => setAuthorAgeHover(keyValue[1])}
-                          onMouseLeave={() => setAuthorAgeHover(false)}>
-
-                            {keyValue[1]===`icon${authorPublicationYear}`?keyValue[0]:keyValue[1]}
-                          <div style={{position:"relative",opacity:authorAgeHover===keyValue[1]?"1":"0"}} className="transition subtitle1-details">{keyValue[0]-authorBirthYear} years old</div>
-
-                          </div>
-
-                          <div style={{lineHeight:"2.5",letterSpacing: "0.05rem", marginTop:"1rem",display:"block",margin:keyValue[1]===`icon${authorPublicationYear}`&&"2rem 0"}} className={keyValue[1]===`icon${authorPublicationYear}`?"subtitle1-details":"body1-details"}>
-
-                          {keyValue[2].split(/(?<!([A-Z]|Inc|St|\sv))\.\s(?=[A-Z])/).filter((event)=>{return event}).map((event)=>{return <div style={{marginBottom:"1rem",opacity:authorAgeHover===keyValue[1]?"1":"0.7"}} className="transition">- {event}{/\.$/.test(event)?"":"."}</div>})}
-
-                          </div>
-
-                          </div>
-                          })
-                      }
-                        </div>
+                  }
+              </div>
           }
+          </>
+          :
+          <>
+          {fullTimelines[0] &&
+             <div>
+             {fullTimelines[0][0] &&  filterAroundLifeTime(getKeyValueArr(fullTimelines[0][0].details)).map((keyValue)=>{
+                      return  <div key={keyValue[1]} className="Column" style={{paddingTop:"0.5rem", width:"100%"}}>
+
+                          <div className="Column" onMouseEnter={() => setAuthorAgeHover(keyValue[1])}
+                          onMouseLeave={() => setAuthorAgeHover(false)}>
+                                <div style={{lineHeight:"2",marginTop:"1rem", display:"inline",fontWeight:"bold",opacity:authorAgeHover===keyValue[1]?"1":"0.8"}} className="subtitle1-details Row transition">
+
+                                      {keyValue[1]===`icon${authorPublicationYear}`?keyValue[0]:keyValue[1]}  <p style={{display:"inline", position:"relative",opacity:authorAgeHover===keyValue[1]?"1":"0"}} className="transition subtitle1-details">- {keyValue[0]-authorBirthYear} years old
+                                      </p>
+
+                                </div>
+
+                                <div style={{lineHeight:"2",letterSpacing: "0.05rem", marginTop:"0.5rem",display:"block"}} className={keyValue[1]===`icon${authorPublicationYear}`?"subtitle1-details":"body1-details"}>
+
+                                      {keyValue[2].split(/(?<!([A-Z]|Inc|St|\sv))\.\s(?=[A-Z])/).filter((event)=>{return event}).map((event)=>{
+                                        return  <div  style={{paddingLeft:"2rem", marginBottom:"0.5rem",opacity:authorAgeHover===keyValue[1]?"1":"0.8"}} className="transition">
+                                         {event}{/\.$/.test(event)?"":"."}
+                                         </div>})}
+
+                                </div>
+                        </div>
+                      </div>
+                  })
+        }
+        </div>
+
+        }
+        </>
+      }
+
       </div>
 
     <div style={{display:"flex",alignItems:"center", justifyContent:"center",marginTop:"1rem"}}>
