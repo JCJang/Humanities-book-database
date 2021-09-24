@@ -150,14 +150,14 @@ const filterAroundPublicationDate = (arr)=>{
         justifyContent: "center"
       }
     } >
-      <div className="authorNav" style={{height:"4rem", width:"4rem",color:"var(--paper)"}} onClick={()=>{setAuthorNavFocus("bg")}}><ChevronLeftOutlinedIcon/>Prev</div>
+      <div className="authorNav" style={{height:"4rem", width:"4rem",color:"var(--paper)",cursor:authorFocus==="init" && "pointer"}} onClick={()=>{setAuthorNavFocus("bg")}}><ChevronLeftOutlinedIcon/>Prev</div>
 
       <div className="Column">
       <div>{authorNavLinks.map((link)=>{if(link===authorNavFocus){return <CircleIcon/>}else{return <CircleOutlinedIcon/>}})}</div>
       <div className="overline-details">LEARN MORE</div>
       </div>
 
-      <div className="authorNav" style={{height:"4rem", width:"4rem",color:"var(--paper)"}} onClick={()=>{setAuthorNavFocus("bio")}}><ChevronRightOutlinedIcon/>Next</div>
+      <div className="authorNav" style={{height:"4rem", width:"4rem",color:"var(--paper)",cursor:authorFocus==="init" && "pointer"}} onClick={()=>{setAuthorNavFocus("bio")}}><ChevronRightOutlinedIcon/>Next</div>
       </div>
     }
 
@@ -176,7 +176,7 @@ const filterAroundPublicationDate = (arr)=>{
       {authorFocus==="init" &&  <div  style={{flex:"4 4"}}>
            <div  style={{maxHeight:"2rem"}}>
            {fullTimelines[0] &&
-              <div className="gradient">
+              <div className="gradient" onClick={()=>{setAuthorFocus("bg")}} style={{cursor:authorFocus==="init" && "pointer"}}>
                   {fullTimelines[0][0] && filterAroundPublicationDate(getKeyValueArr(fullTimelines[0][0].details)).map((keyValue)=>{
                       return <div key={keyValue[1]} style={{display:"grid", gridTemplateColumns:"10rem auto", gridRowGap:"1rem",
                       width:expandFurtherReading?"30rem":"40rem",paddingLeft:keyValue[1]===`icon${authorPublicationYear}`?"0":"1rem"}}>
@@ -193,8 +193,8 @@ const filterAroundPublicationDate = (arr)=>{
 
       {authorFocus==="init" &&
       <>
-        <h5  className="h5-details" style={{textShadow:"0 0 7px var(--ink)"}}>Historical Background</h5>
-        <h6  className="subtitle1-details" style={{textShadow:"0 0 7px var(--ink)"}}>{selectedAuthor.timelineLinks?selectedAuthor.timelineLinks.map((timeline)=>{return timeline.slice(11)}):"Not Available for this Author"}</h6></>}
+        <h5 onClick={()=>{setAuthorFocus("bg")}} className="h5-details" style={{textShadow:"0 0 7px var(--ink)",cursor:authorFocus==="init" && "pointer"}}>Historical Background</h5>
+        <h6 onClick={()=>{setAuthorFocus("bg")}} className="subtitle1-details" style={{textShadow:"0 0 7px var(--ink)",cursor:authorFocus==="init" && "pointer"}}>{selectedAuthor.timelineLinks?selectedAuthor.timelineLinks.map((timeline)=>{return timeline.slice(11)}):"Not Available for this Author"}</h6></>}
 
 
     {authorFocus==="bg" &&  <div  style={{flex:"4 4"}}>
@@ -253,13 +253,13 @@ const filterAroundPublicationDate = (arr)=>{
     {authorFocus!=="bg" &&
       <div className="Column" style={{flex:"1 1 30%",position:authorFocus==="init"?"absolute":"relative",justifyContent:"center",alignItems:"center",marginTop:"1rem",right:expandFurtherReading?"0":authorFocus==="init"?"10rem":"0", marginLeft:"3rem"}}>
 
-        {authorFocus!=="bg" && <div className={authorFocus==="bio"?"upwardsGradient":""} style={{flex:"4 4"}}><img  style={{maxHeight:authorFocus==="init"?"18rem":expandFurtherReading?"13rem":"18rem", width:"auto",boxShadow:"var(--heavyshadow)"}} src={selectedAuthor.authorWikiImage}></img></div>
+        {authorFocus!=="bg" && <div onClick={()=>{setAuthorFocus("bio")}} className={authorFocus==="bio"?"upwardsGradient":""} style={{flex:"4 4",cursor:authorFocus==="init" && "pointer"}}><img  style={{maxHeight:authorFocus==="init"?"18rem":expandFurtherReading?"13rem":"18rem", width:"auto",boxShadow:"var(--heavyshadow)"}} src={selectedAuthor.authorWikiImage}></img></div>
       }
 
         {authorFocus==="init" &&
         <>
-        <h5  style={{flex:"1 1",textShadow:"0 0 7px var(--ink)"}} className="h5-details">{selectedAuthor.authorWikiTitle}</h5>
-        <h6  style={{flex:"1 1",textShadow:"0 0 7px var(--ink)"}} className="subtitle1-details">{`${getYear(selectedAuthor.authorBirthDate)} - ${getYear(selectedAuthor.authorDeathDate)}`}</h6></>}
+        <h5 onClick={()=>{setAuthorFocus("bio")}} style={{flex:"1 1",textShadow:"0 0 7px var(--ink)",cursor:authorFocus==="init" && "pointer"}} className="h5-details">{selectedAuthor.authorWikiTitle}</h5>
+        <h6 onClick={()=>{setAuthorFocus("bio")}} style={{flex:"1 1",textShadow:"0 0 7px var(--ink)",cursor:authorFocus==="init" && "pointer"}} className="subtitle1-details">{`${getYear(selectedAuthor.authorBirthDate)} - ${getYear(selectedAuthor.authorDeathDate)}`}</h6></>}
 
 
         {authorFocus==="bio" &&
