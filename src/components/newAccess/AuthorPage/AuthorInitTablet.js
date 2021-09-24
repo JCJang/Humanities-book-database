@@ -18,7 +18,7 @@ const CircleOutlinedIcon = createSvgIcon(
   <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="1" fill="none"/>
 );
 
-const AuthorInit = ({xs, s, m, l, xl, expandFurtherReading, selectedAuthor, authorFocus, setAuthorFocus, languageSetting, authorBookTitle, authorPublicationYear}) => {
+const AuthorInitTablet = ({xs, s, m, l, xl, expandFurtherReading, selectedAuthor, authorFocus, setAuthorFocus, languageSetting, authorBookTitle, authorPublicationYear}) => {
 
 const [fullTimelines, setFullTimelines] = useState([])
 const [authorBirthYear, setAuthorBirthYear] = useState([])
@@ -115,18 +115,16 @@ const filterAroundPublicationDate = (arr)=>{
 }
 
   return (
-    <div className="noScrollBar OpenedAuthor" style={{ overflowY:authorFocus==='init'?'':'auto',maxWidth:"100%", height:"var(--authorheight)"}}>
+    <div className="noScrollBar OpenedAuthor" style={{ overflowY:authorFocus==='init'?'':'auto',maxWidth:"100%", height:"var(--authorheightwnav)"}}>
 
       < div id = "shelfNav"
     className = "Row transition"
-    style = {
-      {
+    style = {{
         height:"4rem",
         width: "100vw",
         justifyContent: "center",
         alignItems: "center"
-      }
-    } >
+      }} >
       <div className="authorNav" style={{height:"4rem", width:"4rem",color:"var(--paper)"}} onClick={()=>{setAuthorNavFocus("bg")}}><ChevronLeftOutlinedIcon/>Prev</div>
 
       <div className="Column" style={{justifyContent:"center",alignItems:"center"}}>
@@ -135,16 +133,15 @@ const filterAroundPublicationDate = (arr)=>{
       </div>
 
       <div className="authorNav" style={{height:"4rem", width:"4rem",color:"var(--paper)"}} onClick={()=>{setAuthorNavFocus("bio")}}><ChevronRightOutlinedIcon/>Next</div>
-      
+
       </div>
 
 
   {authorFocus==="init" &&
 
     <>
-    <div className="Column" className="transition"  style={{flex:"1 1 70%", position:l?"":"absolute", left:getPosition("bg"), width:"100%", padding:l?"":m?"0 3rem":"0 2rem"}}>
-      <div style={{flex:"4 4"}}>
-           <div  style={{maxHeight:"2rem"}}>
+    <div className="Column transition"  style={{flex:"1 1 70%", position:l?"":"absolute", left:getPosition("bg"), width:"100%", padding:l?"":m?"0 3rem":"0 2rem", height:"var(--authorheightwonav)"}}>
+      <div>
            {fullTimelines[0] &&
               <div className="gradient">
                   {fullTimelines[0][0] && filterAroundPublicationDate(getKeyValueArr(fullTimelines[0][0].details)).map((keyValue)=>{
@@ -156,19 +153,21 @@ const filterAroundPublicationDate = (arr)=>{
                       </div>
                       })}</div>
             }
-          </div>
         </div>
-      <h5  className="h5-details" style={{textShadow:"0 0 7px var(--ink)"}}>Historical Background</h5>
-      <h6  className="subtitle1-details" style={{textShadow:"0 0 7px var(--ink)"}}>{selectedAuthor.timelineLinks?selectedAuthor.timelineLinks.map((timeline)=>{return timeline.slice(11)}):"Not Available for this Author"}</h6>
+        <div style={{position:"absolute",bottom:m?"3rem":"2rem"}}>
+        <h5  className="h5-details" style={{textShadow:"0 0 7px var(--ink)"}}>Historical Background</h5>
+        <h6  className="subtitle1-details" style={{textShadow:"0 0 7px var(--ink)"}}>{selectedAuthor.timelineLinks?selectedAuthor.timelineLinks.map((timeline)=>{return timeline.slice(11)}):"Not Available for this Author"}</h6>
+        </div>
       </div>
 
-      <div className="Column" className="transition"  style={{flex:"1 1 70%", position:l?"":"absolute", left:getPosition("bio"), width:"100%", padding:l?"":m?"0 3rem":"0 2rem"}}>
-      <div style={{flex:"4 4"}}>
-      <img  style={{maxHeight:"18rem", width:"auto",boxShadow:"var(--heavyshadow)"}} src={selectedAuthor.authorWikiImage}></img>
+      <div className="Column transition"  style={{flex:"1 1 70%", position:l?"":authorNavFocus!=="bio" && "absolute", left:getPosition("bio"), width:"100%", padding:l?"":m?"0 3rem":"0 2rem", height:"var(--authorheightwonav)"}}>
+      <div className="gradientImg">
+      <img style={{width:"auto",boxShadow:"var(--heavyshadow)",height:"var(--authorheightwonav)"}} src={selectedAuthor.authorWikiImage}></img>
       </div>
-
-      <h5  style={{flex:"1 1",textShadow:"0 0 7px var(--ink)"}} className="h5-details">{selectedAuthor.authorWikiTitle}</h5>
-      <h6  style={{flex:"1 1",textShadow:"0 0 7px var(--ink)"}} className="subtitle1-details">{`${getYear(selectedAuthor.authorBirthDate)} - ${getYear(selectedAuthor.authorDeathDate)}`}</h6></>}
+      <div style={{position:"absolute",bottom:m?"3rem":"2rem"}}>
+      <h5  style={{flex:"1 1",textShadow:"0 0 7px var(--ink)",marginTop:"2rem"}} className="h5-details">{selectedAuthor.authorWikiTitle}</h5>
+      <h6  style={{flex:"1 1",textShadow:"0 0 7px var(--ink)"}} className="subtitle1-details">{`${getYear(selectedAuthor.authorBirthDate)} - ${getYear(selectedAuthor.authorDeathDate)}`}</h6>
+      </div>
       </div>
 
       </>
@@ -232,11 +231,11 @@ const filterAroundPublicationDate = (arr)=>{
             <div className="body1-details" style={{ textAlign:"left", height:"auto"}}>
           {selectedAuthor.authorWikiExtract}
             </div>
-        </div>
+          </div>
 
-      <div style={{display:"flex",alignItems:"center", justifyContent:"center",marginTop:"1rem"}}>
+          <div style={{display:"flex",alignItems:"center", justifyContent:"center",marginTop:"1rem"}}>
         <a style={{textDecoration:"none",color:"var(--paper)",padding:"2rem"}} href="#authorTitle" className="btn">Back to Top</a>
-      </div>
+          </div>
       </div>
 
       <div className="Column">
@@ -269,7 +268,8 @@ const filterAroundPublicationDate = (arr)=>{
   </div>
 }
 
+</div>
 
-  }
+)}
 
-export default AuthorInit
+export default AuthorInitTablet

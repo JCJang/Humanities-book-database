@@ -1,5 +1,6 @@
 import AuthorNav from './AuthorPage/AuthorNav'
 import AuthorInit from './AuthorPage/AuthorInit'
+import AuthorInitTablet from './AuthorPage/AuthorInitTablet'
 import AuthorPanel from './AuthorPage/AuthorPanel'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import createSvgIcon from "@material-ui/icons/utils/createSvgIcon";

@@ -2,7 +2,7 @@ import {parseInfo} from 'infobox-parser'
 import wiki from 'wikijs'
 import {useEffect, useState} from 'react'
 import Axios from 'axios'
-import MultiSelect from "react-multi-select-component";
+import { MultiSelect } from "react-multi-select-component";
 
 const TranslationAuthorWiki = ({author, toAdd, stripLabels, shelfLanguage, bookId, shelfTranslatingInto, formToggleOn}) => {
 

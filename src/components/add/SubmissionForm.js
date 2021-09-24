@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import NewAuthorWiki from './NewAuthorWiki'
 import Axios from 'axios'
-import MultiSelect from "react-multi-select-component";
+import { MultiSelect } from "react-multi-select-component";
 
 
 const SubmissionForm = ({toAdd, stripLabels,onSearch, languageSetting, formToggleOn }) => {

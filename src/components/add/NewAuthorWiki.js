@@ -1,7 +1,7 @@
 import wiki from 'wikijs'
 import {useEffect, useState} from 'react'
 import Axios from 'axios'
-import MultiSelect from "react-multi-select-component"
+import { MultiSelect } from "react-multi-select-component"
 import useDebounce from '../customHooks/useDebounce.js'
 
 
