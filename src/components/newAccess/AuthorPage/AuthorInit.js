@@ -190,10 +190,6 @@ const filterAroundPublicationDate = (arr)=>{
         </div>
       }
 
-      {authorFocus!=="init" &&
-        <div style={{display:"flex",alignItems:"center", justifyContent:"center",marginTop:"1rem"}}>
-          <a style={{textDecoration:"none",color:"var(--paper)",padding:"2rem"}} href="#authorTitle" className="btn">Back to Top</a>
-            </div>}
 
       {authorFocus==="init" &&
       <>
@@ -247,6 +243,10 @@ const filterAroundPublicationDate = (arr)=>{
           </div>}
 
 
+    {authorFocus!=="init" &&
+          <div style={{display:"flex",alignItems:"center", justifyContent:"center",marginTop:"1rem"}}>
+              <a style={{textDecoration:"none",color:"var(--paper)",padding:"2rem"}} href="#authorTitle" className="btn">Back to Top</a>
+        </div>}
 
 </div>
 

@@ -7,7 +7,7 @@ const AuthorNav = ({xs, s, m, l, xl, selectedAuthor, setAuthorFocus, setColumnFo
 
   return (
     <div className={l?"Row":"Column"} style={{width:"100%"}}>
-    <div  className="Column" style={{order:l?"1":"2", height:"7rem",width:"100%", alignItems: "center", display:"flex",color:"var(--paper)", justifyContent:"center",backgroundColor:"var(--ink)",padding:"0 2rem"}}>
+    <div  className="Column" style={{order:l?"1":"2", height:l?"7rem":"5rem",width:"100%", alignItems: "center", display:"flex",color:"var(--paper)", justifyContent:"center",backgroundColor:"var(--ink)",padding:"0 2rem"}}>
       {l && <nav className="body2-details Row" style={{ height:"3.5rem", alignItems: "center", display:"flex",color:"var(--paper)", justifyContent:"center",backgroundColor:"var(--ink)"}}>
     <span  onClick={()=>{setAuthorFocus("bg")}} className="AuthorLink">
     Historical Background
@@ -17,15 +17,16 @@ const AuthorNav = ({xs, s, m, l, xl, selectedAuthor, setAuthorFocus, setColumnFo
     Author's Biography
     </span>
     </nav>}
-    {selectedAuthor && <div className="overline-details">{`${authorBookTitle} // By ${selectedAuthor.authorWikiTitle}`}</div>}
+    {selectedAuthor && <div className="overline-details" style={{marginTop:"1rem"}}>{`${authorBookTitle} // By ${selectedAuthor.authorWikiTitle}`}</div>}
       {!l && <div style={{width:"100vw",marginTop:"1rem",borderTop:"1px solid var(--paper)"}}></div>}
       {!l && <div style={{width:"100vw",margin:"0.5rem 0",borderTop:"1px solid var(--paper)"}}></div>}
   <div>
   </div>
   </div>
-  <div className="Column" style={{order:l?"2":"1",justifySelf:"flex-end",marginTop:"1rem"}}>
+  {l && <div className="Column" style={{order:l?"2":"1",justifySelf:"flex-end",marginTop:"1rem"}}>
   <span className="btn darkbtn" onClick={()=>{setColumnFocus("shelfpanel")}} style={{width:l?"6rem":"auto",alignSelf:l?"":"flex-start",alignItems:"center",marginTop:"1rem",marginLeft:l?"":m?"3rem":"", display:"flex",justifyContent:"center"}}><ArrowBackRoundedIcon/><span  style={{width:"85%", padding:"0 0.5rem"}}>Back to Shelf</span></span>
-  </div>
+  </div>}
+
   </div>
   )
 }

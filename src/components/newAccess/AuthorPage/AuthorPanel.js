@@ -184,14 +184,16 @@ const AuthorPanel = ({xs,s,m,l,xl, selectedAuthor, expandFurtherReading, setExpa
           backgroundColor: "var(--authorpanel)",
           boxShadow: expandFurtherReading ? "var(--heavyshadow) inset" : "",
           marginLeft: !l?"":expandFurtherReading ? "2rem" : "3rem",
+          marginTop: l?"":"2rem",
+          marginBottom:l? "":"1rem",
           maxWidth: !l?"100%":"20rem",
-          height: l?"var(--panelheight)":expandFurtherReading ? "30vh" : "4rem"
+          height: l?"var(--panelheight)":expandFurtherReading ? "var(--authorpanelopenheight)" : "4rem"
         }
       }>
 
-    <div className={l?"Column noScrollBar":"Row noScrollBar"} style={{overflowY:"auto", order:l?"":"2"}}>
+    <div className={l?"Column noScrollBar":m?"Row noScrollBar":"Column noScrollBar"} style={{overflowY:"auto", order:l?"":"2"}}>
 
-    <div style={{paddingLeft:"1rem",display:expandFurtherReading?"flex":"none", width:l?"":"50%", justifyContent:"center",padding:l?"0 2rem":""}}>
+    <div style={{paddingLeft:"1rem",display:expandFurtherReading?"flex":"none", width:l?"":m?"50%":"100vw", justifyContent:"center",padding:l?"0 2rem":""}}>
         {selectedAuthor.authorInfluences &&
           <div className="subtitle2">
           {authorInfluencesBooks[0] ?
@@ -203,7 +205,7 @@ const AuthorPanel = ({xs,s,m,l,xl, selectedAuthor, expandFurtherReading, setExpa
                 No entries of authors that Influenced {selectedAuthor.authorWikiTitle}
                 </div>
             }
-          <div className="Column">
+            <div className="Column" style={{width:l?"":m?"50%":"80vw"}}>
 
           {authorInfluencesBooks[0] &&
 
@@ -242,7 +244,7 @@ const AuthorPanel = ({xs,s,m,l,xl, selectedAuthor, expandFurtherReading, setExpa
       }
     </div>
 
-    <div style={{paddingLeft:"1rem", display:expandFurtherReading?"flex":"none", width:l?"":"50%",justifyContent:"center",padding:l?"0 2rem":""}}>
+    <div style={{paddingLeft:"1rem", display:expandFurtherReading?"flex":"none", width:l?"":m?"50%":"100vw",justifyContent:"center",padding:l?"0 2rem":""}}>
         {selectedAuthor.authorInfluenced &&
           <div className="subtitle2">
           {authorInfluencedBooks[0] ?
@@ -254,7 +256,7 @@ const AuthorPanel = ({xs,s,m,l,xl, selectedAuthor, expandFurtherReading, setExpa
                 No entries of authors Influenced by {selectedAuthor.authorWikiTitle}
                 </div>
           }
-              <div className="Column">
+              <div className="Column" style={{width:l?"":m?"50%":"80vw"}}>
 
               {authorInfluencedBooks[0] &&
 
