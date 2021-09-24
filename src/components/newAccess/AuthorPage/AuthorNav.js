@@ -6,7 +6,7 @@ const AuthorNav = ({xs, s, m, l, xl, selectedAuthor, setAuthorFocus, setColumnFo
 
 
   return (
-    <div className={l?"Row":"Column"} style={{width:"100%"}}>
+    <div className={l?"Row":"Column"} style={{width:"100%", boxShadow:!m && "var(--heavyshadow)"}}>
     <div  className="Column" style={{order:l?"1":"2", height:l?"7rem":"5rem",width:"100%", alignItems: "center", display:"flex",color:"var(--paper)", justifyContent:"center",backgroundColor:"var(--ink)",padding:"0 2rem"}}>
       {l && <nav className="body2-details Row" style={{ height:"3.5rem", alignItems: "center", display:"flex",color:"var(--paper)", justifyContent:"center",backgroundColor:"var(--ink)"}}>
     <span  onClick={()=>{setAuthorFocus("bg")}} className="AuthorLink">

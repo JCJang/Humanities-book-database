@@ -193,7 +193,7 @@ const AuthorPanel = ({xs,s,m,l,xl, selectedAuthor, expandFurtherReading, setExpa
 
     <div className={l?"Column noScrollBar":m?"Row noScrollBar":"Column noScrollBar"} style={{overflowY:"auto", order:l?"":"2"}}>
 
-    <div style={{paddingLeft:"1rem",display:expandFurtherReading?"flex":"none", width:l?"":m?"50%":"100vw", justifyContent:"center",padding:l?"0 2rem":""}}>
+    <div style={{paddingLeft:l && "1rem",display:expandFurtherReading?"flex":"none", width:l?"":m?"50%":"100vw", justifyContent:"center",padding:l?"0 2rem":""}}>
         {selectedAuthor.authorInfluences &&
           <div className="subtitle2">
           {authorInfluencesBooks[0] ?
@@ -205,7 +205,7 @@ const AuthorPanel = ({xs,s,m,l,xl, selectedAuthor, expandFurtherReading, setExpa
                 No entries of authors that Influenced {selectedAuthor.authorWikiTitle}
                 </div>
             }
-            <div className="Column" style={{width:l?"":m?"50%":"80vw"}}>
+            <div className="Column" style={{width:l?"14rem":m?"40vw":"80vw"}}>
 
           {authorInfluencesBooks[0] &&
 
@@ -244,7 +244,7 @@ const AuthorPanel = ({xs,s,m,l,xl, selectedAuthor, expandFurtherReading, setExpa
       }
     </div>
 
-    <div style={{paddingLeft:"1rem", display:expandFurtherReading?"flex":"none", width:l?"":m?"50%":"100vw",justifyContent:"center",padding:l?"0 2rem":""}}>
+    <div style={{paddingLeft:l && "1rem", display:expandFurtherReading?"flex":"none", width:l?"":m?"50%":"100vw",justifyContent:"center",padding:l?"0 2rem":""}}>
         {selectedAuthor.authorInfluenced &&
           <div className="subtitle2">
           {authorInfluencedBooks[0] ?
@@ -256,7 +256,7 @@ const AuthorPanel = ({xs,s,m,l,xl, selectedAuthor, expandFurtherReading, setExpa
                 No entries of authors Influenced by {selectedAuthor.authorWikiTitle}
                 </div>
           }
-              <div className="Column" style={{width:l?"":m?"50%":"80vw"}}>
+              <div className="Column" style={{width:l?"14rem":m?"40vw":"80vw"}}>
 
               {authorInfluencedBooks[0] &&
 

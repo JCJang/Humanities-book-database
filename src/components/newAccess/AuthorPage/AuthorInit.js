@@ -163,7 +163,7 @@ const filterAroundPublicationDate = (arr)=>{
 
 <div className="Row" style={{alignItems:"center"}}>
 
-      <h4 className="h4-details" style={{margin:"2rem 0 1rem 0",display:"inlineBlock"}} id="authorTitle">{authorFocus==='init'?"Learn More":authorFocus==='bg'?"Historical Timeline":selectedAuthor.authorWikiTitle}</h4>
+      <h4 className="h4-details" style={{margin:"2rem 0 1rem 0",display:"inlineBlock"}} id="authorTitle">{authorFocus==='init'?"Learn More":authorFocus==='bg'?`Historical Timeline ${selectedAuthor.timelineLinks[0].slice(9)}`:selectedAuthor.authorWikiTitle}</h4>
 
       {authorFocus==='bio' && <span  className="subtitle1-details" style={{margin:"2rem 1rem 1rem 1rem", display:"inlineBlock"}}>{`${getYear(selectedAuthor.authorBirthDate)} - ${getYear(selectedAuthor.authorDeathDate)}`}</span>}
 </div>
@@ -179,7 +179,7 @@ const filterAroundPublicationDate = (arr)=>{
               <div className="gradient">
                   {fullTimelines[0][0] && filterAroundPublicationDate(getKeyValueArr(fullTimelines[0][0].details)).map((keyValue)=>{
                       return <div key={keyValue[1]} style={{display:"grid", gridTemplateColumns:"10rem auto", gridRowGap:"1rem",
-                      width:"40rem",paddingLeft:keyValue[1]===`icon${authorPublicationYear}`?"0":"1rem"}}>
+                      width:expandFurtherReading?"30rem":"40rem",paddingLeft:keyValue[1]===`icon${authorPublicationYear}`?"0":"1rem"}}>
                       <div style={{marginTop:"0.5rem",display:"inline",fontWeight:"bold", margin:keyValue[1]===`icon${authorPublicationYear}`&&"2rem 0"}} className={keyValue[1]===`icon${authorPublicationYear}`?"subtitle1-details":"subtitle2-details"}>
                       {keyValue[1]===`icon${authorPublicationYear}`?keyValue[0]:keyValue[1]}</div>
                       <div style={{marginTop:"0.5rem",display:"inline",margin:keyValue[1]===`icon${authorPublicationYear}`&&"2rem   0"}} className={keyValue[1]===`icon${authorPublicationYear}`?"subtitle1-details":"body2-details"}>  {keyValue[2]}</div>

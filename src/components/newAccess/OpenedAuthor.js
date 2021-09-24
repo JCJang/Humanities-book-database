@@ -41,8 +41,26 @@ const h5tabstyle = () => {
   }
 }
 
+const openedAuthorHeight = () =>{
+  if(l){
+    return "var(--panelheight)"
+  }else if(m){
+    if(columnFocus!=="detailspanel"){
+      return "4rem"
+    }else{
+      return "var(--focusedpaneltablet)"
+    }
+  }else if(!m){
+    if(columnFocus!=="detailspanel"){
+      return "3rem"
+    }else{
+      return "var(--focusedpanelmobile)"
+    }
+  }
+}
+
   return (
-    <div className={l?"Row":"Column"} style={{color:"var(--paper)",backgroundColor:"var(--ink)",height:l?"var(--panelheight)":columnFocus!=="detailspanel"?"4rem":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)",overflow:"hidden",position:"relative"}}>
+    <div className={l?"Row":"Column"} style={{color:"var(--paper)",backgroundColor:"var(--ink)",height:openedAuthorHeight(),overflow:"hidden",position:"relative"}}>
 
   <div className="Column" style={{maxWidth:"100%", position:columnFocus==="detailspanel"?"relative":"absolute", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem"}}>
   <AuthorPanel xs={xs} s={s} m={m} l={l} xl={xl} expandFurtherReading={expandFurtherReading} setExpandFurtherReading={setExpandFurtherReading} selectedAuthor={selectedAuthor} languageSetting={languageSetting} setShelfId={setShelfId} setBookNumber={setBookNumber} setColumnFocus={setColumnFocus}/>
@@ -61,7 +79,7 @@ const h5tabstyle = () => {
 
     <h5 className={l?"tabauthor tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style = {h5tabstyle()} onClick={()=>{if(l && columnFocus==="init"){return;}else{setColumnFocus("detailspanel")}}}>
 
-    {selectedAuthor.authorWikiTitle?selectedAuthor.authorWikiTitle.slice(0,45):"Author Details"}
+    {selectedAuthor.authorWikiTitle && l?selectedAuthor.authorWikiTitle.slice(0,45):selectedAuthor.authorWikiTitle?`Back to: ${selectedAuthor.authorWikiTitle.slice(0,12)}...`:"Author Details"}
 
     {columnFocus!=="detailspanel"&&
     <span className="subtitle2" style={{display:"flex",textTransform: "none"

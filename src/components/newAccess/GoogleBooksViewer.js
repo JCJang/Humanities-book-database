@@ -83,9 +83,9 @@ const ArrowBackCircleIcon = createSvgIcon(
 
 
          return (
-           <div style={{zIndex:"3",background:"var(--detailspanel)", position:"relative",color:"var(--detailspaneltext)",display:"flex",height:l?"var(--panelheight)":columnFocus!=="detailspanel"?"4rem":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)", paddingTop:!m && "5rem"}}>
+           <div style={{zIndex:"3",background:"var(--detailspanel)", position:"relative",color:"var(--detailspaneltext)",display:"flex",height:l?"var(--panelheight)":columnFocus!=="detailspanel"?"4rem":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)"}}>
 
-            <div className={l?"Row":"Column"} style={{flex:"1",position:columnFocus!=="detailspanel"?"absolute":authorView?"absolute":"relative",margin:l?"2rem 0 2rem 2rem":"",border:l?"1px solid var(--paper)":"none",visibility:columnFocus!=="detailspanel"?"hidden":authorView?"hidden":""}}>
+            <div className={l?"Row":"Column"} style={{flex:"1",position:columnFocus!=="detailspanel"?"absolute":authorView?"absolute":"relative",margin:l?"2rem 0 2rem 2rem":"",border:l?"1px solid var(--paper)":"none",visibility:columnFocus!=="detailspanel"?"hidden":authorView?"hidden":"",paddingTop:!m && "5rem"}}>
 
             <div  className="Column" style={{overflow:"hidden",width:!l?"100%":"", alignItems: "center", flex:"1", display:"flex",color:"var(--paper)", justifyContent:"center",backgroundColor:"var(--detailspanel)"}}>
 
@@ -112,12 +112,13 @@ const ArrowBackCircleIcon = createSvgIcon(
           </div>
 
               {l &&
-                 <span className="btn darkbtn" onClick={()=>{setColumnFocus("shelfpanel")}} style={{flex:"0 0 6rem",display:columnFocus!=="detailspanel"?"none":authorView?"none":"flex", width:"6rem",justifyContent:"center", alignSelf:"flex-start",alignItems:"center",marginTop:"2rem",marginLeft:"3rem"}}><ArrowBackCircleIcon/><span style={{width:"85%", padding:"0 0.5rem"}}>Back to Shelf</span></span>
+                 <span className="btn darkbtn" onClick={()=>{setColumnFocus("shelfpanel")}} style={{flex:"0 0 6rem",display:columnFocus!=="detailspanel"?"none":authorView?"none":"flex", width:"6rem",justifyContent:"center", alignSelf:"flex-start",alignItems:"center",marginTop:"2rem",marginLeft:"3rem"}}><ArrowBackCircleIcon/><span style={{width:"85%", padding:"0 0.5rem", paddingTop:!m && "5rem"}}>Back to Shelf</span></span>
               }
 
 
-              <h5 className={l?"tabbook tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{width:l?"4rem":"",opacity:"0.9",cursor:columnFocus==="shelfpanel"?"pointer":"",display:l?"":columnFocus==="detailspanel"?"none":"flex",alignItems:"center",justifyContent:"space-between",padding:l?"":m?"2rem":"1.5rem"}} onClick={()=>{if(l && columnFocus==="init"){return;}else{setColumnFocus("detailspanel")}}}>
-              {displayBookTitle? displayBookTitle.slice(0,45):"Book Details"}
+              <h5 className={l?"tabbook tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{width:l?"4rem":"100vw",opacity:"0.9",cursor:columnFocus==="shelfpanel"?"pointer":"",display:l?"":columnFocus==="detailspanel"?"none":"flex",alignItems:"center",justifyContent:"space-between",padding:l?"":m?"2rem":"1.6rem"}} onClick={()=>{if(l && columnFocus==="init"){return;}else{setColumnFocus("detailspanel")}}}>
+
+              {displayBookTitle && l? displayBookTitle.slice(0,45):displayBookTitle?`Back to: ${displayBookTitle.slice(0,12)}...`:"Book Details"}
 
               {columnFocus!=="detailspanel"&&
               <span className="subtitle2" style={{display:"flex",textTransform: "none"

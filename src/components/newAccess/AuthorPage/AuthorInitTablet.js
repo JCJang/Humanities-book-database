@@ -147,10 +147,10 @@ const filterAroundPublicationDate = (arr)=>{
     <div className="Column transition" onClick={()=>{setAuthorFocus("bg")}} style={{flex:"1 1 70%", position:"absolute", left:getPosition("bg"), width:"100%", padding:m?"0 3rem":"0 2rem", height:"var(--authorheightwonav)",alignItems:"center"}}>
       <div className="gradient">
            {fullTimelines[0] &&
-              <div>
+              <div className="Column" style={{alignItems:"center", justifyContent:"center"}}>
                   {fullTimelines[0][0] && filterAroundPublicationDate(getKeyValueArr(fullTimelines[0][0].details)).map((keyValue)=>{
                       return <div key={keyValue[1]} style={{display:"grid", gridTemplateColumns:"10rem auto", gridRowGap:"1rem",
-                      width:"100%",paddingLeft:keyValue[1]===`icon${authorPublicationYear}`?"0":"1rem"}}>
+                      width:"100%",paddingLeft:keyValue[1]===`icon${authorPublicationYear}`?"0":"1rem", alignItems:"center"}}>
                       <div style={{marginTop:"0.5rem",display:"inline",fontWeight:"bold", margin:keyValue[1]===`icon${authorPublicationYear}`&&"2rem 0"}} className={keyValue[1]===`icon${authorPublicationYear}`?"subtitle1-details":"subtitle2-details"}>
                       {keyValue[1]===`icon${authorPublicationYear}`?keyValue[0]:keyValue[1]}</div>
                       <div style={{marginTop:"0.5rem",display:"inline",margin:keyValue[1]===`icon${authorPublicationYear}`&&"2rem   0"}} className={keyValue[1]===`icon${authorPublicationYear}`?"subtitle1-details":"body2-details"}>  {keyValue[2]}</div>
@@ -158,7 +158,7 @@ const filterAroundPublicationDate = (arr)=>{
                       })}</div>
             }
         </div>
-        <div style={{position:"absolute",bottom:m?"3rem":"2rem"}}>
+        <div style={{position:"absolute",bottom:m?"3rem":"2rem",padding:m?"0 3rem":"0 2rem"}}>
         <h5  className="h5-details" style={{textShadow:"0 0 7px var(--ink)"}}>Historical Background</h5>
         <h6  className="subtitle1-details" style={{textShadow:"0 0 7px var(--ink)"}}>{selectedAuthor.timelineLinks?selectedAuthor.timelineLinks.map((timeline)=>{return timeline.slice(11)}):"Not Available for this Author"}</h6>
         </div>
@@ -166,9 +166,9 @@ const filterAroundPublicationDate = (arr)=>{
 
       <div className="Column transition" onClick={()=>{setAuthorFocus("bio")}} style={{flex:"1 1 70%", position:l?"":"absolute", left:getPosition("bio"), width:"100%", height:"var(--authorheightwonav)",alignItems:"center"}}>
       <div className="gradientBioNav">
-      <img style={{width:"100%",boxShadow:"var(--heavyshadow)",height:"auto"}} src={selectedAuthor.authorWikiImage}></img>
+      <img style={{width:"100vw",boxShadow:"var(--heavyshadow)",height:"auto"}} src={selectedAuthor.authorWikiImage}></img>
       </div>
-      <div style={{position:"absolute",bottom:m?"3rem":"2rem", padding:m?"3rem":"2rem"}}>
+      <div style={{position:"absolute",bottom:m?"3rem":"2rem", padding:m?"0 3rem":"0 2rem"}}>
       <h5  style={{flex:"1 1",textShadow:"0 0 7px var(--ink)",marginTop:"2rem"}} className="h5-details">{selectedAuthor.authorWikiTitle}</h5>
       <h6  style={{flex:"1 1",textShadow:"0 0 7px var(--ink)"}} className="subtitle1-details">{`${getYear(selectedAuthor.authorBirthDate)} - ${getYear(selectedAuthor.authorDeathDate)}`}</h6>
       </div>
@@ -183,7 +183,7 @@ const filterAroundPublicationDate = (arr)=>{
 
     <>
     <h4 className="h4-details" style={{margin:"2rem 0 1rem 0"}} id="authorTitle">
-    Historical Timeline of {selectedAuthor.timelineLinks[1].slice(11)}
+    Historical Timeline {selectedAuthor.timelineLinks[0].slice(9)}
     </h4>
 
   <div className="Column">
