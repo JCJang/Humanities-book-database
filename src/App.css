@@ -131,12 +131,12 @@ html{
   --main-headline4: 2.3rem/1.5 "Jost", "Palanquin", sans-serif;
   --main-headline5: 1.65rem/1.5 "Jost", "Palanquin", sans-serif;
   --main-headline6: 500 1.35rem/1.5 "Jost", "Palanquin", sans-serif;
-  --main-body1:  1rem/1.5 "Palanquin", sans-serif;
-  --main-body2:  0.9rem/1.5 "Palanquin", sans-serif;
+  --main-body1:  1rem/1.5 "Jost", "Palanquin", sans-serif;
+  --main-body2:  0.9rem/1.5 "Jost", "Palanquin", sans-serif;
   --main-subtitle1: 1.25rem/1.5 "Jost", "Palanquin", sans-serif;
   --main-subtitle2: 500 0.95rem/1.5 "Jost", "Palanquin", sans-serif;
   --main-button: bold 0.8rem/1.5 "Palanquin", sans-serif;
-  --main-overline:  0.65rem/1.5 "Palanquin", sans-serif;
+  --main-overline:  0.65rem/1.5"Jost",  "Palanquin", sans-serif;
   --main-caption:  0.8rem/1.5 "Palanquin", sans-serif;
 
 

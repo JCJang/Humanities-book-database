@@ -19,7 +19,7 @@ const About = ({xs, s, m, l, xl}) => {
     <div className="noScrollBar" style={{maxWidth:l?"50vw":m?"85vw":"90vw",
       padding:"0 2rem",
      overflowY:"auto"}}>
-    This platform’s goal is to answer questions. Everything is designed to reinforce this goal, and there is heavy moderation to meet this goal.
+    This platform’s goal is to <strong>answer questions</strong>. Everything is designed to reinforce this goal, and there is heavy moderation to meet this goal.<br></br>
     For instance, books submitted for approval will be scrutinized for the following core qualities: Personality, Rationality, Specificity, and Systematicity.
     Personality: This person is not writing a textbook; it is a passionate argument of a person’s opinion and core beliefs.
     Rationality: this person is using facts as presented to him or her. They have tried to get perspective before making an opinion. Aka, they know what they’re talking about.

@@ -253,11 +253,11 @@ const filterAroundPublicationDate = (arr)=>{
       </div>
 
     {authorFocus==="bio" &&
-    <div className="body2-details" style={{opacity:"0.7",padding:"1.5rem"}}>This page is based on the Wikipedia article <a href={selectedAuthor.authorWikiUrl} target="_blank" className="AttributionLink">{selectedAuthor.authorWikiTitle}</a>; it is used under the <a href="https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License" taget="_blank" className="AttributionLink">Creative Commons Attribution-ShareAlike 3.0 Unported License (CC-BY-SA)</a>. You may redistribute it, verbatim or modified, providing that you comply with the terms of the CC-BY-SA.</div>}
+    <div className="body2-details" style={{opacity:"0.7",padding:"1.5rem"}}>This page is based on the Wikipedia article <a href={selectedAuthor.authorWikiUrl} target="_blank" className="AttributionLink">{selectedAuthor.authorWikiTitle}</a>; it is used under the <a href="https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License" target="_blank" className="AttributionLink">Creative Commons Attribution-ShareAlike 3.0 Unported License (CC-BY-SA)</a>. You may redistribute it, verbatim or modified, providing that you comply with the terms of the CC-BY-SA.</div>}
 
     {authorFocus==="bg" && selectedAuthor.timelineLinks[0] &&
-    <div className="body2-details" style={{opacity:"0.7",padding:"1.5rem"}}>This page is based on the Wikipedia article <a href={`https://en.wikipedia.org/wiki/${selectedAuthor.timelineLinks[0].replace(/\s/g,'_')}`} target="_blank" className="AttributionLink">{selectedAuthor.timelineLinks[0]}</a>; it is used under the <a href="https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License" taget="_blank" className="AttributionLink">Creative Commons Attribution-ShareAlike 3.0 Unported License (CC-BY-SA)</a>. You may redistribute it, verbatim or modified, providing that you comply with the terms of the CC-BY-SA.</div>}
-      
+    <div className="body2-details" style={{opacity:"0.7",padding:"1.5rem"}}>This page is based on the Wikipedia article <a href={`https://en.wikipedia.org/wiki/${selectedAuthor.timelineLinks[0].replace(/\s/g,'_')}`} target="_blank" className="AttributionLink">{selectedAuthor.timelineLinks[0]}</a>; it is used under the <a href="https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License" target="_blank" className="AttributionLink">Creative Commons Attribution-ShareAlike 3.0 Unported License (CC-BY-SA)</a>. You may redistribute it, verbatim or modified, providing that you comply with the terms of the CC-BY-SA.</div>}
+
 </>}
 
 </div>
@@ -284,7 +284,7 @@ const filterAroundPublicationDate = (arr)=>{
                 <div className="Row" style={{alignItems:"center", margin:"1rem"}}>
                   Academic Background <LaunchRoundedIcon style={{marginLeft:"0.5rem"}}/>
                   </div>
-              <div>{selectedAuthor.authorBgKeywords[0] && selectedAuthor.authorBgKeywords.map((tag)=>{return <p className="tag AuthorLink" style={{display:"inline-block", border:"1.5px solid var(--paper)", margin:"0 0.5rem 0.5rem 0", padding:"0.2rem 0.3rem"}}>{tag}</p>})}</div>
+              <div>{selectedAuthor.authorBgKeywords[0] && selectedAuthor.authorBgKeywords.map((tag)=>{return <p className="tag AuthorLink" style={{display:"inline-block", border:"1.5px solid var(--paper)", margin:"0 0.5rem 0.5rem 0", padding:"0.2rem 0.5rem"}}>{tag}</p>})}</div>
             </div>
             }
 
@@ -293,7 +293,7 @@ const filterAroundPublicationDate = (arr)=>{
                 <div className="Row" style={{alignItems:"center", margin:"1rem"}}>
                   Life Work <LaunchRoundedIcon style={{marginLeft:"0.5rem"}}/>
                   </div>
-              <div>{selectedAuthor.authorLifeWorkKeywords[0] && selectedAuthor.authorLifeWorkKeywords.map((tag)=>{return <p className="tag AuthorLink" style={{display:"inline-block", border:"1.5px solid var(--paper)", margin:"0 0.5rem 0.5rem 0", padding:"0.2rem 0.3rem"}}>{tag}</p>})}</div>
+              <div>{selectedAuthor.authorLifeWorkKeywords[0] && selectedAuthor.authorLifeWorkKeywords.map((tag)=>{return <p className="tag AuthorLink" style={{display:"inline-block", border:"1.5px solid var(--paper)", margin:"0 0.5rem 0.5rem 0", padding:"0.2rem 0.5rem"}}>{tag}</p>})}</div>
             </div>
               }
 

@@ -101,11 +101,11 @@ const ArrowBackCircleIcon = createSvgIcon(
           </div>
           <div style={{width:l?"100%":"100vw",margin:"0.5rem 0",borderTop:"1px solid var(--paper)"}}></div>
           <div>
-          <div className="overline-details" style={{margin:"1rem"}}>{displayBookTitle}</div>
+          {!l && <div className="overline-details" style={{margin:"1rem"}}>{displayBookTitle}</div>}
           </div>
 
           <div style={{overflow:"hidden",position:"relative"}}>
-          <div id="viewerCanvas" style={{position:columnFocus==="detailspanel"?"relative":"absolute", height:"var(--panelheight)", width:l?"50vw":m?"70vw":"90vw", backgroundColor:"(var(--detailspanel))", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem"}}>
+          <div id="viewerCanvas" style={{position:columnFocus==="detailspanel"?"relative":"absolute", height:"var(--panelheight)", width:l?"40vw":m?"70vw":"90vw", backgroundColor:"(var(--detailspanel))", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem"}}>
           </div>
           </div>
 
