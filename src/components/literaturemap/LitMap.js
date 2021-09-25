@@ -852,10 +852,10 @@ const LitMap = ({xs, s, m, l, xl, languageSetting="en"}) => {
 
 
   function postBook(){
-    Axios.post("http://localhost:3001/suggestshelf",{
+    Axios.post("http://localhost:3001/suggestliteraturebook",{
       bookTitle:title,
       bookAuthor:author,
-      publicationLanguage:publicationLanguage,
+      publicationLanguage:stripLabels(publicationLanguage)[0],
       earliestPublicationYear:earliestPublicationYear,
       recommendationReason:recommendationReason
     })
@@ -868,8 +868,8 @@ const LitMap = ({xs, s, m, l, xl, languageSetting="en"}) => {
   <div className="noScrollBar" style={{backgroundColor:"var(--detailspanel)", padding:m?"3.5rem 0 0 0":"1rem", color:"var(--detailspaneltext)",height:m?"100vh":"var(--panelheightmobile)",overflow:"auto"}}>
     <form onSubmit={(e)=>validateShelf(e)} className="SubmissionForm Column" id="shelfform" style={{width:l?"50vw":m?"85vw":"90vw", margin:"auto"}}>
 
-    <div>A World Literature Map featuring lesser-known works.</div>
-    <img  src={svgMap} alt="world map"/>
+    <div className="h3-details">A World Literature Map featuring lesser-known works.</div>
+    <img style={{padding:"3rem"}} src={svgMap} alt="world map"/>
     <div className="form-section-suggest" style={{color:"var(--ink)"}}>
       <h6>Submit Book information</h6>
       <label htmlFor="title">Title:</label>
@@ -894,7 +894,7 @@ const LitMap = ({xs, s, m, l, xl, languageSetting="en"}) => {
            <textarea className="form-control" type="text" rows="10" id="recommendationReason" value={recommendationReason}
                     onChange={(e)=>setRecommendationReason(e.target.value)} placeholder="what makes this book special?"/>
         </div>
-            <input  className="btn lightbtn" type="submit" style={{margin:"3rem", width:"100%", backgroundColor:preventResubmitBook?"var(--inactive)":"var(--lightactionbtn)", color:preventResubmitBook?"var(--shelfpanellistborder)":"var(--lightactionbtntext)",boxShadow:preventResubmitBook?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateShelf(e)}} value="Submit Shelf and Book"/>
+            <input  className="btn darkbtn" type="submit" style={{margin:"3rem", width:"100%", backgroundColor:preventResubmitBook?"var(--inactive)":"var(--darkactionbtn)", color:preventResubmitBook?"var(--shelfpanellistborder)":"var(--darkactionbtntext)",boxShadow:preventResubmitBook?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateShelf(e)}} value="Submit Shelf and Book"/>
     </form>
     </div>
   )
