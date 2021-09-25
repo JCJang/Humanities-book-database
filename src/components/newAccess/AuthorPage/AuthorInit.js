@@ -284,7 +284,7 @@ const filterAroundPublicationDate = (arr)=>{
                 <div className="Row" style={{alignItems:"center", margin:"1rem"}}>
                   Academic Background <LaunchRoundedIcon style={{marginLeft:"0.5rem"}}/>
                   </div>
-              <div>{selectedAuthor.authorBgKeywords[0] && selectedAuthor.authorBgKeywords.map((tag)=>{return <p className="tag AuthorLink" style={{display:"inline-block", border:"1.5px solid var(--paper)", margin:"0 0.5rem 0.5rem 0", padding:"0.2rem 0.5rem"}}>{tag}</p>})}</div>
+              <div>{selectedAuthor.authorBgKeywords[0] && selectedAuthor.authorBgKeywords.map((tag)=>{return <p className="tag AuthorLink" style={{display:"inline-block", border:"1.5px solid var(--paper)", margin:"0 0.5rem 0.5rem 0", padding:"0.2rem 0.5rem"}}><a href={`https://en.wikipedia.org/wiki/${tag.replace(/\s/g,'_')}`} target="_blank" className="AttributionLink">{tag}</a></p>})}</div>
             </div>
             }
 
@@ -293,7 +293,7 @@ const filterAroundPublicationDate = (arr)=>{
                 <div className="Row" style={{alignItems:"center", margin:"1rem"}}>
                   Life Work <LaunchRoundedIcon style={{marginLeft:"0.5rem"}}/>
                   </div>
-              <div>{selectedAuthor.authorLifeWorkKeywords[0] && selectedAuthor.authorLifeWorkKeywords.map((tag)=>{return <p className="tag AuthorLink" style={{display:"inline-block", border:"1.5px solid var(--paper)", margin:"0 0.5rem 0.5rem 0", padding:"0.2rem 0.5rem"}}>{tag}</p>})}</div>
+              <div>{selectedAuthor.authorLifeWorkKeywords[0] && selectedAuthor.authorLifeWorkKeywords.map((tag)=>{return <p className="tag AuthorLink" style={{display:"inline-block", border:"1.5px solid var(--paper)", margin:"0 0.5rem 0.5rem 0", padding:"0.2rem 0.5rem"}}><a href={`https://en.wikipedia.org/wiki/${tag.replace(/\s/g,'_')}`} target="_blank" className="AttributionLink">{tag}</a></p>})}</div>
             </div>
               }
 

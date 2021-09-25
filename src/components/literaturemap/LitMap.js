@@ -2,45 +2,20 @@ import {useEffect, useState} from 'react';
 import Axios from 'axios'
 import { MultiSelect } from "react-multi-select-component";
 import {useCallback} from 'react'
+import svgMap from'../images/world.svg';
 
-
-const Suggest = ({xs, s, m, l, xl, languageSetting="en"}) => {
-  const [contentKeywords, setContentKeywords] = useState([])//choose from main interests,notable ideas
-  const [shelfTitle, setShelfTitle] = useState('')
-  const [shelfDescription, setShelfDescription] = useState('')
-  const [id, setId] =  useState('')
+const LitMap = ({xs, s, m, l, xl, languageSetting="en"}) => {
   const [title, setTitle] =  useState('')
   const [author, setAuthor] =  useState([])
-  const [isbn10, setIsbn10] =  useState('')
-  const [isbn13, setIsbn13] =  useState('')
-  const [bookHighlights, setBookHighlights] = useState('')
-  const [languageVersions, setLanguageVersions] = useState([])
-  const [previewLanguage, setPreviewLanguage] = useState([])
-  const [shelfValue, setShelfValue] = useState([])
-  //restricts selection to one
+  const [publicationLanguage, setPublicationLanguage] = useState([])
+
   useEffect(() => {
-      if (shelfValue.length > 1) {
-        setShelfValue([shelfValue[shelfValue.length - 1]])
+      if (publicationLanguage.length > 1) {
+        setPublicationLanguage([publicationLanguage[publicationLanguage.length - 1]])
       }
-  }, [shelfValue])
+  }, [publicationLanguage])
 
-  const [allShelves, setAllShelves]=useState(false)
-
-  const [existingShelves, setExistingShelves] = useState([])
-
-
-  useEffect(()=>{
-    if(!allShelves){return;}
-    const newOptions = allShelves.map((shelf)=>{
-     return {
-       value:shelf.join("-"),
-       label:shelf[0]
-      }
-    })
-    setExistingShelves(newOptions)
-
-    },[allShelves])
-
+  const [recommendationReason, setRecommendationReason]= useState("")
 
       const stripLabels = useCallback((a) => {
         if(Array.isArray(a)){
@@ -52,46 +27,13 @@ const Suggest = ({xs, s, m, l, xl, languageSetting="en"}) => {
         }
       }, [])
 
-//restricts selection to one
-useEffect(() => {
-    if (previewLanguage.length > 1) {
-      setPreviewLanguage([previewLanguage[previewLanguage.length - 1]])
-    }
-}, [previewLanguage])
-
-
-  const [subjectLinks, setSubjectLinks] = useState([])//use what?
-  const [shelfLanguage, setShelfLanguage] = useState([])//use what?
-
-  //restricts selection to one
-  useEffect(() => {
-      if (shelfLanguage.length > 1) {
-        setShelfLanguage([shelfLanguage[shelfLanguage.length - 1]])
-      }
-  }, [shelfLanguage])
 
 
   //manual fill
   const [earliestPublicationYear, setEarliestPublicationYear] = useState(0)
-  const [bookLength, setBookLength] = useState("")
 
-  const[newShelf,setNewShelf] = useState(true)
-  const [shelfId, setShelfId]=useState('')
-  const [preventResubmitShelf, setPreventResubmitShelf] = useState(false)
+  const [preventResubmitBook, setPreventResubmitBook] = useState(false)
 
-    const selectSubjects = [
-      { label: "Ancient and Modern Languages", value: "0 Ancient and Modern Languages"},
-      { label: "Literature", value: "1 Literature" },
-      { label: "Philosophy", value: "2 Philosophy"},
-      { label: "History and Archaeology", value: "3 History and Archaeology" },
-      { label: "Anthropology and cultural sciences", value: "4 Anthropology" },
-      { label: "Human Geography", value: "5 Human Geography" },
-      { label: "Law", value: "6 Law" },
-      { label: "Politics", value: "7 Politics" },
-      { label: "Religion", value: "8 Religion" },
-      { label: "Art", value: "9 Art" },
-      { label: "Gender Issues", value: "10 Gender Issues" },
-    ];
     const selectLanguageVersions = [
       {
           label: "English",
@@ -888,164 +830,48 @@ useEffect(() => {
         value: "zu"
     },
 ];
-    const [subjects, setSubjects] = useState([]);
 
 
   const validateShelf = (e)=>{
     e.preventDefault();
-    if(!title||!author||!subjects){
+    if(!title||!author||!earliestPublicationYear){
       alert("please fill in missing data");
       return;
     }
-    if(preventResubmitShelf===false){
-    newShelf?postShelf():addToShelf()
-    setPreventResubmitShelf(true)
+    if(preventResubmitBook===false){
+    postBook()
+    setPreventResubmitBook(true)
   }else{
     return;
   }
   }
 
   useEffect(()=>{
-  setPreventResubmitShelf(false)
-}, [shelfTitle])
+  setPreventResubmitBook(false)
+}, [title,author])
 
 
-//case insensitively match shelves to typed shelves.
-  useEffect(()=>{
-    if(allShelves){
-    allShelves.forEach((x)=>{if(x[0].toLowerCase()===shelfTitle.toLowerCase()){
-      setNewShelf(false); setShelfId(x[3])}})
-    }
-}, [shelfTitle])
-
-
-//initially autoset form languages based on language settings
-  useEffect(()=>{
-    const addLabel = selectLanguageVersions.filter((x)=>{return x.value===languageSetting})
- setPreviewLanguage([addLabel[0]])
-setShelfLanguage([addLabel[0]])
-}, [])
-
-
-//get book data
-//shelfLanguage
-  useEffect(()=>{
-    Axios.post("http://localhost:3001/allshelves",{
-      languageSetting:shelfLanguage[0]?stripLabels(shelfLanguage)[0]:languageSetting
-    }).then((res)=>{
-      setAllShelves(res.data.map((x)=>{ return [x.editions[0].details.shelfTitle, x.editions[0].details.shelfDescription,  x.shelfSubjects, x._id]}))
-    }).then((res)=>{
-      if(!allShelves[0]){
-        return;
-      }else{
-        console.log("reloaded shelves");
-      }
-    })
-      },[preventResubmitShelf])
-
-
-
-  function postShelf(){
+  function postBook(){
     Axios.post("http://localhost:3001/suggestshelf",{
-      shelfSubjects:stripLabels(subjects),
-      shelfTitle:shelfTitle,
       bookTitle:title,
       bookAuthor:author,
-      bookHighlights:bookHighlights,
+      publicationLanguage:publicationLanguage,
       earliestPublicationYear:earliestPublicationYear,
-      shelfLanguage:stripLabels(shelfLanguage)[0],
+      recommendationReason:recommendationReason
     })
-    console.log("posted new shelf suggestion");
+    console.log("posted new book suggestion");
 
   }
 
-
-  function addToShelf(){
-    Axios.post("http://localhost:3001/suggestbooktoshelf",{
-      shelfTitle:shelfTitle,
-      shelfId:shelfId,
-      bookTitle:title,
-      bookAuthor:author,
-      bookHighlights:bookHighlights,
-      earliestPublicationYear:earliestPublicationYear,
-      shelfLanguage:stripLabels(shelfLanguage)[0],
-    })
-    console.log("posted book suggestion for shelf");
-  }
-
-
-useEffect(()=>{
-  if(!shelfValue[0]){return}
-  setShelfTitle( shelfValue[0].value.split("-")[0]);
-  setShelfId(shelfValue[0].value.split("-")[3]);
-  setNewShelf(false);
-},[shelfValue])
 
   return (
-  <div className="noScrollBar" style={{backgroundColor:"var(--shelfpanel)", padding:m?"3.5rem 0 0 0":"1rem", color:"var(--shelfpaneltext)",height:m?"100vh":"var(--panelheightmobile)",overflow:"auto"}}>
+  <div className="noScrollBar" style={{backgroundColor:"var(--detailspanel)", padding:m?"3.5rem 0 0 0":"1rem", color:"var(--detailspaneltext)",height:m?"100vh":"var(--panelheightmobile)",overflow:"auto"}}>
+    <form onSubmit={(e)=>validateShelf(e)} className="SubmissionForm Column" id="shelfform" style={{width:l?"50vw":m?"85vw":"90vw", margin:"auto"}}>
 
-
-    <form onSubmit={(e)=>validateShelf(e)} className="SubmissionForm Column" id="shelfform" style={{width:l?"50vw":m?"70vw":"95vw", margin:"auto"}}>
-
-        <h6>Suggest a Humanities Book.</h6>
-        <h6 className="subtitle1">Make sure to review criteria in the About page.</h6>
-
-      <h5 style={{marginTop:"3rem", marginBottom:"2rem"}}>Step 1:</h5>
-
-      <div className="form-section-suggest">
-      <h6>Select the language of your submission</h6>
-
-      <label htmlFor="shelfLanguage">Shelf Language:</label>
-      <MultiSelect
-      id="shelfLanguage"
-      options={selectLanguageVersions}
-      value={shelfLanguage}
-      onChange={setShelfLanguage}
-      hasSelectAll={false}
-      />
-      </div>
-      <h5 style={{marginTop:"3rem", marginBottom:"2rem"}}>Step 2:</h5>
-
-      <div className="form-section-suggest">
-      <h6 className="Row">
-      <input type="checkbox" style={{alignSelf:"center",justifySelf:"center", marginRight:"1rem",width:"1.5rem",height:"1.5rem"}} id="previewFilter" value="!newShelf" checked={!newShelf} disabled/><div style={{width:"90%"}}>Choose an Existing Shelf</div></h6>
-      <label htmlFor="existingshelves" className="subtitle2">Existing Shelves:</label>
-       <MultiSelect
-       id="existingshelves"
-       options={existingShelves}
-       value={shelfValue}
-      onChange={setShelfValue}
-      hasSelectAll={false}
-       />
-        </div>
-
-      <h6 style={{textAlign:"center", margin:"2rem"}}>OR</h6>
-
-
-
-
-      <div className="form-section-suggest">
-      <h6 className="Row">
-      <input type="checkbox" style={{alignSelf:"center", marginRight:"1rem",width:"1.5rem",height:"1.5rem"}} id="previewFilter" value="newShelf" checked={newShelf} disabled/><div style={{width:"90%"}}>Edit Shelf Title to Create a New Shelf</div></h6>
-      <label htmlFor="shelfTitle">Shelf Title</label>
-      <input className="form-control" type="text" id="shelfTitle" value={shelfTitle}
-       onChange={(e)=>{setShelfTitle(e.target.value); setNewShelf(true)}} placeholder="what is the thesis of your suggested book?"/>
-
-        <label htmlFor="selectSubjects">Select Relevant Subjects:</label>
-  <MultiSelect
-  id="selectSubjects"
-        options={selectSubjects}
-        value={subjects}
-        onChange={setSubjects}
-        hasSelectAll={false}
-        />
-
-        </div>
-
-
-  <h5 style={{marginTop:"3rem", marginBottom:"2rem"}}>Step 3:</h5>
-    <div className="form-section-suggest">
-  <h6>Submit Book information</h6>
+    <div>A World Literature Map featuring lesser-known works.</div>
+    <img  src={svgMap} alt="world map"/>
+    <div className="form-section-suggest" style={{color:"var(--ink)"}}>
+      <h6>Submit Book information</h6>
       <label htmlFor="title">Title:</label>
       <input className="form-control" type="text" id="title" value={title}
        onChange={(e)=>setTitle(e.target.value)} placeholder="book title"/>
@@ -1056,11 +882,19 @@ useEffect(()=>{
         <input className="form-control" type="number" id="earliestPublicationYear" value={earliestPublicationYear}
          onChange={(e)=>setEarliestPublicationYear(e.target.value)} placeholder="earliest publication year"/>
 
-                   <label htmlFor="bookHighlights">highlights</label>
-                   <textarea className="form-control" type="text" rows="20" id="bookHighlights" value={bookHighlights}
-                    onChange={(e)=>setBookHighlights(e.target.value)} placeholder="2 to 3 paragraphs from the book"/>
+         <label htmlFor="publicationLanguage">Originally Published in the language</label>
+         <MultiSelect
+         id="publicationLanguage"
+         options={selectLanguageVersions}
+         value={publicationLanguage}
+         onChange={setPublicationLanguage}
+         hasSelectAll={false}
+         />
+           <label htmlFor="recommendationReason">Why this book?</label>
+           <textarea className="form-control" type="text" rows="10" id="recommendationReason" value={recommendationReason}
+                    onChange={(e)=>setRecommendationReason(e.target.value)} placeholder="what makes this book special?"/>
         </div>
-            <input  className="btn lightbtn" type="submit" style={{margin:"3rem", width:"100%", backgroundColor:preventResubmitShelf?"var(--inactive)":"var(--lightactionbtn)", color:preventResubmitShelf?"var(--shelfpanellistborder)":"var(--lightactionbtntext)",boxShadow:preventResubmitShelf?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateShelf(e)}} value="Submit Shelf and Book"/>
+            <input  className="btn lightbtn" type="submit" style={{margin:"3rem", width:"100%", backgroundColor:preventResubmitBook?"var(--inactive)":"var(--lightactionbtn)", color:preventResubmitBook?"var(--shelfpanellistborder)":"var(--lightactionbtntext)",boxShadow:preventResubmitBook?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateShelf(e)}} value="Submit Shelf and Book"/>
     </form>
     </div>
   )
@@ -1068,4 +902,4 @@ useEffect(()=>{
 
 }
 
-export default Suggest
+export default LitMap

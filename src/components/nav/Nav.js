@@ -15,6 +15,10 @@ const colorForNav = () => {
     return "var(--paper)"
   }else if (routeFocus==="/suggest") {
     return "var(--shelfpaneltext)"
+  }else if (routeFocus==="/map") {
+    return "var(--detailspaneltext)"
+  }else if (routeFocus==="/saved") {
+    return "var(--paper)"
   }else if (routeFocus==="/" && !l) {
   return "var(--searchpaneltext)"
   }else{
@@ -39,6 +43,10 @@ const background = () => {
     return "var(--ink)"
   }else if (routeFocus==="/suggest") {
     return "var(--shelfpanel)"
+  }else if (routeFocus==="/map") {
+    return "var(--detailspanel)"
+  }else if (routeFocus==="/saved") {
+    return "var(--ink)"
   }else if (routeFocus==="/" && !l) {
   return "var(--searchpanel)"
   }else{

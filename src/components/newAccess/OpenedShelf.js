@@ -278,7 +278,7 @@ const getAndSet = async(highlights) =>{
         <div className="Row" style={{alignItems:"center",marginBottom:"0.5rem"}}>
           Content Keywords <LaunchRoundedIcon style={{marginLeft:"0.5rem"}}/>
           </div>
-      <div>{selectedBook.contentKeywords[0] && selectedBook.contentKeywords.map((tag)=>{return <p className="tag" style={{display:"inline-block", border:"1.5px solid var(--shelfpanellistpressedborder)", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.2rem"}}>{tag}</p>})}</div>
+      <div>{selectedBook.contentKeywords[0] && selectedBook.contentKeywords.map((tag)=>{return <p className="tag" style={{display:"inline-block", border:"1.5px solid var(--shelfpanellistpressedborder)", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.2rem"}}><a href={`https://en.wikipedia.org/wiki/${tag.replace(/\s/g,'_')}`} target="_blank" className="shelfPanelLink">{tag}</a></p>})}</div>
   </div>}
 
     {selectedBook.subjectLinks &&
@@ -286,7 +286,7 @@ const getAndSet = async(highlights) =>{
         <div className="Row" style={{alignItems:"center",marginBottom:"0.5rem"}}>
           Background Keywords <LaunchRoundedIcon style={{marginLeft:"0.5rem"}}/>
           </div>
-      <div>{selectedBook.subjectLinks[0] && selectedBook.subjectLinks.map((tag)=>{return <p className="tag" style={{display:"inline-block", border:"1.5px solid var(--shelfpanellistpressedborder)", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.2rem"}}>{tag}</p>})}</div>
+      <div>{selectedBook.subjectLinks[0] && selectedBook.subjectLinks.map((tag)=>{return <p className="tag" style={{display:"inline-block", border:"1.5px solid var(--shelfpanellistpressedborder)", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.2rem"}}><a href={`https://en.wikipedia.org/wiki/${tag.replace(/\s/g,'_')}`} target="_blank" className="shelfPanelLink">{tag}</a></p>})}</div>
   </div>}
   </div>
 

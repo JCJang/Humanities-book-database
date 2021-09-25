@@ -47,7 +47,7 @@ const searchFormDisplay = () =>{
           <div className="noScrollBar" style={{overflowY:"auto", marginBottom:"0.1rem"}}>
                 {shelfResults && shelfResults.map((shelf)=><div onClick={()=>{setNewShelf(shelf)}} className="transition" key={shelf.shelfId}
                 style={{cursor:shelf.shelfId===shelfId?"":"pointer",color:"searchpaneltext",maxWidth:"30rem", backgroundColor:shelf.shelfId===shelfId?"white":"var(--searchpanellist)",
-                border:shelf.shelfId===shelfId?"1px solid var(--searchpanellstborderpressed)":"1px solid var(--searchpanellistborder)",
+                border:shelf.shelfId===shelfId?"1.5px solid var(--searchpanellstborderpressed)":"1.5px solid var(--searchpanellistborder)",
                 boxShadow:"var(--heavyshadow)",
                 margin:"1rem 0 0 0", padding:"0.6rem 1rem"}}>
                   <div style={{fontFamily:'Jost', fontWeight:shelf.shelfId===shelfId?"500":"400",fontSize:shelf.shelfId===shelfId?"1.35rem":"1.25rem",

@@ -2,6 +2,8 @@ import './App.css';
 import Access from './components/newAccess/Access'
 import About from './components/about/About'
 import Suggest from './components/suggest/Suggest'
+import LitMap from './components/literaturemap/LitMap'
+import Saved from './components/saved/Saved'
 import Nav from './components/nav/Nav'
 import NavMobile from './components/nav/NavMobile'
 import {Route, BrowserRouter as Router} from 'react-router-dom'
@@ -50,7 +52,13 @@ const App = () => {
     <Access xs={xs} s={s} m={m} l={l} xl={xl} columnFocus={columnFocus} setColumnFocus={setColumnFocus} googleScriptLoaded={googleScriptLoaded} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting} authorView={authorView} setAuthorView={setAuthorView}/>
     </Route>
     <Route path = "/suggest" exact>
-    <Suggest xs={xs} s={s} m={m} l={l} xl={xl} googleScriptLoaded={googleScriptLoaded} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting} />
+    <Suggest xs={xs} s={s} m={m} l={l} xl={xl} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting} />
+    </Route>
+    <Route path = "/map" exact>
+    <LitMap xs={xs} s={s} m={m} l={l} xl={xl} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting} />
+    </Route>
+    <Route path = "/saved" exact>
+    <Saved xs={xs} s={s} m={m} l={l} xl={xl} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting} />
     </Route>
     <Route path = "/about" exact>
     <About  xs={xs} s={s} m={m} l={l} xl={xl} />

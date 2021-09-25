@@ -52,11 +52,11 @@ const ArrowBackCircleIcon = createSvgIcon(
  if (isbnOrId === true) {
 
   if (window.viewer) {
-    if(window.google.books===false){return}
+    if(window.google.books===false){alert("Please reload the page for the preview to work");return}
     var viewer = new window.google.books.DefaultViewer(document.getElementById('viewerCanvas'));
     viewer.load(`https://books.google.com/books?vid=ISBN${bookIdentifier}&printsec=toc`, alertNotFound);
   } else {
-    if(window.google.books===false){return}
+    if(window.google.books===false){alert("Please reload the page for the preview to work");return}
     window.google.books.load({     "language": "en"    });
     window.google.books.setOnLoadCallback(() => {
       var viewer = new window.google.books.DefaultViewer(document.getElementById('viewerCanvas'));
@@ -67,13 +67,13 @@ const ArrowBackCircleIcon = createSvgIcon(
 
 } else {
   if(window.viewer){
-    if(window.google.books===false){return}
+    if(window.google.books===false){alert("Please reload the page for the preview to work");return}
      var viewer = new window.google.books.DefaultViewer
      (document.getElementById('viewerCanvas'));
      viewer.load(bookIdentifier, alertNotFound);
    }
    else{
-     if(window.google.books===false){return}
+     if(window.google.books===false){alert("Please reload the page for the preview to work");return}
      window.google.books.load({"language": "en"});
      window.google.books.setOnLoadCallback(() => {
      var viewer = new window.google.books.DefaultViewer
