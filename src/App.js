@@ -1,6 +1,6 @@
 import './App.css';
 import Access from './components/newAccess/Access'
-import Add from './components/add/Add'
+import Suggest from './components/suggest/Suggest'
 import Nav from './components/nav/Nav'
 import NavMobile from './components/nav/NavMobile'
 import {Route, BrowserRouter as Router} from 'react-router-dom'
@@ -46,8 +46,8 @@ const App = () => {
     <Route path = "/" exact>
     <Access xs={xs} s={s} m={m} l={l} xl={xl} googleScriptLoaded={googleScriptLoaded} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting}/>
     </Route>
-    <Route path = "/add" exact>
-    <Add xs={xs} s={s} m={m} l={l} xl={xl} googleScriptLoaded={googleScriptLoaded} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting} />
+    <Route path = "/suggest" exact>
+    <Suggest xs={xs} s={s} m={m} l={l} xl={xl} googleScriptLoaded={googleScriptLoaded} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting} />
     </Route>
     {!m && <NavMobile xs={xs} s={s} m={m} l={l} xl={xl} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting}/>}
     </div>

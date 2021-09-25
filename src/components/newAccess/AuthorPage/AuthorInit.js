@@ -163,7 +163,8 @@ const filterAroundPublicationDate = (arr)=>{
 
 <div className="Row" style={{alignItems:"center"}}>
 
-      <h4 className="h4-details" style={{margin:"2rem 0 1rem 0",display:"inlineBlock"}} id="authorTitle">{authorFocus==='init'?"Learn More":authorFocus==='bg'?`Historical Timeline ${selectedAuthor.timelineLinks[0].slice(9)}`:selectedAuthor.authorWikiTitle}</h4>
+      <h4 className="h4-details" style={{margin:"2rem 0 1rem 0",display:"inlineBlock"}} id="authorTitle">{authorFocus==='init'?"Learn More":authorFocus==='bg' && selectedAuthor.timelineLinks[0]?`Historical Timeline ${selectedAuthor.timelineLinks[0].slice(9)}`:authorFocus==='bg'?`No Historical Timeline Stored for ${selectedAuthor.authorWikiTitle}
+`:selectedAuthor.authorWikiTitle}</h4>
 
       {authorFocus==='bio' && <span  className="subtitle1-details" style={{margin:"2rem 1rem 1rem 1rem", display:"inlineBlock"}}>{`${getYear(selectedAuthor.authorBirthDate)} - ${getYear(selectedAuthor.authorDeathDate)}`}</span>}
 </div>
@@ -244,16 +245,28 @@ const filterAroundPublicationDate = (arr)=>{
 
 
     {authorFocus!=="init" &&
-          <div style={{display:"flex",alignItems:"center", justifyContent:"center",marginTop:"1rem"}}>
-              <a style={{textDecoration:"none",color:"var(--paper)",padding:"2rem"}} href="#authorTitle" className="btn">Back to Top</a>
-        </div>}
+    <>
+
+
+      <div style={{display:"flex",alignItems:"center", justifyContent:"center",marginTop:"1rem"}}>
+            <a style={{textDecoration:"none",color:"var(--paper)",padding:"2rem"}} href="#authorTitle" className="btn">Back to Top</a>
+      </div>
+
+    {authorFocus==="bio" &&
+    <div className="body2-details" style={{opacity:"0.7",padding:"1.5rem"}}>This page is based on the Wikipedia article <a href={selectedAuthor.authorWikiUrl} target="_blank" className="AttributionLink">{selectedAuthor.authorWikiTitle}</a>; it is used under the <a href="https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License" taget="_blank" className="AttributionLink">Creative Commons Attribution-ShareAlike 3.0 Unported License (CC-BY-SA)</a>. You may redistribute it, verbatim or modified, providing that you comply with the terms of the CC-BY-SA.</div>}
+
+    {authorFocus==="bg" && selectedAuthor.timelineLinks[0] &&
+    <div className="body2-details" style={{opacity:"0.7",padding:"1.5rem"}}>This page is based on the Wikipedia article <a href={`https://en.wikipedia.org/wiki/${selectedAuthor.timelineLinks[0].replace(/\s/g,'_')}`} target="_blank" className="AttributionLink">{selectedAuthor.timelineLinks[0]}</a>; it is used under the <a href="https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License" taget="_blank" className="AttributionLink">Creative Commons Attribution-ShareAlike 3.0 Unported License (CC-BY-SA)</a>. You may redistribute it, verbatim or modified, providing that you comply with the terms of the CC-BY-SA.</div>}
+      
+</>}
 
 </div>
 
     {authorFocus!=="bg" &&
-      <div className="Column" style={{flex:"1 1 30%",position:authorFocus==="init"?"absolute":"relative",justifyContent:"center",alignItems:"center",marginTop:"1rem",right:expandFurtherReading?"0":authorFocus==="init"?"10rem":"0", marginLeft:"3rem"}}>
+      <div className="Column" style={{flex:"1 1 30%",position:authorFocus==="init"?"absolute":"relative",marginTop:"1rem",right:expandFurtherReading?"0":authorFocus==="init"?"10rem":"0", marginLeft:"3rem"}}>
 
-        {authorFocus!=="bg" && <div onClick={()=>{setAuthorFocus("bio")}} className={authorFocus==="bio"?"upwardsGradient":""} style={{flex:"4 4",cursor:authorFocus==="init" && "pointer"}}><img  style={{maxHeight:authorFocus==="init"?"18rem":expandFurtherReading?"13rem":"18rem", width:"auto",boxShadow:"var(--heavyshadow)"}} src={selectedAuthor.authorWikiImage}></img></div>
+        {authorFocus!=="bg" &&
+         <div onClick={()=>{setAuthorFocus("bio")}} className={authorFocus==="bio"?"upwardsGradient":""} style={{flex:"4 4",cursor:authorFocus==="init" && "pointer"}}><img  style={{maxHeight:authorFocus==="init"?"18rem":expandFurtherReading?"13rem":"18rem", width:"auto",boxShadow:"var(--heavyshadow)"}} src={selectedAuthor.authorWikiImage}></img></div>
       }
 
         {authorFocus==="init" &&

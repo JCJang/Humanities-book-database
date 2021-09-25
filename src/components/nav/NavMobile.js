@@ -17,7 +17,7 @@ const NavMobile = ({xs, s, m, l, xl, languageSetting, setLanguageSetting}) => {
     alignItems: "center",
     justifyContent: "space-around",
     display: "flex",
-    padding:"0 1.5rem"
+    padding:"0.5rem 1.5rem 0 1.5rem",
     }
   }
 

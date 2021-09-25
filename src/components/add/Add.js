@@ -145,7 +145,7 @@ setTasks([...tasks, data])
 
     <div>
         <div  className="container">
-        <div className="subcontainer left-block"  style={{width:"30rem"}}>
+        <div className="subcontainer left-block"  style={{width:"30rem",height:"var(--panelheight)"}}>
           <SearchForm onSearch = {onSearch} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting} results={results}/>
         {results && (<Query result={results} toAdd={toAdd} setToAdd={setToAdd}/>)}
 

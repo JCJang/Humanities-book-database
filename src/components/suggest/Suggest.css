@@ -1,0 +1,19 @@
+
+input{
+  height: 2rem;
+}
+input::placeholder{
+color:var(--inactive);
+}
+textarea::placeholder{
+color:var(--inactive);
+}
+
+.readOnly input{
+  background-color: var(--shelfpanellist);
+
+}
+.readOnly textarea{
+  background-color: var(--shelfpanellist);
+
+}

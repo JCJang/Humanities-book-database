@@ -115,7 +115,7 @@ const filterAroundPublicationDate = (arr)=>{
 }
 
   return (
-    <div className="noScrollBar OpenedAuthor" style={{ overflowY:authorFocus==='init'?'':'auto',maxWidth:"100%", height:"var(--authorheightwnav)",padding:m?"0 3rem":"0 2rem"}}>
+    <div className="noScrollBar OpenedAuthor" style={{ overflowY:authorFocus==='init'?'':'auto',maxWidth:"100%", height:m?"var(--authorheightwnavtablet)":"var(--authorheightwnavmobile)",padding:m?"0 3rem":"0 2rem"}}>
 
     {authorFocus === "init"?  < div id = "shelfNav"
     className = "Row transition"
@@ -137,14 +137,14 @@ const filterAroundPublicationDate = (arr)=>{
 
       </div>
       :
-      <span className="btn darkbtn" onClick={()=>{setAuthorFocus("init")}} style={{width:l?"6rem":"",display:"flex",justifyContent:"center", alignSelf:"flex-start",alignItems:"center",marginTop:"1rem",marginLeft:l?"":m?"3rem":"", position:"relative", zIndex:"1"}}><ArrowBackCircleIcon/><span style={{width:"85%", padding:"0 0.5rem"}}>Back to Author Menu</span></span>
+      <span id="returnbtn" className="btn darkbtn" onClick={()=>{setAuthorFocus("init")}} style={{width:l?"6rem":"",display:"flex",justifyContent:"center", alignSelf:"flex-start",alignItems:"center",marginTop:"1rem",marginLeft:l?"":m?"3rem":"", position:"relative", zIndex:"1"}}><ArrowBackCircleIcon/><span style={{width:"85%", padding:"0 0.5rem"}}>Back to Author Menu</span></span>
     }
 
 
   {authorFocus==="init" &&
 
     <>
-    <div className="Column transition" onClick={()=>{setAuthorFocus("bg")}} style={{flex:"1 1 70%", position:"absolute", left:getPosition("bg"), width:"100%", padding:m?"0 3rem":"0 2rem", height:"var(--authorheightwonav)",alignItems:"center"}}>
+    <div className="Column transition" onClick={()=>{setAuthorFocus("bg")}} style={{flex:"1 1 70%", position:"absolute", left:getPosition("bg"), width:"100%", padding:m?"0 3rem":"0 2rem", height:m?"var(--authorheightwonavtablet)":"var(--authorheightwonavmobile)",alignItems:"center"}}>
       <div className="gradient">
            {fullTimelines[0] &&
               <div className="Column" style={{alignItems:"center", justifyContent:"center"}}>
@@ -164,7 +164,7 @@ const filterAroundPublicationDate = (arr)=>{
         </div>
       </div>
 
-      <div className="Column transition" onClick={()=>{setAuthorFocus("bio")}} style={{flex:"1 1 70%", position:l?"":"absolute", left:getPosition("bio"), width:"100%", height:"var(--authorheightwonav)",alignItems:"center"}}>
+      <div className="Column transition" onClick={()=>{setAuthorFocus("bio")}} style={{flex:"1 1 70%", position:l?"":"absolute", left:getPosition("bio"), width:"100%", height:m?"var(--authorheightwonavtablet)":"var(--authorheightwonavmobile)",alignItems:"center"}}>
       <div className="gradientBioNav">
       <img style={{width:"100vw",boxShadow:"var(--heavyshadow)",height:"auto"}} src={selectedAuthor.authorWikiImage}></img>
       </div>
@@ -179,7 +179,7 @@ const filterAroundPublicationDate = (arr)=>{
   }
 
 
-  {authorFocus==="bg" &&
+  {authorFocus==="bg" && selectedAuthor.timelineLinks[0]?
 
     <>
     <h4 className="h4-details" style={{margin:"2rem 0 1rem 0"}} id="authorTitle">
@@ -255,14 +255,20 @@ const filterAroundPublicationDate = (arr)=>{
       </div>
 
     <div style={{display:"flex",alignItems:"center", justifyContent:"center",marginTop:"1rem"}}>
-        <a style={{textDecoration:"none",color:"var(--paper)",padding:"2rem"}} href="#authorTitle" className="btn">Back to Top</a>
+        <a style={{textDecoration:"none",color:"var(--paper)",padding:"2rem"}} href="#returnbtn" className="btn">Back to Top</a>
     </div>
+
+    <div className="body2-details" style={{opacity:"0.7",padding:"1.5rem"}}>This page is based on the Wikipedia article <a href={`https://en.wikipedia.org/wiki/${selectedAuthor.timelineLinks[0].replace(/\s/g,'_')}`} target="_blank" className="AttributionLink">{selectedAuthor.timelineLinks[0]}</a>; it is used under the <a href="https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License" taget="_blank" className="AttributionLink">Creative Commons Attribution-ShareAlike 3.0 Unported License (CC-BY-SA)</a>. You may redistribute it, verbatim or modified, providing that you comply with the terms of the CC-BY-SA.</div>
+
     </>
+    :  <h4 className={authorFocus==="bg"?"h4-details":"body2-details"} style={{margin:"2rem 0 1rem 0",textAlign:"center"}} id="authorTitle">
+      No Historical Timeline Stored for {selectedAuthor.authorWikiTitle}
+      </h4>
     }
 
 {authorFocus==="bio" &&
 <>
-<div className="gradientBio" style={{opacity:"0.4", backgroundImage:!m && `url(${selectedAuthor.authorWikiImage})`, backgroundSize:"cover", height:"var(--authorheightwnav)", width:"100vw", position:"absolute", left:"0", bottom:"0"}}>
+<div className="gradientBio" style={{opacity:"0.4", backgroundImage:!m && `url(${selectedAuthor.authorWikiImage})`, backgroundSize:"cover", height:m?"var(--authorheightwnavtablet)":"var(--authorheightwnavmobile)", width:"100vw", position:"absolute", left:"0", bottom:"0"}}>
 </div>
 
 <h4 className="h4-details" style={{margin:"2rem 0 1rem 0", position:"relative",zIndex:"1"}} id="authorTitle">
@@ -272,7 +278,7 @@ const filterAroundPublicationDate = (arr)=>{
 
 
       <div className={m?"Column":"Row"} style={{order:m?"2":"1", marginLeft:m && "4rem"}}>
-        <div className={m?"upwardsGradient":"rightwardsGradient"} style={{position:m?"":"relative", flex:"4 4", display:!m && "none"}}>
+        <div className={m && "upwardsGradientTablet"} style={{position:m?"":"relative", flex:"4 4", display:!m && "none"}}>
           <img  style={{maxHeight:m?"13rem":"18rem",width:"auto",boxShadow:"var(--heavyshadow)"}} src={selectedAuthor.authorWikiImage}></img>
         </div>
 
@@ -315,10 +321,12 @@ const filterAroundPublicationDate = (arr)=>{
        </div>
       </div>
 
-
     <div style={{display:"flex",alignItems:"center", justifyContent:"center",marginTop:"1rem",position:"relative",zIndex:"1"}}>
-        <a style={{textDecoration:"none",color:"var(--paper)",padding:"2rem"}} href="#authorTitle" className="btn">Back to Top</a>
+        <a style={{textDecoration:"none",color:"var(--paper)",padding:"2rem"}} href="#returnbtn" className="btn">Back to Top</a>
     </div>
+
+    <div className="body2-details" style={{opacity:"0.7",padding:"1.5rem"}}>This page is based on the Wikipedia article <a href={selectedAuthor.authorWikiUrl} target="_blank" className="AttributionLink">{selectedAuthor.authorWikiTitle}</a>; it is used under the <a href="https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License" taget="_blank" className="AttributionLink">Creative Commons Attribution-ShareAlike 3.0 Unported License (CC-BY-SA)</a>. You may redistribute it, verbatim or modified, providing that you comply with the terms of the CC-BY-SA.</div>
+
 </>
 }
 

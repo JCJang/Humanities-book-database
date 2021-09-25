@@ -59,10 +59,42 @@ const openedAuthorHeight = () =>{
   }
 }
 
+const authorPanelVisibility = () =>{
+  if(l){
+    if(columnFocus==="detailspanel"){
+      return ""
+    }else{
+      return "hidden"
+    }
+  }else{
+    if(columnFocus==="detailspanel" && authorFocus==="init"){
+      return ""
+    }else{
+      return "hidden"
+    }
+  }
+}
+
+const authorPanelPosition = () =>{
+  if(l){
+    if(columnFocus==="detailspanel"){
+      return "relative"
+    }else{
+      return "absolute"
+    }
+  }else{
+    if(columnFocus==="detailspanel" && authorFocus==="init"){
+      return "relative"
+    }else{
+      return "absolute"
+    }
+  }
+}
+
   return (
     <div className={l?"Row":"Column"} style={{color:"var(--paper)",backgroundColor:"var(--ink)",height:openedAuthorHeight(),overflow:"hidden",position:"relative"}}>
 
-  <div className="Column" style={{maxWidth:"100%", position:columnFocus==="detailspanel"?"relative":"absolute", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem"}}>
+  <div className="Column" style={{maxWidth:"100%", position:authorPanelPosition(), visibility:authorPanelVisibility(), left:columnFocus==="detailspanel"?"0px":"110rem"}}>
   <AuthorPanel xs={xs} s={s} m={m} l={l} xl={xl} expandFurtherReading={expandFurtherReading} setExpandFurtherReading={setExpandFurtherReading} selectedAuthor={selectedAuthor} languageSetting={languageSetting} setShelfId={setShelfId} setBookNumber={setBookNumber} setColumnFocus={setColumnFocus}/>
   </div>
 

@@ -27,7 +27,7 @@ const SearchForm = ({type,placeholder,onSearch, setLanguageSetting, languageSett
   }
   return (
     <div>
-    <h5 className="SearchCaption" style={{font:results?"var(--main-overline)":"var(--main-headline4)", textTransform: results?`uppercase`:'', letterSpacing: results? `0.375rem`:''}}>Search database to autofill suggestion</h5>
+    <h5 className="SearchCaption" style={{font:results?"var(--main-overline)":"var(--main-headline4)", textTransform: results?`uppercase`:'', letterSpacing: results? `0.375rem`:''}}>Search Google Books for your suggestion</h5>
 
     <form onSubmit={(e)=>validateForm(e)} id="SearchForm" className="form-section">
 

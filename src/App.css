@@ -58,19 +58,9 @@ html{
   scroll-behavior: smooth;
 }
 
-@media screen and (max-width: 600px) {
-html { font-size: 14px;}
-}
-
-@media screen and (min-width: 600px) {
-html { font-size: 14px;}
-}
-@media screen and (min-width: 1200px) {
-html { font-size: 16px;}
-}
 
 :root{
-  --nav:rgba(83,100,109,0.8);
+  --nav:rgba(83,100,109,1);
   --nav-text:white;
 
   --searchpanel:#F5EBE2;
@@ -110,9 +100,11 @@ html { font-size: 16px;}
 --focusedpanel:calc(70vw - 4rem);
 --initpanel:calc(100vw - 8rem);
 --authorheight:calc(100vh - 11.5rem);
---authorheightwnav:calc(100vh - 26rem);
---authorheightwonav:calc(100vh - 30.5rem);
---authorpanelopenheight:calc(100vh - 22.5rem);
+--authorheightwnavtablet:calc(100vh - 16.5rem);
+--authorheightwonavtablet:calc(100vh - 30.5rem);
+--authorheightwnavmobile:calc(100vh - 19rem);
+--authorheightwonavmobile:calc(100vh - 30.5rem);
+--authorpanelopenheight:calc(100vh - 20.5rem);
 
 
 --mobileWidth:calc(100vw - 4rem);
@@ -150,8 +142,8 @@ html { font-size: 16px;}
   --details-headline4: 2.3rem/1.5 "Amiri",serif;
   --details-headline5: 1.65rem/1.5 "Amiri",serif;
   --details-headline6: bold 1.35rem/1.5 "Amiri",serif;
-  --details-body1:  1rem/1.5 "Amiri",serif;
-  --details-body2:  0.9rem/1.5 "Amiri",serif;
+  --details-body1:  1.2rem/1.5 "Amiri",serif;
+  --details-body2:  1rem/1.5 "Amiri",serif;
   --details-subtitle1:  1.06rem/1.5 "Amiri",serif;
   --details-subtitle2: bold 0.95rem/1.5 "Amiri",serif;
   --details-button: bold 0.95rem/1.5 "Amiri",serif;
@@ -378,10 +370,16 @@ font:var(--body1);
 }
 
 .WebNavLink{
-  color: var(--detailspaneltext);
+  color: var(--paper);
   text-decoration: none;
   padding:0 3rem;
+  opacity:0.7;
 }
+
+.WebNavLink:hover{
+  opacity:1;
+}
+
 
 .MobileNavLink{
   color: var(--nav);
@@ -402,6 +400,16 @@ font:var(--body1);
   opacity:0.6;
   cursor:pointer;
 }
+
+.AttributionLink{
+  color: var(--paper);
+  text-decoration: none;
+}
+
+.AttributionLink:hover{
+  opacity:1;
+}
+
 
 .AuthorLink:hover{
   background: linear-gradient( rgba(107,107,107,0) 0%, rgba(107,107,107,1) 100%);
@@ -515,10 +523,30 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f6f0', end
   width: 100%;
   background: linear-gradient(to top,
      rgba(17, 17, 17, 0.9) 30%,
-     rgba(17, 17, 17, 0.1) 80%
+     rgba(17, 17, 17, 0.3) 80%
   );
   pointer-events: none; /* so the text is still selectable */
 }
+
+
+.upwardsGradientTablet {
+  position: relative;
+}
+
+.upwardsGradientTablet:after {
+  position: absolute;
+  bottom: 0;
+  left:0;
+  content:'';
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(to top,
+     rgba(17, 17, 17, 0.5) 30%,
+     rgba(17, 17, 17, 0.1) 60%
+  );
+  pointer-events: none; /* so the text is still selectable */
+}
+
 
 
 .rightwardsGradient {
@@ -677,4 +705,36 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f6f0', end
 .mirror{
   transform:rotate(180deg);
   transform-origin:center center;
+}
+
+.sticky {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+}
+
+@media screen and (max-width: 359px) {
+html { font-size: 13px;}
+}
+
+@media screen and (min-width: 600px) {
+html { font-size: 14px;}
+}
+@media screen and (min-width: 1200px) {
+html { font-size: 16px;}
+}
+
+@media screen and (min-width: 1600px) {
+html { font-size: 18px;}
+}
+
+
+
+.form-section-suggest{
+  width:80%;
+  font:var(--main-subtitle2);
+  display:grid;
+grid-template-rows:auto;
+  grid-template-columns: 30% 70%;
+  grid-row-gap:0.5em;
 }

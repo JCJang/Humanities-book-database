@@ -193,7 +193,7 @@ const AuthorPanel = ({xs,s,m,l,xl, selectedAuthor, expandFurtherReading, setExpa
 
     <div className={l?"Column noScrollBar":m?"Row noScrollBar":"Column noScrollBar"} style={{overflowY:"auto", order:l?"":"2"}}>
 
-    <div style={{paddingLeft:l && "1rem",display:expandFurtherReading?"flex":"none", width:l?"":m?"50%":"100vw", justifyContent:"center",padding:l?"0 2rem":""}}>
+    <div style={{paddingLeft:l && "1rem",display:expandFurtherReading?"flex":"none", width:l?"":m?"50%":"100vw", justifyContent:"center",padding:l?"0 2rem":"", borderRight:l?"":!m?"":"1.5px solid var(--shelfpanel)"}}>
         {selectedAuthor.authorInfluences &&
           <div className="subtitle2">
           {authorInfluencesBooks[0] ?
