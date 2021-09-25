@@ -16,7 +16,31 @@ const Suggest = ({xs, s, m, l, xl, languageSetting="en"}) => {
   const [bookHighlights, setBookHighlights] = useState('')
   const [languageVersions, setLanguageVersions] = useState([])
   const [previewLanguage, setPreviewLanguage] = useState([])
-  const [shelfValue, setShelfValue] = useState("")
+  const [shelfValue, setShelfValue] = useState([])
+  //restricts selection to one
+  useEffect(() => {
+      if (shelfValue.length > 1) {
+        setShelfValue([shelfValue[shelfValue.length - 1]])
+      }
+  }, [shelfValue])
+
+  const [allShelves, setAllShelves]=useState(false)
+
+  const [existingShelves, setExistingShelves] = useState([])
+
+
+  useEffect(()=>{
+    if(!allShelves){return;}
+    const newOptions = allShelves.map((shelf)=>{
+     return {
+       value:shelf.join("-"),
+       label:shelf[0]
+      }
+    })
+    setExistingShelves(newOptions)
+
+    },[allShelves])
+
 
       const stripLabels = useCallback((a) => {
         if(Array.isArray(a)){
@@ -52,7 +76,6 @@ useEffect(() => {
   const [bookLength, setBookLength] = useState("")
 
   const[newShelf,setNewShelf] = useState(true)
-  const [allShelves, setAllShelves]=useState(false)
   const [shelfId, setShelfId]=useState('')
   const [preventResubmitShelf, setPreventResubmitShelf] = useState(false)
 
@@ -915,8 +938,6 @@ setShelfLanguage([addLabel[0]])
       if(!allShelves[0]){
         return;
       }else{
-        setExistingShelf(allShelves[0].join("-"));
-        setShelfValue(allShelves[0].join("-"));
         console.log("reloaded shelves");
       }
     })
@@ -928,56 +949,37 @@ setShelfLanguage([addLabel[0]])
     Axios.post("http://localhost:3001/suggestshelf",{
       shelfSubjects:stripLabels(subjects),
       shelfTitle:shelfTitle,
-      shelfDescription:shelfDescription,
-      googleId:id,
       bookTitle:title,
       bookAuthor:author,
-      isbn10:isbn10,
-      isbn13:isbn13,
       bookHighlights:bookHighlights,
       earliestPublicationYear:earliestPublicationYear,
-      bookLength:bookLength,
-      contentKeywords:contentKeywords,
-      languageVersions:stripLabels(languageVersions),
       shelfLanguage:stripLabels(shelfLanguage)[0],
-      previewLanguage:stripLabels(previewLanguage)[0],
-      previewStatus:"",
-      subjectLinks:subjectLinks
     })
-    console.log("posted new shelf");
+    console.log("posted new shelf suggestion");
 
   }
 
 
   function addToShelf(){
-    Axios.put("http://localhost:3001/suggestbooktoshelf",{
+    Axios.post("http://localhost:3001/suggestbooktoshelf",{
       shelfTitle:shelfTitle,
-
-      language:stripLabels(shelfLanguage)[0],
-      googleId:id,
       shelfId:shelfId,
-      contentKeywords:contentKeywords,
-      languageVersions:stripLabels(languageVersions),
-      earliestPublicationYear:earliestPublicationYear,
-      subjectLinks:subjectLinks,
       bookTitle:title,
       bookAuthor:author,
-      previewStatus:"",
-      isbn10:isbn10,
-      isbn13:isbn13,
       bookHighlights:bookHighlights,
-      bookLength:bookLength,
+      earliestPublicationYear:earliestPublicationYear,
+      shelfLanguage:stripLabels(shelfLanguage)[0],
     })
-    console.log("added book to shelf");
+    console.log("posted book suggestion for shelf");
   }
 
 
-const setExistingShelf = (shelfValue) =>{
-  const shelf = shelfValue.split("-");
-  setShelfTitle(shelf[0]);
-  setShelfId(shelf[3]);
+useEffect(()=>{
+  if(!shelfValue[0]){return}
+  setShelfTitle( shelfValue[0].value.split("-")[0]);
+  setShelfId(shelfValue[0].value.split("-")[3]);
   setNewShelf(false);
-}
+},[shelfValue])
 
   return (
   <div style={{backgroundColor:"var(--searchpanel)",height:"var(--panelheight)"}}>
@@ -998,13 +1000,13 @@ const setExistingShelf = (shelfValue) =>{
       <h5 style={{marginTop:"3rem", marginBottom:"2rem"}}><strong>Step 2:</strong> Choose an Existing Shelf <input type="checkbox" style={{alignSelf:"center", marginLeft:"0.5rem",width:"1.5rem",height:"1.5rem"}} id="previewFilter" value="!newShelf" checked={!newShelf} disabled/></h5>
       <div className="form-section-suggest">
       <label htmlFor="existingshelves" className="subtitle2">Existing Shelves:</label>
-      <select className="form-control" id="existingshelves" value={shelfValue}
-       placeholder="toggles auto input settings" onChange={(e)=>{setShelfValue(e.target.value); setExistingShelf(e.target.value)}}>
-       {allShelves && allShelves.map((shelf)=>
-         <option value={shelf.join("-")} key={shelf[3]}>
-       {shelf[0]}
-       </option>)}
-       </select>
+       <MultiSelect
+       id="existingshelves"
+       options={existingShelves}
+       value={shelfValue}
+      onChange={setShelfValue}
+      hasSelectAll={false}
+       />
         </div>
 
       <h6 style={{textAlign:"center", marginTop:"3rem"}}>OR</h6>
