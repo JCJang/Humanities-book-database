@@ -4,29 +4,28 @@ const About = ({xs, s, m, l, xl}) => {
     return {
     backgroundColor:"var(--ink)",
     color:"var(--paper)",
-    lineHeight:"1.5",
+    lineHeight:"2",
     height:m?"100vh":"var(--panelheightmobile)",
     overflow:"hidden",
     alignItems:"center",
     justifyContent:"center",
-    paddingTop:"3.5rem"
+    paddingTop:"3.5rem",
   }
   }
   return (
 
 
-    <div className="Column body1-details" style={aboutStyle()}>
-    <div className="noScrollBar" style={{maxWidth:l?"50vw":m?"85vw":"90vw",
-      padding:"0 2rem",
+    <div className="Column body2-details" style={aboutStyle()}>
+    <div className="noScrollBar" style={{maxWidth:l?"50vw":m?"85vw":"90vw",opacity:"0.9",
+      padding:"2rem",
      overflowY:"auto"}}>
-    This platform’s goal is to <strong>answer questions</strong>. Everything is designed to reinforce this goal, and there is heavy moderation to meet this goal.<br></br>
-    For instance, books submitted for approval will be scrutinized for the following core qualities: Personality, Rationality, Specificity, and Systematicity.
-    Personality: This person is not writing a textbook; it is a passionate argument of a person’s opinion and core beliefs.
-    Rationality: this person is using facts as presented to him or her. They have tried to get perspective before making an opinion. Aka, they know what they’re talking about.
-    Specificity: The book is not an overview on a topic. The author explores a particular question, and returns his or her systematic thoughts on the matter.
-    In certain circumstances, for instance, if a certain piercing essay is not published alone, we might include the book on the shelf.
-    Systematicity: The table of contents breaks down the core question into arguments.
-
+    This platform’s goal is to <em>answer questions</em>. Books submitted for approval will be scrutinized for the following core qualities: Personality, Rationality, Specificity, and Systematicity.
+    <ul style={{margin:"1rem"}}>
+    <li className="body1-details" style={{margin:"1rem"}}><p style={{letterSpacing:"0.8px"}} className="h6-details">Personality:</p> The work is a passionate argument of the authors opinions and core beliefs.</li>
+    <li className="body1-details" style={{margin:"1rem"}}><p style={{letterSpacing:"0.8px"}} className="h6-details">Rationality:</p> this person is using facts as presented to him or her. They have tried to get perspective before making an opinion.</li>
+    <li className="body1-details" style={{margin:"1rem"}}><p style={{letterSpacing:"0.8px"}} className="h6-details">Specificity:</p> The work is not an overview on a topic. The author explores a particular question, and returns his or her systematic thoughts on the matter.</li>
+    <li className="body1-details" style={{margin:"1rem"}}><p style={{letterSpacing:"0.8px"}} className="h6-details">Systematicity:</p> The table of contents breaks down the core question into arguments.</li>
+    </ul>
     Most books in this platform will meet such criteria, but I do and will make exceptions for certain shelves. (see the shelf 'How Can One Live a Moral Life' for reference.)
     Note that most books categorized as Self-help or textbook will not make the cut.
     </div>

@@ -90,16 +90,16 @@ const ArrowBackCircleIcon = createSvgIcon(
          return (
            <div style={{zIndex:"3",background:"var(--detailspanel)", position:"relative",color:"var(--detailspaneltext)",display:"flex",height:l?"var(--panelheight)":columnFocus!=="detailspanel"?"4rem":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)",overflowY:!m && columnFocus==="detailspanel" && "auto"}}>
 
-            <div className={l?"Row":"Column"} style={{flex:"1",position:columnFocus!=="detailspanel"?"absolute":authorView?"absolute":"relative",margin:l?"2rem 0 2rem 2rem":"",border:l?"1px solid var(--paper)":"none",visibility:columnFocus!=="detailspanel"?"hidden":authorView?"hidden":"",paddingTop:!m && "5rem"}}>
+            <div className={l?"Row":"Column"} style={{flex:"1",position:columnFocus!=="detailspanel"?"absolute":authorView?"absolute":"relative",margin:l?"2rem 0 2rem 2rem":"",border:l?"1.5px solid var(--detailspaneltext)":"none",visibility:columnFocus!=="detailspanel"?"hidden":authorView?"hidden":"",paddingTop:!m && "5rem"}}>
 
-            <div  className="Column" style={{width:!l?"100%":"", alignItems: "center", flex:"1", display:"flex",color:"var(--paper)", justifyContent:"center",backgroundColor:"var(--detailspanel)"}}>
+            <div  className="Column" style={{width:!l?"100%":"", alignItems: "center", flex:"1", display:"flex",color:"var(--detailspaneltext)", justifyContent:"center",backgroundColor:"var(--detailspanel)"}}>
 
-            {!l && <div style={{width:"100vw",marginTop:"1rem",borderTop:"1px solid var(--paper)"}}></div>}
-            <div style={{width:l?"100%":"100vw",margin:"0.5rem 0",borderTop:"1px solid var(--paper)"}}></div>
+            {!l && <div style={{width:"100vw",marginTop:"1rem",borderTop:"1.5px solid var(--detailspaneltext)"}}></div>}
+            <div style={{width:l?"100%":"100vw",margin:"0.5rem 0",borderTop:"1.5px solid var(--detailspaneltext)"}}></div>
           <div>
           <div className="subtitle1-details">{`${displayBookTitle} // By ${author}`}</div>
           </div>
-          <div style={{width:l?"100%":"100vw",margin:"0.5rem 0",borderTop:"1px solid var(--paper)"}}></div>
+          <div style={{width:l?"100%":"100vw",margin:"0.5rem 0",borderTop:"1.5px solid var(--detailspaneltext)"}}></div>
           <div>
           {!l && <div className="overline-details" style={{margin:"1rem"}}>{displayBookTitle}</div>}
           </div>

@@ -51,7 +51,7 @@ const searchFormDisplay = () =>{
                 boxShadow:"var(--heavyshadow)",
                 margin:"1rem 0 0 0", padding:"0.6rem 1rem"}}>
                   <div style={{fontFamily:'Jost', fontWeight:shelf.shelfId===shelfId?"500":"400",fontSize:shelf.shelfId===shelfId?"1.35rem":"1.25rem",
-                  textTransform: "capitalize", letterSpacing:"0.01rem"}}>
+                  textTransform: "capitalize", letterSpacing:"0.01rem", marginBottom:"0.5rem"}}>
                 {shelf.shelfTitle}
                   </div>
                   <div>
