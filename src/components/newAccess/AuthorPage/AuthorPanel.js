@@ -179,7 +179,7 @@ const AuthorPanel = ({xs,s,m,l,xl, selectedAuthor, expandFurtherReading, setExpa
           l?"Row":"Column"
         }
       style = {
-        {
+        { paddingTop:m && "3.5rem",
           color: "var(--authorpaneltext)",
           backgroundColor: "var(--authorpanel)",
           boxShadow: expandFurtherReading ? "var(--heavyshadow) inset" : "",
@@ -187,7 +187,7 @@ const AuthorPanel = ({xs,s,m,l,xl, selectedAuthor, expandFurtherReading, setExpa
           marginTop: l?"":"2rem",
           marginBottom:l? "":"1rem",
           maxWidth: !l?"100%":"20rem",
-          height: l?"var(--panelheight)":expandFurtherReading ? "var(--authorpanelopenheight)" : "4rem"
+          height: l?"100vh":expandFurtherReading ? "var(--authorpanelopenheight)" : "4rem"
         }
       }>
 

@@ -11,7 +11,7 @@ import ArrowRightRoundedIcon from '@material-ui/icons/ArrowRightRounded';
 
 
 
-const Access =({xs,s,m,l,xl,googleScriptLoaded, languageSetting, setLanguageSetting})=>{
+const Access =({xs,s,m,l,xl, authorView, setAuthorView, googleScriptLoaded, columnFocus, setColumnFocus, languageSetting, setLanguageSetting})=>{
 
   const [slideOut, setSlideOut] = useState(false)
 
@@ -127,7 +127,6 @@ const Access =({xs,s,m,l,xl,googleScriptLoaded, languageSetting, setLanguageSett
 
 //search panel
     const [allShelves,setAllShelves]=useState([])
-    const [columnFocus, setColumnFocus] = useState('init')
     const [bookNumber, setBookNumber] = useState('0')
 
 //shelf panel
@@ -169,7 +168,6 @@ const Access =({xs,s,m,l,xl,googleScriptLoaded, languageSetting, setLanguageSett
     })
 //author panel
     const [authorFocus, setAuthorFocus] = useState('init')
-    const [authorView, setAuthorView] = useState(false)
     const [authorToGet, setAuthorToGet] = useState('')
     const [selectedAuthor, setSelectedAuthor]=useState({
       authorInfluences:[],
@@ -396,7 +394,7 @@ const Access =({xs,s,m,l,xl,googleScriptLoaded, languageSetting, setLanguageSett
   return (
 
     <div className={l?"Row":"column"}>
-        {!m && <div class="overline-details" style={{zIndex:"30", height:"3rem", display:"flex", alignItems:"center", justifyContent:"center", background:"var(--searchpanel)", color:"var(--searchpaneltext)",paddingTop:"1rem"}}>HUMANITIESDB</div>}
+        {!m && <div class="overline-logo" style={{zIndex:"30", height:"3rem", display:"flex", alignItems:"center", justifyContent:"center", background:"var(--searchpanel)", color:"var(--searchpaneltext)",paddingTop:"1rem"}}>HUMANITIESDB</div>}
 
                 {!l && m &&
                 < div id = "shelfNav"
@@ -445,29 +443,29 @@ const Access =({xs,s,m,l,xl,googleScriptLoaded, languageSetting, setLanguageSett
 
 
 
-        <div  className="col-1" style={{width:l?col1widthL():"100vw",height:l?"var(--panelheight)":m?col1heightM():col1heightS()}}>
+        <div  className="col-1" style={{paddingTop:m && "3.5rem", width:l?col1widthL():"100vw",height:l?"100vh":m?col1heightM():col1heightS()}}>
 
         <SearchForm allShelves={allShelves} xs={xs} s={s} m={m} l={l} xl={xl} columnFocus={columnFocus} setLanguageSetting={setLanguageSetting} languageSetting={languageSetting} setColumnFocus={setColumnFocus} shelfId={shelfId} setShelfId={setShelfId} selectedShelf={selectedShelf} setSelectedShelf={setSelectedShelf} setBookNumber={setBookNumber}/>
 
         </div>
-        <div className="col-2"  style={{width:l?col2widthL():"100vw",boxShadow:l?"var(--panelshadow)":"var(--panelshadowtop)",height:l?"var(--panelheight)":m?col2heightM():col2heightS()}}>
+        <div className="col-2"  style={{paddingTop:m && "3.5rem", width:l?col2widthL():"100vw",boxShadow:l?"var(--panelshadow)":"var(--panelshadowtop)",height:l?"100vh":m?col2heightM():col2heightS()}}>
           {selectedShelf && <OpenedShelf xs={xs} s={s} m={m} l={l} xl={xl} setAuthorFocus={setAuthorFocus} setAuthorToGet={setAuthorToGet} setDisplayEarliestPublicationYear={setDisplayEarliestPublicationYear} setColumnFocus={setColumnFocus} authorView={authorView} setAuthorView={setAuthorView} columnFocus={columnFocus} setIsbnOrId={setIsbnOrId} setBookIdentifier={setBookIdentifier} selectedShelf={selectedShelf} setDisplayBookTitle={setDisplayBookTitle} bookNumber={bookNumber} setBookNumber={setBookNumber} slideOut={slideOut} setSlideOut={setSlideOut} selectedBook={selectedBook} setSelectedBook={setSelectedBook}/>}
           </div>
 
         <AnimatePresence>
           {authorView===false &&
-            <motion.div className="col-3" style={{overflow:"hidden",width:l?col3widthLpreview():"100vw",boxShadow:l?"var(--panelshadow)":"var(--panelshadowtop)",height:l?"var(--panelheight)":m?col3heightMpreview():col3heightSpreview()}}
+            <div className="col-3" style={{paddingTop:m && "3.5rem", overflow:"hidden",width:l?col3widthLpreview():"100vw",boxShadow:l?"var(--panelshadow)":"var(--panelshadowtop)",height:l?"100vh":m?col3heightMpreview():col3heightSpreview()}}
             >
             <GoogleBooksViewer xs={xs} s={s} m={m} l={l} xl={xl} authorView={authorView} columnFocus={columnFocus} authorView={authorView} setAuthorView={setAuthorView} authors={selectedBook.bookAuthor} bookIdentifier={bookIdentifier} setColumnFocus={setColumnFocus} displayBookTitle={displayBookTitle} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId} slideOut={slideOut} setSlideOut={setSlideOut}/>
-            </motion.div>
+            </div>
           }
         </AnimatePresence>
         <AnimatePresence>
           {authorView===true &&
-              <motion.div className="col-3" style={{width:l?col3widthLauthor():"100vw",boxShadow:l?"var(--panelshadow)":"var(--panelshadowtop)",height:l?"var(--panelheight)":m?col3heightMauthor():col3heightSauthor()}}
+              <div className="col-3" style={{width:l?col3widthLauthor():"100vw",boxShadow:l?"var(--panelshadow)":"var(--panelshadowtop)",height:l?"100vh":m?col3heightMauthor():col3heightSauthor()}}
               >
                 <OpenedAuthor xs={xs} s={s} m={m} l={l} xl={xl} languageSetting={languageSetting} authorFocus={authorFocus} setAuthorFocus={setAuthorFocus} displayEarliestPublicationYear={displayEarliestPublicationYear} columnFocus={columnFocus} authorView={authorView} setAuthorView={setAuthorView} setColumnFocus={setColumnFocus} displayBookTitle={displayBookTitle} selectedAuthor={selectedAuthor} setShelfId={setShelfId} setBookNumber={setBookNumber} bookNumber={bookNumber}/>
-              </motion.div>
+              </div>
           }
         </AnimatePresence>
     </div>

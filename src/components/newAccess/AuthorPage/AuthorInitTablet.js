@@ -178,8 +178,13 @@ const filterAroundPublicationDate = (arr)=>{
 
   }
 
+  {authorFocus==="bg" && !selectedAuthor.timelineLinks[0] &&
+  <h4 className={authorFocus==="bg"?"h4-details":"body2-details"} style={{margin:"2rem 0 1rem 0",textAlign:"center"}} id="authorTitle">
+   No Historical Timeline Stored for {selectedAuthor.authorWikiTitle}
+   </h4>
+ }
 
-  {authorFocus==="bg" && selectedAuthor.timelineLinks[0]?
+  {authorFocus==="bg" && selectedAuthor.timelineLinks[0] &&
 
     <>
     <h4 className="h4-details" style={{margin:"2rem 0 1rem 0"}} id="authorTitle">
@@ -261,9 +266,6 @@ const filterAroundPublicationDate = (arr)=>{
     <div className="body2-details" style={{opacity:"0.7",padding:"1.5rem"}}>This page is based on the Wikipedia article <a href={`https://en.wikipedia.org/wiki/${selectedAuthor.timelineLinks[0].replace(/\s/g,'_')}`} target="_blank" className="AttributionLink">{selectedAuthor.timelineLinks[0]}</a>; it is used under the <a href="https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License" taget="_blank" className="AttributionLink">Creative Commons Attribution-ShareAlike 3.0 Unported License (CC-BY-SA)</a>. You may redistribute it, verbatim or modified, providing that you comply with the terms of the CC-BY-SA.</div>
 
     </>
-    :  <h4 className={authorFocus==="bg"?"h4-details":"body2-details"} style={{margin:"2rem 0 1rem 0",textAlign:"center"}} id="authorTitle">
-      No Historical Timeline Stored for {selectedAuthor.authorWikiTitle}
-      </h4>
     }
 
 {authorFocus==="bio" &&

@@ -39,9 +39,9 @@ const searchFormDisplay = () =>{
     <div className="Row" style={{width:"100%",height:l?"var(--panelheight)":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)"}}>
     <div style={{width:l?"calc(100% - 6rem)":"100%",alignItems:"center",display:searchFormDisplay(),margin:l?"0 0 0 2rem":"",
     flexDirection: "column",padding: l ? "0" : m ? "0 3rem" : "0 2rem"}}>
-          <div className={columnFocus==="init"?"Row":"Column"} style={{maxWidth:"30rem", margin:"2rem"}}>
-      <label htmlFor="searchForm" style={{marginRight:columnFocus==="init"?"3rem":""}}>query:</label>
-      <input className="form-control" type="text" id="shelfQuery" placeholder="enter some keywords" value={shelfQuery}
+          <div className="Column" style={{maxWidth:l?"30vw":m?"75vw":"90vw", padding:!l ? "2rem":"2rem 0 0.5rem 0",alignItems:"center", justifyContent:"center"}}>
+      <label htmlFor="searchForm" className={columnFocus!=="init"?"h6":!m?"h6":"h4"} style={{margin: "0 1rem 1rem 1rem"}}>What Questions are on your mind?</label>
+      <input className="query-form" type="text" id="shelfQuery" placeholder="filter by keywords here" value={shelfQuery}
        onChange={(e)=>setShelfQuery(e.target.value)}/>
          </div>
           <div className="noScrollBar" style={{overflowY:"auto", marginBottom:"0.1rem"}}>

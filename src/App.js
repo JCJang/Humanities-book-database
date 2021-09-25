@@ -1,5 +1,6 @@
 import './App.css';
 import Access from './components/newAccess/Access'
+import About from './components/about/About'
 import Suggest from './components/suggest/Suggest'
 import Nav from './components/nav/Nav'
 import NavMobile from './components/nav/NavMobile'
@@ -9,8 +10,10 @@ import useMediaQuery from "./components/customHooks/useMediaQuery";
 
 
 const App = () => {
+  const [columnFocus, setColumnFocus] = useState('init')
   const [googleScriptLoaded, setGoogleScriptLoaded] = useState(false);
   const [languageSetting, setLanguageSetting] = useState('en')
+  const [authorView, setAuthorView] = useState(false)
 
   /* Extra small devices (phones, 600px and down) */
   const xs = useMediaQuery('(max-width: 600px)');
@@ -42,12 +45,15 @@ const App = () => {
   return (
     <Router>
     <div className="rootContainer">
-    {m && <Nav xs={xs} s={s} m={m} l={l} xl={xl} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting}/>}
+    {m && <Nav xs={xs} s={s} m={m} l={l} xl={xl} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting} columnFocus={columnFocus} authorView={authorView} setAuthorView={setAuthorView}/>}
     <Route path = "/" exact>
-    <Access xs={xs} s={s} m={m} l={l} xl={xl} googleScriptLoaded={googleScriptLoaded} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting}/>
+    <Access xs={xs} s={s} m={m} l={l} xl={xl} columnFocus={columnFocus} setColumnFocus={setColumnFocus} googleScriptLoaded={googleScriptLoaded} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting} authorView={authorView} setAuthorView={setAuthorView}/>
     </Route>
     <Route path = "/suggest" exact>
     <Suggest xs={xs} s={s} m={m} l={l} xl={xl} googleScriptLoaded={googleScriptLoaded} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting} />
+    </Route>
+    <Route path = "/about" exact>
+    <About  xs={xs} s={s} m={m} l={l} xl={xl} />
     </Route>
     {!m && <NavMobile xs={xs} s={s} m={m} l={l} xl={xl} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting}/>}
     </div>

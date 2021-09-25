@@ -27,11 +27,11 @@ const NavMobile = ({xs, s, m, l, xl, languageSetting, setLanguageSetting}) => {
 
     <LinksMobile routeName="/" label="home" m={m} Icon={SearchOutlinedIcon}/>
 
+    <LinksMobile routeName="/suggest" label="suggest" m={m} Icon={RateReviewOutlinedIcon}/>
+
     <LinksMobile routeName="/map" label="lit map" m={m} Icon={MapOutlinedIcon}/>
 
     <LinksMobile routeName="/saved" label="saved" m={m} Icon={BookmarkBorderOutlinedIcon}/>
-
-    <LinksMobile routeName="/suggest" label="suggest" m={m} Icon={RateReviewOutlinedIcon}/>
 
     <LinksMobile routeName="/about" label="about" m={m} Icon={CodeOutlinedIcon}/>
 

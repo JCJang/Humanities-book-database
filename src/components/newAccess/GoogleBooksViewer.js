@@ -53,6 +53,7 @@ const ArrowBackCircleIcon = createSvgIcon(
     var viewer = new window.google.books.DefaultViewer(document.getElementById('viewerCanvas'));
     viewer.load(`https://books.google.com/books?vid=ISBN${bookIdentifier}&printsec=toc`, alertNotFound);
   } else {
+    if(window.google.books===false){return}
     window.google.books.load({     "language": "en"    });
     window.google.books.setOnLoadCallback(() => {
       var viewer = new window.google.books.DefaultViewer(document.getElementById('viewerCanvas'));
@@ -68,7 +69,7 @@ const ArrowBackCircleIcon = createSvgIcon(
      viewer.load(bookIdentifier, alertNotFound);
    }
    else{
-
+     if(window.google.books===false){return}
      window.google.books.load({"language": "en"});
      window.google.books.setOnLoadCallback(() => {
      var viewer = new window.google.books.DefaultViewer
@@ -83,11 +84,11 @@ const ArrowBackCircleIcon = createSvgIcon(
 
 
          return (
-           <div style={{zIndex:"3",background:"var(--detailspanel)", position:"relative",color:"var(--detailspaneltext)",display:"flex",height:l?"var(--panelheight)":columnFocus!=="detailspanel"?"4rem":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)"}}>
+           <div style={{zIndex:"3",background:"var(--detailspanel)", position:"relative",color:"var(--detailspaneltext)",display:"flex",height:l?"var(--panelheight)":columnFocus!=="detailspanel"?"4rem":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)",overflowY:!m && "auto"}}>
 
             <div className={l?"Row":"Column"} style={{flex:"1",position:columnFocus!=="detailspanel"?"absolute":authorView?"absolute":"relative",margin:l?"2rem 0 2rem 2rem":"",border:l?"1px solid var(--paper)":"none",visibility:columnFocus!=="detailspanel"?"hidden":authorView?"hidden":"",paddingTop:!m && "5rem"}}>
 
-            <div  className="Column" style={{overflow:"hidden",width:!l?"100%":"", alignItems: "center", flex:"1", display:"flex",color:"var(--paper)", justifyContent:"center",backgroundColor:"var(--detailspanel)"}}>
+            <div  className="Column" style={{width:!l?"100%":"", alignItems: "center", flex:"1", display:"flex",color:"var(--paper)", justifyContent:"center",backgroundColor:"var(--detailspanel)"}}>
 
           {!l &&
                 <span className="btn darkbtn" onClick={()=>{setColumnFocus("shelfpanel")}} style={{width:l?"6rem":"auto",display:"flex",justifyContent:"center", alignSelf:"flex-start",alignItems:"center",marginTop:"1rem",marginLeft:l?"":m?"3rem":""}}><ArrowBackCircleIcon/><span style={{width:"85%", padding:"0 0.5rem"}}>Back to Shelf</span></span>
@@ -104,7 +105,7 @@ const ArrowBackCircleIcon = createSvgIcon(
           </div>
 
           <div style={{overflow:"hidden",position:"relative"}}>
-          <div id="viewerCanvas" style={{position:columnFocus==="detailspanel"?"relative":"absolute", height:"var(--panelheight)", backgroundColor:"(var(--detailspanel))", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem"}}>
+          <div id="viewerCanvas" style={{position:columnFocus==="detailspanel"?"relative":"absolute", height:"var(--panelheight)", width:l?"50vw":m?"70vw":"90vw", backgroundColor:"(var(--detailspanel))", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem"}}>
           </div>
           </div>
 

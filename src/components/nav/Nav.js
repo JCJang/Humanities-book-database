@@ -6,17 +6,37 @@ import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutline
 import RateReviewOutlinedIcon from '@material-ui/icons/RateReviewOutlined';
 import CodeOutlinedIcon from '@material-ui/icons/CodeOutlined';
 
-const Nav = ({xs, s, m, l, xl, languageSetting, setLanguageSetting}) => {
+const Nav = ({xs, s, m, l, xl, authorView, columnFocus, setColumnFocus, languageSetting, setLanguageSetting}) => {
 
-  const navWebsite = () => {
-    return {
-    width: "100vw",
-    background: "var(--nav)",
-    color: "var(--nav-text)",
-    height: "3.5rem",
-    alignItems: "center",
-    display: "flex"}
+const colorForNav = () => {
+  if(columnFocus==="init"){
+    return "var(--searchpaneltext)";
+  }else if(columnFocus==="shelfpanel"){
+      return "var(--shelfpaneltext)";
+  }else if(columnFocus==="detailspanel"){
+    if(authorView===true){
+      return "var(--paper)"
+    }else {
+      return "var(--detailspaneltext)";
+    }
   }
+}
+
+const background = () => {
+  if(columnFocus==="init"){
+    return "var(--searchpanel)";
+  }else if(columnFocus==="shelfpanel"){
+      return "var(--shelfpanel)";
+  }else if(columnFocus==="detailspanel"){
+    if(authorView===true){
+      return "var(--ink)"
+    }else {
+      return "var(--detailspanel)";
+    }
+  }
+}
+
+
   //
   // <label htmlFor="languageSetting" className="subtitle2">site language:</label>
   // <select className="form-control" id="languageSetting" value={languageSetting}
@@ -27,18 +47,29 @@ const Nav = ({xs, s, m, l, xl, languageSetting, setLanguageSetting}) => {
   //  </select>
 
   return (
-    <nav className={"Row"} style={navWebsite()}>
+    <nav className={"Row"} style={{
+    width: "100vw",
+    position:"absolute",
+    background: background(),
+    color: colorForNav(),
+    height: "3.5rem",
+    alignItems: "center",
+    justifyContent:"space-between",
+    zIndex:"40",
+    display: "flex"}}>
 
+        <div className="overline-logo" style={{opacity:0.8, padding:"0.2rem 3rem 0 3rem"}}>Humanities Database</div>
+        <div className="Row">
+        <Links routeName="/" label="Home" Icon={SearchOutlinedIcon}/>
 
-        <Links routeName="/" label="home" Icon={SearchOutlinedIcon}/>
+        <Links routeName="/suggest" label="Suggest" Icon={RateReviewOutlinedIcon}/>
 
-        <Links routeName="/map" label="lit map" Icon={MapOutlinedIcon}/>
+        <Links routeName="/map" label="Lit map" Icon={MapOutlinedIcon}/>
 
-        <Links routeName="/saved" label="saved" Icon={BookmarkBorderOutlinedIcon}/>
+        <Links routeName="/saved" label="Saved" Icon={BookmarkBorderOutlinedIcon}/>
 
-        <Links routeName="/suggest" label="suggest" Icon={RateReviewOutlinedIcon}/>
-
-        <Links routeName="/about" label="about" Icon={CodeOutlinedIcon}/>
+        <Links routeName="/about" label="About" Icon={CodeOutlinedIcon}/>
+        </div>
 
   </nav>
   )

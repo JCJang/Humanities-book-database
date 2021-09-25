@@ -982,11 +982,13 @@ useEffect(()=>{
 },[shelfValue])
 
   return (
-  <div style={{backgroundColor:"var(--searchpanel)",height:"var(--panelheight)"}}>
+  <div className="noScrollBar" style={{backgroundColor:"var(--shelfpanel)", paddingTop:"3.5rem", color:"var(--shelfpaneltext)",height:m?"100vh":"var(--panelheightmobile)",overflow:"auto",padding:!m && "1rem"}}>
     <form onSubmit={(e)=>validateShelf(e)} className="SubmissionForm Column" id="shelfform" style={{width:l?"50vw":m?"70vw":"95vw", margin:"auto"}}>
-      <h5 style={{marginTop:"3rem", marginBottom:"2rem"}}><strong>Step 1:</strong> Select the language of your submission</h5>
+      <h5 style={{marginTop:"3rem", marginBottom:"2rem"}}>Step 1:</h5>
 
       <div className="form-section-suggest">
+      <h6>Select the language of your submission</h6>
+
       <label htmlFor="shelfLanguage">Shelf Language:</label>
       <MultiSelect
       id="shelfLanguage"
@@ -996,9 +998,10 @@ useEffect(()=>{
       hasSelectAll={false}
       />
       </div>
+      <h5 style={{marginTop:"3rem", marginBottom:"2rem"}}>Step 2:</h5>
 
-      <h5 style={{marginTop:"3rem", marginBottom:"2rem"}}><strong>Step 2:</strong> Choose an Existing Shelf <input type="checkbox" style={{alignSelf:"center", marginLeft:"0.5rem",width:"1.5rem",height:"1.5rem"}} id="previewFilter" value="!newShelf" checked={!newShelf} disabled/></h5>
       <div className="form-section-suggest">
+      <h6 className="Row"><input type="checkbox" style={{alignSelf:"center",justifySelf:"center", marginRight:"1rem",width:"20px",height:"20px"}} id="previewFilter" value="!newShelf" checked={!newShelf} disabled/>Choose an Existing Shelf</h6>
       <label htmlFor="existingshelves" className="subtitle2">Existing Shelves:</label>
        <MultiSelect
        id="existingshelves"
@@ -1009,16 +1012,16 @@ useEffect(()=>{
        />
         </div>
 
-      <h6 style={{textAlign:"center", marginTop:"3rem"}}>OR</h6>
-      <h5 style={{marginTop:"3rem", marginBottom:"2rem"}}>Edit Shelf Title to Create a New Shelf <input type="checkbox" style={{alignSelf:"center", marginLeft:"0.5rem",width:"1.5rem",height:"1.5rem"}} id="previewFilter" value="newShelf" checked={newShelf} disabled/></h5>
+      <h6 style={{textAlign:"center", margin:"2rem"}}>OR</h6>
+
 
 
 
       <div className="form-section-suggest">
-
+      <h6 className="Row"><input type="checkbox" style={{alignSelf:"center", marginRight:"1rem",width:"20px",height:"20px"}} id="previewFilter" value="newShelf" checked={newShelf} disabled/>Edit Shelf Title to Create a New Shelf </h6>
       <label htmlFor="shelfTitle">Shelf Title</label>
       <input className="form-control" type="text" id="shelfTitle" value={shelfTitle}
-       onChange={(e)=>{setShelfTitle(e.target.value); setNewShelf(true)}} placeholder="question form"/>
+       onChange={(e)=>{setShelfTitle(e.target.value); setNewShelf(true)}} placeholder="what is the thesis of your suggested book?"/>
 
         <label htmlFor="selectSubjects">Select Relevant Subjects:</label>
   <MultiSelect
@@ -1031,17 +1034,17 @@ useEffect(()=>{
 
         </div>
 
-      <h5 style={{marginTop:"3rem", marginBottom:"2rem"}}><strong>Step 3:</strong> Submit Book information</h5>
 
+  <h5 style={{marginTop:"3rem", marginBottom:"2rem"}}>Step 3:</h5>
     <div className="form-section-suggest">
-
+  <h6>Submit Book information</h6>
       <label htmlFor="title">Title:</label>
       <input className="form-control" type="text" id="title" value={title}
        onChange={(e)=>setTitle(e.target.value)} placeholder="book title"/>
        <label htmlFor="author">Author(s):</label>
        <textarea className="form-control"  id="author" form="SubmissionForm" rows={4} value={author}
         onChange={(e)=>setAuthor(e.target.value.split(/[、,,،，]\s*/))} placeholder="book author(s). Should match wikipedia page title. Separate with commas"/>
-        <label htmlFor="earliestPublicationYear">First Published in the year (negative for B.C.)</label>
+        <label htmlFor="earliestPublicationYear">First Published in the year (negative number for B.C.)</label>
         <input className="form-control" type="number" id="earliestPublicationYear" value={earliestPublicationYear}
          onChange={(e)=>setEarliestPublicationYear(e.target.value)} placeholder="earliest publication year"/>
 

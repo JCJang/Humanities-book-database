@@ -4,13 +4,12 @@ const Links = ({Icon, routeName, label}) => {
 
 
 
-    <div className="WebNavLink Row transition"  style={{alignItems:"center", justifyContent:"center"}}>
-    <Icon style={{fontSize:"1.2rem", marginRight:"0.5rem"}}/>
-    <Link to={routeName} style={{ color: "var(--detailspaneltext)",
-      textDecoration: "none"}}>
+    <Link to={routeName} style={{color:"inherit",textDecoration: "none"}}>
+      <div className="WebNavLink Row transition"  style={{alignItems:"center", justifyContent:"center"}}>
+      <Icon style={{fontSize:"1.2rem", marginRight:"0.5rem"}}/>
     {label}
-    </Link>
     </div>
+    </Link>
 
 
   )
