@@ -98,7 +98,7 @@ const authorPanelPosition = () =>{
   <AuthorPanel xs={xs} s={s} m={m} l={l} xl={xl} expandFurtherReading={expandFurtherReading} setExpandFurtherReading={setExpandFurtherReading} selectedAuthor={selectedAuthor} languageSetting={languageSetting} setShelfId={setShelfId} setBookNumber={setBookNumber} setColumnFocus={setColumnFocus}/>
   </div>
 
-  <div className="Column" style={{paddingTop:m && "3.5rem", flex:"4 4", maxWidth:"100%", position:columnFocus==="detailspanel"?"relative":"absolute", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem"}}>
+  <div className="Column" style={{paddingTop:l && "3.5rem", flex:"4 4", maxWidth:"100%", position:columnFocus==="detailspanel"?"relative":"absolute", visibility:columnFocus==="detailspanel"?"visible":"hidden", left:columnFocus==="detailspanel"?"0px":"110rem"}}>
     <AuthorNav xs={xs} s={s} m={m} l={l} xl={xl} selectedAuthor={selectedAuthor} setColumnFocus={setColumnFocus} setAuthorFocus={setAuthorFocus} authorBookTitle={authorBookTitle}/>
 
 
@@ -114,7 +114,7 @@ const authorPanelPosition = () =>{
     {selectedAuthor.authorWikiTitle && l?selectedAuthor.authorWikiTitle.slice(0,45):selectedAuthor.authorWikiTitle?`Back to: ${selectedAuthor.authorWikiTitle.slice(0,12)}...`:"Author Details"}
 
     {columnFocus!=="detailspanel"&&
-    <span className="subtitle2" style={{paddingTop:m && "3.5rem",display:"flex",textTransform: "none"
+    <span className="subtitle2" style={{paddingTop:l && "3.5rem",display:"flex",textTransform: "none"
 ,position:l?"absolute":"relative", left:l?"1rem":"", bottom:l?"0":""}}><p>expand</p><AddCircleOutlineOutlinedIcon style={{alignSelf:"center",width:"1rem",height:"1rem",marginLeft:!l&&"0.5rem",marginTop:l&&"0.5rem"}}/></span>}
 
     </h5>

@@ -1,5 +1,5 @@
 import Links from './Links'
-
+import {useState} from 'react'
 import MapOutlinedIcon from '@material-ui/icons/MapOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
@@ -8,21 +8,42 @@ import CodeOutlinedIcon from '@material-ui/icons/CodeOutlined';
 
 const Nav = ({xs, s, m, l, xl, authorView, columnFocus, setColumnFocus, languageSetting, setLanguageSetting}) => {
 
+const [routeFocus, setRouteFocus] = useState("/")
+
 const colorForNav = () => {
-  if(columnFocus==="init"){
-    return "var(--searchpaneltext)";
-  }else if(columnFocus==="shelfpanel"){
-      return "var(--shelfpaneltext)";
-  }else if(columnFocus==="detailspanel"){
-    if(authorView===true){
-      return "var(--paper)"
-    }else {
-      return "var(--detailspaneltext)";
-    }
-  }
+  if(routeFocus==="/about"){
+    return "var(--paper)"
+  }else if (routeFocus==="/suggest") {
+    return "var(--shelfpaneltext)"
+  }else if (routeFocus==="/" && !l) {
+  return "var(--searchpaneltext)"
+  }else{
+
+        if(columnFocus==="init"){
+          return "var(--searchpaneltext)";
+        }else if(columnFocus==="shelfpanel"){
+            return "var(--shelfpaneltext)";
+        }else if(columnFocus==="detailspanel"){
+          if(authorView===true){
+            return "var(--paper)"
+          }else {
+            return "var(--detailspaneltext)";
+          }
+        }
+
+}
 }
 
 const background = () => {
+  if(routeFocus==="/about"){
+    return "var(--ink)"
+  }else if (routeFocus==="/suggest") {
+    return "var(--shelfpanel)"
+  }else if (routeFocus==="/" && !l) {
+  return "var(--searchpanel)"
+  }else{
+
+
   if(columnFocus==="init"){
     return "var(--searchpanel)";
   }else if(columnFocus==="shelfpanel"){
@@ -34,6 +55,7 @@ const background = () => {
       return "var(--detailspanel)";
     }
   }
+}
 }
 
 
@@ -60,15 +82,15 @@ const background = () => {
 
         <div className="overline-logo" style={{opacity:0.8, padding:"0.2rem 3rem 0 3rem"}}>Humanities Database</div>
         <div className="Row">
-        <Links routeName="/" label="Home" Icon={SearchOutlinedIcon}/>
+        <Links routeName="/" label="Home" setRouteFocus={setRouteFocus} Icon={SearchOutlinedIcon}/>
 
-        <Links routeName="/suggest" label="Suggest" Icon={RateReviewOutlinedIcon}/>
+        <Links routeName="/suggest" label="Suggest" setRouteFocus={setRouteFocus} Icon={RateReviewOutlinedIcon}/>
 
-        <Links routeName="/map" label="Lit map" Icon={MapOutlinedIcon}/>
+        <Links routeName="/map" label="Lit map" setRouteFocus={setRouteFocus} Icon={MapOutlinedIcon}/>
 
-        <Links routeName="/saved" label="Saved" Icon={BookmarkBorderOutlinedIcon}/>
+        <Links routeName="/saved" label="Saved" setRouteFocus={setRouteFocus} Icon={BookmarkBorderOutlinedIcon}/>
 
-        <Links routeName="/about" label="About" Icon={CodeOutlinedIcon}/>
+        <Links routeName="/about" label="About" setRouteFocus={setRouteFocus} Icon={CodeOutlinedIcon}/>
         </div>
 
   </nav>

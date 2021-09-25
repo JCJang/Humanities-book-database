@@ -114,6 +114,8 @@ html{
 
 --shelfoverlaytablet:calc(100vh - 13.5rem);
 --focusedpaneltablet:calc(100vh - 11.5rem);
+--searchpanelheighttablet:calc(100vh - 15rem);
+
 --focusedpanelmobile:calc(100vh - 13rem);
 
 --lightshadow: 0px 4px 4px rgba(0, 0, 0, 0.15);

@@ -982,7 +982,7 @@ useEffect(()=>{
 },[shelfValue])
 
   return (
-  <div className="noScrollBar" style={{backgroundColor:"var(--shelfpanel)", paddingTop:"3.5rem", color:"var(--shelfpaneltext)",height:m?"100vh":"var(--panelheightmobile)",overflow:"auto",padding:!m && "1rem"}}>
+  <div className="noScrollBar" style={{backgroundColor:"var(--shelfpanel)", padding:m?"3.5rem 0 0 0":"1rem", color:"var(--shelfpaneltext)",height:m?"100vh":"var(--panelheightmobile)",overflow:"auto"}}>
     <form onSubmit={(e)=>validateShelf(e)} className="SubmissionForm Column" id="shelfform" style={{width:l?"50vw":m?"70vw":"95vw", margin:"auto"}}>
       <h5 style={{marginTop:"3rem", marginBottom:"2rem"}}>Step 1:</h5>
 
