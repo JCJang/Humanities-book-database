@@ -138,7 +138,7 @@ const filterAroundPublicationDate = (arr)=>{
 }
 
   return (
-    <div className="noScrollBar OpenedAuthor" style={{marginLeft:"3rem", overflowY:authorFocus==='init'?'':'auto',maxWidth:"100%", height:"var(--authorheight)"}}>
+    <div className="noScrollBar OpenedAuthor transition" style={{marginLeft:"3rem", overflowY:authorFocus==='init'?'':'auto',maxWidth:"100%", height:"var(--authorheight)"}}>
 
     {!l &&
       < div id = "shelfNav"
@@ -152,7 +152,7 @@ const filterAroundPublicationDate = (arr)=>{
     } >
       <div className="authorNav" style={{height:"4rem", width:"4rem",color:"var(--paper)",cursor:authorFocus==="init" && "pointer"}} onClick={()=>{setAuthorNavFocus("bg")}}><ChevronLeftOutlinedIcon/>Prev</div>
 
-      <div className="Column">
+      <div className="Column transition">
       <div>{authorNavLinks.map((link)=>{if(link===authorNavFocus){return <CircleIcon/>}else{return <CircleOutlinedIcon/>}})}</div>
       <div className="overline-details">LEARN MORE</div>
       </div>
@@ -263,10 +263,10 @@ const filterAroundPublicationDate = (arr)=>{
 </div>
 
     {authorFocus!=="bg" &&
-      <div className="Column" style={{flex:"1 1 30%",position:authorFocus==="init"?"absolute":"relative",marginTop:"1rem",right:expandFurtherReading?"0":authorFocus==="init"?"10rem":"0", marginLeft:"3rem"}}>
+      <div className="Column transition" style={{flex:"1 1 30%",position:authorFocus==="init"?"absolute":"relative",marginTop:"1rem",right:expandFurtherReading?"0":authorFocus==="init"?"10rem":"0", marginLeft:"3rem"}}>
 
         {authorFocus!=="bg" &&
-         <div onClick={()=>{setAuthorFocus("bio")}} className={authorFocus==="bio"?"upwardsGradient":""} style={{flex:"4 4",cursor:authorFocus==="init" && "pointer"}}><img  style={{maxHeight:authorFocus==="init"?"18rem":expandFurtherReading?"13rem":"18rem", width:"auto",boxShadow:"var(--heavyshadow)"}} src={selectedAuthor.authorWikiImage}></img></div>
+         <div onClick={()=>{setAuthorFocus("bio")}} className={authorFocus==="bio"?"upwardsGradient transition":"transition"} style={{flex:"4 4",cursor:authorFocus==="init" && "pointer"}}><img  style={{maxHeight:authorFocus==="init"?"18rem":expandFurtherReading?"13rem":"18rem", width:"auto",boxShadow:"var(--heavyshadow)"}} src={selectedAuthor.authorWikiImage}></img></div>
       }
 
         {authorFocus==="init" &&

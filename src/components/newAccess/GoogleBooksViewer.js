@@ -1,5 +1,5 @@
 import React from 'react'
-import {useEffect, useState} from 'react'
+import {useEffect, useState, useCallback} from 'react'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import createSvgIcon from "@material-ui/icons/utils/createSvgIcon";
 
@@ -28,7 +28,18 @@ const ArrowBackCircleIcon = createSvgIcon(
 
 
 /*referencing Christina Sohn from https://chsohn15.medium.com/integrating-google-books-embedded-viewer-api-into-a-react-app-a81fde35c14d*/
-  const GoogleBooksViewer = ({xs,s,m,l,xl,bookIdentifier,authors,authorView, displayBookTitle,columnFocus, isbnOrId,setColumnFocus, googleScriptLoaded}) => {
+  const GoogleBooksViewer = ({xs,s,m,l,xl,bookIdentifier,authors,authorView, displayBookTitle,columnFocus, isbnOrId,setColumnFocus, googleScriptLoaded,setGoogleScriptLoaded}) => {
+
+    const loadGoogleBooksViewer = useCallback(() => {
+      const scriptTag = document.createElement('script')
+      scriptTag.src= 'https://www.google.com/books/jsapi.js'
+      scriptTag.type="text/javascript"
+      scriptTag.id = "google-script"
+      document.body.appendChild(scriptTag);
+
+      document.getElementById("google-script").addEventListener('load', ()=>setGoogleScriptLoaded(true))
+    }, [])
+
 
     const [authorBookTitle, setAuthorBookTitle] = useState('')
     const [author, setAuthor] = useState('')
@@ -52,14 +63,14 @@ const ArrowBackCircleIcon = createSvgIcon(
 
   if (window.viewer) {
     if(window.google.books.load===false){alert("Please reload the page for the preview to work");return}else{
-    var viewer = new window.google.books.DefaultViewer(document.getElementById('viewerCanvas'));
+    let viewer = new window.google.books.DefaultViewer(document.getElementById('viewerCanvas'));
     viewer.load(`https://books.google.com/books?vid=ISBN${bookIdentifier}&printsec=toc`, alertNotFound);}
   } else {
     if(window.google.books.load===false){alert("Please reload the page for the preview to work");return
     }else{
     window.google.books.load();
     window.google.books.setOnLoadCallback(() => {
-      var viewer = new window.google.books.DefaultViewer(document.getElementById('viewerCanvas'));
+      let viewer = new window.google.books.DefaultViewer(document.getElementById('viewerCanvas'));
       window.viewer = viewer
       viewer.load(`https://books.google.com/books?vid=ISBN${bookIdentifier}&printsec=toc`, alertNotFound);
     })
@@ -69,20 +80,20 @@ const ArrowBackCircleIcon = createSvgIcon(
 } else {
   if(window.viewer){
     if(window.google.books.load===false){alert("Please reload the page for the preview to work");return}else{
-     var viewer = new window.google.books.DefaultViewer
+     let viewer = new window.google.books.DefaultViewer
      (document.getElementById('viewerCanvas'));
      viewer.load(bookIdentifier, alertNotFound);}
    }else{
      if(window.google.books.load===false){alert("Please reload the page for the preview to work");return}else{
      window.google.books.load();
      window.google.books.setOnLoadCallback(() => {
-     var viewer = new window.google.books.DefaultViewer
+     let viewer = new window.google.books.DefaultViewer
          (document.getElementById('viewerCanvas'));
      window.viewer = viewer
      viewer.load(bookIdentifier, alertNotFound);
    })
  }}}
-}else{console.log("loading google script")}
+}else{loadGoogleBooksViewer(); console.log("reloading google script")}
 }, [googleScriptLoaded, isbnOrId, bookIdentifier])
 
 

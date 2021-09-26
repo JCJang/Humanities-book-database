@@ -226,12 +226,12 @@ const getAndSet = async(highlights) =>{
 
 
 <div className="Column noScrollBar" style={{display:columnFocus==="shelfpanel"?"":"none",flex:"2 2",height:l?"var(--panelheight)":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)",width:l?"":m?"var(--tabletWidth)":"var(--mobileWidth)", overflowY:"auto",scrollBehavior:"smooth", margin:!m?"0 2rem":!l?"0 5rem":"", paddingTop:!m && "5rem"}}>
-      <h4 id="title" style={{paddingTop:"1.5rem"}}>{selectedBook.bookTitle}</h4>
+      <h4 className="h4-details" id="title" style={{paddingTop:"1.5rem"}}>{selectedBook.bookTitle}</h4>
 
 
 <div className="Row" style={{justifyContent:"space-between"}}>
   <div className="Column" style={{width:"auto",flex:"1 1"}}>
-      <div className="subtitle1" style={{padding:"1rem 0"}}>
+      <div className="subtitle1" style={{padding:"1.5rem 0"}}>
       {selectedBook.bookAuthor && selectedBook.bookAuthor.join(", ")}
       {document.queryCommandSupported('copy') && <span  value={toCopy}><FileCopyOutlinedIcon  style={{margin:"0 0.5rem", cursor:"pointer"}} onClick={()=>{copyToClipboard(toCopy)}}/><span className="caption" style={{color:"var(--shelfpanellistpressedborder)"}}>{copySuccess}</span>
     </span>
@@ -260,7 +260,7 @@ const getAndSet = async(highlights) =>{
       </div>
 
       <div className="Column" style={{flex:"1 1"}}>
-        <span className="btn lightbtn" onClick={()=>{setNewPreview()}} style={{width:"6rem", display:"flex",justifyContent:"center",alignItems:"center",marginTop:"1rem"}}><span  style={{width:"85%"}}>Preview</span><ArrowForwardCircleIcon/></span>
+        <span className="btn lightbtn" onClick={()=>{setNewPreview()}} style={{width:"6rem", display:"flex",justifyContent:"center",alignItems:"center",marginTop:"1.5rem"}}><span  style={{width:"85%"}}>Preview</span><ArrowForwardCircleIcon/></span>
         {selectedBook.bookAuthor && selectedBook.bookAuthor.map((author) => {
           return <span className="btn lightbtn" onClick={()=>{setNewAuthor(author);setAuthorFocus("init")}} style={{width:"6rem", marginTop:"1rem",display:"flex",justifyContent:"center",alignItems:"center"}}><p style={{width:"85%"}}>{`About ${author}`}</p><ArrowForwardCircleIcon/></span>
         })}

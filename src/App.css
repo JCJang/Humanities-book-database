@@ -122,6 +122,8 @@ html{
 
 --lightshadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
 --heavyshadow:0px 6px 8px rgba(0, 0, 0, 0.15);
+
+--lighttextshadow: 0px 2px 2px rgba(0, 0, 0, 0.10);
 --heavytextshadow:0px 6px 8px rgba(0, 0, 0, 0.35);
 
 
@@ -147,7 +149,7 @@ html{
   --details-headline1: 6.5rem/1.5 "Amiri",serif;
   --details-headline2: 4rem/1.5 "Amiri",serif;
   --details-headline3: 3.2rem/1.5 "Amiri",serif;
-  --details-headline4: 2.3rem/1.5 "Amiri",serif;
+  --details-headline4: 2.5rem/1.5 "Amiri",serif;
   --details-headline5: 1.65rem/1.5 "Amiri",serif;
   --details-headline6: bold 1.35rem/1.5 "Amiri",serif;
   --details-body1:  1.2rem/1.5 "Amiri",serif;
@@ -762,6 +764,7 @@ html { font-size: 18px;}
 
 .form-section-suggest{
   width:90%;
+  text-shadow:none;
   background-color: var(--paper);
   box-shadow: var(--heavyshadow);
   padding:2rem;

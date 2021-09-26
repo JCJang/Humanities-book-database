@@ -30,6 +30,7 @@ const App = () => {
 
 
   const loadGoogleBooksViewer = useCallback(() => {
+    setGoogleScriptLoaded(false)
     const scriptTag = document.createElement('script')
     scriptTag.src= 'https://www.google.com/books/jsapi.js'
     scriptTag.type="text/javascript"
@@ -49,7 +50,7 @@ const App = () => {
     <div className="rootContainer">
     {m && <Nav xs={xs} s={s} m={m} l={l} xl={xl} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting} columnFocus={columnFocus} authorView={authorView} setAuthorView={setAuthorView}/>}
     <Route path = "/" exact>
-    <Access xs={xs} s={s} m={m} l={l} xl={xl} columnFocus={columnFocus} setColumnFocus={setColumnFocus} googleScriptLoaded={googleScriptLoaded} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting} authorView={authorView} setAuthorView={setAuthorView}/>
+    <Access xs={xs} s={s} m={m} l={l} xl={xl} columnFocus={columnFocus} setColumnFocus={setColumnFocus} googleScriptLoaded={googleScriptLoaded} setGoogleScriptLoaded={setGoogleScriptLoaded} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting} authorView={authorView} setAuthorView={setAuthorView}/>
     </Route>
     <Route path = "/suggest" exact>
     <Suggest xs={xs} s={s} m={m} l={l} xl={xl} languageSetting={languageSetting} setLanguageSetting={setLanguageSetting} />

@@ -179,7 +179,7 @@ const AuthorPanel = ({xs,s,m,l,xl, selectedAuthor, expandFurtherReading, setExpa
           l?"Row":"Column"
         }
       style = {
-        { 
+        {
           color: "var(--authorpaneltext)",
           backgroundColor: "var(--authorpanel)",
           boxShadow: expandFurtherReading ? "var(--heavyshadow) inset" : "",

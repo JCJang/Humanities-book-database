@@ -875,34 +875,47 @@ const LitMap = ({xs, s, m, l, xl, languageSetting="en"}) => {
       alignItems:"center",
       justifyContent:"center",
       paddingTop:m?"3.5rem":"",
+      textShadow:"var(--heavytextshadow)"
     }
     }
     return (
 
 
-      <div className="Column body2-details" style={litMapStyle()}>
+      <div className="Column body1-details" style={litMapStyle()}>
 
       <div style={{height:m?"100vh":"var(--panelheightmobile)",width:"100vw",  top:"0px", left:"0px", position:"absolute",overflow:"hidden"}}>
       <ImageFadeIn src={oldMap} style={{width:"100vw",height:"100vh",objectFit:"cover"}}/>
     </div>
 
       <div className="noScrollBar" style={{width:"100vw",padding:"2rem",
-       overflowY:"auto",position:"relative"}}>
+       overflowY:"auto",position:"relative", opacity:"0.8"}}>
 
     <form onSubmit={(e)=>validateShelf(e)} className="SubmissionForm Column" id="shelfform" style={{width:l?"50vw":m?"85vw":"90vw", margin:"auto"}}>
 
-    <div className="h3-details" style={{textShadow:"var(--heavytextshadow)"}}>A World Literature Map featuring lesser-known works.</div>
-     <h6 className="subtitle1">Upcoming Feature: A Literature Database to accompany your Humanities reading. Submit your recommendations below.</h6>
-     <div style={{width:"90%",margin:"0.5rem 0",borderTop:"1.5px solid var(--detailspaneltext)"}}></div>
+    <div className="h3-details">A World Literature Map featuring lesser-known works.</div>
+     <h6 style={{marginLeft:m && "1.5rem"}} className="subtitle1">Upcoming Feature: A Literature Database to accompany your Humanities reading. Submit your recommendations below.</h6>
+     <div style={{width:"90%",margin:m?"0.5rem 0 0.5rem 1.5rem":"0.5rem 0",borderTop:"1.5px solid var(--detailspaneltext)"}}></div>
      <br></br>
-    <div className="form-section-suggest" style={{color:"var(--ink)"}}>
+     <div>A preview of the current database:
+     <ul style={{margin:"1rem"}}>
+     <li className="body1-details" style={{margin:"1rem"}}><p style={{letterSpacing:"0.8px"}} className="h6-details">The Ice Palace by Tarjei Vesas (Norway)</p></li>
+     <li className="body1-details" style={{margin:"1rem"}}><p style={{letterSpacing:"0.8px"}} className="h6-details">Piano Stories by Felisberto Hernández (Uruguay)
+</p></li>
+     <li className="body1-details" style={{margin:"1rem"}}><p style={{letterSpacing:"0.8px"}} className="h6-details">Kokoro by Natsume Souseki (Japan)
+</p></li>
+     <li className="body1-details" style={{margin:"1rem"}}><p style={{letterSpacing:"0.8px"}} className="h6-details">Red Rose, White Rose by Eileen Chang (China)</p></li>
+     </ul>
+</div>
+
+    <div className="form-section-suggest" style={{marginTop:"2rem",color:"var(--shelfpaneltext)"}}>
       <h4>Submit Book information</h4>
+      <div className="subtitle1" style={{textTransform: "none",margin:"2rem 0"}}>As a general criteria, submit a book that is lesser-known outside of its own country or language. Avoid works that have already achieved the category of 'Classics', and suggest instead works that you hope to see achieve that label.</div>
       <label htmlFor="title">Title:</label>
       <input className="form-control" type="text" id="title" value={title}
        onChange={(e)=>setTitle(e.target.value)} placeholder="book title"/>
-       <label htmlFor="author">Author(s):</label>
-       <textarea className="form-control"  id="author" form="SubmissionForm" rows={4} value={author}
-        onChange={(e)=>setAuthor(e.target.value.split(/[、,,،，]\s*/))} placeholder="book author(s). Should match wikipedia page title. Separate with commas"/>
+       <label htmlFor="author">Author:</label>
+       <input className="form-control"  type="text" id="author" form="SubmissionForm" value={author}
+        onChange={(e)=>setAuthor(e.target.value.split(/[、,,،，]\s*/))} placeholder="book author"/>
         <label htmlFor="earliestPublicationYear">First Published in the year (negative number for B.C.)</label>
         <input className="form-control" type="number" id="earliestPublicationYear" value={earliestPublicationYear}
          onChange={(e)=>setEarliestPublicationYear(e.target.value)} placeholder="earliest publication year"/>
@@ -916,11 +929,12 @@ const LitMap = ({xs, s, m, l, xl, languageSetting="en"}) => {
          hasSelectAll={false}
          />
            <label htmlFor="recommendationReason">Why this book?</label>
-           <textarea className="form-control" type="text" rows="10" id="recommendationReason" value={recommendationReason}
-                    onChange={(e)=>setRecommendationReason(e.target.value)} placeholder="what makes this book special?"/>
+           <textarea className="form-control" type="text" rows="6" id="recommendationReason" value={recommendationReason}
+                    onChange={(e)=>setRecommendationReason(e.target.value)} placeholder="What compelled you to read this book, and what did you enjoy about it that may convince others to do so as well?"/>
         </div>
             <input  className="btn darkbtn" type="submit" style={{margin:"3rem", width:"100%", backgroundColor:preventResubmitBook?"var(--inactive)":"var(--darkactionbtn)", color:preventResubmitBook?"var(--shelfpanellistborder)":"var(--darkactionbtntext)",boxShadow:preventResubmitBook?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateShelf(e)}} value="Submit Shelf and Book"/>
     </form>
+    <div style={{textAlign:"right", opacity:"0.9"}} className="body2"> Photo by <a className="AttributionLink" href="https://www.pexels.com/@ekrulila" target="_blank">Ekrulila</a></div>
     </div>
     </div>
   )

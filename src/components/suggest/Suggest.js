@@ -992,6 +992,7 @@ const suggestStyle = () =>{
   alignItems:"center",
   justifyContent:"center",
   paddingTop:m?"3.5rem":"",
+  textShadow:"var(--lighttextshadow)"
 }
 }
 return (
@@ -1004,13 +1005,13 @@ return (
 </div>
 
   <div className="noScrollBar" style={{width:"100vw",padding:"2rem",
-   overflowY:"auto",position:"relative"}}>
+   overflowY:"auto",position:"relative",opacity:"0.9"}}>
 
     <form onSubmit={(e)=>validateBook(e)} className="SubmissionForm Column" id="shelfform" style={{maxWidth:l?"50vw":m?"85vw":"90vw",margin:"auto",position:"relative"}}>
 
         <h3 className="h3-details">Suggest a Humanities Book.</h3>
-        <h6 className="subtitle1">Make sure to review submission criteria in the About page.</h6>
-        <div style={{width:"90%",margin:"0.5rem 0",borderTop:"1.5px solid var(--ink)"}}></div>
+        <h6 style={{marginLeft:m && "1.5rem"}} className="subtitle1">Make sure to review submission criteria in the About page.</h6>
+        <div style={{width:"90%",margin:m?"0.5rem 0 0.5rem 1.5rem":"0.5rem 0",borderTop:"1.5px solid var(--ink)"}}></div>
         <br></br>
       <h5 style={{marginTop:"3rem", marginBottom:"2rem"}}>Step 1:</h5>
 
@@ -1084,6 +1085,10 @@ return (
         </div>
             <input  className="btn lightbtn" type="submit" style={{margin:"3rem", width:"100%", backgroundColor:preventResubmitShelf?"var(--inactive)":"var(--lightactionbtn)", color:preventResubmitShelf?"var(--shelfpanellistborder)":"var(--lightactionbtntext)",boxShadow:preventResubmitShelf?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateBook(e)}} value="Submit Shelf and Book"/>
     </form>
+    <div style={{textAlign:"right", opacity:"0.9"}} className="body2">Photo by <a style={{color:"var(--ink)"}} className="AttributionLink" href="https://www.pexels.com/@hngstrm" target="_blank">
+Henry & Co.</a>
+    </div>
+
     </div>
   </div>
   )

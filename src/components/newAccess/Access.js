@@ -11,7 +11,7 @@ import ArrowRightRoundedIcon from '@material-ui/icons/ArrowRightRounded';
 
 
 
-const Access =({xs,s,m,l,xl, authorView, setAuthorView, googleScriptLoaded, columnFocus, setColumnFocus, languageSetting, setLanguageSetting})=>{
+const Access =({xs,s,m,l,xl, authorView, setAuthorView, googleScriptLoaded, setGoogleScriptLoaded, columnFocus, setColumnFocus, languageSetting, setLanguageSetting})=>{
 
   const [slideOut, setSlideOut] = useState(false)
 
@@ -443,26 +443,26 @@ const Access =({xs,s,m,l,xl, authorView, setAuthorView, googleScriptLoaded, colu
 
 
 
-        <div  className="col-1" style={{paddingTop:m && "3.5rem", width:l?col1widthL():"100vw",height:l?"100vh":m?col1heightM():col1heightS()}}>
+        <div  className="col-1 transition" style={{paddingTop:m && "3.5rem", width:l?col1widthL():"100vw",height:l?"100vh":m?col1heightM():col1heightS()}}>
 
         <SearchForm allShelves={allShelves} xs={xs} s={s} m={m} l={l} xl={xl} columnFocus={columnFocus} setLanguageSetting={setLanguageSetting} languageSetting={languageSetting} setColumnFocus={setColumnFocus} shelfId={shelfId} setShelfId={setShelfId} selectedShelf={selectedShelf} setSelectedShelf={setSelectedShelf} setBookNumber={setBookNumber}/>
 
         </div>
-        <div className="col-2"  style={{paddingTop:l && "3.5rem", width:l?col2widthL():"100vw",boxShadow:l?"var(--panelshadow)":"var(--panelshadowtop)",height:l?"100vh":m?col2heightM():col2heightS()}}>
+        <div className="col-2 transition"  style={{paddingTop:l && "3.5rem", width:l?col2widthL():"100vw",boxShadow:l?"var(--panelshadow)":"var(--panelshadowtop)",height:l?"100vh":m?col2heightM():col2heightS()}}>
           {selectedShelf && <OpenedShelf xs={xs} s={s} m={m} l={l} xl={xl} setAuthorFocus={setAuthorFocus} setAuthorToGet={setAuthorToGet} setDisplayEarliestPublicationYear={setDisplayEarliestPublicationYear} setColumnFocus={setColumnFocus} authorView={authorView} setAuthorView={setAuthorView} columnFocus={columnFocus} setIsbnOrId={setIsbnOrId} setBookIdentifier={setBookIdentifier} selectedShelf={selectedShelf} setDisplayBookTitle={setDisplayBookTitle} bookNumber={bookNumber} setBookNumber={setBookNumber} slideOut={slideOut} setSlideOut={setSlideOut} selectedBook={selectedBook} setSelectedBook={setSelectedBook}/>}
           </div>
 
         <AnimatePresence>
           {authorView===false &&
-            <div className="col-3" style={{paddingTop:l && "3.5rem", overflow:"hidden",width:l?col3widthLpreview():"100vw",boxShadow:l?"var(--panelshadow)":"var(--panelshadowtop)",height:l?"100vh":m?col3heightMpreview():col3heightSpreview()}}
+            <div className="col-3 transition" style={{paddingTop:l && "3.5rem", overflow:"hidden",width:l?col3widthLpreview():"100vw",boxShadow:l?"var(--panelshadow)":"var(--panelshadowtop)",height:l?"100vh":m?col3heightMpreview():col3heightSpreview()}}
             >
-            <GoogleBooksViewer xs={xs} s={s} m={m} l={l} xl={xl} authorView={authorView} columnFocus={columnFocus} authorView={authorView} setAuthorView={setAuthorView} authors={selectedBook.bookAuthor} bookIdentifier={bookIdentifier} setColumnFocus={setColumnFocus} displayBookTitle={displayBookTitle} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId} slideOut={slideOut} setSlideOut={setSlideOut}/>
+            <GoogleBooksViewer xs={xs} s={s} m={m} l={l} xl={xl} authorView={authorView} columnFocus={columnFocus} authorView={authorView} setAuthorView={setAuthorView} authors={selectedBook.bookAuthor} bookIdentifier={bookIdentifier} setColumnFocus={setColumnFocus} displayBookTitle={displayBookTitle} setGoogleScriptLoaded={setGoogleScriptLoaded} googleScriptLoaded={googleScriptLoaded} isbnOrId={isbnOrId} slideOut={slideOut} setSlideOut={setSlideOut}/>
             </div>
           }
         </AnimatePresence>
         <AnimatePresence>
           {authorView===true &&
-              <div className="col-3" style={{width:l?col3widthLauthor():"100vw",boxShadow:l?"var(--panelshadow)":"var(--panelshadowtop)",height:l?"100vh":m?col3heightMauthor():col3heightSauthor()}}
+              <div className="col-3 transition" style={{width:l?col3widthLauthor():"100vw",boxShadow:l?"var(--panelshadow)":"var(--panelshadowtop)",height:l?"100vh":m?col3heightMauthor():col3heightSauthor()}}
               >
                 <OpenedAuthor xs={xs} s={s} m={m} l={l} xl={xl} languageSetting={languageSetting} authorFocus={authorFocus} setAuthorFocus={setAuthorFocus} displayEarliestPublicationYear={displayEarliestPublicationYear} columnFocus={columnFocus} authorView={authorView} setAuthorView={setAuthorView} setColumnFocus={setColumnFocus} displayBookTitle={displayBookTitle} selectedAuthor={selectedAuthor} setShelfId={setShelfId} setBookNumber={setBookNumber} bookNumber={bookNumber}/>
               </div>
