@@ -52,7 +52,7 @@ const Access =({xs,s,m,l,xl, authorView, setAuthorView, googleScriptLoaded, colu
     const col1heightM = () => {
 
       if(columnFocus === "init"){
-        return "var(--focusedpaneltablet)";
+        return "var(--focusedsearchpaneltablet)";
       }else{
         return "7.5rem";
       }

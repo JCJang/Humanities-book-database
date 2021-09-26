@@ -1,5 +1,5 @@
 import Links from './Links'
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 import MapOutlinedIcon from '@material-ui/icons/MapOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
@@ -10,15 +10,16 @@ const Nav = ({xs, s, m, l, xl, authorView, columnFocus, setColumnFocus, language
 
 const [routeFocus, setRouteFocus] = useState("/")
 
+
 const colorForNav = () => {
   if(routeFocus==="/about"){
     return "var(--paper)"
   }else if (routeFocus==="/suggest") {
-    return "var(--shelfpaneltext)"
+    return "var(--ink)"
   }else if (routeFocus==="/map") {
-    return "var(--detailspaneltext)"
-  }else if (routeFocus==="/saved") {
     return "var(--paper)"
+  }else if (routeFocus==="/saved") {
+    return "var(--ink)"
   }else if (routeFocus==="/" && !l) {
   return "var(--searchpaneltext)"
   }else{
@@ -37,16 +38,17 @@ const colorForNav = () => {
 
 }
 }
+//edd1b8
 
 const background = () => {
   if(routeFocus==="/about"){
     return "var(--ink)"
   }else if (routeFocus==="/suggest") {
-    return "var(--shelfpanel)"
+    return "#e9e7e3"
   }else if (routeFocus==="/map") {
-    return "var(--detailspanel)"
+    return "var(--shelfpaneltext)"
   }else if (routeFocus==="/saved") {
-    return "var(--ink)"
+    return "#e6e6e6"
   }else if (routeFocus==="/" && !l) {
   return "var(--searchpanel)"
   }else{
@@ -77,7 +79,7 @@ const background = () => {
   //  </select>
 
   return (
-    <nav className={"Row"} style={{
+    <nav className="Row transition" style={{
     width: "100vw",
     position:"absolute",
     background: background(),
@@ -96,7 +98,7 @@ const background = () => {
 
         <Links routeName="/map" label="Lit map" setRouteFocus={setRouteFocus} Icon={MapOutlinedIcon}/>
 
-        <Links routeName="/saved" label="Saved" setRouteFocus={setRouteFocus} Icon={BookmarkBorderOutlinedIcon}/>
+        <Links routeName="/saved" label="Accounts" setRouteFocus={setRouteFocus} Icon={BookmarkBorderOutlinedIcon}/>
 
         <Links routeName="/about" label="About" setRouteFocus={setRouteFocus} Icon={CodeOutlinedIcon}/>
         </div>

@@ -11,8 +11,8 @@ const NavMobile = ({xs, s, m, l, xl, languageSetting, setLanguageSetting}) => {
   const navMobile = () => {
     return {
     width: "100vw",
-    background: "var(--nav-text)",
-    color: "var(--nav)",
+    background: "var(--paper)",
+    color: "var(--ink)",
     height: "4rem",
     alignItems: "center",
     justifyContent: "space-around",

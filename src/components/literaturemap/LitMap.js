@@ -2,7 +2,9 @@ import {useEffect, useState} from 'react';
 import Axios from 'axios'
 import { MultiSelect } from "react-multi-select-component";
 import {useCallback} from 'react'
-import svgMap from'../images/world.svg';
+import oldMap from'../images/pexels-ekrulila-4402272.jpg';
+import ImageFadeIn from '../customHooks/imageFadeIn'
+
 
 const LitMap = ({xs, s, m, l, xl, languageSetting="en"}) => {
   const [title, setTitle] =  useState('')
@@ -863,15 +865,38 @@ const LitMap = ({xs, s, m, l, xl, languageSetting="en"}) => {
 
   }
 
+  const litMapStyle = () =>{
+      return {
+      backgroundColor:"var(--shelfpaneltext)",
+      color:"var(--paper)",
+      lineHeight:"2",
+      height:m?"100vh":"var(--panelheightmobile)",
+      overflow:"hidden",
+      alignItems:"center",
+      justifyContent:"center",
+      paddingTop:m?"3.5rem":"",
+    }
+    }
+    return (
 
-  return (
-  <div className="noScrollBar" style={{backgroundColor:"var(--detailspanel)", padding:m?"3.5rem 0 0 0":"1rem", color:"var(--detailspaneltext)",height:m?"100vh":"var(--panelheightmobile)",overflow:"auto"}}>
+
+      <div className="Column body2-details" style={litMapStyle()}>
+
+      <div style={{height:m?"100vh":"var(--panelheightmobile)",width:"100vw",  top:"0px", left:"0px", position:"absolute",overflow:"hidden"}}>
+      <ImageFadeIn src={oldMap} style={{width:"100vw",height:"100vh",objectFit:"cover"}}/>
+    </div>
+
+      <div className="noScrollBar" style={{width:"100vw",padding:"2rem",
+       overflowY:"auto",position:"relative"}}>
+
     <form onSubmit={(e)=>validateShelf(e)} className="SubmissionForm Column" id="shelfform" style={{width:l?"50vw":m?"85vw":"90vw", margin:"auto"}}>
 
-    <div className="h3-details">A World Literature Map featuring lesser-known works.</div>
-    <img style={{padding:"3rem"}} src={svgMap} alt="world map"/>
+    <div className="h3-details" style={{textShadow:"var(--heavytextshadow)"}}>A World Literature Map featuring lesser-known works.</div>
+     <h6 className="subtitle1">Upcoming Feature: A Literature Database to accompany your Humanities reading. Submit your recommendations below.</h6>
+     <div style={{width:"90%",margin:"0.5rem 0",borderTop:"1.5px solid var(--detailspaneltext)"}}></div>
+     <br></br>
     <div className="form-section-suggest" style={{color:"var(--ink)"}}>
-      <h6>Submit Book information</h6>
+      <h4>Submit Book information</h4>
       <label htmlFor="title">Title:</label>
       <input className="form-control" type="text" id="title" value={title}
        onChange={(e)=>setTitle(e.target.value)} placeholder="book title"/>
@@ -896,6 +921,7 @@ const LitMap = ({xs, s, m, l, xl, languageSetting="en"}) => {
         </div>
             <input  className="btn darkbtn" type="submit" style={{margin:"3rem", width:"100%", backgroundColor:preventResubmitBook?"var(--inactive)":"var(--darkactionbtn)", color:preventResubmitBook?"var(--shelfpanellistborder)":"var(--darkactionbtntext)",boxShadow:preventResubmitBook?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateShelf(e)}} value="Submit Shelf and Book"/>
     </form>
+    </div>
     </div>
   )
 

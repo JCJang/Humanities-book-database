@@ -2,7 +2,8 @@ import {useEffect, useState} from 'react';
 import Axios from 'axios'
 import { MultiSelect } from "react-multi-select-component";
 import {useCallback} from 'react'
-
+import whiteMarble from'../images/pexels-henry-&-co-2341290.jpg';
+import ImageFadeIn from '../customHooks/imageFadeIn'
 
 const Suggest = ({xs, s, m, l, xl, languageSetting="en"}) => {
   const [contentKeywords, setContentKeywords] = useState([])//choose from main interests,notable ideas
@@ -891,7 +892,7 @@ useEffect(() => {
     const [subjects, setSubjects] = useState([]);
 
 
-  const validateShelf = (e)=>{
+  const validateBook = (e)=>{
     e.preventDefault();
     if(!title||!author||!subjects){
       alert("please fill in missing data");
@@ -981,18 +982,39 @@ useEffect(()=>{
   setNewShelf(false);
 },[shelfValue])
 
-  return (
-  <div className="noScrollBar" style={{backgroundColor:"var(--shelfpanel)", padding:m?"3.5rem 0 0 0":"1rem", color:"var(--shelfpaneltext)",height:m?"100vh":"var(--panelheightmobile)",overflow:"auto"}}>
+const suggestStyle = () =>{
+  return {
+  backgroundColor:"#e9e7e3",
+  color:"var(--ink)",
+  lineHeight:"2",
+  height:m?"100vh":"var(--panelheightmobile)",
+  overflow:"hidden",
+  alignItems:"center",
+  justifyContent:"center",
+  paddingTop:m?"3.5rem":"",
+}
+}
+return (
 
 
-    <form onSubmit={(e)=>validateShelf(e)} className="SubmissionForm Column" id="shelfform" style={{width:l?"50vw":m?"70vw":"95vw", margin:"auto"}}>
+  <div className="Column body2-details" style={suggestStyle()}>
 
-        <h6>Suggest a Humanities Book.</h6>
-        <h6 className="subtitle1">Make sure to review criteria in the About page.</h6>
+  <div style={{height:m?"100vh":"var(--panelheightmobile)", width:"100vw", top:"0px", left:"0px", position:"absolute",overflow:"hidden"}}>
+  <ImageFadeIn src={whiteMarble} style={{width:"100vw",height:"100vh",objectFit:"cover"}}/>
+</div>
 
+  <div className="noScrollBar" style={{width:"100vw",padding:"2rem",
+   overflowY:"auto",position:"relative"}}>
+
+    <form onSubmit={(e)=>validateBook(e)} className="SubmissionForm Column" id="shelfform" style={{maxWidth:l?"50vw":m?"85vw":"90vw",margin:"auto",position:"relative"}}>
+
+        <h3 className="h3-details">Suggest a Humanities Book.</h3>
+        <h6 className="subtitle1">Make sure to review submission criteria in the About page.</h6>
+        <div style={{width:"90%",margin:"0.5rem 0",borderTop:"1.5px solid var(--ink)"}}></div>
+        <br></br>
       <h5 style={{marginTop:"3rem", marginBottom:"2rem"}}>Step 1:</h5>
 
-      <div className="form-section-suggest">
+      <div className="form-section-suggest" style={{color:"var(--ink)"}}>
       <h6>Select the language of your submission</h6>
 
       <label htmlFor="shelfLanguage">Shelf Language:</label>
@@ -1006,7 +1028,7 @@ useEffect(()=>{
       </div>
       <h5 style={{marginTop:"3rem", marginBottom:"2rem"}}>Step 2:</h5>
 
-      <div className="form-section-suggest">
+      <div className="form-section-suggest" style={{color:"var(--ink)"}}>
       <h6 className="Row">
       <input type="checkbox" style={{alignSelf:"center",justifySelf:"center", marginRight:"1rem",width:"1.5rem",height:"1.5rem"}} id="previewFilter" value="!newShelf" checked={!newShelf} disabled/><div style={{width:"90%"}}>Choose an Existing Shelf</div></h6>
       <label htmlFor="existingshelves" className="subtitle2">Existing Shelves:</label>
@@ -1024,7 +1046,7 @@ useEffect(()=>{
 
 
 
-      <div className="form-section-suggest">
+      <div className="form-section-suggest" style={{color:"var(--ink)"}}>
       <h6 className="Row">
       <input type="checkbox" style={{alignSelf:"center", marginRight:"1rem",width:"1.5rem",height:"1.5rem"}} id="previewFilter" value="newShelf" checked={newShelf} disabled/><div style={{width:"90%"}}>Edit Shelf Title to Create a New Shelf</div></h6>
       <label htmlFor="shelfTitle">Shelf Title</label>
@@ -1044,7 +1066,7 @@ useEffect(()=>{
 
 
   <h5 style={{marginTop:"3rem", marginBottom:"2rem"}}>Step 3:</h5>
-    <div className="form-section-suggest">
+    <div className="form-section-suggest"  style={{color:"var(--ink)"}}>
   <h6>Submit Book information</h6>
       <label htmlFor="title">Title:</label>
       <input className="form-control" type="text" id="title" value={title}
@@ -1060,9 +1082,10 @@ useEffect(()=>{
                    <textarea className="form-control" type="text" rows="20" id="bookHighlights" value={bookHighlights}
                     onChange={(e)=>setBookHighlights(e.target.value)} placeholder="2 to 3 paragraphs from the book"/>
         </div>
-            <input  className="btn lightbtn" type="submit" style={{margin:"3rem", width:"100%", backgroundColor:preventResubmitShelf?"var(--inactive)":"var(--lightactionbtn)", color:preventResubmitShelf?"var(--shelfpanellistborder)":"var(--lightactionbtntext)",boxShadow:preventResubmitShelf?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateShelf(e)}} value="Submit Shelf and Book"/>
+            <input  className="btn lightbtn" type="submit" style={{margin:"3rem", width:"100%", backgroundColor:preventResubmitShelf?"var(--inactive)":"var(--lightactionbtn)", color:preventResubmitShelf?"var(--shelfpanellistborder)":"var(--lightactionbtntext)",boxShadow:preventResubmitShelf?"none":"var(--heavyshadow)"}} onClick={(e)=>{validateBook(e)}} value="Submit Shelf and Book"/>
     </form>
     </div>
+  </div>
   )
 
 

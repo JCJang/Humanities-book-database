@@ -101,7 +101,7 @@ html{
 
 --focusedpanel:calc(70vw - 4rem);
 --initpanel:calc(100vw - 8rem);
---authorheight:calc(100vh - 11.5rem);
+--authorheight:calc(100vh - 10rem);
 --authorheightwnavtablet:calc(100vh - 16.5rem);
 --authorheightwonavtablet:calc(100vh - 30.5rem);
 --authorheightwnavmobile:calc(100vh - 19rem);
@@ -114,12 +114,16 @@ html{
 
 --shelfoverlaytablet:calc(100vh - 13.5rem);
 --focusedpaneltablet:calc(100vh - 11.5rem);
---searchpanelheighttablet:calc(100vh - 15rem);
+--focusedsearchpaneltablet:calc(100vh - 7.5rem);
+
+--searchpanelheighttablet:calc(100vh - 11rem);
 
 --focusedpanelmobile:calc(100vh - 13rem);
 
 --lightshadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
 --heavyshadow:0px 6px 8px rgba(0, 0, 0, 0.15);
+--heavytextshadow:0px 6px 8px rgba(0, 0, 0, 0.35);
+
 
 --panelshadow:6px 0px 8px rgba(0, 0, 0, 0.15) inset;
 --panelshadowtop:0px 6px 8px rgba(0, 0, 0, 0.15) inset;
@@ -776,4 +780,8 @@ html { font-size: 18px;}
   font:var(--details-headline6);
   align-self: center;
   margin-bottom: 2rem;
+}
+
+.opaque {
+  opacity: .95;
 }

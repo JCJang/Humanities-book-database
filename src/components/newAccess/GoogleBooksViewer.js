@@ -42,7 +42,6 @@ const ArrowBackCircleIcon = createSvgIcon(
       setAuthor(newAuthor)
     },[bookIdentifier])
 
-     //if isbn is not working, use google id as backup.
      function alertNotFound() { console.log("preview unavailable")
 }
 
@@ -52,36 +51,37 @@ const ArrowBackCircleIcon = createSvgIcon(
  if (isbnOrId === true) {
 
   if (window.viewer) {
-    if(window.google.books===false){alert("Please reload the page for the preview to work");return}
+    if(window.google.books.load===false){alert("Please reload the page for the preview to work");return}else{
     var viewer = new window.google.books.DefaultViewer(document.getElementById('viewerCanvas'));
-    viewer.load(`https://books.google.com/books?vid=ISBN${bookIdentifier}&printsec=toc`, alertNotFound);
+    viewer.load(`https://books.google.com/books?vid=ISBN${bookIdentifier}&printsec=toc`, alertNotFound);}
   } else {
-    if(window.google.books===false){alert("Please reload the page for the preview to work");return}
-    window.google.books.load({     "language": "en"    });
+    if(window.google.books.load===false){alert("Please reload the page for the preview to work");return
+    }else{
+    window.google.books.load();
     window.google.books.setOnLoadCallback(() => {
       var viewer = new window.google.books.DefaultViewer(document.getElementById('viewerCanvas'));
       window.viewer = viewer
       viewer.load(`https://books.google.com/books?vid=ISBN${bookIdentifier}&printsec=toc`, alertNotFound);
     })
   }
+  }
 
 } else {
   if(window.viewer){
-    if(window.google.books===false){alert("Please reload the page for the preview to work");return}
+    if(window.google.books.load===false){alert("Please reload the page for the preview to work");return}else{
      var viewer = new window.google.books.DefaultViewer
      (document.getElementById('viewerCanvas'));
-     viewer.load(bookIdentifier, alertNotFound);
-   }
-   else{
-     if(window.google.books===false){alert("Please reload the page for the preview to work");return}
-     window.google.books.load({"language": "en"});
+     viewer.load(bookIdentifier, alertNotFound);}
+   }else{
+     if(window.google.books.load===false){alert("Please reload the page for the preview to work");return}else{
+     window.google.books.load();
      window.google.books.setOnLoadCallback(() => {
      var viewer = new window.google.books.DefaultViewer
          (document.getElementById('viewerCanvas'));
      window.viewer = viewer
      viewer.load(bookIdentifier, alertNotFound);
    })
- }}
+ }}}
 }else{console.log("loading google script")}
 }, [googleScriptLoaded, isbnOrId, bookIdentifier])
 
