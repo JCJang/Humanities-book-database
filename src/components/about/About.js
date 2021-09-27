@@ -32,7 +32,7 @@ const About = ({xs, s, m, l, xl}) => {
 
 
     function postComment(){
-      Axios.post("http://localhost:3001/suggestliteraturebook",{
+      Axios.post("https://humanities-book.herokuapp.com/suggestliteraturebook",{
         bookTitle:"COMMENT",
         bookAuthor:name,
         publicationLanguage:email,

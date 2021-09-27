@@ -99,7 +99,7 @@ useEffect(()=>{
     return newStr
     }
 
-    Axios.post("http://localhost:5000/getauthortimeline",{
+    Axios.post("https://humanities-book.herokuapp.com/getauthortimeline",{
     language: languageSetting,
      timelineWikiTitle:capitalize(timeline)
 

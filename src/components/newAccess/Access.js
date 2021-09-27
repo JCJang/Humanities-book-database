@@ -203,7 +203,7 @@ const Access =({xs,s,m,l,xl, authorView, setAuthorView, googleScriptLoaded, setG
 
     useEffect(()=>{
       if(shelfId.length<10){return}
-      Axios.post("http://localhost:3001/openedshelf",{
+      Axios.post("https://humanities-book.herokuapp.com/openedshelf",{
         shelfLanguage:languageSetting,
         shelfId:shelfId
       })
@@ -297,7 +297,7 @@ const Access =({xs,s,m,l,xl, authorView, setAuthorView, googleScriptLoaded, setG
         authorWikiExtract:"",
       })
 
-      Axios.post("http://localhost:3001/allshelves",{
+      Axios.post("https://humanities-book.herokuapp.com/allshelves",{
         languageSetting:languageSetting
       }).then((res)=>{
 
@@ -341,7 +341,7 @@ const Access =({xs,s,m,l,xl, authorView, setAuthorView, googleScriptLoaded, setG
         authorBgKeywords:[],
         authorWikiExtract:"",
       })
-      Axios.post("http://localhost:3001/openedauthor",{
+      Axios.post("https://humanities-book.herokuapp.com/openedauthor",{
         authorLanguage:languageSetting,
         authorToGet:authorToGet
       })
