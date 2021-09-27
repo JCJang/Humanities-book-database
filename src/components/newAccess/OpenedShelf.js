@@ -1,7 +1,7 @@
 //icons
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined';
 import LaunchRoundedIcon from '@material-ui/icons/LaunchRounded';
-import {useState,useEffect} from 'react'
+import {useState,useEffect,useRef} from 'react'
 import createSvgIcon from "@material-ui/icons/utils/createSvgIcon";
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 
@@ -46,6 +46,39 @@ const OpenedShelf = ({xs,s,m,l,xl,selectedShelf, selectedBook, setSelectedBook, 
            return year;
          }
        }
+
+ const [displayShelfScroll, setDisplayShelfScroll] = useState(true)
+
+       const shelfScroll = useRef();
+
+         const detectShelfScrollBottom = () => {
+             if (shelfScroll.current) {
+               const { scrollTop, scrollHeight, clientHeight } = shelfScroll.current;
+               if (scrollTop + clientHeight > scrollHeight - 200) {
+                 // TO SOMETHING HERE
+                 setDisplayShelfScroll(false)
+               }else{
+                 setDisplayShelfScroll(true)
+               }
+             }
+           };
+
+   const [displayBookScroll, setDisplayBookScroll] = useState(true)
+
+       const bookScroll = useRef();
+
+         const detectBookScrollBottom = () => {
+             if (bookScroll.current) {
+               const { scrollTop, scrollHeight, clientHeight } = bookScroll.current;
+               if (scrollTop + clientHeight > scrollHeight - 200) {
+                     // TO SOMETHING HERE
+                 setDisplayBookScroll(false)
+               }else{
+                 setDisplayBookScroll(true)
+               }
+             }
+         };
+
  //reset copy success message upon book change
 
        useEffect(()=>{
@@ -200,11 +233,11 @@ const getAndSet = async(highlights) =>{
         </div>
         <div className="Row" style={{marginTop:"0.5rem"}}>
         <p onClick={()=>{setContentOrSubjectKeywords(true)}} className="subtitle2" style={{backgroundColor:contentOrSubjectKeywords?"white":"#907e73",color:contentOrSubjectKeywords?"var(--shelfpaneltext)":"white", borderLeft:"none",border:"1.5px solid #907e73", borderRadius:"5px 0 0 5px", padding:"0 1rem"}}>Content</p>
-        <p onClick={()=>{setContentOrSubjectKeywords(false)}} className="subtitle2" style={{backgroundColor:contentOrSubjectKeywords?"#907e73":"white", color:contentOrSubjectKeywords?"white":"var(--shelfpaneltext)",borderLeft:"none",border:"1.5px solid #907e73", borderRadius:"0 5px 5px 0", padding:"0 1rem"}}>Background</p>
+        <p onClick={()=>{setContentOrSubjectKeywords(false); detectBookScrollBottom(); detectShelfScrollBottom()}} className="subtitle2" style={{backgroundColor:contentOrSubjectKeywords?"#907e73":"white", color:contentOrSubjectKeywords?"white":"var(--shelfpaneltext)",borderLeft:"none",border:"1.5px solid #907e73", borderRadius:"0 5px 5px 0", padding:"0 1rem"}}>Background</p>
         </div>
-    <div className="noScrollBar" style={{height:"70vh",overflowY:"auto", marginTop:"1rem"}}>
+    <div className="noScrollBar" onScroll={()=>detectShelfScrollBottom()} ref={shelfScroll} style={{alignItems:"center",height:"75vh",overflowY:"auto", marginTop:"1rem"}}>
       {selectedShelf.shelfBooks.map((book)=>{
-        return <div className="transition" key={book.googleId} onClick={()=>{setNewBook(book); setSlideOut(false)}}
+        return <div className="transition" key={book.googleId} onClick={()=>{setNewBook(book); setSlideOut(false); detectBookScrollBottom(); detectShelfScrollBottom()}}
          style = {
              {
                cursor: book.googleId === googleId ? "" : "pointer",
@@ -222,11 +255,15 @@ const getAndSet = async(highlights) =>{
         <div className="body2">{contentOrSubjectKeywords?book.contentKeywords.map((tag)=>{return <p className="tag" style={{display:"inline-block", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.1rem"}}>{tag}</p>}):book.subjectLinks.map((tag)=>{return <p className="tag" style={{display:"inline-block", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.1rem"}}>{tag}</p>})}</div>
         </div>
       })}
+      {displayShelfScroll &&  <div class="scrollIndicator-container">
+        <div class="scrollIndicatorShelf" ></div>
+      </div>
+    }
     </div>
       </div>
 
 
-<div className="Column noScrollBar" style={{display:columnFocus==="shelfpanel"?"":"none",flex:"2 2",height:l?"var(--panelheight)":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)",width:l?"":m?"var(--tabletWidth)":"var(--mobileWidth)", overflowY:"auto",scrollBehavior:"smooth", margin:!m?"0 2rem":!l?"0 5rem":"", paddingTop:!m && "5rem"}}>
+<div className="Column noScrollBar"  onScroll={()=>detectBookScrollBottom()} ref={bookScroll} style={{alignItems:"center",display:columnFocus==="shelfpanel"?"":"none",flex:"2 2",height:l?"var(--panelheight)":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)",width:l?"":m?"var(--tabletWidth)":"var(--mobileWidth)", overflowY:"auto",scrollBehavior:"smooth", margin:!m?"0 2rem":!l?"0 5rem":"", paddingTop:!m && "5rem"}}>
       <h4 className="h4-details" id="title" style={{paddingTop:"1.5rem"}}>{selectedBook.bookTitle}</h4>
 
 
@@ -266,7 +303,7 @@ const getAndSet = async(highlights) =>{
           return <span className="btn lightbtn" onClick={()=>{setNewAuthor(author);setAuthorFocus("init")}} style={{width:"6rem", marginTop:"1rem",display:"flex",justifyContent:"center",alignItems:"center"}}><p style={{width:"85%"}}>{`About ${author}`}</p><ArrowForwardCircleIcon/></span>
         })}
         <span className="btn" style={{width:"10rem",color:"var(--shelfpanellistpressedborder)",position:"relative"}}
-       onClick={()=>{setShowKeywords(!showKeywords)}}><span style={{bottom:"0.5rem", position:"absolute"}}>{showKeywords?"Hide Keywords":"Show Keywords"}</span></span>
+       onClick={()=>{setShowKeywords(!showKeywords); detectBookScrollBottom(); detectShelfScrollBottom()}}><span style={{bottom:"0.5rem", position:"absolute"}}>{showKeywords?"Hide Keywords":"Show Keywords"}</span></span>
     </div>
   </div>
 
@@ -320,6 +357,9 @@ const getAndSet = async(highlights) =>{
       <div style={{display:"flex",alignItems:"center", justifyContent:"center",marginBottom:"2rem"}}>
       <a style={{textDecoration:"none",color:"var(--shelfpanellistpressedborder)",padding:"1.5rem"}} href="#title" className="btn">Back to Top</a>
       </div>
+      {displayBookScroll &&  <div class="scrollIndicator-container">
+        <div class="scrollIndicatorBook"></div>
+      </div>}
     </div>
     <h5 className={l?"tabshelf tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.8", cursor:columnFocus==="init"&&l?"":columnFocus!=="shelfpanel"?"pointer":"",display:l?"":columnFocus==="shelfpanel"?"none":"flex",alignItems:"center",justifyContent:"space-between",padding:l?"":m?"2rem":"1.6rem"}} onClick={()=>{if(l && columnFocus==="init"){return;}else{setColumnFocus("shelfpanel")}}}>
     {selectedBook.bookTitle && l? selectedBook.bookTitle.slice(0,45):selectedBook.bookTitle?`Back to: ${selectedBook.bookTitle.slice(0,12)}...`:"Book Title"}

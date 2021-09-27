@@ -33,12 +33,12 @@
   background-color: var(--inactive);
   border-radius: 20px;
   cursor: pointer;
-  border: 1.5px solid var(--nav);
+  border: 1.5px solid var(--inactive);
 
 }
 
 ::-webkit-scrollbar-corner{
-  background: var(--nav);
+  background: var(--inactive);
 
 }
 
@@ -784,7 +784,178 @@ html { font-size: 18px;}
   align-self: center;
   margin-bottom: 2rem;
 }
+.scrollIndicator-container {
+  width: 2px;
+  height: 15px;
+  position: absolute;
+  bottom:2rem;
+  margin: auto;
 
-.opaque {
-  opacity: .95;
+
+}
+.scrollIndicatorSearch {
+  width: 1.5px;
+  height: 0px;
+  background-color: var(--searchpaneltext);
+  top: 0;
+  bottom: initial;
+  animation: line-animation 2.5s ease-in-out 0s infinite normal;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.scrollIndicatorSearch::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid var(--searchpaneltext);
+  border-bottom: 2px solid var(--searchpaneltext);
+  transform: rotate(45deg);
+  display: block;
+  position: absolute;
+  bottom: 0;
+  animation: arrow-animation 2.5s ease-in-out 0s infinite normal;
+}
+.scrollIndicatorSearch::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid var(--searchpaneltext);
+  border-bottom: 2px solid var(--searchpaneltext);
+  transform: rotate(45deg);
+  display: block;
+  position: absolute;
+  bottom: 7px;
+  animation: arrow-animation 2.5s ease-in-out 0s infinite normal;
+}
+
+
+.scrollIndicatorShelf {
+  width: 1.5px;
+  height: 0px;
+  background-color: var(--shelfpaneltext);
+  top: 0;
+  bottom: initial;
+  animation: line-animation 2.5s ease-in-out 0s infinite normal;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.scrollIndicatorShelf::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid var(--shelfpaneltext);
+  border-bottom: 2px solid var(--shelfpaneltext);
+  transform: rotate(45deg);
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left:8.5vw;
+  animation: arrow-animation 2.5s ease-in-out 0s infinite normal;
+}
+.scrollIndicatorShelf::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid var(--shelfpaneltext);
+  border-bottom: 2px solid var(--shelfpaneltext);
+  transform: rotate(45deg);
+  display: block;
+  position: absolute;
+  bottom: 7px;
+  left:8.5vw;
+
+  animation: arrow-animation 2.5s ease-in-out 0s infinite normal;
+}
+
+
+.scrollIndicatorBook {
+  width: 1.5px;
+  height: 0px;
+  background-color: var(--shelfpaneltext);
+  top: 0;
+  bottom: initial;
+  animation: line-animation 2.5s ease-in-out 0s infinite normal;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.scrollIndicatorBook::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid var(--shelfpaneltext);
+  border-bottom: 2px solid var(--shelfpaneltext);
+  transform: rotate(45deg);
+  display: block;
+  position: absolute;
+  bottom: 0;
+  animation: arrow-animation 2.5s ease-in-out 0s infinite normal;
+}
+.scrollIndicatorBook::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid var(--shelfpaneltext);
+  border-bottom: 2px solid var(--shelfpaneltext);
+  transform: rotate(45deg);
+  display: block;
+  position: absolute;
+  bottom: 7px;
+  animation: arrow-animation 2.5s ease-in-out 0s infinite normal;
+}
+
+.scrollIndicatorAuthor {
+  width: 1.5px;
+  height: 0px;
+  background-color: var(--paper);
+  top: 0;
+  bottom: initial;
+  animation: line-animation 2.5s ease-in-out 0s infinite normal;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.scrollIndicatorAuthor::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid var(--paper);
+  border-bottom: 2px solid var(--paper);
+  transform: rotate(45deg);
+  display: block;
+  position: absolute;
+  bottom: 0;
+  animation: arrow-animation 2.5s ease-in-out 0s infinite normal;
+}
+.scrollIndicatorAuthor::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid var(--paper);
+  border-bottom: 2px solid var(--paper);
+  transform: rotate(45deg);
+  display: block;
+  position: absolute;
+  bottom: 7px;
+  animation: arrow-animation 2.5s ease-in-out 0s infinite normal;
+}
+
+
+
+@keyframes line-animation {
+  0% {opacity: 0.5}
+  50% {opacity: 0.9}
+  100% {opacity: 0.5}
+}
+
+@keyframes arrow-animation {
+  0% {opacity: 0.5}
+  50% {opacity: 0.9}
+  100% {opacity: 0.5}
 }

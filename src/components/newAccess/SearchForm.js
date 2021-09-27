@@ -1,4 +1,4 @@
-import {useState,useEffect} from 'react'
+import {useState,useEffect,useRef} from 'react'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 //
 // {l && columnFocus==="init" ?
@@ -16,6 +16,22 @@ const SearchForm = ({xs,s,m,l,xl,allShelves, columnFocus, setColumnFocus, setLan
   const [shelfQuery, setShelfQuery] =  useState('')
   const [shelfResults, setShelfResults] = useState(false)
   const [shelfTitle, setShelfTitle] = useState('Shelf Title')
+  const [displayScroll, setDisplayScroll] = useState(true)
+  const noScrollBar = useRef();
+
+    const detectScrollBottom = () => {
+        if (noScrollBar.current) {
+          const { scrollTop, scrollHeight, clientHeight } = noScrollBar.current;
+          console.log(scrollHeight)
+          if (scrollTop + clientHeight > scrollHeight - 200) {
+            // TO SOMETHING HERE
+            console.log('Reached bottom')
+            setDisplayScroll(false)
+          }else{
+            setDisplayScroll(true)
+          }
+        }
+      };
 
 const searchH5Cursor = () => {
   if(l){
@@ -70,9 +86,9 @@ const searchFormDisplay = () =>{
       <label htmlFor="searchForm" className={columnFocus!=="init"?"h6-details":!m?"h6-details":"h3-details"} style={{margin: "0 1rem 1rem 1rem"}}>What Questions are on your mind?</label>
       <h6 style={{margin:m && "0.7rem", alignSelf:"flex-start"}} className="subtitle1">Select a shelf below.</h6>
       <input className="query-form" type="text" id="shelfQuery" placeholder="filter by keywords here" value={shelfQuery}
-       onChange={(e)=>setShelfQuery(e.target.value)}/>
+       onChange={(e)=>{setShelfQuery(e.target.value);detectScrollBottom()}}/>
          </div>
-          <div className="Column noScrollBar" style={{width:"100%",alignItems:"center",overflowY:"auto", marginBottom:"0.1rem"}}>
+          <div className="Column noScrollBar" onScroll={()=>detectScrollBottom()} ref={noScrollBar} style={{width:"100%",alignItems:"center",overflowY:"auto", marginBottom:"0.1rem"}}>
                 {shelfResults && shelfResults.map((shelf)=><div onClick={()=>{setNewShelf(shelf)}} className="transition" key={shelf.shelfId}
                 style={{cursor:shelf.shelfId===shelfId?"":"pointer",color:"searchpaneltext",width:l && columnFocus==="init"?"30rem":l && columnFocus==="shelfpanel"?"21vw":m?"70vw":"80vw", backgroundColor:shelf.shelfId===shelfId?"white":"var(--paper)",
                 border:shelf.shelfId===shelfId?"1.5px solid var(--searchpaneltext)":"1.5px solid var(--searchpanellistborder)",
@@ -88,6 +104,9 @@ const searchFormDisplay = () =>{
                   })}
                   </div>
                 </div>)}
+                {displayScroll &&  <div class="scrollIndicator-container">
+                  <div class="scrollIndicatorSearch"></div>
+                </div>}
           </div>
 
     </div>
