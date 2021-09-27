@@ -909,7 +909,7 @@ html { font-size: 18px;}
   animation: arrow-animation 2.5s ease-in-out 0s infinite normal;
 }
 
-.scrollIndicatorAuthor {
+.scrollIndicatorBg {
   width: 1.5px;
   height: 0px;
   background-color: var(--paper);
@@ -921,29 +921,74 @@ html { font-size: 18px;}
   justify-content: center;
   align-items: center;
 }
-.scrollIndicatorAuthor::before {
+.scrollIndicatorBg::before {
   content: '';
   width: 10px;
   height: 10px;
-  border-right: 2px solid var(--paper);
-  border-bottom: 2px solid var(--paper);
+  border-right: 2px solid white;
+  border-bottom: 2px solid white;
   transform: rotate(45deg);
   display: block;
   position: absolute;
   bottom: 0;
   animation: arrow-animation 2.5s ease-in-out 0s infinite normal;
+  left:30vw;
+
 }
-.scrollIndicatorAuthor::after {
+.scrollIndicatorBg::after {
   content: '';
   width: 10px;
   height: 10px;
-  border-right: 2px solid var(--paper);
-  border-bottom: 2px solid var(--paper);
+  border-right: 2px solid white;
+  border-bottom: 2px solid white;
   transform: rotate(45deg);
   display: block;
   position: absolute;
   bottom: 7px;
   animation: arrow-animation 2.5s ease-in-out 0s infinite normal;
+  left:30vw;
+
+}
+
+.scrollIndicatorBio {
+  width: 1.5px;
+  height: 0px;
+  background-color: var(--darkactionbtn);
+  top: 0;
+  bottom: initial;
+  animation: line-animation 2.5s ease-in-out 0s infinite normal;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.scrollIndicatorBio::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid var(--darkactionbtn);
+  border-bottom: 2px solid var(--darkactionbtn);
+  transform: rotate(45deg);
+  display: block;
+  position: absolute;
+  bottom: 0;
+  animation: arrow-animation 2.5s ease-in-out 0s infinite normal;
+  left:30vw;
+
+}
+.scrollIndicatorBio::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid var(--darkactionbtn);
+  border-bottom: 2px solid var(--darkactionbtn);
+  transform: rotate(45deg);
+  display: block;
+  position: absolute;
+  bottom: 7px;
+  animation: arrow-animation 2.5s ease-in-out 0s infinite normal;
+  left:30vw;
+
 }
 
 

@@ -1,5 +1,5 @@
 import Axios from 'axios'
-import {useEffect, useState} from 'react'
+import {useEffect, useState,useRef} from 'react'
 import LaunchRoundedIcon from '@material-ui/icons/LaunchRounded';
 import createSvgIcon from "@material-ui/icons/utils/createSvgIcon";
 import ChevronRightOutlinedIcon from '@material-ui/icons/ChevronRightOutlined';
@@ -31,6 +31,22 @@ const authorNavLinks = ["bg", "bio"]
       return year;
     }
   }
+
+     const [displayAuthorScroll, setDisplayAuthorScroll] = useState(true)
+
+         const authorScroll = useRef();
+
+           const detectAuthorScrollBottom = () => {
+               if (authorScroll.current) {
+                 const { scrollTop, scrollHeight, clientHeight } = authorScroll.current;
+                 if (scrollTop + clientHeight > scrollHeight - 200) {
+                       // TO SOMETHING HERE
+                   setDisplayAuthorScroll(false)
+                 }else{
+                   setDisplayAuthorScroll(true)
+                 }
+               }
+           };
 
 
 // parser
@@ -138,7 +154,7 @@ const filterAroundPublicationDate = (arr)=>{
 }
 
   return (
-    <div className="noScrollBar OpenedAuthor transition" style={{marginLeft:"3rem", overflowY:authorFocus==='init'?'':'auto',maxWidth:"100%", height:"var(--authorheight)"}}>
+    <div className="noScrollBar OpenedAuthor transition" onScroll={()=>detectAuthorScrollBottom()} ref={authorScroll} style={{marginLeft:"3rem", overflowY:authorFocus==='init'?'':'auto',maxWidth:"100%", height:"var(--authorheight)"}}>
 
     {!l &&
       < div id = "shelfNav"
@@ -302,6 +318,10 @@ const filterAroundPublicationDate = (arr)=>{
 
     </div>}
     </div>
+    {displayAuthorScroll &&  <div class="scrollIndicator-container">
+      <div class={authorFocus==="bg"?"scrollIndicatorBg":"scrollIndicatorBio"} style={{display:authorFocus==="init"&&"none"}}></div>
+    </div>
+  }
   </div>
 
   )

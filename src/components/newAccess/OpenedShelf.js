@@ -116,6 +116,11 @@ useEffect(()=>{
 },[selectedShelf, bookNumber])
 
 
+useEffect(()=>{
+  detectBookScrollBottom();
+  detectShelfScrollBottom()
+},[selectedShelf])
+
 //onClick functions
   const setNewBook = (book) =>{
     setGoogleId(book.googleId);
@@ -124,7 +129,8 @@ useEffect(()=>{
     setDisplayBookTitle(book.bookTitle)
     setToCopy(`${book.bookTitle} by ${book.bookAuthor.join(", ")}`);
     getAndSet(book.bookHighlights);
-    console.log(selectedBook)
+    detectBookScrollBottom();
+    detectShelfScrollBottom()
   }
 
 const setNewAuthor = (author) =>{
@@ -141,7 +147,7 @@ const setNewPreview = () =>{
 const getAndSet = async(highlights) =>{
     if(highlights.length===0){setBookHighlights([]); return}
       const parseHighlights = async() => {
-      let  paragraphArr = highlights.split("``")
+      let  paragraphArr = highlights.trim().split("``")
       if(paragraphArr.length>1){
         paragraphArr = paragraphArr.slice(1).map(a=>{return a.replace(/\n*/g,"")})
       }
@@ -237,7 +243,7 @@ const getAndSet = async(highlights) =>{
         </div>
     <div className="noScrollBar" onScroll={()=>detectShelfScrollBottom()} ref={shelfScroll} style={{alignItems:"center",height:"75vh",overflowY:"auto", marginTop:"1rem"}}>
       {selectedShelf.shelfBooks.map((book)=>{
-        return <div className="transition" key={book.googleId} onClick={()=>{setNewBook(book); setSlideOut(false); detectBookScrollBottom(); detectShelfScrollBottom()}}
+        return <div className="transition" key={book.googleId} onClick={()=>{setNewBook(book); setSlideOut(false)}}
          style = {
              {
                cursor: book.googleId === googleId ? "" : "pointer",
@@ -263,7 +269,7 @@ const getAndSet = async(highlights) =>{
       </div>
 
 
-<div className="Column noScrollBar"  onScroll={()=>detectBookScrollBottom()} ref={bookScroll} style={{alignItems:"center",display:columnFocus==="shelfpanel"?"":"none",flex:"2 2",height:l?"var(--panelheight)":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)",width:l?"":m?"var(--tabletWidth)":"var(--mobileWidth)", overflowY:"auto",scrollBehavior:"smooth", margin:!m?"0 2rem":!l?"0 5rem":"", paddingTop:!m && "5rem"}}>
+<div className="Column noScrollBar"  onScroll={()=>detectBookScrollBottom()} ref={bookScroll} style={{display:columnFocus==="shelfpanel"?"":"none",flex:"2 2",height:l?"var(--panelheight)":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)",width:l?"":m?"var(--tabletWidth)":"var(--mobileWidth)", overflowY:"auto",scrollBehavior:"smooth", margin:!m?"0 2rem":!l?"0 5rem":"", paddingTop:!m && "5rem"}}>
       <h4 className="h4-details" id="title" style={{paddingTop:"1.5rem"}}>{selectedBook.bookTitle}</h4>
 
 
@@ -357,7 +363,7 @@ const getAndSet = async(highlights) =>{
       <div style={{display:"flex",alignItems:"center", justifyContent:"center",marginBottom:"2rem"}}>
       <a style={{textDecoration:"none",color:"var(--shelfpanellistpressedborder)",padding:"1.5rem"}} href="#title" className="btn">Back to Top</a>
       </div>
-      {displayBookScroll &&  <div class="scrollIndicator-container">
+      {displayBookScroll &&  <div class="scrollIndicator-container" style={{alignSelf:"center"}}>
         <div class="scrollIndicatorBook"></div>
       </div>}
     </div>
