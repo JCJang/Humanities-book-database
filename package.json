@@ -15,6 +15,7 @@
     "framer-motion": "^4.1.17",
     "infobox-parser": "^3.6.1",
     "json-server": "^0.16.3",
+    "openssl": "^1.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.2.0",
