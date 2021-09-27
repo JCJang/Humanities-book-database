@@ -70,7 +70,7 @@ const About = ({xs, s, m, l, xl}) => {
 
      <div style={{maxWidth:l?"50vw":m?"85vw":"90vw",margin:"auto"}}>
      <h3 className="h3-details">What makes a good book?</h3>
-     <div style={{width:"90%",margin:m?"0.5rem 0 0.5rem 1.5rem":"0.5rem 0",borderTop:"1.5px solid var(--paper)"}}></div>
+     <div style={{width:"90%",margin:m?"0.5rem 0 0.5rem 1.5rem":"0.5rem 0",borderTop:"1.8px solid var(--paper)"}}></div>
      <br></br>
     This platform’s goal is to <em>answer questions</em>. Humanities books submitted for approval will thus be scrutinized for the following core qualities: Personality, Rationality, Specificity, and Systematicity.
     <ul style={{margin:"1rem"}}>

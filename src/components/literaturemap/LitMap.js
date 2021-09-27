@@ -894,7 +894,7 @@ const LitMap = ({xs, s, m, l, xl, languageSetting="en"}) => {
 
     <div className="h3-details">A World Literature Map featuring lesser-known works.</div>
      <h6 style={{marginLeft:m && "1.5rem"}} className="subtitle1">Upcoming Feature: A Literature Database to accompany your Humanities reading. Submit your recommendations below.</h6>
-     <div style={{width:"90%",margin:m?"0.5rem 0 0.5rem 1.5rem":"0.5rem 0",borderTop:"1.5px solid var(--detailspaneltext)"}}></div>
+     <div style={{width:"90%",margin:m?"0.5rem 0 0.5rem 1.5rem":"0.5rem 0",borderTop:"1.8px solid var(--detailspaneltext)"}}></div>
      <br></br>
      <div>A preview of the current database:
      <ul style={{margin:"1rem"}}>

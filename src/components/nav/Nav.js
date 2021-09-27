@@ -92,15 +92,15 @@ const background = () => {
 
         <div className="overline-logo" style={{opacity:0.8, padding:"0.2rem 3rem 0 3rem"}}>Humanities Database</div>
         <div className="Row">
-        <Links routeName="/" label="Home" setRouteFocus={setRouteFocus} Icon={SearchOutlinedIcon}/>
+        <Links routeName="/" label="Home" routeFocus={routeFocus} colorForNav={colorForNav} setRouteFocus={setRouteFocus} Icon={SearchOutlinedIcon}/>
 
-        <Links routeName="/suggest" label="Suggest" setRouteFocus={setRouteFocus} Icon={RateReviewOutlinedIcon}/>
+        <Links routeName="/suggest" label="Suggest" routeFocus={routeFocus} colorForNav={colorForNav}  setRouteFocus={setRouteFocus} Icon={RateReviewOutlinedIcon}/>
 
-        <Links routeName="/map" label="Lit map" setRouteFocus={setRouteFocus} Icon={MapOutlinedIcon}/>
+        <Links routeName="/map" label="Lit map" routeFocus={routeFocus} colorForNav={colorForNav}  setRouteFocus={setRouteFocus} Icon={MapOutlinedIcon}/>
 
-        <Links routeName="/saved" label="Accounts" setRouteFocus={setRouteFocus} Icon={BookmarkBorderOutlinedIcon}/>
+        <Links routeName="/saved" label="Accounts" routeFocus={routeFocus} colorForNav={colorForNav}  setRouteFocus={setRouteFocus} Icon={BookmarkBorderOutlinedIcon}/>
 
-        <Links routeName="/about" label="About" setRouteFocus={setRouteFocus} Icon={CodeOutlinedIcon}/>
+        <Links routeName="/about" label="About" routeFocus={routeFocus} colorForNav={colorForNav}  setRouteFocus={setRouteFocus} Icon={CodeOutlinedIcon}/>
         </div>
 
   </nav>

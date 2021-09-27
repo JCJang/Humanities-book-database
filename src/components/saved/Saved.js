@@ -50,7 +50,7 @@ const Saved = ({xs, s, m, l, xl}) => {
         <div style={{textAlign:"right", opacity:"0.9"}} className="body2">Photo by <a style={{color:"var(--ink)"}} className="AttributionLink" href="https://www.pexels.com/@hngstrm" target="_blank">
     Henry & Co.</a>
         </div>
-        
+
         </div>
         </div>
 

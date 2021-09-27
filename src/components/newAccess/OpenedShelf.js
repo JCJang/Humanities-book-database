@@ -189,6 +189,7 @@ const getAndSet = async(highlights) =>{
                 display: columnFocus === "init" ? "none" : columnFocus === "shelfpanel" ? "block" : authorView === true ? "none" : "block",
                 background: "var(--shelfpanel)",
                 width: l ? "" : "100vw",
+                maxWidth:l?"20vw":"",
                 margin: l ? "2rem 2rem" : "0",
                 padding: l ? "0" : m ? "2rem 5rem" : "2rem",
                 boxShadow: !l && "var(--panelshadowtop)",
@@ -320,7 +321,7 @@ const getAndSet = async(highlights) =>{
       <a style={{textDecoration:"none",color:"var(--shelfpanellistpressedborder)",padding:"1.5rem"}} href="#title" className="btn">Back to Top</a>
       </div>
     </div>
-    <h5 className={l?"tabshelf tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.8", cursor:columnFocus!=="shelfpanel"?"pointer":"",display:l?"":columnFocus==="shelfpanel"?"none":"flex",alignItems:"center",justifyContent:"space-between",padding:l?"":m?"2rem":"1.6rem"}} onClick={()=>{if(l && columnFocus==="init"){return;}else{setColumnFocus("shelfpanel")}}}>
+    <h5 className={l?"tabshelf tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.8", cursor:columnFocus==="init"&&l?"":columnFocus!=="shelfpanel"?"pointer":"",display:l?"":columnFocus==="shelfpanel"?"none":"flex",alignItems:"center",justifyContent:"space-between",padding:l?"":m?"2rem":"1.6rem"}} onClick={()=>{if(l && columnFocus==="init"){return;}else{setColumnFocus("shelfpanel")}}}>
     {selectedBook.bookTitle && l? selectedBook.bookTitle.slice(0,45):selectedBook.bookTitle?`Back to: ${selectedBook.bookTitle.slice(0,12)}...`:"Book Title"}
     {columnFocus!=="shelfpanel" &&  <span className="subtitle2" style={{display:"flex",textTransform: "none"
 ,position:l?"absolute":"relative", left:l?"1rem":"", bottom:l?"0":""}}><p>expand</p><AddCircleOutlineOutlinedIcon style={{alignSelf:"center",width:"1rem",height:"1rem",marginLeft:!l&&"0.5rem",marginTop:l&&"0.5rem"}}/></span>}

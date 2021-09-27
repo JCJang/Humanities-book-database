@@ -17,6 +17,21 @@ const SearchForm = ({xs,s,m,l,xl,allShelves, columnFocus, setColumnFocus, setLan
   const [shelfResults, setShelfResults] = useState(false)
   const [shelfTitle, setShelfTitle] = useState('Shelf Title')
 
+const searchH5Cursor = () => {
+  if(l){
+    if(columnFocus==="detailspanel"){
+      return "pointer"
+    }else{
+      return ""
+    }
+  }else{
+    if(columnFocus!=="init"){
+      return "pointer"
+    }else if(columnFocus==="shelfpanel"){
+      return ""
+    }
+  }
+}
 
 useEffect(()=>{
   if(!allShelves){return}
@@ -53,8 +68,7 @@ const searchFormDisplay = () =>{
     flexDirection: "column",padding: l ? "0" : m ? "0 3rem" : "0 2rem"}}>
           <div className="Column" style={{maxWidth:l?"30rem":m?"75vw":"90vw", padding:!l ? "2rem":"2rem 0 0.5rem 0",alignItems:"center", justifyContent:"center"}}>
       <label htmlFor="searchForm" className={columnFocus!=="init"?"h6-details":!m?"h6-details":"h3-details"} style={{margin: "0 1rem 1rem 1rem"}}>What Questions are on your mind?</label>
-      <div style={{width:"90%",margin:"0.5rem 0",borderTop:"1.5px solid var(--searchpaneltext)"}}></div>
-      <br></br>
+      <h6 style={{margin:m && "0.7rem", alignSelf:"flex-start"}} className="subtitle1">Select a shelf below.</h6>
       <input className="query-form" type="text" id="shelfQuery" placeholder="filter by keywords here" value={shelfQuery}
        onChange={(e)=>setShelfQuery(e.target.value)}/>
          </div>
@@ -77,7 +91,7 @@ const searchFormDisplay = () =>{
           </div>
 
     </div>
-    <h5 className={l && columnFocus!=="init"?"tabsearch tab-lr h5tab-l":l?"tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.8",cursor:columnFocus!=="shelfpanel"?"pointer":columnFocus!=="init"?"pointer":"",display:l?"":columnFocus==="init"?"none":"flex",alignItems:"center",justifyContent:"space-between",padding:l?"":m?"2rem":"1.5rem"}} onClick={()=>{if(l && columnFocus==="init"){return}else if(!l){setColumnFocus("init")}else{setColumnFocus("shelfpanel")}}}>
+    <h5 className={l && columnFocus!=="init"?"tabsearch tab-lr h5tab-l":l?"tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.8",cursor:searchH5Cursor(),display:l?"":columnFocus==="init"?"none":"flex",alignItems:"center",justifyContent:"space-between",padding:l?"":m?"2rem":"1.5rem"}} onClick={()=>{if(l && columnFocus==="init"){return}else if(!l){setColumnFocus("init")}else{setColumnFocus("shelfpanel")}}}>
     <span>
 
     {shelfTitle && l? shelfTitle.slice(0,45):shelfTitle?`Back to: ${shelfTitle.slice(0,12)}...`:"Shelf Details"}
