@@ -29,20 +29,20 @@ const App = () => {
     const xl = useMediaQuery('(min-width: 1200px)');
 
 
-  const loadGoogleBooksViewer = useCallback(() => {
-    setGoogleScriptLoaded(false)
-    const scriptTag = document.createElement('script')
-    scriptTag.src= 'https://www.google.com/books/jsapi.js'
-    scriptTag.type="text/javascript"
-    scriptTag.id = "google-script"
-    document.body.appendChild(scriptTag);
+    useEffect(()=>{
+      const loadGoogleBooksViewer = async() =>{
+        const scriptTag = document.createElement('script')
+        scriptTag.src= 'https://www.google.com/books/jsapi.js'
+        scriptTag.type="text/javascript"
+        scriptTag.id = "google-script"
+        document.body.appendChild(scriptTag);
+      }
 
-    document.getElementById("google-script").addEventListener('load', ()=>setGoogleScriptLoaded(true))
-  }, [])
+      loadGoogleBooksViewer().then(()=>{
+        document.getElementById("google-script").addEventListener('load', ()=>setGoogleScriptLoaded(true))
+      })
 
-
-
-    useEffect(()=>{loadGoogleBooksViewer()},[])
+    },[])
 
 
   return (
