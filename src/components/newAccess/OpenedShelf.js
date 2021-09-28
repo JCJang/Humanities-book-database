@@ -234,7 +234,7 @@ const getAndSet = async(highlights) =>{
                 boxShadow: !l && "var(--panelshadowtop)",
               }
             } >
-        <div>
+        <div style={{margin:m?"":"0 1rem"}}>
         <p className="subtitle1">Keyword Display</p>
         </div>
         <div className="Row" style={{margin:m?"0.5rem 0 0 0":"0.5rem 1rem 0 1rem"}}>
