@@ -405,19 +405,19 @@ const Access =({xs,s,m,l,xl, authorView, setAuthorView, googleScriptLoaded, setG
                   position: "absolute",
                   left: columnFocus === "shelfpanel" ? "0px" : columnFocus === "init" ? "-100%" : authorView === true ? "-100%" : "0px",
                   bottom: "2rem",
-                  height:"var(--focusedpaneltablet)",
+                  height:"70vh",
                   width: "4rem",
                   justifyContent: "center",
                   overflowY:"auto"
                 }
               } >
 
-                <div className="shelfNav tab-lr mirror" style={{ height:"50%", width:"4rem", background:selectedShelf.shelfBooks.length===1?"var(--inactive)":columnFocus==="shelfpanel"?"var(--searchpanellist)":"var(--darkactionbtn)",color:selectedShelf.shelfBooks.length===1?"var(--inactivetext)":columnFocus==="shelfpanel"?"var(--shelfpaneltext)":"var(--darkactionbtntext)"}} onClick={()=>{if(selectedShelf.shelfBooks.length===1){return;}else{ setSlideOut(!slideOut)}}}>SHELF</div>
+                <div className="shelfNav tab-lr mirror" style={{ height:"50%", width:"4rem", background:selectedShelf.shelfBooks.length===1?"var(--inactive)":columnFocus==="shelfpanel"?"var(--paper)":"var(--darkactionbtn)",color:selectedShelf.shelfBooks.length===1?"var(--inactivetext)":columnFocus==="shelfpanel"?"var(--shelfpaneltext)":"var(--darkactionbtntext)", border:selectedShelf.shelfBooks.length===1?"1.5px solid var(--searchpaneltext)":columnFocus==="shelfpanel"?"1.5px solid var(--searchpanellistborder)":""}} onClick={()=>{if(selectedShelf.shelfBooks.length===1){return;}else{ setSlideOut(!slideOut)}}}>SHELF</div>
 
-                <div className="shelfNav" style={{height:"4rem", width:"4rem", background:parseFloat(bookNumber)===0?"var(--inactive)":columnFocus==="shelfpanel"?"var(--searchpanellist)":"var(--darkactionbtn)",color:parseFloat(bookNumber)===0?"var(--inactivetext)":columnFocus==="shelfpanel"?"var(--shelfpaneltext)":"var(--darkactionbtntext)"}} onClick={()=>{prevBook()}}><ArrowLeftRoundedIcon/>prev</div>
+                <div className="shelfNav" style={{height:"4rem", width:"4rem", background:parseFloat(bookNumber)===0?"var(--inactive)":columnFocus==="shelfpanel"?"var(--paper)":"var(--darkactionbtn)",color:parseFloat(bookNumber)===0?"var(--inactivetext)":columnFocus==="shelfpanel"?"var(--shelfpaneltext)":"var(--darkactionbtntext)",border:parseFloat(bookNumber)===0?"1.5px solid var(--searchpaneltext)":columnFocus==="shelfpanel"?"1.5px solid var(--searchpanellistborder)":""}} onClick={()=>{prevBook()}}><ArrowLeftRoundedIcon/>prev</div>
 
 
-                <div className="shelfNav" style={{order:"3",background:parseFloat(bookNumber)===parseFloat(selectedShelf.shelfBooks.length)-1?"var(--inactive)":columnFocus==="shelfpanel"?"var(--searchpanellist)":"var(--darkactionbtn)",color:parseFloat(bookNumber)===parseFloat(selectedShelf.shelfBooks.length)-1?"var(--inactivetext)":columnFocus==="shelfpanel"?"var(--shelfpaneltext)":"var(--darkactionbtntext)",height:"4rem", width:"4rem"}} onClick={()=>{nextBook()}}><ArrowRightRoundedIcon/>next</div>
+                <div className="shelfNav" style={{order:"3",background:parseFloat(bookNumber)===parseFloat(selectedShelf.shelfBooks.length)-1?"var(--inactive)":columnFocus==="shelfpanel"?"var(--paper)":"var(--darkactionbtn)",color:parseFloat(bookNumber)===parseFloat(selectedShelf.shelfBooks.length)-1?"var(--inactivetext)":columnFocus==="shelfpanel"?"var(--shelfpaneltext)":"var(--darkactionbtntext)",border:parseFloat(bookNumber)===parseFloat(selectedShelf.shelfBooks.length)-1?"1.5px solid var(--searchpaneltext)":columnFocus==="shelfpanel"?"1.5px solid var(--searchpanellistborder)":"",height:"4rem", width:"4rem"}} onClick={()=>{nextBook()}}><ArrowRightRoundedIcon/>next</div>
                 </div>}
 
 
@@ -434,11 +434,11 @@ const Access =({xs,s,m,l,xl, authorView, setAuthorView, googleScriptLoaded, setG
                   justifyContent: "center"
                 }
               } >
-                <div className="shelfNav" style={{height:"4rem", width:"4rem", background:parseFloat(bookNumber)===0?"var(--inactive)":columnFocus==="shelfpanel"?"var(--searchpanellist)":"var(--darkactionbtn)",color:parseFloat(bookNumber)===0?"var(--inactivetext)":columnFocus==="shelfpanel"?"var(--shelfpaneltext)":"var(--darkactionbtntext)"}} onClick={()=>{prevBook()}}><ArrowLeftRoundedIcon/>prev</div>
+                <div className="shelfNav" style={{height:"4rem", width:"4rem", background:parseFloat(bookNumber)===0?"var(--inactive)":columnFocus==="shelfpanel"?"var(--paper)":"var(--darkactionbtn)",color:parseFloat(bookNumber)===0?"var(--inactivetext)":columnFocus==="shelfpanel"?"var(--shelfpaneltext)":"var(--darkactionbtntext)",border:parseFloat(bookNumber)===0?"1.5px solid var(--searchpaneltext)":columnFocus==="shelfpanel"?"1.5px solid var(--searchpanellistborder)":""}} onClick={()=>{prevBook()}}><ArrowLeftRoundedIcon/>prev</div>
 
-                <div className={"shelfNav"} style={{height:"4rem", width:"50%", background:selectedShelf.shelfBooks.length===1?"var(--inactive)":columnFocus==="shelfpanel"?"var(--searchpanellist)":"var(--darkactionbtn)",color:selectedShelf.shelfBooks.length===1?"var(--inactivetext)":columnFocus==="shelfpanel"?"var(--shelfpaneltext)":"var(--darkactionbtntext)"}} onClick={()=>{if(selectedShelf.shelfBooks.length===1){return;}else{ setSlideOut(!slideOut)}}}>SHELF</div>
+                <div className={"shelfNav"} style={{height:"4rem", width:"50%", background:selectedShelf.shelfBooks.length===1?"var(--inactive)":columnFocus==="shelfpanel"?"var(--paper)":"var(--darkactionbtn)",color:selectedShelf.shelfBooks.length===1?"var(--inactivetext)":columnFocus==="shelfpanel"?"var(--shelfpaneltext)":"var(--darkactionbtntext)",border:selectedShelf.shelfBooks.length===1?"1.5px solid var(--searchpaneltext)":columnFocus==="shelfpanel"?"1.5px solid var(--searchpanellistborder)":""}} onClick={()=>{if(selectedShelf.shelfBooks.length===1){return;}else{ setSlideOut(!slideOut)}}}>SHELF</div>
 
-                <div className="shelfNav" style={{order:"3",background:parseFloat(bookNumber)===parseFloat(selectedShelf.shelfBooks.length)-1?"var(--inactive)":columnFocus==="shelfpanel"?"var(--searchpanellist)":"var(--darkactionbtn)",color:parseFloat(bookNumber)===parseFloat(selectedShelf.shelfBooks.length)-1?"var(--inactivetext)":columnFocus==="shelfpanel"?"var(--shelfpaneltext)":"var(--darkactionbtntext)",height:"4rem", width:"4rem"}} onClick={()=>{nextBook()}}><ArrowRightRoundedIcon/>next</div>
+                <div className="shelfNav" style={{order:"3",border:parseFloat(bookNumber)===parseFloat(selectedShelf.shelfBooks.length)-1?"1.5px solid var(--searchpaneltext)":columnFocus==="shelfpanel"?"1.5px solid var(--searchpanellistborder)":"",background:parseFloat(bookNumber)===parseFloat(selectedShelf.shelfBooks.length)-1?"var(--inactive)":columnFocus==="shelfpanel"?"var(--paper)":"var(--darkactionbtn)",color:parseFloat(bookNumber)===parseFloat(selectedShelf.shelfBooks.length)-1?"var(--inactivetext)":columnFocus==="shelfpanel"?"var(--shelfpaneltext)":"var(--darkactionbtntext)",height:"4rem", width:"4rem"}} onClick={()=>{nextBook()}}><ArrowRightRoundedIcon/>next</div>
                 </div>
               }
 
@@ -446,7 +446,7 @@ const Access =({xs,s,m,l,xl, authorView, setAuthorView, googleScriptLoaded, setG
 
         <div  className="col-1 transition" style={{paddingTop:m && "3.5rem", width:l?col1widthL():"100vw",height:l?"100vh":m?col1heightM():col1heightS()}}>
 
-        <SearchForm allShelves={allShelves} xs={xs} s={s} m={m} l={l} xl={xl} columnFocus={columnFocus} setLanguageSetting={setLanguageSetting} languageSetting={languageSetting} setColumnFocus={setColumnFocus} shelfId={shelfId} setShelfId={setShelfId} selectedShelf={selectedShelf} setSelectedShelf={setSelectedShelf} setBookNumber={setBookNumber}/>
+        <SearchForm setSlideOut={setSlideOut} allShelves={allShelves} xs={xs} s={s} m={m} l={l} xl={xl} columnFocus={columnFocus} setLanguageSetting={setLanguageSetting} languageSetting={languageSetting} setColumnFocus={setColumnFocus} shelfId={shelfId} setShelfId={setShelfId} selectedShelf={selectedShelf} setSelectedShelf={setSelectedShelf} setBookNumber={setBookNumber}/>
 
         </div>
         <div className="col-2 transition"  style={{paddingTop:l && "3.5rem", width:l?col2widthL():"100vw",boxShadow:l?"var(--panelshadow)":"var(--panelshadowtop)",height:l?"100vh":m?col2heightM():col2heightS()}}>

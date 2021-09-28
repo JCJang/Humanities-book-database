@@ -12,7 +12,7 @@ import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOut
 // <div></div>
 // }
 
-const SearchForm = ({xs,s,m,l,xl,allShelves, columnFocus, setColumnFocus, setLanguageSetting, languageSetting, shelfId, setShelfId,selectedShelf,setSelectedShelf, setBookNumber}) => {
+const SearchForm = ({xs,s,m,l,xl,setSlideOut,allShelves, columnFocus, setColumnFocus, setLanguageSetting, languageSetting, shelfId, setShelfId,selectedShelf,setSelectedShelf, setBookNumber}) => {
   const [shelfQuery, setShelfQuery] =  useState('')
   const [shelfResults, setShelfResults] = useState(false)
   const [shelfTitle, setShelfTitle] = useState('Shelf Title')
@@ -75,6 +75,7 @@ useEffect(()=>{
 },[shelfQuery,allShelves])
 
 const setNewShelf = (shelf) =>{
+  setSlideOut(false)
   setBookNumber('0')
   setShelfId(shelf.shelfId);
   setShelfTitle(shelf.shelfTitle);
