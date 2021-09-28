@@ -408,7 +408,6 @@ const Access =({xs,s,m,l,xl, authorView, setAuthorView, googleScriptLoaded, setG
                   height:"70vh",
                   width: "4rem",
                   justifyContent: "center",
-                  overflowY:"auto"
                 }
               } >
 
