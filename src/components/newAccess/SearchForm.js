@@ -49,6 +49,22 @@ const searchH5Cursor = () => {
   }
 }
 
+const searchH5Expand = () => {
+  if(l){
+    if(columnFocus==="detailspanel"){
+      return "flex"
+    }else{
+      return "hidden"
+    }
+  }else{
+    if(columnFocus!=="init"){
+      return "flex"
+    }else if(columnFocus==="shelfpanel"){
+      return "hidden"
+    }
+  }
+}
+
 useEffect(()=>{
   if(!allShelves){return}
       if(!shelfQuery){
@@ -116,12 +132,7 @@ const searchFormDisplay = () =>{
     {shelfTitle && l? shelfTitle.slice(0,45):shelfTitle?`Back to: ${shelfTitle.slice(0,12)}...`:"Shelf Details"}
 
     </span>
-    {columnFocus!=="init" && l?
-    columnFocus==="shelfpanel" &&
-    <span className="subtitle2" style={{display:"flex",textTransform: "none"
-,position:l?"absolute":"relative", left:l?"1rem":"", bottom:l?"0":""}}><p>expand</p><AddCircleOutlineOutlinedIcon style={{alignSelf:"center",width:"1rem",height:"1rem",marginLeft:!l&&"0.5rem",marginTop:l&&"0.5rem"}}/></span>
-    :
-    <span className="subtitle2" style={{display:"flex",textTransform: "none"
+    {columnFocus!=="init" && <span className="subtitle2" style={{display:searchH5Expand(),textTransform: "none"
 ,position:l?"absolute":"relative", left:l?"1rem":"", bottom:l?"0":""}}><p>expand</p><AddCircleOutlineOutlinedIcon style={{alignSelf:"center",width:"1rem",height:"1rem",marginLeft:!l&&"0.5rem",marginTop:l&&"0.5rem"}}/></span>
 
     }
