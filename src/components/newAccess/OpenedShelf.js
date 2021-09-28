@@ -229,7 +229,7 @@ const getAndSet = async(highlights) =>{
                 background: "var(--shelfpanel)",
                 width: l ? "" : "100vw",
                 maxWidth:l?"20vw":"",
-                margin: l ? "2rem 2rem" : "0 2rem",
+                margin: l ? "2rem 2rem" : "0",
                 padding: l ? "0" : m ? "2rem 5rem" : "7rem 0 2rem 0",
                 boxShadow: !l && "var(--panelshadowtop)",
               }
@@ -237,7 +237,7 @@ const getAndSet = async(highlights) =>{
         <div>
         <p className="subtitle1">Keyword Display</p>
         </div>
-        <div className="Row" style={{marginTop:"0.5rem"}}>
+        <div className="Row" style={{margin:m?"0.5rem 0 0 0":"0.5rem 1rem 0 1rem"}}>
         <p onClick={()=>{setContentOrSubjectKeywords(true)}} className="subtitle2" style={{backgroundColor:contentOrSubjectKeywords?"white":"#907e73",color:contentOrSubjectKeywords?"var(--shelfpaneltext)":"white", borderLeft:"none",border:"1.5px solid #907e73", borderRadius:"5px 0 0 5px", padding:"0 1rem"}}>Content</p>
         <p onClick={()=>{setContentOrSubjectKeywords(false); detectBookScrollBottom(); detectShelfScrollBottom()}} className="subtitle2" style={{backgroundColor:contentOrSubjectKeywords?"#907e73":"white", color:contentOrSubjectKeywords?"white":"var(--shelfpaneltext)",borderLeft:"none",border:"1.5px solid #907e73", borderRadius:"0 5px 5px 0", padding:"0 1rem"}}>Background</p>
         </div>
@@ -253,7 +253,7 @@ const getAndSet = async(highlights) =>{
                transform: book.googleId === googleId ? "translateY(0.3rem)" : "translateY(0px)",
                boxShadow: book.googleId === googleId ? "none" : "var(--heavyshadow)",
                padding: "0.6rem 1rem",
-               margin: "1rem 0"
+               margin: m?"1rem 0":"1rem"
              }
            }>
         <div className="subtitle1" style={{margin:"0 0 0.3rem 0"}}>{book.bookTitle}</div>
