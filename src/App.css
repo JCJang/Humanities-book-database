@@ -67,7 +67,7 @@ html{
   --searchpaneltext:#6B2A0A;
   --searchpanellist:#EDEDED;
   --searchpanellistborder:#BBBBBB;
-  --searchpanellstborderpressed:#C4C4C4;
+  --searchpanellistborderpressed:#C4C4C4;
 
 
   --shelfpanel:#E9D6CA;
@@ -107,6 +107,7 @@ html{
 --authorheightwnavmobile:calc(100vh - 19rem);
 --authorheightwonavmobile:calc(100vh - 30.5rem);
 --authorpanelopenheight:calc(100vh - 20.5rem);
+--shelfnavheightmobile:calc(100vh - 26rem);
 
 
 --mobileWidth:calc(100vw - 4rem);

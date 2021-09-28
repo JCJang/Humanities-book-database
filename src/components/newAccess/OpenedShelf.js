@@ -229,8 +229,8 @@ const getAndSet = async(highlights) =>{
                 background: "var(--shelfpanel)",
                 width: l ? "" : "100vw",
                 maxWidth:l?"20vw":"",
-                margin: l ? "2rem 2rem" : "0",
-                padding: l ? "0" : m ? "2rem 5rem" : "5rem 0 2rem 0",
+                margin: l ? "2rem 2rem" : "0 2rem",
+                padding: l ? "0" : m ? "2rem 5rem" : "7rem 0 2rem 0",
                 boxShadow: !l && "var(--panelshadowtop)",
               }
             } >
@@ -241,7 +241,7 @@ const getAndSet = async(highlights) =>{
         <p onClick={()=>{setContentOrSubjectKeywords(true)}} className="subtitle2" style={{backgroundColor:contentOrSubjectKeywords?"white":"#907e73",color:contentOrSubjectKeywords?"var(--shelfpaneltext)":"white", borderLeft:"none",border:"1.5px solid #907e73", borderRadius:"5px 0 0 5px", padding:"0 1rem"}}>Content</p>
         <p onClick={()=>{setContentOrSubjectKeywords(false); detectBookScrollBottom(); detectShelfScrollBottom()}} className="subtitle2" style={{backgroundColor:contentOrSubjectKeywords?"#907e73":"white", color:contentOrSubjectKeywords?"white":"var(--shelfpaneltext)",borderLeft:"none",border:"1.5px solid #907e73", borderRadius:"0 5px 5px 0", padding:"0 1rem"}}>Background</p>
         </div>
-    <div className="noScrollBar" onScroll={()=>detectShelfScrollBottom()} ref={shelfScroll} style={{alignItems:"center",height:m?"75vh":"var(--authorpanelopenheight)",overflowY:"auto", marginTop:"1rem"}}>
+    <div className="noScrollBar" onScroll={()=>detectShelfScrollBottom()} ref={shelfScroll} style={{alignItems:"center",height:m?"75vh":"var(--shelfnavheightmobile)",overflowY:"auto", marginTop:"1rem"}}>
       {selectedShelf.shelfBooks.map((book)=>{
         return <div className="transition" key={book.googleId} onClick={()=>{setNewBook(book); setSlideOut(false)}}
          style = {
