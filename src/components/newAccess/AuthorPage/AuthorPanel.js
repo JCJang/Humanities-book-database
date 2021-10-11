@@ -131,7 +131,7 @@ const AuthorPanel = ({xs,s,m,l,xl, selectedAuthor, expandFurtherReading, setExpa
               setAuthorInfluencesBooks((prev)=>[...prev,newInfluencesBooks])
       }})
     })
-  )
+
 
   },[authorInfluences])
 
