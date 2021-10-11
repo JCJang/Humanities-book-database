@@ -89,7 +89,6 @@ const AuthorPanel = ({xs,s,m,l,xl, selectedAuthor, expandFurtherReading, setExpa
 
   useEffect(()=>{
 
-    .then(
       authorInfluences.map((author)=>{
         Axios.post("https://humanities-book.herokuapp.com/influencesbooks",{
             languageSetting:languageSetting,
