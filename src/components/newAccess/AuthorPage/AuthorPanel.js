@@ -59,8 +59,8 @@ const AuthorPanel = ({xs,s,m,l,xl, selectedAuthor, expandFurtherReading, setExpa
         if(!expandFurtherReading){return}
         if(authorInfluencesBooks.length>0){return}
         if(authorInfluencedBooks.length>0){return}
-        const influences = selectedAuthor.authorInfluences
-        const influenced = selectedAuthor.authorInfluenced
+        const influences = [...selectedAuthor.authorInfluences]
+        const influenced = [...selectedAuthor.authorInfluenced]
 
         setAuthorInfluencesBooks([])
         setAuthorInfluencedBooks([])
