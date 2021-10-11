@@ -231,9 +231,7 @@ const Access =({xs,s,m,l,xl, authorView, setAuthorView, googleScriptLoaded, setG
 
         }
         setSelectedShelf({...newSelectedShelf})})
-    .then((res)=>{
-      console.log(selectedShelf)
-    })
+
     },[shelfId])
 
     // useEffect(()=> {
@@ -320,7 +318,6 @@ const Access =({xs,s,m,l,xl, authorView, setAuthorView, googleScriptLoaded, setG
       }})
 
       setAllShelves(allShelves)
-      console.log(res.data)
 
     }).then( console.log(`reloaded shelves in ${languageSetting}`))
     },[languageSetting])
@@ -369,9 +366,7 @@ const Access =({xs,s,m,l,xl, authorView, setAuthorView, googleScriptLoaded, setG
           }
         setSelectedAuthor({...newSelectedAuthor})
       })
-    .then((res)=>{
-      console.log(selectedAuthor)
-    })
+
   },[authorToGet,languageSetting])
 
 

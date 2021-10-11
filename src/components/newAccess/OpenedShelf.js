@@ -163,7 +163,6 @@ const getAndSet = async(highlights) =>{
       }
     await parseHighlights().then((res)=>{
       setBookHighlights(res)
-      console.log(res)
     })
   }
 

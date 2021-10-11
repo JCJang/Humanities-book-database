@@ -22,10 +22,8 @@ const SearchForm = ({xs,s,m,l,xl,setSlideOut,allShelves, columnFocus, setColumnF
     const detectScrollBottom = () => {
         if (noScrollBar.current) {
           const { scrollTop, scrollHeight, clientHeight } = noScrollBar.current;
-          console.log(scrollHeight)
           if (scrollTop + clientHeight > scrollHeight - 200) {
             // TO SOMETHING HERE
-            console.log('Reached bottom')
             setDisplayScroll(false)
           }else{
             setDisplayScroll(true)
