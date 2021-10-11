@@ -70,12 +70,12 @@ const AuthorPanel = ({xs,s,m,l,xl, selectedAuthor, expandFurtherReading, setExpa
           authorWikiTitle:selectedAuthor.authorWikiTitle
         })
       .then((res)=>{
-        console.log(res.data)
+        console.log(influences.indexOf(book.editions[0].details.authorWikiTitle) === -1)
+        console.log(res.data[0].editions[0].details.authorWikiTitle)
         res.data.map((book)=>{
           if(influences.indexOf(book.editions[0].details.authorWikiTitle) === -1){ influences.push(book.editions[0].details.authorWikiTitle)
           }})
         setAuthorInfluences(influences)
-        console.log(authorInfluences)
       })
       .then(
         authorInfluences.map((author)=>{
