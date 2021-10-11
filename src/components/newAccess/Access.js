@@ -308,12 +308,14 @@ const Access =({xs,s,m,l,xl, authorView, setAuthorView, googleScriptLoaded, setG
           shelfSubjects:shelf.shelfSubjects,
           shelfId:shelf._id,
           shelfText: shelf.shelfBooks.map((book)=>{
+             const shelfTitle = shelf.editions[0].details.shelfTitle
+             const shelfSubjects = shelf.shelfSubjects.join(' ')
              const authors = book.editions[0].details.bookAuthor.join(' ')
              const subjects = book.editions[0].details.subjectLinks.join(' ')
              const content = book.editions[0].details.contentKeywords.join(' ')
              const title = book.editions[0].details.bookTitle
              const highlights = book.editions[0].details.bookHighlights
-          return `${authors} ${subjects} ${content} ${title} ${highlights}`
+          return `${shelfTitle} ${shelfSubjects} ${authors} ${subjects} ${content} ${title} ${highlights}`
           }).join(' ')
       }})
 
@@ -411,7 +413,7 @@ const Access =({xs,s,m,l,xl, authorView, setAuthorView, googleScriptLoaded, setG
                 }
               } >
 
-                <div className="shelfNav tab-lr mirror" style={{ height:"50%", width:"4rem", background:selectedShelf.shelfBooks.length===1?"var(--inactive)":columnFocus==="shelfpanel"?"var(--paper)":"var(--darkactionbtn)",color:selectedShelf.shelfBooks.length===1?"var(--inactivetext)":columnFocus==="shelfpanel"?"var(--shelfpaneltext)":"var(--darkactionbtntext)", border:selectedShelf.shelfBooks.length===1?"1.5px solid var(--searchpanellistborderpressed)":columnFocus==="shelfpanel"?"1.5px solid var(--searchpaneltext)":""}} onClick={()=>{if(selectedShelf.shelfBooks.length===1){return;}else{ setSlideOut(!slideOut)}}}>SHELF</div>
+                <div className="shelfNav tab-lr mirror" style={{ height:"50%", width:"4rem", background:selectedShelf.shelfBooks.length===1?"var(--inactive)":columnFocus==="shelfpanel"?"var(--paper)":"var(--darkactionbtn)",color:selectedShelf.shelfBooks.length===1?"var(--inactivetext)":columnFocus==="shelfpanel"?"var(--shelfpaneltext)":"var(--darkactionbtntext)", border:selectedShelf.shelfBooks.length===1?"1.5px solid var(--searchpanellistborderpressed)":columnFocus==="shelfpanel"?"1.5px solid var(--searchpaneltext)":""}} onClick={()=>{if(selectedShelf.shelfBooks.length===1){return;}else{ setSlideOut(!slideOut)}}}>{slideOut ? "CLOSE SHELF" : "OPEN SHELF"}</div>
 
                 <div className="shelfNav" style={{height:"4rem", width:"4rem", background:parseFloat(bookNumber)===0?"var(--inactive)":columnFocus==="shelfpanel"?"var(--paper)":"var(--darkactionbtn)",color:parseFloat(bookNumber)===0?"var(--inactivetext)":columnFocus==="shelfpanel"?"var(--shelfpaneltext)":"var(--darkactionbtntext)",border:parseFloat(bookNumber)===0?"1.5px solid var(--searchpanellistborderpressed)":columnFocus==="shelfpanel"?"1.5px solid var(--searchpaneltext)":""}} onClick={()=>{prevBook()}}><ArrowLeftRoundedIcon/>prev</div>
 
