@@ -2,13 +2,15 @@ import Links from './Links'
 import {useState,useEffect} from 'react'
 import MapOutlinedIcon from '@material-ui/icons/MapOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
+import LanguageOutlinedIcon from '@material-ui/icons/LanguageOutlined';
+import ArrowDropDownOutlinedIcon from '@material-ui/icons/ArrowDropDownOutlined';
 import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
 import RateReviewOutlinedIcon from '@material-ui/icons/RateReviewOutlined';
 import CodeOutlinedIcon from '@material-ui/icons/CodeOutlined';
 import { useTranslation } from 'react-i18next'
 
 const Nav = ({xs, s, m, l, xl, authorView, columnFocus, setColumnFocus, languageSetting, setLanguageSetting}) => {
-
+  const [languageSelectOpen, setLanguageSelectOpen] = useState(false)
 const [routeFocus, setRouteFocus] = useState("/")
 const {t, i18n} = useTranslation();
 
@@ -95,13 +97,15 @@ const background = () => {
 
         <Links routeName="/about" label={t("Nav.about")} routeFocus={routeFocus} colorForNav={colorForNav}  setRouteFocus={setRouteFocus} Icon={CodeOutlinedIcon}/>
         </div>
-        <label htmlFor="languageSetting" className="subtitle2">site language:</label>
-  <select className="form-control" id="languageSetting" value={languageSetting}
-   onChange={(e)=>setLanguageSetting(e.target.value)} placeholder="toggles auto input settings">
-   <option value="en">English</option>
-   <option value="zh-tw">繁體中文</option>
-   <option value="zh-cn">简体中文</option>
-   </select>
+        <div  id="languageDiv" onClick={()=>{setLanguageSelectOpen(!languageSelectOpen)}} style={{height:"3.5rem",display:"flex",alignItems:"center", justifyContent:"center", position:"relative", padding:"0.2rem 1rem 0 1.5rem", cursor:"pointer"}}>
+        <label id="languageSetting" className="subtitle2" style={{opacity:0.8, cursor:"pointer"}}><LanguageOutlinedIcon/><ArrowDropDownOutlinedIcon/></label>
+        <div  style={{position:"absolute",opacity:"1",top:"3.5rem",right:"0.5rem",boxShadow: "var(--heavyshadow)",borderRadius:"5px",overflow:"hidden",display:!languageSelectOpen&&"none",cursor:"pointer"}}>
+     <div className="languageLabel" onClick={()=>{setLanguageSetting("en");setLanguageSelectOpen(false);}} value="en">English</div>
+     <div className="languageLabel" onClick={()=>{setLanguageSetting("zh-tw");setLanguageSelectOpen(false);}} value="zh-tw">繁體中文</div>
+     <div className="languageLabel" onClick={()=>{setLanguageSetting("zh-cn");setLanguageSelectOpen(false);}} value="zh-cn">简体中文</div>
+      </div>
+
+   </div>
   </nav>
   )
 }

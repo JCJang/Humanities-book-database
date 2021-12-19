@@ -28,7 +28,8 @@
         "backgroundKeywords":"Background Keywords",
         "contentKeywords":"Content Keywords",
         "highlights":"highlights",
-        "noHighlights":"No highlights were added in this current language",  "placeholder":"Book Title"
+        "noHighlights":"No highlights were added in this current language",  "placeholder":"Book Title",
+        "expand":"Back To: "
       },
       "Details":{
         "back":"return to Shelf",

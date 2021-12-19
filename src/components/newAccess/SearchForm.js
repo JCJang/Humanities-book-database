@@ -131,11 +131,11 @@ const searchFormDisplay = () =>{
     <h5 className={l && columnFocus!=="init"?"tabsearch tab-lr h5tab-l":l?"tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.8",cursor:searchH5Cursor(),display:l?"":columnFocus==="init"?"none":"flex",alignItems:"center",justifyContent:"space-between",padding:l?"":m?"2rem":"1.5rem"}} onClick={()=>{if(l && columnFocus==="init"){return}else if(!l){setColumnFocus("init")}else{setColumnFocus("shelfpanel")}}}>
     <span>
 
-    {shelfTitle && l? shelfTitle.slice(0,45):shelfTitle?`Back to: ${shelfTitle.slice(0,12)}...`:"Shelf Details"}
+    {shelfTitle && l? shelfTitle.slice(0,45):shelfTitle?`${t("Find.Shelf.expand")} ${shelfTitle.slice(0,12)}...`:t("Find.Shelf.placeholder")}
 
     </span>
     {columnFocus!=="init" && <span className="subtitle2" style={{display:searchH5Expand(),textTransform: "none"
-,position:l?"absolute":"relative", left:l?"1rem":"", bottom:l?"0":""}}><p>expand</p><AddCircleOutlineOutlinedIcon style={{alignSelf:"center",width:"1rem",height:"1rem",marginLeft:!l&&"0.5rem",marginTop:l&&"0.5rem"}}/></span>
+,position:l?"absolute":"relative", left:l?"1rem":"", bottom:l?"0":""}}><p>{t("Util.expand")}</p><AddCircleOutlineOutlinedIcon style={{alignSelf:"center",width:"1rem",height:"1rem",marginLeft:!l&&"0.5rem",marginTop:l&&"0.5rem"}}/></span>
 
     }
     </h5>

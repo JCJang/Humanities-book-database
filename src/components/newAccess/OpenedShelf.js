@@ -369,7 +369,7 @@ const getAndSet = async(highlights) =>{
       </div>}
     </div>
     <h5 className={l?"tabshelf tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.8", cursor:columnFocus==="init"&&l?"":columnFocus!=="shelfpanel"?"pointer":"",display:l?"":columnFocus==="shelfpanel"?"none":"flex",alignItems:"center",justifyContent:"space-between",padding:l?"":m?"2rem":"1.6rem"}} onClick={()=>{if(l && columnFocus==="init"){return;}else{setColumnFocus("shelfpanel")}}}>
-    {selectedBook.bookTitle && l? selectedBook.bookTitle.slice(0,45):selectedBook.bookTitle?`${t("Find.Shelf.expand")} ${selectedBook.bookTitle.slice(0,12)}...`:t("Find.Shelf.placeholder")}
+    {selectedBook.bookTitle && l? selectedBook.bookTitle.slice(0,45):selectedBook.bookTitle?`${t("Find.Shelf.placeholder")} ${selectedBook.bookTitle.slice(0,12)}...`:t("Find.Shelf.placeholder")}
     {columnFocus!=="shelfpanel" &&  <span className="subtitle2" style={{display:"flex",textTransform: "none"
 ,position:l?"absolute":"relative", left:l?"1rem":"", bottom:l?"0":""}}><p>{t("Util.expand")}</p><AddCircleOutlineOutlinedIcon style={{alignSelf:"center",width:"1rem",height:"1rem",marginLeft:!l&&"0.5rem",marginTop:l&&"0.5rem"}}/></span>}
     </h5>

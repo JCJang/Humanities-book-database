@@ -634,6 +634,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f6f0', end
   padding: 0.5rem;
   }
 
+.characters{
+  transform:rotate(180deg);
+  transform-origin:center center;
+}
 
   .tabsearch:after {
     position: absolute;
@@ -992,7 +996,33 @@ html { font-size: 18px;}
 
 }
 
+.languageLabel{
+  padding:1rem 2rem;
+  width:10rem;
+  opacity:1;
+  font-size: 1.2rem;
+  cursor: pointer;
+  background:var(--paper);
+  color:var(--ink);
+}
 
+#languageSetting{
+  transition-duration: 0.3s;
+  opacity: 0.6;
+}
+
+#languageSetting:hover{
+  transform: scale(1.1);
+  transition-duration: 0.3s;
+  opacity: 1;
+}
+#languageDiv:hover{
+background: var(--detailspaneltext);
+}
+
+.languageLabel:hover{
+  background:var(--shelfpanellist);
+}
 
 @keyframes line-animation {
   0% {opacity: 0.5}
