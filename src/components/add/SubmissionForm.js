@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import NewAuthorWiki from './NewAuthorWiki'
 import Axios from 'axios'
 import { MultiSelect } from "react-multi-select-component";
+import { useTranslation } from 'react-i18next'
 
 
 const SubmissionForm = ({toAdd, stripLabels,onSearch, languageSetting, formToggleOn }) => {
@@ -16,6 +17,7 @@ const SubmissionForm = ({toAdd, stripLabels,onSearch, languageSetting, formToggl
   const [bookHighlights, setBookHighlights] = useState('')
   const [languageVersions, setLanguageVersions] = useState([])
   const [previewLanguage, setPreviewLanguage] = useState([])
+  const {t, i18n} = useTranslation();
 
 //restricts selection to one
 useEffect(() => {

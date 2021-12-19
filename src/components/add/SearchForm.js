@@ -1,10 +1,13 @@
 import {useState} from 'react'
+import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 
 const SearchForm = ({type,placeholder,onSearch, setLanguageSetting, languageSetting, results}) => {
   const [title, setTitle] =  useState('')
   const [author, setAuthor] =  useState('')
   const [isbn, setIsbn] =  useState('')
   const [previewFilter, setPreviewFilter] = useState(true)
+  const {t, i18n} = useTranslation();
 
   const validateForm = (e)=>{
     console.log("submitted");

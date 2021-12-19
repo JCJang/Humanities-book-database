@@ -2,8 +2,11 @@ import blackMarble from'../images/pexels-tirachard-kumtanom-450055.jpg';
 import ImageFadeIn from '../customHooks/imageFadeIn'
 import {useState, useEffect} from 'react';
 import Axios from 'axios'
+import { useTranslation } from 'react-i18next'
+
 
 const About = ({xs, s, m, l, xl}) => {
+  const {t, i18n} = useTranslation();
 
   const [email, setEmail] =  useState("")
   const [name, setName] =  useState([])

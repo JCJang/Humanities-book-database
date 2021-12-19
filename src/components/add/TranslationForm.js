@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import TranslationAuthorWiki from './TranslationAuthorWiki'
 import Axios from 'axios'
 import { MultiSelect } from "react-multi-select-component";
+import { useTranslation } from 'react-i18next'
 
 
 const TranslationForm = ({toAdd, stripLabels,onSearch, languageSetting, translateForm, formToggleOn }) => {
@@ -16,6 +17,7 @@ const TranslationForm = ({toAdd, stripLabels,onSearch, languageSetting, translat
   const [bookSubjectLinksDisplay, setBookSubjectLinksDisplay] = useState([])
   const [bookContentKeywordsDisplay, setBookContentKeywordsDisplay] = useState([])
   const [bookHighlightsDisplay, setBookHighlightsDisplay] = useState("")
+  const {t, i18n} = useTranslation();
 
   const [id, setId] =  useState('')
   const [title, setTitle] =  useState('')

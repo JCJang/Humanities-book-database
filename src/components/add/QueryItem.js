@@ -1,6 +1,9 @@
+import { useTranslation } from 'react-i18next'
+
 const QueryItem = ({result, setToAdd, bg, border, shadow, top}) => {
 
 //if you see this warning again: "Objects are not valid as a React child (found: object with keys {type, identifier}). If you meant to render a collection of children, use an array instead." you messed up something here, while accessing the object. Don't change setResults.
+const {t, i18n} = useTranslation();
 
 
 const getIsbn=(isbn)=>{

@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import Axios from 'axios'
+import { useTranslation } from 'react-i18next'
 import { MultiSelect } from "react-multi-select-component";
 import {useCallback} from 'react'
 import oldMap from'../images/pexels-ekrulila-4402272.jpg';
@@ -10,6 +11,7 @@ const LitMap = ({xs, s, m, l, xl, languageSetting="en"}) => {
   const [title, setTitle] =  useState('')
   const [author, setAuthor] =  useState([])
   const [publicationLanguage, setPublicationLanguage] = useState([])
+  const {t, i18n} = useTranslation();
 
   useEffect(() => {
       if (publicationLanguage.length > 1) {

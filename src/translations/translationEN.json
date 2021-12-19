@@ -1,0 +1,9 @@
+{
+    "Nav":{
+      "home":"Find",
+      "suggest":"Suggest",
+      "map":"Lit Map",
+      "saved":"Accounts",
+      "about":"About"
+    }
+}

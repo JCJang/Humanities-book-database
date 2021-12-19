@@ -3,6 +3,7 @@ import wiki from 'wikijs'
 import {useEffect, useState} from 'react'
 import Axios from 'axios'
 import { MultiSelect } from "react-multi-select-component";
+import { useTranslation } from 'react-i18next'
 
 const TranslationAuthorWiki = ({author, toAdd, stripLabels, shelfLanguage, bookId, shelfTranslatingInto, formToggleOn}) => {
 
@@ -16,6 +17,7 @@ const [authorLifeWorkKeywords, setAuthorLifeWorkKeywords] = useState([])
 const [authorWikiExtract, setAuthorWikiExtract] = useState("")
 const [translatingFrom, setTranslatingFrom] = useState([])
 const [translatingInto, setTranslatingInto] = useState([])
+const {t, i18n} = useTranslation();
 
 //restricts selection to one
 useEffect(() => {

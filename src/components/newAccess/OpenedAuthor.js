@@ -6,6 +6,7 @@ import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOut
 import createSvgIcon from "@material-ui/icons/utils/createSvgIcon";
 import {Route, BrowserRouter as Router} from 'react-router-dom'
 import {useEffect, useState} from 'react'
+import { useTranslation } from 'react-i18next'
 
 const ArrowBackArrowCircle = createSvgIcon(
   <>
@@ -21,6 +22,7 @@ const OpenedAuthor = ({xs,s,m,l,xl,columnFocus, setColumnFocus, authorFocus, set
   const [expandFurtherReading, setExpandFurtherReading] = useState(false)
   const [authorBookTitle, setAuthorBookTitle] = useState('')
   const [authorPublicationYear, setAuthorPublicationYear] = useState('')
+  const {t, i18n} = useTranslation();
 
   useEffect(()=>{
     setAuthorBookTitle(displayBookTitle)

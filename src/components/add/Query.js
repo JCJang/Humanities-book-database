@@ -1,4 +1,5 @@
 import QueryItem from './QueryItem'
+
 const Query = ({result=[], setToAdd,toAdd}) => {
   console.log(result)
   return (

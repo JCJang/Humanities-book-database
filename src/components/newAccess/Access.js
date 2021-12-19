@@ -8,12 +8,14 @@ import {useCallback} from 'react'
 import {motion, AnimatePresence} from 'framer-motion'
 import ArrowLeftRoundedIcon from '@material-ui/icons/ArrowLeftRounded';
 import ArrowRightRoundedIcon from '@material-ui/icons/ArrowRightRounded';
+import { useTranslation } from 'react-i18next'
 
 
 
 const Access =({xs,s,m,l,xl, authorView, setAuthorView, googleScriptLoaded, setGoogleScriptLoaded, columnFocus, setColumnFocus, languageSetting, setLanguageSetting})=>{
 
   const [slideOut, setSlideOut] = useState(false)
+  const {t, i18n} = useTranslation();
 
   const col1heightS = () => {
 

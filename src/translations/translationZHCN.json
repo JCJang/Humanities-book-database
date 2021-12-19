@@ -1,0 +1,13 @@
+{
+    "Navbar":{
+      "trekinn":"Home",
+      "about":"About",
+      "destinations+map":"Travel guide",
+      "rooms":"Rooms",
+      "contact":"Contact",
+      "home":"Back to Home",
+      "callus":"Call us",
+      "changeTo":"中文版",
+      "language":"zhtw"
+    }
+}

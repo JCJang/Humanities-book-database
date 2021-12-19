@@ -4,6 +4,7 @@ import LaunchRoundedIcon from '@material-ui/icons/LaunchRounded';
 import {useState,useEffect,useRef} from 'react'
 import createSvgIcon from "@material-ui/icons/utils/createSvgIcon";
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
+import { useTranslation } from 'react-i18next'
 
 
 const ArrowForwardCircleIcon = createSvgIcon(
@@ -19,6 +20,7 @@ const OpenedShelf = ({xs,s,m,l,xl,selectedShelf, selectedBook, setSelectedBook, 
   const [googleId, setGoogleId] = useState("")
   const [isbn, setIsbn] = useState("")
   const [contentOrSubjectKeywords,setContentOrSubjectKeywords]=useState(true)
+  const {t, i18n} = useTranslation();
 
   const [copySuccess, setCopySuccess] = useState('');
   const [toCopy, setToCopy] = useState('');

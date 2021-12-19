@@ -1,4 +1,6 @@
 import {useState, useEffect} from 'react';
+import { useTranslation } from 'react-i18next'
+
 import './Add.css';
 import Query from './Query'
 import SearchForm from './SearchForm'
@@ -9,6 +11,8 @@ import GoogleBooksViewer from './GoogleBooksViewer'
 
 
 const Add =({googleScriptLoaded})=>{
+    const {t, i18n} = useTranslation();
+
   const [results, setResults] = useState(false)
   const [toAdd, setToAdd] = useState(false)
     const [bookIdentifier, setBookIdentifier] = useState(false);

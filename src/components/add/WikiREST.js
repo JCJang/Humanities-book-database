@@ -1,10 +1,13 @@
 import React from 'react'
 import parseInfo from 'infobox-parser'
 import {useEffect, useState} from 'react'
+import { useTranslation } from 'react-i18next'
+
 const WikiREST = ({author}) => {
 
 const [authorWikiData, setAuthorWikiData] = useState("")
 const [parsedAuthorArray, setParsedAuthorArray] = useState([])
+const {t, i18n} = useTranslation();
 
 
 //parse array of authors

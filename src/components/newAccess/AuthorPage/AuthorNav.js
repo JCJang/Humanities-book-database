@@ -1,8 +1,11 @@
 import {Link} from 'react-router-dom'
 import {motion} from 'framer-motion'
+import { useTranslation } from 'react-i18next'
+
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded'
 
 const AuthorNav = ({xs, s, m, l, xl, selectedAuthor, setAuthorFocus, setColumnFocus,authorBookTitle}) => {
+  const {t, i18n} = useTranslation();
 
 
   return (

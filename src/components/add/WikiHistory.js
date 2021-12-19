@@ -1,10 +1,13 @@
 import {parseInfo} from 'infobox-parser'
 import wiki from 'wikijs'
 import {useEffect, useState} from 'react'
+import { useTranslation } from 'react-i18next'
+
 const WikiHistory = ({author}) => {
 
 const [targetCountry, setTargetCountry] = useState("Spanish")
 const [parsedWikiTimeline, setParsedWikiTimeline] = useState("")
+const {t, i18n} = useTranslation();
 
 
 //parse array of authors

@@ -1,8 +1,10 @@
 import plaster from'../images/pexels-henry-&-co-1939485.jpg';
 import ImageFadeIn from '../customHooks/imageFadeIn'
+import { useTranslation } from 'react-i18next'
 
 
 const Saved = ({xs, s, m, l, xl}) => {
+  const {t, i18n} = useTranslation();
 
   const savedStyle = () =>{
       return {

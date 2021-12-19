@@ -4,6 +4,7 @@ import { MultiSelect } from "react-multi-select-component";
 import {useCallback} from 'react'
 import whiteMarble from'../images/pexels-henry-&-co-2341290.jpg';
 import ImageFadeIn from '../customHooks/imageFadeIn'
+import { useTranslation } from 'react-i18next'
 
 const Suggest = ({xs, s, m, l, xl, languageSetting="en"}) => {
   const [contentKeywords, setContentKeywords] = useState([])//choose from main interests,notable ideas
@@ -18,6 +19,8 @@ const Suggest = ({xs, s, m, l, xl, languageSetting="en"}) => {
   const [languageVersions, setLanguageVersions] = useState([])
   const [previewLanguage, setPreviewLanguage] = useState([])
   const [shelfValue, setShelfValue] = useState([])
+  const {t, i18n} = useTranslation();
+
   //restricts selection to one
   useEffect(() => {
       if (shelfValue.length > 1) {

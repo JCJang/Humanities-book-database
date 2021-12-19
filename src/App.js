@@ -8,15 +8,23 @@ import Nav from './components/nav/Nav'
 import NavMobile from './components/nav/NavMobile'
 import {Route, BrowserRouter as Router} from 'react-router-dom'
 import {useEffect, useState, useCallback} from 'react'
+import i18n from './i18n'
 import useMediaQuery from "./components/customHooks/useMediaQuery";
 
 
 const App = () => {
   const [columnFocus, setColumnFocus] = useState('init')
   const [googleScriptLoaded, setGoogleScriptLoaded] = useState(false);
-  const [languageSetting, setLanguageSetting] = useState('en')
+  const [languageSetting, setLanguageSetting] = useState('zh-tw')
   const [authorView, setAuthorView] = useState(false)
 
+  useEffect(()=>{
+    const removeNonCharacters = (lang) => {
+       return lang.replace("-", "")
+    }
+    i18n.changeLanguage(removeNonCharacters(languageSetting))
+  },[languageSetting])
+  
   /* Extra small devices (phones, 600px and down) */
   const xs = useMediaQuery('(max-width: 600px)');
   /* Small devices (portrait tablets and large phones, 600px and up) */

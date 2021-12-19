@@ -5,10 +5,12 @@ import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
 import RateReviewOutlinedIcon from '@material-ui/icons/RateReviewOutlined';
 import CodeOutlinedIcon from '@material-ui/icons/CodeOutlined';
+import { useTranslation } from 'react-i18next'
 
 const Nav = ({xs, s, m, l, xl, authorView, columnFocus, setColumnFocus, languageSetting, setLanguageSetting}) => {
 
 const [routeFocus, setRouteFocus] = useState("/")
+const {t, i18n} = useTranslation();
 
 
 const colorForNav = () => {
@@ -69,15 +71,6 @@ const background = () => {
 }
 
 
-  //
-  // <label htmlFor="languageSetting" className="subtitle2">site language:</label>
-  // <select className="form-control" id="languageSetting" value={languageSetting}
-  //  onChange={(e)=>setLanguageSetting(e.target.value)} placeholder="toggles auto input settings">
-  //  <option value="en">English</option>
-  //  <option value="zh-tw">Traditional Chinese</option>
-  //  <option value="zh-cn">Simplified Chinese</option>
-  //  </select>
-
   return (
     <nav className="Row transition" style={{
     width: "100vw",
@@ -92,17 +85,23 @@ const background = () => {
 
         <div className="overline-logo" style={{opacity:0.8, padding:"0.2rem 3rem 0 3rem"}}>Humanities Database</div>
         <div className="Row">
-        <Links routeName="/" label="Home" routeFocus={routeFocus} colorForNav={colorForNav} setRouteFocus={setRouteFocus} Icon={SearchOutlinedIcon}/>
+        <Links routeName="/" label={t("Nav.home")} routeFocus={routeFocus} colorForNav={colorForNav} setRouteFocus={setRouteFocus} Icon={SearchOutlinedIcon}/>
 
-        <Links routeName="/suggest" label="Suggest" routeFocus={routeFocus} colorForNav={colorForNav}  setRouteFocus={setRouteFocus} Icon={RateReviewOutlinedIcon}/>
+        <Links routeName="/suggest" label={t("Nav.suggest")} routeFocus={routeFocus} colorForNav={colorForNav}  setRouteFocus={setRouteFocus} Icon={RateReviewOutlinedIcon}/>
 
-        <Links routeName="/map" label="Lit map" routeFocus={routeFocus} colorForNav={colorForNav}  setRouteFocus={setRouteFocus} Icon={MapOutlinedIcon}/>
+        <Links routeName="/map" label={t("Nav.map")} routeFocus={routeFocus} colorForNav={colorForNav}  setRouteFocus={setRouteFocus} Icon={MapOutlinedIcon}/>
 
-        <Links routeName="/saved" label="Accounts" routeFocus={routeFocus} colorForNav={colorForNav}  setRouteFocus={setRouteFocus} Icon={BookmarkBorderOutlinedIcon}/>
+        <Links routeName="/saved" label={t("Nav.saved")} routeFocus={routeFocus} colorForNav={colorForNav}  setRouteFocus={setRouteFocus} Icon={BookmarkBorderOutlinedIcon}/>
 
-        <Links routeName="/about" label="About" routeFocus={routeFocus} colorForNav={colorForNav}  setRouteFocus={setRouteFocus} Icon={CodeOutlinedIcon}/>
+        <Links routeName="/about" label={t("Nav.about")} routeFocus={routeFocus} colorForNav={colorForNav}  setRouteFocus={setRouteFocus} Icon={CodeOutlinedIcon}/>
         </div>
-
+        <label htmlFor="languageSetting" className="subtitle2">site language:</label>
+  <select className="form-control" id="languageSetting" value={languageSetting}
+   onChange={(e)=>setLanguageSetting(e.target.value)} placeholder="toggles auto input settings">
+   <option value="en">English</option>
+   <option value="zh-tw">Traditional Chinese</option>
+   <option value="zh-cn">Simplified Chinese</option>
+   </select>
   </nav>
   )
 }

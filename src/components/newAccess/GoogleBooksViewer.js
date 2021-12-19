@@ -2,6 +2,7 @@ import React from 'react'
 import {useEffect, useState, useCallback} from 'react'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import createSvgIcon from "@material-ui/icons/utils/createSvgIcon";
+import { useTranslation } from 'react-i18next'
 
 
 const ArrowBackCircleIcon = createSvgIcon(
@@ -53,50 +54,112 @@ const ArrowBackCircleIcon = createSvgIcon(
       setAuthor(newAuthor)
     },[bookIdentifier])
 
-     function alertNotFound() { console.log("preview unavailable")
+
+function alertNotFound() {
+  alert("preview unavailable")
 }
 
 
-     useEffect(()=>{
-         if (googleScriptLoaded===true){
- if (isbnOrId === true) {
+useEffect(() => {
+  if (googleScriptLoaded === true) {
+    if (isbnOrId === true) {
 
-  if (window.viewer) {
-    if(window.google.books.load===false){alert("Please reload the page for the preview to work");return}else{
-    let viewer = new window.google.books.DefaultViewer(document.getElementById('viewerCanvas'));
-    viewer.load(`https://books.google.com/books?vid=ISBN${bookIdentifier}&printsec=toc`, alertNotFound);}
+      if (window.viewer) {
+        if (window.google.books.load === false) {
+          alert("Please reload the page for the preview to work");
+          return
+        } else {
+          let viewer = new window.google.books.DefaultViewer(document.getElementById('viewerCanvas'));
+          viewer.load(`https://books.google.com/books?vid=ISBN${bookIdentifier}&printsec=toc`, alertNotFound);
+        }
+      } else {
+        if (window.google.books.load === false) {
+          alert("Please reload the page for the preview to work");
+          return
+        } else {
+          window.google.books.load();
+          window.google.books.setOnLoadCallback(() => {
+            let viewer = new window.google.books.DefaultViewer(document.getElementById('viewerCanvas'));
+            window.viewer = viewer
+            viewer.load(`https://books.google.com/books?vid=ISBN${bookIdentifier}&printsec=toc`, alertNotFound);
+          })
+        }
+      }
+
+    } else {
+      if (window.viewer) {
+        if (window.google.books.load === false) {
+          alert("Please reload the page for the preview to work");
+          return
+        } else {
+          let viewer = new window.google.books.DefaultViewer(document.getElementById('viewerCanvas'));
+          viewer.load(bookIdentifier, alertNotFound);
+        }
+      } else {
+        if (window.google.books.load === false) {
+          alert("Please reload the page for the preview to work");
+          return
+        } else {
+          window.google.books.load();
+          window.google.books.setOnLoadCallback(() => {
+            let viewer = new window.google.books.DefaultViewer(document.getElementById('viewerCanvas'));
+            window.viewer = viewer
+            viewer.load(bookIdentifier, alertNotFound);
+          })
+        }
+      }
+    }
   } else {
-    if(window.google.books.load===false){alert("Please reload the page for the preview to work");return
-    }else{
-    window.google.books.load();
-    window.google.books.setOnLoadCallback(() => {
-      let viewer = new window.google.books.DefaultViewer(document.getElementById('viewerCanvas'));
-      window.viewer = viewer
-      viewer.load(`https://books.google.com/books?vid=ISBN${bookIdentifier}&printsec=toc`, alertNotFound);
-    })
+    loadGoogleBooksViewer();
+    console.log("reloading google script")
   }
-  }
-
-} else {
-  if(window.viewer){
-    if(window.google.books.load===false){alert("Please reload the page for the preview to work");return}else{
-     let viewer = new window.google.books.DefaultViewer
-     (document.getElementById('viewerCanvas'));
-     viewer.load(bookIdentifier, alertNotFound);}
-   }else{
-     if(window.google.books.load===false){alert("Please reload the page for the preview to work");return}else{
-     window.google.books.load();
-     window.google.books.setOnLoadCallback(() => {
-     let viewer = new window.google.books.DefaultViewer
-         (document.getElementById('viewerCanvas'));
-     window.viewer = viewer
-     viewer.load(bookIdentifier, alertNotFound);
-   })
- }}}
-}else{loadGoogleBooksViewer(); console.log("reloading google script")}
 }, [googleScriptLoaded, isbnOrId, bookIdentifier])
 
 
+//simplified:
+
+// useEffect(() => {
+//
+//   if (googleScriptLoaded === false) {
+//     loadGoogleBooksViewer();
+//     console.log("reloading google script")
+//   }
+//
+//   if (isbnOrId) {
+//
+//     if (window.viewer) {
+//
+//       let viewer = new window.google.books.DefaultViewer(document.getElementById('viewerCanvas'));
+//       viewer.load(`https://books.google.com/books?vid=ISBN${bookIdentifier}&printsec=toc`, alertNotFound);
+//
+//     } else {
+//       window.google.books.load();
+//       window.google.books.setOnLoadCallback(() => {
+//         let viewer = new window.google.books.DefaultViewer(document.getElementById('viewerCanvas'));
+//         window.viewer = viewer
+//         viewer.load(`https://books.google.com/books?vid=ISBN${bookIdentifier}&printsec=toc`, alertNotFound);
+//       })
+//     }
+//
+//   } else {
+//
+//     if (window.viewer) {
+//       let viewer = new window.google.books.DefaultViewer(document.getElementById('viewerCanvas'));
+//       viewer.load(bookIdentifier, alertNotFound);
+//
+//     } else {
+//
+//       window.google.books.load();
+//       window.google.books.setOnLoadCallback(() => {
+//         let viewer = new window.google.books.DefaultViewer(document.getElementById('viewerCanvas'));
+//         window.viewer = viewer
+//         viewer.load(bookIdentifier, alertNotFound);
+//       })
+//
+//     }
+//   }
+//
+// }, [googleScriptLoaded, isbnOrId, bookIdentifier])
 
          return (
            <div style={{zIndex:"3",background:"var(--detailspanel)", position:"relative",color:"var(--detailspaneltext)",display:"flex",height:l?"var(--panelheight)":columnFocus!=="detailspanel"?"4rem":m?"var(--focusedpaneltablet)":"var(--focusedpanelmobile)",overflowY:!m && columnFocus==="detailspanel" && "auto"}}>

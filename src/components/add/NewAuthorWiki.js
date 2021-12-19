@@ -1,5 +1,7 @@
 import wiki from 'wikijs'
 import {useEffect, useState} from 'react'
+import { useTranslation } from 'react-i18next'
+
 import Axios from 'axios'
 import { MultiSelect } from "react-multi-select-component"
 import useDebounce from '../customHooks/useDebounce.js'
@@ -1206,6 +1208,7 @@ const fetchAuthorWikiUrl = (author) => {
 wiki().page(author).then(page => page.url()).then((res)=>setAuthorWikiUrl(res)
 )}
 
+const {t, i18n} = useTranslation();
 
 //if no page found, display "no wikipedia page found"
   return (

@@ -1,5 +1,7 @@
 import Axios from 'axios'
 import {useEffect, useState,useRef} from 'react'
+import { useTranslation } from 'react-i18next'
+
 import LaunchRoundedIcon from '@material-ui/icons/LaunchRounded';
 import createSvgIcon from "@material-ui/icons/utils/createSvgIcon";
 import ChevronRightOutlinedIcon from '@material-ui/icons/ChevronRightOutlined';
@@ -19,6 +21,7 @@ const [authorBirthYear, setAuthorBirthYear] = useState([])
 const [authorAgeHover, setAuthorAgeHover] = useState(false)
 const [authorNavFocus, setAuthorNavFocus] = useState("bg")
 const authorNavLinks = ["bg", "bio"]
+const {t, i18n} = useTranslation();
 
   const getYear = (date)=> {
     if(!date){return "undefined"}

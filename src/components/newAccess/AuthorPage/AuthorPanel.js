@@ -5,7 +5,8 @@ import LaunchRoundedIcon from '@material-ui/icons/LaunchRounded'
 import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded';
 import ExpandLessRoundedIcon from '@material-ui/icons/ExpandLessRounded';
 import ArrowForwardRoundedIcon from '@material-ui/icons/ArrowForwardRounded';
-import Axios from 'axios'
+import Axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
 
 const AuthorPanel = ({xs,s,m,l,xl, selectedAuthor, expandFurtherReading, setExpandFurtherReading, languageSetting, setShelfId, setBookNumber, setColumnFocus}) => {
@@ -15,6 +16,7 @@ const AuthorPanel = ({xs,s,m,l,xl, selectedAuthor, expandFurtherReading, setExpa
   const [authorInfluenced, setAuthorInfluenced] = useState([])
   const [authorInfluencedBooks, setAuthorInfluencedBooks] = useState([])
   const [accordionFocusInfluences, setAccordionFocusInfluences] = useState("")
+  const {t, i18n} = useTranslation();
 
 
     useEffect(()=>{
@@ -54,140 +56,166 @@ const AuthorPanel = ({xs,s,m,l,xl, selectedAuthor, expandFurtherReading, setExpa
       setColumnFocus('shelfpanel')
   }
 
-  useEffect(()=>{
+  useEffect(() => {
 
-        if(!expandFurtherReading){return}
-        if(authorInfluencesBooks.length>0){return}
-        if(authorInfluencedBooks.length>0){return}
-        const influences = [...selectedAuthor.authorInfluences]
-        const influenced = [...selectedAuthor.authorInfluenced]
+    if (!expandFurtherReading) {
+      return
+    }
+    if (authorInfluencesBooks.length > 0) {
+      return
+    }
+    if (authorInfluencedBooks.length > 0) {
+      return
+    }
+    const influences = [...selectedAuthor.authorInfluences]
+    const influenced = [...selectedAuthor.authorInfluenced]
 
-        setAuthorInfluencesBooks([])
-        setAuthorInfluencedBooks([])
+    setAuthorInfluencesBooks([])
+    setAuthorInfluencedBooks([])
 
-      Axios.post("https://humanities-book.herokuapp.com/influences",{
-          languageSetting:languageSetting,
-          authorWikiTitle:selectedAuthor.authorWikiTitle
-        })
-      .then((res)=>{
-        res.data.map((book)=>influences.indexOf(book.editions[0].details.authorWikiTitle) === -1 && influences.push(book.editions[0].details.authorWikiTitle))
+    Axios.post("https://humanities-book.herokuapp.com/influences", {
+        languageSetting: languageSetting,
+        authorWikiTitle: selectedAuthor.authorWikiTitle
+      })
+      .then((res) => {
+        res.data.map((book) => influences.indexOf(book.editions[0].details.authorWikiTitle) === -1 && influences.push(book.editions[0].details.authorWikiTitle))
         setAuthorInfluences(influences)
       })
 
-      Axios.post("https://humanities-book.herokuapp.com/influenced",{
-          languageSetting:languageSetting,
-          authorWikiTitle:selectedAuthor.authorWikiTitle
-        })
-      .then((res)=>{
-        res.data.map((book)=>influenced.indexOf(book.editions[0].details.authorWikiTitle) === -1 && influenced.push(book.editions[0].details.authorWikiTitle))
+    Axios.post("https://humanities-book.herokuapp.com/influenced", {
+        languageSetting: languageSetting,
+        authorWikiTitle: selectedAuthor.authorWikiTitle
+      })
+      .then((res) => {
+        res.data.map((book) => influenced.indexOf(book.editions[0].details.authorWikiTitle) === -1 && influenced.push(book.editions[0].details.authorWikiTitle))
         setAuthorInfluenced(influenced)
       })
 
-  },[selectedAuthor,languageSetting,expandFurtherReading])
+  }, [selectedAuthor, languageSetting, expandFurtherReading])
 
-  useEffect(()=>{
+  useEffect(() => {
 
-      authorInfluences.map((author)=>{
-        if(authorInfluencesBooks.find(obj =>obj.authorWikiTitle === author)!== undefined){
-          return;
-        }
+    authorInfluences.map((author) => {
+      if (authorInfluencesBooks.find(obj => obj.authorWikiTitle === author) !== undefined) {
+        return;
+      }
 
-        Axios.post("https://humanities-book.herokuapp.com/influencesbooks",{
-            languageSetting:languageSetting,
-            authorWikiTitle:author
-          })
-        .then((res)=>{
-          if(res.data===[]){
-            setAuthorInfluencesBooks((prev)=>[...prev,{
-              authorWikiTitle:author,
-              shelfId:[],
-              shelfTitle:[],
-              bookTitle:[],
-              arrNumber:[]
+      Axios.post("https://humanities-book.herokuapp.com/influencesbooks", {
+          languageSetting: languageSetting,
+          authorWikiTitle: author
+        })
+        .then((res) => {
+          if (res.data === []) {
+            setAuthorInfluencesBooks((prev) => [...prev, {
+              authorWikiTitle: author,
+              shelfId: [],
+              shelfTitle: [],
+              bookTitle: [],
+              arrNumber: []
             }])
-          }else{
+          } else {
             const newInfluencesBooks = {
-              authorWikiTitle:author,
-              shelfAndBook:res.data.map((shelf)=>{
-                  const shelfId = shelf._id
-                  const shelfTitle = shelf.editions[0].details.shelfTitle
-                  const books = shelf.shelfBooks.filter(book=>{
-                  return book.editions[0].details.bookAuthor.indexOf(author)!==-1
+              authorWikiTitle: author,
+              shelfAndBook: res.data.map((shelf) => {
+                const shelfId = shelf._id
+                const shelfTitle = shelf.editions[0].details.shelfTitle
+                const books = shelf.shelfBooks.filter(book => {
+                  return book.editions[0].details.bookAuthor.indexOf(author) !== -1
                 })
-                const bookTitles = books.map((book)=>{return book.editions[0].details.bookTitle})
-                const getArrNumber = (book) =>{
-                    return books.map((book)=>{
-                     return shelf.shelfBooks.indexOf(book)
-                    })
-                  }
-                const bookNumbers = books.map((book)=>{return getArrNumber(book)})
+                const bookTitles = books.map((book) => {
+                  return book.editions[0].details.bookTitle
+                })
+                const getArrNumber = (book) => {
+                  return books.map((book) => {
+                    return shelf.shelfBooks.indexOf(book)
+                  })
+                }
+                const bookNumbers = books.map((book) => {
+                  return getArrNumber(book)
+                })
                 const bookAndNumber = []
-                for(let i = 0; i<bookTitles.length; i++){
-                    bookAndNumber.push({
-                    bookTitle:bookTitles[i],
-                    bookNumber:bookNumbers[i][0]
-                  })}
-                return {shelfId:shelfId, shelfTitle:shelfTitle, book:bookAndNumber}
+                for (let i = 0; i < bookTitles.length; i++) {
+                  bookAndNumber.push({
+                    bookTitle: bookTitles[i],
+                    bookNumber: bookNumbers[i][0]
+                  })
+                }
+                return {
+                  shelfId: shelfId,
+                  shelfTitle: shelfTitle,
+                  book: bookAndNumber
+                }
               })
-              }
-              setAuthorInfluencesBooks((prev)=>[...prev,newInfluencesBooks])
-      }})
+            }
+            setAuthorInfluencesBooks((prev) => [...prev, newInfluencesBooks])
+          }
+        })
     })
 
 
-  },[authorInfluences])
+  }, [authorInfluences])
 
-  useEffect(()=>{
+  useEffect(() => {
 
-      authorInfluenced.map((author)=>{
-        if(authorInfluencedBooks.find(obj =>obj.authorWikiTitle === author)!== undefined){
-          return;
-        }
+    authorInfluenced.map((author) => {
+      if (authorInfluencedBooks.find(obj => obj.authorWikiTitle === author) !== undefined) {
+        return;
+      }
 
-        Axios.post("https://humanities-book.herokuapp.com/influencedbooks",{
-            languageSetting:languageSetting,
-            authorWikiTitle:author
-          })
-        .then((res)=>{
-          if(res.data===[]){
-            setAuthorInfluencedBooks((prev)=>[...prev,{
-              authorWikiTitle:author,
-              shelf_Id:[],
-              shelfTitle:[],
-              bookTitle:[],
-              arrNumber:[]
+      Axios.post("https://humanities-book.herokuapp.com/influencedbooks", {
+          languageSetting: languageSetting,
+          authorWikiTitle: author
+        })
+        .then((res) => {
+          if (res.data === []) {
+            setAuthorInfluencedBooks((prev) => [...prev, {
+              authorWikiTitle: author,
+              shelf_Id: [],
+              shelfTitle: [],
+              bookTitle: [],
+              arrNumber: []
             }])
-          }else{
+          } else {
             const newInfluencedBooks = {
-              authorWikiTitle:author,
-              shelfAndBook:res.data.map((shelf)=>{
-                  const shelfId = shelf._id
-                  const shelfTitle = shelf.editions[0].details.shelfTitle
-                  const books = shelf.shelfBooks.filter(book=>{
-                  return book.editions[0].details.bookAuthor.indexOf(author)!==-1
+              authorWikiTitle: author,
+              shelfAndBook: res.data.map((shelf) => {
+                const shelfId = shelf._id
+                const shelfTitle = shelf.editions[0].details.shelfTitle
+                const books = shelf.shelfBooks.filter(book => {
+                  return book.editions[0].details.bookAuthor.indexOf(author) !== -1
                 })
-                const bookTitles = books.map((book)=>{return book.editions[0].details.bookTitle})
-                const getArrNumber = (book) =>{
-                    return books.map((book)=>{
-                     return shelf.shelfBooks.indexOf(book)
-                    })
-                  }
-                const bookNumbers = books.map((book)=>{return getArrNumber(book)})
+                const bookTitles = books.map((book) => {
+                  return book.editions[0].details.bookTitle
+                })
+                const getArrNumber = (book) => {
+                  return books.map((book) => {
+                    return shelf.shelfBooks.indexOf(book)
+                  })
+                }
+                const bookNumbers = books.map((book) => {
+                  return getArrNumber(book)
+                })
                 const bookAndNumber = []
-                for(let i = 0; i<bookTitles.length; i++){
-                    bookAndNumber.push({
-                    bookTitle:bookTitles[i],
-                    bookNumber:bookNumbers[i][0]
-                  })}
-                return {shelfId:shelfId,shelfTitle:shelfTitle, book:bookAndNumber}
+                for (let i = 0; i < bookTitles.length; i++) {
+                  bookAndNumber.push({
+                    bookTitle: bookTitles[i],
+                    bookNumber: bookNumbers[i][0]
+                  })
+                }
+                return {
+                  shelfId: shelfId,
+                  shelfTitle: shelfTitle,
+                  book: bookAndNumber
+                }
               })
-              }
-              setAuthorInfluencedBooks((prev)=>[...prev,newInfluencedBooks])
-      }})
+            }
+            setAuthorInfluencedBooks((prev) => [...prev, newInfluencedBooks])
+          }
+        })
 
     })
 
-  },[authorInfluenced])
+  }, [authorInfluenced])
 
   return (
     <div className={

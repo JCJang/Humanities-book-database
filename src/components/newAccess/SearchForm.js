@@ -1,5 +1,7 @@
 import {useState,useEffect,useRef} from 'react'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
+import { useTranslation } from 'react-i18next'
+
 //
 // {l && columnFocus==="init" ?
 //   <div  style={{height:"50vh",width:"var(--initpanel)",overflow:"hidden",position:"fixed",top:"0px",left:"0px",zIndex:"0"}}>
@@ -18,6 +20,7 @@ const SearchForm = ({xs,s,m,l,xl,setSlideOut,allShelves, columnFocus, setColumnF
   const [shelfTitle, setShelfTitle] = useState('Shelf Title')
   const [displayScroll, setDisplayScroll] = useState(true)
   const noScrollBar = useRef();
+  const {t, i18n} = useTranslation();
 
     const detectScrollBottom = () => {
         if (noScrollBar.current) {

@@ -5,8 +5,10 @@ import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
 import RateReviewOutlinedIcon from '@material-ui/icons/RateReviewOutlined';
 import CodeOutlinedIcon from '@material-ui/icons/CodeOutlined';
+import { useTranslation } from 'react-i18next'
 
 const NavMobile = ({xs, s, m, l, xl, languageSetting, setLanguageSetting}) => {
+  const {t, i18n} = useTranslation();
 
   const navMobile = () => {
     return {
