@@ -45,7 +45,7 @@ const ArrowBackCircleIcon = createSvgIcon(
     const [authorBookTitle, setAuthorBookTitle] = useState('')
     const [author, setAuthor] = useState('')
     const {t, i18n} = useTranslation()
-    
+
     useEffect(()=>{
       setAuthorBookTitle(displayBookTitle)
     },[bookIdentifier])
@@ -188,13 +188,13 @@ useEffect(() => {
           </div>
 
               {l &&
-                 <span className="btn darkbtn" onClick={()=>{setColumnFocus("shelfpanel")}} style={{flex:"0 0 6rem",display:columnFocus!=="detailspanel"?"none":authorView?"none":"flex", width:"6rem",justifyContent:"center", alignSelf:"flex-start",alignItems:"center",marginTop:"2rem",marginLeft:"3rem"}}><ArrowBackCircleIcon/><span style={{width:"85%", padding:"0 0.5rem", paddingTop:!m && "5rem"}}>Back to Shelf</span></span>
+                 <span className="btn darkbtn" onClick={()=>{setColumnFocus("shelfpanel")}} style={{flex:"0 0 6rem",display:columnFocus!=="detailspanel"?"none":authorView?"none":"flex", width:"6rem",justifyContent:"center", alignSelf:"flex-start",alignItems:"center",marginTop:"2rem",marginLeft:"3rem"}}><ArrowBackCircleIcon/><span style={{width:"85%", padding:"0 0.5rem", paddingTop:!m && "5rem"}}>{t("Find.Author.Nav.back")}</span></span>
               }
 
 
               <h5 className={l?"tabbook tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{width:l?"4rem":"100vw",opacity:"0.9",cursor:columnFocus==="shelfpanel"?"pointer":"",display:l?"":columnFocus==="detailspanel"?"none":"flex",alignItems:"center",justifyContent:"space-between",padding:l?"":m?"2rem":"1.6rem"}} onClick={()=>{if(l && columnFocus==="init"){return;}else{setColumnFocus("detailspanel")}}}>
 
-              {displayBookTitle && l? displayBookTitle.slice(0,45):displayBookTitle?`Back to: ${displayBookTitle.slice(0,12)}...`:"Book Details"}
+              {displayBookTitle && l? displayBookTitle.slice(0,45):displayBookTitle?`${t("Find.Details.expand")}: ${displayBookTitle.slice(0,12)}...`:t("Find.Details.placeholder")}
 
               {columnFocus!=="detailspanel"&&
               <span className="subtitle2" style={{display:"flex",textTransform: "none"

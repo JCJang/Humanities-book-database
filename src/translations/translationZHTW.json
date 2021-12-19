@@ -1,9 +1,73 @@
 {
-  "Nav":{
-    "home":"找書",
-    "suggest":"推薦",
-    "map":"文學地圖",
-    "saved":"建立帳號",
-    "about":"關於"
+  "Nav": {
+    "home": "找書",
+    "suggest": "推薦",
+    "map": "文學地圖",
+    "saved": "建立帳號",
+    "about": "關於"
+  },
+  "Find": {
+    "Search": {
+      "title": "你最近在揣摩哪些問題？",
+      "subtitle": "請點選開啟文庫",
+      "placeholder": "文庫名",
+      "form-placeholder":"關鍵字查詢"
+    },
+    "Shelf": {
+      "keywordSwitch": {
+        "title": "關鍵字選項",
+        "content": "內容",
+        "background": "學術背景"
+      },
+      "publication": "初版年",
+      "pages": "頁",
+      "preview": "試閱",
+      "about": "更多關於",
+      "hide": "隱藏關鍵字",
+      "show": "顯示關鍵字",
+      "backgroundKeywords": "作家學術背景關鍵字",
+      "contentKeywords": "書籍內容關鍵字",
+      "highlights": "文本節錄",
+      "noHighlights": "資料庫沒有此作品的節錄",
+      "placeholder":"書名"
+    },
+    "Details":{
+      "back":"返回文庫",
+      "placeholder":"書籍祥情",
+      "expand":"展開"
+    },
+    "Author": {
+      "by": "",
+      "Nav": {
+        "background": "作家歷史背景",
+        "biography": "作家生平",
+        "back": "返回文庫"
+      },
+      "biography": "作家生平簡介",
+      "academicBackground": "學術背景",
+      "lifeWork": "代表作",
+      "timeline": "作家生平時間線",
+      "publish": "出版",
+      "publishAtAge": "，年齡",
+      "death": "逝世，享年",
+      "deathAtAge": "歲",
+      "birth": "出生",
+      "noTimeline": "資料庫時間線未找到:",
+      "learnMore": "了解更多",
+      "ageLabel": "歲",
+      "wiki-1": "本頁面的文字引用或是源自維基百科",
+      "wiki-2": "網頁; 相同方式分享",
+      "wiki-3": "Creative Commons 3.0 協議之條款",
+      "wiki-4": "下提供，附加條款亦可能應用。（請參閱使用條款）。",
+      "backToNav": "回到作者首頁"
+
+    }
+
+  },
+  "Util": {
+    "backToTop": "返回頁首",
+    "expand": "展開",
+    "prev": "前一項",
+    "next": "下一項"
   }
 }

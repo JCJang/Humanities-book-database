@@ -15,12 +15,12 @@ import { useTranslation } from 'react-i18next'
 // }
 
 const SearchForm = ({xs,s,m,l,xl,setSlideOut,allShelves, columnFocus, setColumnFocus, setLanguageSetting, languageSetting, shelfId, setShelfId,selectedShelf,setSelectedShelf, setBookNumber}) => {
+  const {t, i18n} = useTranslation();
   const [shelfQuery, setShelfQuery] =  useState('')
   const [shelfResults, setShelfResults] = useState(false)
-  const [shelfTitle, setShelfTitle] = useState('Shelf Title')
+  const [shelfTitle, setShelfTitle] = useState(t("Find.Search.placeholder"))
   const [displayScroll, setDisplayScroll] = useState(true)
   const noScrollBar = useRef();
-  const {t, i18n} = useTranslation();
 
     const detectScrollBottom = () => {
         if (noScrollBar.current) {
@@ -103,7 +103,7 @@ const searchFormDisplay = () =>{
           <div className="Column" style={{maxWidth:l?"30rem":m?"75vw":"90vw", padding:!l ? "2rem":"2rem 0 0.5rem 0",alignItems:"center", justifyContent:"center"}}>
       <label htmlFor="searchForm" className={columnFocus!=="init"?"h6-details":!m?"h6-details":"h3-details"} style={{margin: "0 1rem 1rem 1rem"}}>{t("Find.Search.title")}</label>
       <h6 style={{margin:m && "0.7rem", alignSelf:"flex-start"}} className="subtitle1">{t("Find.Search.subtitle")}</h6>
-      <input className="query-form" type="text" id="shelfQuery" placeholder="filter by keywords here" value={shelfQuery}
+      <input className="query-form" type="text" id="shelfQuery" placeholder={t("Find.Search.form-placeholder")} value={shelfQuery}
        onChange={(e)=>{setShelfQuery(e.target.value);detectScrollBottom()}}/>
          </div>
           <div className="Column noScrollBar" onScroll={()=>detectScrollBottom()} ref={noScrollBar} style={{width:"100%",alignItems:"center",overflowY:"auto", marginBottom:"0.1rem"}}>

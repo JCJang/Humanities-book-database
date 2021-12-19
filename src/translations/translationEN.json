@@ -9,7 +9,9 @@
     "Find":{
       "Search":{
         "title":"What Questions are on your mind?",
-        "subtitle":"Select a shelf below"
+        "subtitle":"Select a shelf below",
+        "placeholder":"Shelf Title",
+        "form-placeholder":"Filter by keywords here"
       },
       "Shelf":{
         "keywordSwitch":{
@@ -26,7 +28,12 @@
         "backgroundKeywords":"Background Keywords",
         "contentKeywords":"Content Keywords",
         "highlights":"highlights",
-        "noHighlights":"No highlights were added in this current language"
+        "noHighlights":"No highlights were added in this current language",  "placeholder":"Book Title"
+      },
+      "Details":{
+        "back":"return to Shelf",
+        "placeholder":"Book Details",
+        "expand":"Back To: "
       },
     "Author":{
       "by":"By",
@@ -52,8 +59,8 @@
       "wiki-3":"Creative Commons Attribution-ShareAlike 3.0 Unported License (CC-BY-SA).",
       "wiki-4":"You may redistribute it, verbatim or modified, providing that you comply with the terms of the CC-BY-SA.",
       "backToNav":"Back To Author Menu"
-      
-    }      
+
+    }
 
     },
     "Util":{
