@@ -99,8 +99,8 @@ const background = () => {
   <select className="form-control" id="languageSetting" value={languageSetting}
    onChange={(e)=>setLanguageSetting(e.target.value)} placeholder="toggles auto input settings">
    <option value="en">English</option>
-   <option value="zh-tw">Traditional Chinese</option>
-   <option value="zh-cn">Simplified Chinese</option>
+   <option value="zh-tw">繁體中文</option>
+   <option value="zh-cn">简体中文</option>
    </select>
   </nav>
   )

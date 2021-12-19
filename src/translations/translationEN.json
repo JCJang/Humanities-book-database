@@ -5,5 +5,61 @@
       "map":"Lit Map",
       "saved":"Accounts",
       "about":"About"
+    },
+    "Find":{
+      "Search":{
+        "title":"What Questions are on your mind?",
+        "subtitle":"Select a shelf below"
+      },
+      "Shelf":{
+        "keywordSwitch":{
+          "title":"Keyword Display",
+          "content":"Content",
+          "background":"Background"
+          },
+        "publication":"Publication Date",
+        "pages":"Pages",
+        "preview":"Preview",
+        "about":"About",
+        "hide":"Hide keywords",
+        "show":"show keywords",
+        "backgroundKeywords":"Background Keywords",
+        "contentKeywords":"Content Keywords",
+        "highlights":"highlights",
+        "noHighlights":"No highlights were added in this current language"
+      },
+    "Author":{
+      "by":"By",
+      "Nav":{
+        "background":"Historical Background",
+        "biography":"Author's Biography",
+        "back":"back to shelf"
+      },
+      "biography":"short biography",
+      "academicBackground":"Academic Background",
+      "lifeWork":"Life Work",
+      "timeline":"Historical Timeline",
+      "publish":"published",
+      "publishAtAge":"at age",
+      "death":"Death of",
+      "deathAtAge":", age",
+      "birth":"Birth of",
+      "noTimeline":"No Historical Timeline found in Database for",
+      "learnMore":"learn more",
+      "ageLabel":"years old",
+      "wiki-1":"This page is based on the Wikipedia article",
+      "wiki-2":"; it is used under the",
+      "wiki-3":"Creative Commons Attribution-ShareAlike 3.0 Unported License (CC-BY-SA).",
+      "wiki-4":"You may redistribute it, verbatim or modified, providing that you comply with the terms of the CC-BY-SA.",
+      "backToNav":"Back To Author Menu"
+      
+    }      
+
+    },
+    "Util":{
+      "backToTop":"Back to Top",
+      "expand":"expand",
+      "prev":"Prev",
+      "next":"Next"
     }
 }

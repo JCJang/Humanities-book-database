@@ -101,8 +101,8 @@ const searchFormDisplay = () =>{
     <div style={{width:l?"calc(100% - 6rem)":"100%",alignItems:"center",position:"relative",display:searchFormDisplay(),margin:l?"0 0 0 2rem":"",
     flexDirection: "column",padding: l ? "0" : m ? "0 3rem" : "0 2rem"}}>
           <div className="Column" style={{maxWidth:l?"30rem":m?"75vw":"90vw", padding:!l ? "2rem":"2rem 0 0.5rem 0",alignItems:"center", justifyContent:"center"}}>
-      <label htmlFor="searchForm" className={columnFocus!=="init"?"h6-details":!m?"h6-details":"h3-details"} style={{margin: "0 1rem 1rem 1rem"}}>What Questions are on your mind?</label>
-      <h6 style={{margin:m && "0.7rem", alignSelf:"flex-start"}} className="subtitle1">Select a shelf below.</h6>
+      <label htmlFor="searchForm" className={columnFocus!=="init"?"h6-details":!m?"h6-details":"h3-details"} style={{margin: "0 1rem 1rem 1rem"}}>{t("Find.Search.title")}</label>
+      <h6 style={{margin:m && "0.7rem", alignSelf:"flex-start"}} className="subtitle1">{t("Find.Search.subtitle")}</h6>
       <input className="query-form" type="text" id="shelfQuery" placeholder="filter by keywords here" value={shelfQuery}
        onChange={(e)=>{setShelfQuery(e.target.value);detectScrollBottom()}}/>
          </div>

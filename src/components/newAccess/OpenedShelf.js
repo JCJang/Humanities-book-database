@@ -236,11 +236,11 @@ const getAndSet = async(highlights) =>{
               }
             } >
         <div style={{margin:m?"":"0 1rem"}}>
-        <p className="subtitle1">Keyword Display</p>
+        <p className="subtitle1">{t("Find.Shelf.keywordSwitch.title")}</p>
         </div>
         <div className="Row" style={{margin:m?"0.5rem 0 0 0":"0.5rem 1rem 0 1rem"}}>
-        <p onClick={()=>{setContentOrSubjectKeywords(true)}} className="subtitle2" style={{backgroundColor:contentOrSubjectKeywords?"white":"#907e73",color:contentOrSubjectKeywords?"var(--shelfpaneltext)":"white", borderLeft:"none",border:"1.5px solid #907e73", borderRadius:"5px 0 0 5px", padding:"0 1rem"}}>Content</p>
-        <p onClick={()=>{setContentOrSubjectKeywords(false); detectBookScrollBottom(); detectShelfScrollBottom()}} className="subtitle2" style={{backgroundColor:contentOrSubjectKeywords?"#907e73":"white", color:contentOrSubjectKeywords?"white":"var(--shelfpaneltext)",borderLeft:"none",border:"1.5px solid #907e73", borderRadius:"0 5px 5px 0", padding:"0 1rem"}}>Background</p>
+        <p onClick={()=>{setContentOrSubjectKeywords(true)}} className="subtitle2" style={{backgroundColor:contentOrSubjectKeywords?"white":"#907e73",color:contentOrSubjectKeywords?"var(--shelfpaneltext)":"white", borderLeft:"none",border:"1.5px solid #907e73", borderRadius:"5px 0 0 5px", padding:"0 1rem"}}>{t("Find.Shelf.keywordSwitch.content")}</p>
+        <p onClick={()=>{setContentOrSubjectKeywords(false); detectBookScrollBottom(); detectShelfScrollBottom()}} className="subtitle2" style={{backgroundColor:contentOrSubjectKeywords?"#907e73":"white", color:contentOrSubjectKeywords?"white":"var(--shelfpaneltext)",borderLeft:"none",border:"1.5px solid #907e73", borderRadius:"0 5px 5px 0", padding:"0 1rem"}}>{t("Find.Shelf.keywordSwitch.background")}</p>
         </div>
     <div className="noScrollBar" onScroll={()=>detectShelfScrollBottom()} ref={shelfScroll} style={{alignItems:"center",height:m?"75vh":"var(--shelfnavheightmobile)",overflowY:"auto", marginTop:"1rem"}}>
       {selectedShelf.shelfBooks.map((book)=>{
@@ -286,7 +286,7 @@ const getAndSet = async(highlights) =>{
   {selectedBook.earliestPublicationYear &&
       <div className="Row">
       <div className="caption" style={{textAlign:"right",width:"50%",paddingRight:"0.5rem"}}>
-        Publication Date:
+      {t("Find.Shelf.publication")}:
       </div>
       <div className="subtitle2" style={{textAlign:"left",width:"50%"}}>
         {getYear(selectedBook.earliestPublicationYear)}
@@ -296,7 +296,7 @@ const getAndSet = async(highlights) =>{
 {selectedBook.bookLength &&
     <div className="Row" style={{height:"auto"}}>
     <div className="caption" style={{textAlign:"right",width:"50%",paddingRight:"0.5rem"}}>
-    Pages:
+    {t("Find.Shelf.pages")}:
     </div>
     <div className="subtitle2" style={{textAlign:"left",width:"50%"}}>
       {selectedBook.bookLength}
@@ -305,12 +305,12 @@ const getAndSet = async(highlights) =>{
       </div>
 
       <div className="Column" style={{flex:"1 1"}}>
-        <span className="btn lightbtn" onClick={()=>{setNewPreview()}} style={{width:"6rem", display:"flex",justifyContent:"center",alignItems:"center",marginTop:"1.5rem"}}><span  style={{width:"85%"}}>Preview</span><ArrowForwardCircleIcon/></span>
+        <span className="btn lightbtn" onClick={()=>{setNewPreview()}} style={{width:"6rem", display:"flex",justifyContent:"center",alignItems:"center",marginTop:"1.5rem"}}><span  style={{width:"85%"}}>{t("Find.Shelf.preview")}</span><ArrowForwardCircleIcon/></span>
         {selectedBook.bookAuthor && selectedBook.bookAuthor.map((author) => {
-          return <span className="btn lightbtn" onClick={()=>{setNewAuthor(author);setAuthorFocus("init")}} style={{width:"6rem", marginTop:"1rem",display:"flex",justifyContent:"center",alignItems:"center"}}><p style={{width:"85%"}}>{`About ${author}`}</p><ArrowForwardCircleIcon/></span>
+          return <span className="btn lightbtn" onClick={()=>{setNewAuthor(author);setAuthorFocus("init")}} style={{width:"6rem", marginTop:"1rem",display:"flex",justifyContent:"center",alignItems:"center"}}><p style={{width:"85%"}}>{`${t("Find.Shelf.about")} ${author}`}</p><ArrowForwardCircleIcon/></span>
         })}
         <span className="btn" style={{width:"10rem",color:"var(--shelfpanellistpressedborder)",position:"relative"}}
-       onClick={()=>{setShowKeywords(!showKeywords); detectBookScrollBottom(); detectShelfScrollBottom()}}><span style={{bottom:"0.5rem", position:"absolute"}}>{showKeywords?"Hide Keywords":"Show Keywords"}</span></span>
+       onClick={()=>{setShowKeywords(!showKeywords); detectBookScrollBottom(); detectShelfScrollBottom()}}><span style={{bottom:"0.5rem", position:"absolute"}}>{showKeywords?t("Find.Shelf.hide"):t("Find.Shelf.show")}</span></span>
     </div>
   </div>
 
@@ -321,7 +321,7 @@ const getAndSet = async(highlights) =>{
     {selectedBook.contentKeywords &&
       <div className="subtitle2" style={{width:"50%"}}>
         <div className="Row" style={{alignItems:"center",marginBottom:"0.5rem"}}>
-          Content Keywords <LaunchRoundedIcon style={{marginLeft:"0.5rem"}}/>
+        {t("Find.Shelf.contentKeywords")} <LaunchRoundedIcon style={{marginLeft:"0.5rem"}}/>
           </div>
       <div>{selectedBook.contentKeywords[0] && selectedBook.contentKeywords.map((tag)=>{return <p className="tag" style={{display:"inline-block", border:"1.5px solid var(--shelfpanellistpressedborder)", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.2rem"}}><a href={`https://en.wikipedia.org/wiki/${tag.replace(/\s/g,'_')}`} target="_blank" className="shelfPanelLink">{tag}</a></p>})}</div>
   </div>}
@@ -329,7 +329,7 @@ const getAndSet = async(highlights) =>{
     {selectedBook.subjectLinks &&
       <div style={{width:"50%"}} className="subtitle2">
         <div className="Row" style={{alignItems:"center",marginBottom:"0.5rem"}}>
-          Background Keywords <LaunchRoundedIcon style={{marginLeft:"0.5rem"}}/>
+        {t("Find.Shelf.backgroundKeywords")} <LaunchRoundedIcon style={{marginLeft:"0.5rem"}}/>
           </div>
       <div>{selectedBook.subjectLinks[0] && selectedBook.subjectLinks.map((tag)=>{return <p className="tag" style={{display:"inline-block", border:"1.5px solid var(--shelfpanellistpressedborder)", margin:"0 0.5rem 0.5rem 0", padding:"0.1rem 0.2rem"}}><a href={`https://en.wikipedia.org/wiki/${tag.replace(/\s/g,'_')}`} target="_blank" className="shelfPanelLink">{tag}</a></p>})}</div>
   </div>}
@@ -338,7 +338,7 @@ const getAndSet = async(highlights) =>{
   {bookHighlights[0] ? bookHighlights.map((section)=>{
     return <div style={{backgroundColor:"var(--paper)", color:"var(--ink)",padding:"1rem",border:"1.5px solid #C4C4C4", marginTop:"1rem", boxShadow:"var(--heavyshadow)"}}>
     <div className="overline-details" style={{textAlign:"center", marginTop:"0.5rem"}}>
-        {section[1]? section[0]:"HIGHLIGHTS"}
+        {section[1]? section[0]:t("Find.Shelf.highlights").toUpperCase()}
       </div>
 
     <div className="body1-details" style={{ textAlign:"justify", height:"auto"}}>
@@ -356,13 +356,13 @@ const getAndSet = async(highlights) =>{
       </div>
   }):
       <div className="body1-details" style={{backgroundColor:"var(--paper)", color:"var(--ink)",padding:"1rem",border:"1.5px solid #C4C4C4", marginTop:"1rem", padding:"1rem 3rem", boxShadow:"var(--heavyshadow)",textAlign:"justify", height:"auto"}}>
-      No Highlights yet for this book.
+      {t("Find.Shelf.noHighlights")}
       </div>
     }
 
 
       <div style={{display:"flex",alignItems:"center", justifyContent:"center",marginBottom:"2rem"}}>
-      <a style={{textDecoration:"none",color:"var(--shelfpanellistpressedborder)",padding:"1.5rem"}} href="#title" className="btn">Back to Top</a>
+      <a style={{textDecoration:"none",color:"var(--shelfpanellistpressedborder)",padding:"1.5rem"}} href="#title" className="btn">{t("Util.backToTop")}</a>
       </div>
       {displayBookScroll &&  <div class="scrollIndicator-container" style={{alignSelf:"center"}}>
         <div class="scrollIndicatorBook"></div>
@@ -371,7 +371,7 @@ const getAndSet = async(highlights) =>{
     <h5 className={l?"tabshelf tab-lr h5tab-l":m?"h5tab-m":"h5tab-s"} style={{opacity:"0.8", cursor:columnFocus==="init"&&l?"":columnFocus!=="shelfpanel"?"pointer":"",display:l?"":columnFocus==="shelfpanel"?"none":"flex",alignItems:"center",justifyContent:"space-between",padding:l?"":m?"2rem":"1.6rem"}} onClick={()=>{if(l && columnFocus==="init"){return;}else{setColumnFocus("shelfpanel")}}}>
     {selectedBook.bookTitle && l? selectedBook.bookTitle.slice(0,45):selectedBook.bookTitle?`Back to: ${selectedBook.bookTitle.slice(0,12)}...`:"Book Title"}
     {columnFocus!=="shelfpanel" &&  <span className="subtitle2" style={{display:"flex",textTransform: "none"
-,position:l?"absolute":"relative", left:l?"1rem":"", bottom:l?"0":""}}><p>expand</p><AddCircleOutlineOutlinedIcon style={{alignSelf:"center",width:"1rem",height:"1rem",marginLeft:!l&&"0.5rem",marginTop:l&&"0.5rem"}}/></span>}
+,position:l?"absolute":"relative", left:l?"1rem":"", bottom:l?"0":""}}><p>{t("Util.expand")}</p><AddCircleOutlineOutlinedIcon style={{alignSelf:"center",width:"1rem",height:"1rem",marginLeft:!l&&"0.5rem",marginTop:l&&"0.5rem"}}/></span>}
     </h5>
   </div>
 

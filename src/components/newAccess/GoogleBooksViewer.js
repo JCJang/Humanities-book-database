@@ -1,8 +1,8 @@
 import React from 'react'
 import {useEffect, useState, useCallback} from 'react'
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
+import { useTranslation } from 'react-i18next';
 import createSvgIcon from "@material-ui/icons/utils/createSvgIcon";
-import { useTranslation } from 'react-i18next'
 
 
 const ArrowBackCircleIcon = createSvgIcon(
@@ -44,7 +44,8 @@ const ArrowBackCircleIcon = createSvgIcon(
 
     const [authorBookTitle, setAuthorBookTitle] = useState('')
     const [author, setAuthor] = useState('')
-
+    const {t, i18n} = useTranslation()
+    
     useEffect(()=>{
       setAuthorBookTitle(displayBookTitle)
     },[bookIdentifier])
@@ -197,7 +198,7 @@ useEffect(() => {
 
               {columnFocus!=="detailspanel"&&
               <span className="subtitle2" style={{display:"flex",textTransform: "none"
-          ,position:l?"absolute":"relative", left:l?"1rem":"", bottom:l?"0":""}}><p>expand</p><AddCircleOutlineOutlinedIcon style={{alignSelf:"center",width:"1rem",height:"1rem",marginLeft:!l&&"0.5rem",marginTop:l&&"0.5rem"}}/></span>}
+          ,position:l?"absolute":"relative", left:l?"1rem":"", bottom:l?"0":""}}><p>{t("Util.expand")}</p><AddCircleOutlineOutlinedIcon style={{alignSelf:"center",width:"1rem",height:"1rem",marginLeft:!l&&"0.5rem",marginTop:l&&"0.5rem"}}/></span>}
 
 
               </h5>

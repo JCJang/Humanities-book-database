@@ -13,21 +13,21 @@ const AuthorNav = ({xs, s, m, l, xl, selectedAuthor, setAuthorFocus, setColumnFo
     <div  className="Column" style={{order:l?"1":"2", height:l?"7rem":"5rem",width:"100%", alignItems: "center", display:"flex",color:"var(--paper)", justifyContent:"center",backgroundColor:"var(--ink)",padding:"0 2rem"}}>
       {l && <nav className="body2-details Row" style={{ height:"3.5rem", alignItems: "center", display:"flex",color:"var(--paper)", justifyContent:"center",backgroundColor:"var(--ink)"}}>
     <span  onClick={()=>{setAuthorFocus("bg")}} className="AuthorLink">
-    Historical Background
+    {t("Find.Author.Nav.background")}
     </span>
     <div style={{width:"0.1px",height:"1.5rem",borderLeft:"1px solid var(--paper)"}}></div>
     <span onClick={()=>{setAuthorFocus("bio")}} className="AuthorLink">
-    Author's Biography
+    {t("Find.Author.Nav.biography")}
     </span>
     </nav>}
-    {selectedAuthor && <div className="overline-details" style={{marginTop:"1rem"}}>{`${authorBookTitle} // By ${selectedAuthor.authorWikiTitle}`}</div>}
+    {selectedAuthor && <div className="overline-details" style={{marginTop:"1rem"}}>{`${authorBookTitle} // ${t("Find.Author.by")} ${selectedAuthor.authorWikiTitle}`}</div>}
       {!l && <div style={{width:"100vw",marginTop:"1rem",borderTop:"1px solid var(--paper)"}}></div>}
       {!l && <div style={{width:"100vw",margin:"0.5rem 0",borderTop:"1px solid var(--paper)"}}></div>}
   <div>
   </div>
   </div>
   {l && <div className="Column" style={{order:l?"2":"1",justifySelf:"flex-end",marginTop:"1rem"}}>
-  <span className="btn darkbtn" onClick={()=>{setColumnFocus("shelfpanel")}} style={{width:l?"6rem":"auto",alignSelf:l?"":"flex-start",alignItems:"center",marginTop:"1rem",marginLeft:l?"":m?"3rem":"", display:"flex",justifyContent:"center"}}><ArrowBackRoundedIcon/><span  style={{width:"85%", padding:"0 0.5rem"}}>Back to Shelf</span></span>
+  <span className="btn darkbtn" onClick={()=>{setColumnFocus("shelfpanel")}} style={{width:l?"6rem":"auto",alignSelf:l?"":"flex-start",alignItems:"center",marginTop:"1rem",marginLeft:l?"":m?"3rem":"", display:"flex",justifyContent:"center"}}><ArrowBackRoundedIcon/><span  style={{width:"85%", padding:"0 0.5rem"}}>{t("Find.Author.Nav.back")}</span></span>
   </div>}
 
   </div>

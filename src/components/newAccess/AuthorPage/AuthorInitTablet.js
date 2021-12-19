@@ -140,7 +140,7 @@ const filterAroundPublicationDate = (arr)=>{
 
       </div>
       :
-      <span id="returnbtn" className="btn darkbtn" onClick={()=>{setAuthorFocus("init")}} style={{width:l?"6rem":"",display:"flex",justifyContent:"center", alignSelf:"flex-start",alignItems:"center",marginTop:"1rem",marginLeft:l?"":m?"3rem":"", position:"relative", zIndex:"1"}}><ArrowBackCircleIcon/><span style={{width:"85%", padding:"0 0.5rem"}}>Back to Author Menu</span></span>
+      <span id="returnbtn" className="btn darkbtn" onClick={()=>{setAuthorFocus("init")}} style={{width:l?"6rem":"",display:"flex",justifyContent:"center", alignSelf:"flex-start",alignItems:"center",marginTop:"1rem",marginLeft:l?"":m?"3rem":"", position:"relative", zIndex:"1"}}><ArrowBackCircleIcon/><span style={{width:"85%", padding:"0 0.5rem"}}>{t("Find.Author.backToNav")}</span></span>
     }
 
 
@@ -162,8 +162,8 @@ const filterAroundPublicationDate = (arr)=>{
             }
         </div>
         <div style={{position:"absolute",bottom:m?"3rem":"2rem",padding:m?"0 3rem":"0 2rem"}}>
-        <h5  className="h5-details" style={{textShadow:"0 0 7px var(--ink)"}}>Historical Background</h5>
-        <h6  className="subtitle1-details" style={{textShadow:"0 0 7px var(--ink)"}}>{selectedAuthor.timelineLinks?selectedAuthor.timelineLinks.map((timeline)=>{return timeline.slice(11)}):"Not Available for this Author"}</h6>
+        <h5  className="h5-details" style={{textShadow:"0 0 7px var(--ink)"}}>{t("Find.Author.Nav.background")}</h5>
+        <h6  className="subtitle1-details" style={{textShadow:"0 0 7px var(--ink)"}}>{selectedAuthor.timelineLinks?selectedAuthor.timelineLinks.map((timeline)=>{return timeline.slice(11)}):`${t("Find.Author.noTimeline")} ${selectedAuthor.authorWikiTitle}`}</h6>
         </div>
       </div>
 
@@ -183,7 +183,7 @@ const filterAroundPublicationDate = (arr)=>{
 
   {authorFocus==="bg" && !selectedAuthor.timelineLinks[0] &&
   <h4 className={authorFocus==="bg"?"h4-details":"body2-details"} style={{margin:"2rem 0 1rem 0",textAlign:"center"}} id="authorTitle">
-   No Historical Timeline Stored for {selectedAuthor.authorWikiTitle}
+   {t("Find.Author.noTimeline")} {selectedAuthor.authorWikiTitle}
    </h4>
  }
 
@@ -191,7 +191,7 @@ const filterAroundPublicationDate = (arr)=>{
 
     <>
     <h4 className="h4-details" style={{margin:"2rem 0 1rem 0"}} id="authorTitle">
-    Historical Timeline {selectedAuthor.timelineLinks[0].slice(9)}
+    {t("Find.Author.timeline")} {selectedAuthor.timelineLinks[0].slice(9)}
     </h4>
 
   <div className="Column">
@@ -210,7 +210,7 @@ const filterAroundPublicationDate = (arr)=>{
                         onMouseLeave={() => setAuthorAgeHover(false)}>
 
                           {keyValue[1]===`icon${authorPublicationYear}`?keyValue[0]:keyValue[1]}
-                        <div style={{position:"relative",opacity:authorAgeHover===keyValue[1]?"1":"0"}} className="transition subtitle1-details">{keyValue[0]-authorBirthYear} years old</div>
+                        <div style={{position:"relative",opacity:authorAgeHover===keyValue[1]?"1":"0"}} className="transition subtitle1-details">{keyValue[0]-authorBirthYear} {t("Find.Author.ageLabel")}</div>
 
                         </div>
 
@@ -237,8 +237,7 @@ const filterAroundPublicationDate = (arr)=>{
                           onMouseLeave={() => setAuthorAgeHover(false)}>
                                 <div style={{lineHeight:"2",marginTop:"1rem", display:"inline",fontWeight:"bold",opacity:authorAgeHover===keyValue[1]?"1":"0.8"}} className="subtitle1-details Row transition">
 
-                                      {keyValue[1]===`icon${authorPublicationYear}`?keyValue[0]:keyValue[1]}  <p style={{display:"inline", position:"relative",opacity:authorAgeHover===keyValue[1]?"1":"0"}} className="transition subtitle1-details">- {keyValue[0]-authorBirthYear} years old
-                                      </p>
+                                      {keyValue[1]===`icon${authorPublicationYear}`?keyValue[0]:keyValue[1]}  <p style={{display:"inline", position:"relative",opacity:authorAgeHover===keyValue[1]?"1":"0"}} className="transition subtitle1-details">- {keyValue[0]-authorBirthYear} {t("Find.Author.ageLabel")}</p>
 
                                 </div>
 
@@ -263,10 +262,10 @@ const filterAroundPublicationDate = (arr)=>{
       </div>
 
     <div style={{display:"flex",alignItems:"center", justifyContent:"center",marginTop:"1rem"}}>
-        <a style={{textDecoration:"none",color:"var(--paper)",padding:"2rem"}} href="#returnbtn" className="btn">Back to Top</a>
+        <a style={{textDecoration:"none",color:"var(--paper)",padding:"2rem"}} href="#returnbtn" className="btn">{t("Util.backToTop")}</a>
     </div>
 
-    <div className="body2-details" style={{opacity:"0.7",padding:"1.5rem"}}>This page is based on the Wikipedia article <a href={`https://en.wikipedia.org/wiki/${selectedAuthor.timelineLinks[0].replace(/\s/g,'_')}`} target="_blank" className="AttributionLink">{selectedAuthor.timelineLinks[0]}</a>; it is used under the <a href="https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License" taget="_blank" className="AttributionLink">Creative Commons Attribution-ShareAlike 3.0 Unported License (CC-BY-SA)</a>. You may redistribute it, verbatim or modified, providing that you comply with the terms of the CC-BY-SA.</div>
+    <div className="body2-details" style={{opacity:"0.7",padding:"1.5rem"}}>{t("Find.Author.wiki-1")} <a href={`https://en.wikipedia.org/wiki/${selectedAuthor.timelineLinks[0].replace(/\s/g,'_')}`} target="_blank" className="AttributionLink">{selectedAuthor.timelineLinks[0]}</a>{t("Find.Author.wiki-2")} <a href="https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License" taget="_blank" className="AttributionLink">{t("Find.Author.wiki-3")}</a> {t("Find.Author.wiki-4")}</div>
 
     </>
     }
@@ -292,7 +291,7 @@ const filterAroundPublicationDate = (arr)=>{
         {selectedAuthor.authorBgKeywords &&
           <div className="subtitle2" style={{ position:"relative", zIndex:"1"}}>
             <div className="Row" style={{alignItems:"center", margin:"1rem"}}>
-              Academic Background <LaunchRoundedIcon style={{marginLeft:"0.5rem"}}/>
+            {t("Find.Author.academicBackground")} <LaunchRoundedIcon style={{marginLeft:"0.5rem"}}/>
               </div>
           <div>{selectedAuthor.authorBgKeywords[0] && selectedAuthor.authorBgKeywords.map((tag)=>{return <p className="tag AuthorLink" style={{display:"inline-block", border:"1.5px solid var(--paper)", margin:"0 0.5rem 0.5rem 0", padding:"0.2rem 0.3rem"}}><a href={`https://en.wikipedia.org/wiki/${tag.replace(/\s/g,'_')}`} target="_blank" className="AttributionLink">{tag}</a></p>})}</div>
         </div>
@@ -301,7 +300,7 @@ const filterAroundPublicationDate = (arr)=>{
         {selectedAuthor.authorLifeWorkKeywords  &&
           <div className="subtitle2" style={{ position:"relative", zIndex:"1"}}>
             <div className="Row" style={{alignItems:"center", margin:"1rem"}}>
-              Life Work <LaunchRoundedIcon style={{marginLeft:"0.5rem"}}/>
+            {t("Find.Author.lifeWork")} <LaunchRoundedIcon style={{marginLeft:"0.5rem"}}/>
               </div>
           <div>{selectedAuthor.authorLifeWorkKeywords[0] && selectedAuthor.authorLifeWorkKeywords.map((tag)=>{return <p className="tag AuthorLink" style={{display:"inline-block", border:"1.5px solid var(--paper)", margin:"0 0.5rem 0.5rem 0", padding:"0.2rem 0.3rem"}}><a href={`https://en.wikipedia.org/wiki/${tag.replace(/\s/g,'_')}`} target="_blank" className="AttributionLink">{tag}</a></p>})}</div>
         </div>
@@ -315,7 +314,7 @@ const filterAroundPublicationDate = (arr)=>{
           <div style={{backgroundColor:"var(--paper)", color:"var(--ink)",padding:"1rem",border:"1.5px solid #C4C4C4", marginTop:"1rem", boxShadow:"var(--heavyshadow)"}}>
 
             <div className="overline-details" style={{textAlign:"center"}}>
-                  SHORT BIOGRAPHY
+            {t("Find.Author.biography").toUppercase()}
             </div>
 
             <div className="body1-details" style={{ textAlign:"left", height:"auto"}}>
@@ -327,10 +326,10 @@ const filterAroundPublicationDate = (arr)=>{
       </div>
 
     <div style={{display:"flex",alignItems:"center", justifyContent:"center",marginTop:"1rem",position:"relative",zIndex:"1"}}>
-        <a style={{textDecoration:"none",color:"var(--paper)",padding:"2rem"}} href="#returnbtn" className="btn">Back to Top</a>
+        <a style={{textDecoration:"none",color:"var(--paper)",padding:"2rem"}} href="#returnbtn" className="btn">{t("Util.backToTop")}</a>
     </div>
 
-    <div className="body2-details" style={{opacity:"0.7",padding:"1.5rem"}}>This page is based on the Wikipedia article <a href={selectedAuthor.authorWikiUrl} target="_blank" className="AttributionLink">{selectedAuthor.authorWikiTitle}</a>; it is used under the <a href="https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License" taget="_blank" className="AttributionLink">Creative Commons Attribution-ShareAlike 3.0 Unported License (CC-BY-SA)</a>. You may redistribute it, verbatim or modified, providing that you comply with the terms of the CC-BY-SA.</div>
+    <div className="body2-details" style={{opacity:"0.7",padding:"1.5rem"}}>{t("Find.Author.wiki-1")} <a href={selectedAuthor.authorWikiUrl} target="_blank" className="AttributionLink">{selectedAuthor.authorWikiTitle}</a>{t("Find.Author.wiki-2")} <a href="https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License" taget="_blank" className="AttributionLink">{t("Find.Author.wiki-3")}</a> {t("Find.Author.wiki-4")}</div>
 
 </>
 }
