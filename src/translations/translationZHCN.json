@@ -1,13 +1,73 @@
 {
-    "Navbar":{
-      "trekinn":"Home",
-      "about":"About",
-      "destinations+map":"Travel guide",
-      "rooms":"Rooms",
-      "contact":"Contact",
-      "home":"Back to Home",
-      "callus":"Call us",
-      "changeTo":"中文版",
-      "language":"zhtw"
+  "Nav": {
+    "home": "找书",
+    "suggest": "推荐",
+    "map": "文学地图",
+    "saved": "建立帐号",
+    "about": "关于"
+  },
+  "Find": {
+    "Search": {
+      "title": "你最近在揣摩哪些问题？",
+      "subtitle": "请点选开启文库",
+      "placeholder": "文库名",
+      "form-placeholder":"关键字查询"
+    },
+    "Shelf": {
+      "keywordSwitch": {
+        "title": "关键字选项",
+        "content": "内容",
+        "background": "学术背景"
+      },
+      "publication": "初版年",
+      "pages": "页",
+      "preview": "试阅",
+      "about": "更多关于",
+      "hide": "隐藏关键字",
+      "show": "显示关键字",
+      "backgroundKeywords": "作家学术背景关键字",
+      "contentKeywords": "书籍内容关键字",
+      "highlights": "文本节录",
+      "noHighlights": "资料库没有此作品的节录",
+      "placeholder":"书名"
+    },
+    "Details":{
+      "back":"返回文库",
+      "placeholder":"书籍祥情",
+      "expand":"展开"
+    },
+    "Author": {
+      "by": "",
+      "Nav": {
+        "background": "作家历史背景",
+        "biography": "作家生平",
+        "back": "返回文库"
+      },
+      "biography": "作家生平简介",
+      "academicBackground": "学术背景",
+      "lifeWork": "代表作",
+      "timeline": "作家生平时间线",
+      "publish": "出版",
+      "publishAtAge": "，年龄",
+      "death": "逝世，享年",
+      "deathAtAge": "岁",
+      "birth": "出生",
+      "noTimeline": "资料库时间线未找到:",
+      "learnMore": "了解更多",
+      "ageLabel": "岁",
+      "wiki-1": "本页面的文字引用或是源自维基百科",
+      "wiki-2": "网页; 相同方式分享",
+      "wiki-3": "Creative Commons 3.0 协议之条款",
+      "wiki-4": "下提供，附加条款亦可能应用。（请参阅使用条款）。",
+      "backToNav": "回到作者首页"
+
     }
+
+  },
+  "Util": {
+    "backToTop": "返回页首",
+    "expand": "展开",
+    "prev": "前一项",
+    "next": "下一项"
+  }
 }
