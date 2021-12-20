@@ -203,38 +203,48 @@ const Access =({xs,s,m,l,xl, authorView, setAuthorView, googleScriptLoaded, setG
 
 
 
-    useEffect(()=>{
-      if(shelfId.length<10){return}
-      Axios.post("http://localhost:3001/openedshelf",{
-        shelfLanguage:languageSetting,
-        shelfId:shelfId
-      })
-      .then((res) => {
-        const newSelectedShelf = {
-          shelfTitle:res.data.editions[0].details.shelfTitle,
-          shelfDescription:res.data.editions[0].details.shelfDescription,
-          shelfSubjects:res.data.shelfSubjects,
-          shelfId: res.data._id,
-          shelfBooks:
-            res.data.shelfBooks.map((x) => {
-                  return {
-                    languageVersions:x.languageVersions,
-                    earliestPublicationYear:x.earliestPublicationYear,
-                    bookTitle:x.editions[0].details.bookTitle,
-                    bookAuthor: x.editions[0].details.bookAuthor,
-                    contentKeywords: x.editions[0].details.contentKeywords,
-                    subjectLinks:x.editions[0].details.subjectLinks,
-                    bookHighlights:x.editions[0].details.bookHighlights,
-                    bookLength:x.editions[0].details.bookLength,
-                    previewStatus:x.editions[0].details.previewStatus,
-                    isbn13:x.editions[0].details.isbn13,
-                    googleId: x.editions[0].details.googleId}
-                })
+        useEffect(()=>{
+          if(shelfId.length<10){return}
+          Axios.post("https://humanities-book.herokuapp.com/openedshelf",{
+            shelfLanguage:languageSetting,
+            shelfId:shelfId
+          })
+          .then((res) => {
+            console.log(res)
+            const newRes = res.data.editions.filter((edition)=> {return edition.language === languageSetting})
+            const newSelectedShelf = {
+              shelfTitle:newRes[0].details.shelfTitle,
+              shelfDescription:newRes[0].details.shelfDescription,
+              shelfSubjects:res.data.shelfSubjects,
+              shelfId: res.data._id,
+              shelfBooks:
+                res.data.shelfBooks.map((x) => {
+                    let newX = x.editions
+                    if(newX.some(edition=>edition.language === languageSetting)){
+                      newX = newX.filter((edition)=>{
+                          return edition.language===languageSetting
+                        })
+                    }
+                    console.log(newX)
 
-        }
-        setSelectedShelf({...newSelectedShelf})})
+                      return {
+                        languageVersions:x.languageVersions,
+                        earliestPublicationYear:x.earliestPublicationYear,
+                        bookTitle:newX[0].details.bookTitle,
+                        bookAuthor: newX[0].details.bookAuthor,
+                        contentKeywords: newX[0].details.contentKeywords,
+                        subjectLinks:newX[0].details.subjectLinks,
+                        bookHighlights:newX[0].details.bookHighlights,
+                        bookLength:newX[0].details.bookLength,
+                        previewStatus:newX[0].details.previewStatus,
+                        isbn13:newX[0].details.isbn13,
+                        googleId: newX[0].details.googleId}
+                    })
+            }
+            setSelectedShelf({...newSelectedShelf})})
 
-    },[shelfId])
+        },[shelfId])
+
 
     // useEffect(()=> {
     //   if(selectedShelf!==false){
