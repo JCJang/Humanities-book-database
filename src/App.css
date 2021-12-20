@@ -1,27 +1,341 @@
+@import "~@fontsource/palanquin/index.css";
+@import "~@fontsource/jost/300.css";
+@import "~@fontsource/jost/400.css";
+@import "~@fontsource/jost/500.css";
+
+@import "~@fontsource/amiri/index.css";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color:  var(--inactive) var(--searchpanel);
+
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--lightactionbtn);
+}
+*::-webkit-scrollbar-track {
+  background: var(--searchpanel));
+   box-shadow: inset var(--lightshadow);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--inactive);
+  border-radius: 20px;
+  cursor: pointer;
+  border: 1.5px solid var(--inactive);
+
+}
+
+::-webkit-scrollbar-corner{
+  background: var(--inactive);
+
+}
+
+.noScrollBar::-webkit-scrollbar {
+  display: none;}
+
+.noScrollBar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+.OpenedAuthor{
+  scroll-behavior: smooth;
+}
+
 
 :root{
-  --nav:black;
+  --nav:rgba(83,100,109,1);
   --nav-text:white;
 
-  --searchbg:blue;
-  --searchlistbg:white;
-  --searchlisttext:black;
+  --searchpanel:#F5EBE2;
+  --searchpaneltext:#6B2A0A;
+  --searchpanellist:#EDEDED;
+  --searchpanellistborder:#BBBBBB;
+  --searchpanellistborderpressed:#C4C4C4;
 
 
-  --shelfbg:lightBlue;
-  --shelflistbg:black;
-  --shelflisttext:white;
+  --shelfpanel:#E9D6CA;
+  --shelfpanellist:#DDDDDD;
 
-  --bookbg:darkGrey;
-  --booklistbg:white;
-  --booklisttext:black;
+  --shelfpanellistpressed:#E0C6B6;
+  --shelfpanellistpressedborder:#A08D80;
+
+  --shelfpaneltext:#3D1C0D;
+  --shelfpanellistborder:#776A61;
+
+  --detailspanel:#494243;
+  --detailspaneltext:#e0ddd8;
+
+  --authorpanel:#71272F;
+  --authorpaneltext:#E9D6CA;
+
+--lightactionbtn:#F17C67;
+--lightactionbtntext:#F9F6F0;
+--darkactionbtn:#71272F;
+--darkactionbtntext:#F9F6F0;
+
+--inactive:#BBBBBB;
+--inactivetext:#FFFFFF;
+
+--ink:#111111;
+--paper:#F9F6F0;
+
+--panelheight:calc(100vh - 3.5rem);
+--panelheightmobile:calc(100vh - 4rem);
+
+--focusedpanel:calc(70vw - 4rem);
+--initpanel:calc(100vw - 8rem);
+--authorheight:calc(100vh - 10rem);
+--authorheightwnavtablet:calc(100vh - 16.5rem);
+--authorheightwonavtablet:calc(100vh - 30.5rem);
+--authorheightwnavmobile:calc(100vh - 19rem);
+--authorheightwonavmobile:calc(100vh - 30.5rem);
+--authorpanelopenheight:calc(100vh - 20.5rem);
+--shelfnavheightmobile:calc(100vh - 25rem);
+
+
+--mobileWidth:calc(100vw - 4rem);
+--tabletWidth:calc(100vw - 10rem);
+
+--shelfoverlaytablet:calc(100vh - 13.5rem);
+--focusedpaneltablet:calc(100vh - 11.5rem);
+--focusedsearchpaneltablet:calc(100vh - 7.5rem);
+
+--searchpanelheighttablet:calc(100vh - 11rem);
+
+--focusedpanelmobile:calc(100vh - 13rem);
+
+--lightshadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+--heavyshadow:0px 6px 8px rgba(0, 0, 0, 0.15);
+
+--lighttextshadow: 0px 2px 2px rgba(0, 0, 0, 0.10);
+--heavytextshadow:0px 6px 8px rgba(0, 0, 0, 0.35);
+
+
+--panelshadow:6px 0px 8px rgba(0, 0, 0, 0.15) inset;
+--panelshadowtop:0px 6px 8px rgba(0, 0, 0, 0.15) inset;
+
+
+  --main-headline1: 300 6.5rem/1.5 "Jost", "Palanquin", sans-serif;
+  --main-headline2: 300 4rem/1.5 "Jost", "Palanquin", sans-serif;
+  --main-headline3: 3.2rem/1.5 "Jost", "Palanquin", sans-serif;
+  --main-headline4: 2.3rem/1.5 "Jost", "Palanquin", sans-serif;
+  --main-headline5: 1.65rem/1.5 "Jost", "Palanquin", sans-serif;
+  --main-headline6: 500 1.35rem/1.5 "Jost", "Palanquin", sans-serif;
+  --main-body1:  1rem/1.5 "Jost", "Palanquin", sans-serif;
+  --main-body2:  0.9rem/1.5 "Jost", "Palanquin", sans-serif;
+  --main-subtitle1: 1.25rem/1.5 "Jost", "Palanquin", sans-serif;
+  --main-subtitle2: 500 0.95rem/1.5 "Jost", "Palanquin", sans-serif;
+  --main-button: bold 0.8rem/1.5 "Palanquin", sans-serif;
+  --main-overline:  0.65rem/1.5"Jost",  "Palanquin", sans-serif;
+  --main-caption:  0.8rem/1.5 "Palanquin", sans-serif;
+
+
+  --details-headline1: 6.5rem/1.5 "Amiri",serif;
+  --details-headline2: 4rem/1.5 "Amiri",serif;
+  --details-headline3: 3.2rem/1.5 "Amiri",serif;
+  --details-headline4: 2.5rem/1.5 "Amiri",serif;
+  --details-headline5: 1.65rem/1.5 "Amiri",serif;
+  --details-headline6: bold 1.35rem/1.5 "Amiri",serif;
+  --details-body1:  1.2rem/1.5 "Amiri",serif;
+  --details-body2:  1rem/1.5 "Amiri",serif;
+  --details-subtitle1:  1.06rem/1.5 "Amiri",serif;
+  --details-subtitle2: bold 0.95rem/1.5 "Amiri",serif;
+  --details-button: bold 0.95rem/1.5 "Amiri",serif;
+  --details-overline:  0.65rem/1.5 "Amiri",serif;
+  --details-caption:  0.8rem/1.5 "Amiri",serif;
+  --details-overline-logo:  0.75rem/1.5 "Amiri",serif;
+
 
 }
 
-.Nav {
-  background-color: var(--nav);
-  color: var(--nav-text);
+
+h1{ font:var(--main-headline1);
+text-transform: capitalize;
+letter-spacing: -0.094rem;}
+h2{ font:var(--main-headline2);
+text-transform: capitalize;
+letter-spacing: -0.03rem;}
+h3{ font:var(--main-headline3);
+text-transform: capitalize;}
+h4{ font:var(--main-headline4);
+text-transform: capitalize;
+letter-spacing: 0.0156rem;}
+h5{font:var(--main-headline5);
+text-transform: capitalize;}
+h6{font:var(--main-headline6);
+text-transform: capitalize;
+letter-spacing: 0.01rem;}
+body{font:var(--main-body1);}
+.h1{ font:var(--main-headline1);
+text-transform: capitalize;
+letter-spacing: -0.094rem;}
+.h2{ font:var(--main-headline2);
+text-transform: capitalize;
+letter-spacing: -0.03rem;}
+.h3{ font:var(--main-headline3);
+text-transform: capitalize;}
+.h4{ font:var(--main-headline4);
+text-transform: capitalize;
+letter-spacing: 0.0156rem;}
+.h5{font:var(--main-headline5);
+text-transform: capitalize;}
+.h6{font:var(--main-headline6);
+text-transform: capitalize;
+letter-spacing: 0.01rem;}
+.body1{font:var(--main-body1);}
+.body2{font:var(--main-body2);}
+.subtitle1{font:var(--main-subtitle1);
+text-transform: capitalize;
+letter-spacing: 0.01rem;}
+.subtitle2{font:var(--main-subtitle2);
+text-transform: capitalize;
+letter-spacing: 0.0156rem;}
+.btn{font:var(--main-button);
+  text-transform: uppercase;
+  letter-spacing: 0.078rem;
 }
+.overline{font:var(--main-overline);
+text-transform: uppercase;
+letter-spacing: 0.375rem;}
+.caption{font:var(--main-caption);
+  letter-spacing: 0.025rem;
+}
+
+
+.h1-details{ font:var(--details-headline1);
+text-transform: capitalize;
+letter-spacing: -0.094rem;}
+.h2-details{ font:var(--details-headline2);
+text-transform: capitalize;
+letter-spacing: -0.03rem;}
+.h3-details{ font:var(--details-headline3);
+text-transform: capitalize;}
+.h4-details{ font:var(--details-headline4);
+text-transform: capitalize;
+letter-spacing: 0.0156rem;}
+.h5-details{font:var(--details-headline5);
+text-transform: capitalize;}
+.h6-details{font:var(--details-headline6);
+text-transform: capitalize;
+letter-spacing: 0.01rem;}
+.body1-details{font:var(--details-body1);}
+.body2-details{font:var(--details-body2);}
+.subtitle1-details{font:var(--details-subtitle1);
+text-transform: capitalize;
+letter-spacing: 0.01rem;}
+.subtitle2-details{font:var(--details-subtitle2);
+text-transform: capitalize;
+letter-spacing: 0.0156rem;}
+.btn-details{font:var(--details-button);
+  text-transform: uppercase;
+  letter-spacing: 0.078rem;
+}
+.overline-details{font:var(--details-overline);
+text-transform: uppercase;
+letter-spacing: 0.375rem;}
+
+.overline-logo{font:var(--details-overline-logo);
+text-transform: uppercase;
+letter-spacing: 0.375rem;}
+
+.caption-details{font:var(--details-caption);
+  letter-spacing: 0.025rem;
+}
+
+
+.rootContainer{
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+.btn {
+  display: inline-block;
+  border: none;
+  align-self: center;
+  min-height:50px;
+  min-width: 120px;
+  padding: 0.3rem 1rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.078rem;
+  text-decoration: none;
+  font: var(--main-button);
+}
+
+.MuiIcon-root{
+margin-left: 1rem;
+}
+
+.lightbtn{
+  background: var(--lightactionbtn);
+  color: var(--lightactionbtntext);
+  box-shadow: var(--lightshadow);
+
+}
+
+.darkbtn{
+  background: var(--darkactionbtn);
+  color: var(--darkactionbtntext);
+  box-shadow: var(--lightshadow);
+
+}
+
+.authorpanelbtn{
+  background: var(--darkactionbtn);
+  color: var(--authorpaneltext);
+  transition-duration: 0.3s;
+  box-shadow: var(--heavyshadow) inset;
+}
+
+.authorpanelbtn:hover{
+  background: var(--inactive);
+  transition-duration: 0.3s;
+  color: var(--authorpanel);
+  box-shadow: none;
+  font-size:1rem;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.form-control{
+margin:5px;
+padding: 6px 12px;
+background: white;
+border: 1px solid var(--inactive);
+box-sizing: border-box;
+border-radius: 4px;
+font:var(--body1);
+}
+
+
+.query-form{
+padding: 0.5rem 1rem;
+width:100%;
+background: white;
+border: 1.5px solid var(--inactive);
+box-sizing: border-box;
+border-radius: 4px;
+font:var(--details-subtitle1);
+}
+
 
 .Header{
   align-self: center;
@@ -34,36 +348,46 @@
 .Column{
   display:flex;
   flex-direction: column;
-  width: 33vw;
-  height: 100vh;
 
 }
+
+.tag{
+  font: 0.8rem/1.5 'Palanquin', sans-serif;
+
+}
+
+
+.transition{
+  transition-duration: 0.3s;
+}
+
+
+
 .col-1{
-  background-color: var(--searchbg);
+  background-color: var(--searchpanel);
 }
 .col-2{
-  background-color: var(--shelfbg);
+  background-color: var(--shelfpanel);
 }
 .col-3{
-  background-color: var(--bookbg);
+  background-color: var(--detailspanel);
 }
 .list-1{
-  background-color: var(--searchlistbg);
+  background-color: var(--searchpanellist);
 }
 .list-2{
-  background-color: var(--shelflistbg);
+  background-color: var(--shelfpanellist);
 }
-.list-3{
-  background-color: var(--booklistbg);
-}
+
+
 .text-1{
-  color: var(--searchlisttext);
+  color: var(--searchpaneltext);
 }
 .text-2{
-  color: var(--shelflisttext);
+  color: var(--shelfpaneltext);
 }
 .text-3{
-  color: var(--booklisttext);
+  color: var(--detailspaneltext);
 }
 .Row{
   display:flex;
@@ -72,4 +396,642 @@
 .list{
   padding: 3%;
   width: minmax(33vw,400px);
+}
+
+.WebNavLink{
+  text-decoration: none;
+  padding:0 1.5rem;
+  opacity:0.7;
+}
+
+.WebNavLink:hover{
+  opacity:1;
+}
+
+
+.MobileNavLink{
+  color: var(--nav);
+  text-decoration: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.AuthorLink{
+  color: var(--detailspaneltext);
+  text-decoration: none;
+  padding:0 3rem;
+  display:inline-block;
+  text-decoration: none;
+  padding:0.5rem 2rem;
+  transition-duration: 0.6s;
+  background: inherit;
+  opacity:0.6;
+  cursor:pointer;
+}
+
+.AttributionLink{
+  color: var(--paper);
+  text-decoration: none;
+}
+
+.AttributionLink:hover{
+  opacity:1;
+}
+
+.shelfPanelLink{
+  color: var(--shelfpaneltext);
+  text-decoration: none;
+}
+
+
+.AuthorLink:hover{
+  background: linear-gradient( rgba(107,107,107,0) 0%, rgba(107,107,107,1) 100%);
+  opacity:1;
+
+}
+
+
+.authorPanelLink{
+  color: var(--detailspaneltext);
+  text-decoration: none;
+  padding:0 3rem;
+  text-decoration: none;
+  padding:0.5rem 2rem;
+  transition-duration: 0.6s;
+  background: inherit;
+  opacity:0.6;
+}
+
+.authorPanelLink:hover{
+  background: linear-gradient( rgba(107,107,107,0) 0%, rgba(107,107,107,1) 100%);
+  opacity:1;
+
+}
+
+.authorPanelLinkActive{
+  background: linear-gradient( rgba(107,107,107,0) 0%, rgba(107,107,107,1) 100%);
+  opacity:1;
+}
+
+.gradient{
+height: 100%;
+width: 100%;
+/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#f9f6f0+0,111111+100 */
+background: rgb(249,246,240); /* Old browsers */
+/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPHJhZGlhbEdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY3g9IjUwJSIgY3k9IjUwJSIgcj0iNzUlIj4KICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNmOWY2ZjAiIHN0b3Atb3BhY2l0eT0iMSIvPgogICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMTExMTExIiBzdG9wLW9wYWNpdHk9IjEiLz4KICA8L3JhZGlhbEdyYWRpZW50PgogIDxyZWN0IHg9Ii01MCIgeT0iLTUwIiB3aWR0aD0iMTAxIiBoZWlnaHQ9IjEwMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+background: -moz-radial-gradient(center, ellipse cover,  rgba(249,246,240,1) 0%, rgba(17,17,17,1) 100%); /* FF3.6-15 */
+background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(249,246,240,1)), color-stop(100%,rgba(17,17,17,1))); /* Chrome4-9,Safari4-5 */
+background: -webkit-radial-gradient(center, ellipse cover,  rgba(249,246,240,1) 0%,rgba(17,17,17,1) 100%); /* Chrome10-25,Safari5.1-6 */
+background: -o-radial-gradient(center, ellipse cover,  rgba(249,246,240,1) 0%,rgba(17,17,17,1) 100%); /* Opera 12+ */
+background: -ms-radial-gradient(center, ellipse cover,  rgba(249,246,240,1) 0%,rgba(17,17,17,1) 100%); /* IE10 preview */
+background: radial-gradient(ellipse at center,  rgba(249,246,240,1) 0%,rgba(17,17,17,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f6f0', endColorstr='#111111',GradientType=1 ); /* IE6-8 fallback on horizontal gradient */
+
+-webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradientBioNav{
+  position: relative;
+
+}
+
+.gradientBioNav:after{
+  position: absolute;
+  bottom: 0;
+  left:0;
+  content:'';
+  height: 100%;
+  width: 100%;
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#f9f6f0+0,111111+100 */
+  background: rgb(249,246,240); /* Old browsers */
+  /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPHJhZGlhbEdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY3g9IjUwJSIgY3k9IjUwJSIgcj0iNzUlIj4KICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNmOWY2ZjAiIHN0b3Atb3BhY2l0eT0iMSIvPgogICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMTExMTExIiBzdG9wLW9wYWNpdHk9IjEiLz4KICA8L3JhZGlhbEdyYWRpZW50PgogIDxyZWN0IHg9Ii01MCIgeT0iLTUwIiB3aWR0aD0iMTAxIiBoZWlnaHQ9IjEwMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+  background: -moz-radial-gradient(center, ellipse cover,  rgba(249,246,240,0) 0%, rgba(17,17,17,1) 95%, rgba(17,17,17,1) 100%); /* FF3.6-15 */
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(249,246,240,1)), color-stop(95%,rgba(17,17,17,1)), color-stop(100%,rgba(17,17,17,1))); /* Chrome4-9,Safari4-5 */
+  background: -webkit-radial-gradient(center, ellipse cover,  rgba(249,246,240,0) 0%,rgba(17,17,17,1) 95%, rgba(17,17,17,1) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: -o-radial-gradient(center, ellipse cover,  rgba(249,246,240,0) 0%, rgba(17,17,17,1) 95%, rgba(17,17,17,1) 100%); /* Opera 12+ */
+  background: -ms-radial-gradient(center, ellipse cover,  rgba(249,246,240,0) 0%, rgba(17,17,17,1) 95%, rgba(17,17,17,1) 100%); /* IE10 preview */
+  background: radial-gradient(ellipse at center,  rgba(249,246,240,0) 0%, rgba(17,17,17,1) 95%, rgba(17,17,17,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+
+}
+
+
+.gradientBio{
+  position: relative;
+
+}
+
+.gradientBio:after{
+  position: absolute;
+  bottom: 0;
+  left:0;
+  content:'';
+  height: 100%;
+  width: 100%;
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#f9f6f0+0,111111+100 */
+  /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPHJhZGlhbEdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY3g9IjUwJSIgY3k9IjUwJSIgcj0iNzUlIj4KICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNmOWY2ZjAiIHN0b3Atb3BhY2l0eT0iMSIvPgogICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMTExMTExIiBzdG9wLW9wYWNpdHk9IjEiLz4KICA8L3JhZGlhbEdyYWRpZW50PgogIDxyZWN0IHg9Ii01MCIgeT0iLTUwIiB3aWR0aD0iMTAxIiBoZWlnaHQ9IjEwMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+  background: -moz-radial-gradient(center, ellipse cover,  rgba(17,17,17,0.3) 0%, rgba(17,17,17,1) 95%, rgba(17,17,17,1) 100%); /* FF3.6-15 */
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(17,17,17,0.3)), color-stop(95%,rgba(17,17,17,1)), color-stop(100%,rgba(17,17,17,1))); /* Chrome4-9,Safari4-5 */
+  background: -webkit-radial-gradient(center, ellipse cover,  rgba(17,17,17,0.3) 0%,rgba(17,17,17,1) 95%, rgba(17,17,17,1) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: -o-radial-gradient(center, ellipse cover,  rgba(17,17,17,0.3) 0%, rgba(17,17,17,1) 95%, rgba(17,17,17,1) 100%); /* Opera 12+ */
+  background: -ms-radial-gradient(center, ellipse cover,   rgba(17,17,17,0.3) 0%, rgba(17,17,17,1) 95%, rgba(17,17,17,1) 100%); /* IE10 preview */
+  background: radial-gradient(ellipse at center,  rgba(17,17,17,0.3) 0%, rgba(17,17,17,1) 95%, rgba(17,17,17,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+
+}
+
+
+.upwardsGradient {
+  position: relative;
+}
+
+.upwardsGradient:after {
+  position: absolute;
+  bottom: 0;
+  left:0;
+  content:'';
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(to top,
+     rgba(17, 17, 17, 0.9) 30%,
+     rgba(17, 17, 17, 0.3) 80%
+  );
+  pointer-events: none; /* so the text is still selectable */
+}
+
+
+.upwardsGradientTablet {
+  position: relative;
+}
+
+.upwardsGradientTablet:after {
+  position: absolute;
+  bottom: 0;
+  left:0;
+  content:'';
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(to top,
+     rgba(17, 17, 17, 0.5) 30%,
+     rgba(17, 17, 17, 0.1) 60%
+  );
+  pointer-events: none; /* so the text is still selectable */
+}
+
+
+
+.rightwardsGradient {
+  position: relative;
+}
+
+.rightwardsGradient:after {
+  position: absolute;
+  bottom: 0;
+  left:0;
+  content:'';
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(to right,
+     rgba(17, 17, 17, 0.9) 30%,
+     rgba(17, 17, 17, 0.1) 80%
+  );
+  pointer-events: none; /* so the text is still selectable */
+}
+
+
+.tab-lr{
+  writing-mode:vertical-lr;
+}
+
+.tab-rl{
+  writing-mode:vertical-rl;
+}
+
+
+.h5tab-s{
+  font-size:1.3rem;
+  height:2rem;
+  width:100vw;
+  padding: 0.5rem;
+}
+
+.h5tab-m{
+  font-size:1.3rem;
+  height:4rem;
+  width:100vw;
+  padding: 0.5rem;
+}
+
+.h5tab-l{
+  font-size:1.3rem;
+  width:4rem;
+  align-self:center;
+  height:80vh;
+  transform:rotate(180deg);
+  transform-origin:center center;
+  padding: 0.5rem;
+  }
+
+.characters{
+  transform:rotate(180deg);
+  transform-origin:center center;
+}
+
+  .tabsearch:after {
+    position: absolute;
+    bottom: 5rem;
+    left:0;
+    content:'';
+    height: 30%;
+    width: 60%;
+    opacity:0.9;
+    background: linear-gradient(to top,
+       var(--searchpanel) 10%,
+       rgba(0, 0, 0, 0) 90%
+    );
+    pointer-events: none; /* so the text is still selectable */
+  }
+
+
+  .tabshelf:after {
+    position: absolute;
+    bottom: 5rem;
+    left:0;
+    content:'';
+    height: 30%;
+    width: 60%;
+    opacity:0.9;
+    background: linear-gradient(to top,
+       var(--shelfpanel) 10%,
+       rgba(0, 0, 0, 0) 90%
+    );
+    pointer-events: none; /* so the text is still selectable */
+  }
+
+
+  .tabbook:after {
+    position: absolute;
+    bottom:  5rem;
+    left:0;
+    content:'';
+    height: 30%;
+    width: 60%;
+    opacity:0.9;
+    background: linear-gradient(to top,
+       var(--detailspanel) 10%,
+       rgba(0, 0, 0, 0) 90%
+    );
+    pointer-events: none; /* so the text is still selectable */
+  }
+
+  .tabauthor:after {
+    position: absolute;
+    bottom: 5rem;
+    left:0;
+    content:'';
+    height: 30%;
+    width: 60%;
+    opacity:0.9;
+    background: linear-gradient(to top,
+       var(--ink) 10%,
+       rgba(0, 0, 0, 0) 90%
+    );
+    pointer-events: none; /* so the text is still selectable */
+  }
+
+.greybtn{
+ background-color: var(--shelfpanellist);
+ color:var(--shelfText);
+}
+
+.shelfNav{
+  display:flex;
+  flex-direction: column;
+  border: none;
+  align-self: center;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.078rem;
+  text-decoration: none;
+  font: var(--main-button);
+  align-items:center;
+  justify-content: center;
+  margin:0.2rem;
+  box-shadow: var(--heavyshadow);
+}
+
+
+.authorNav{
+  display:flex;
+  flex-direction: column;
+  border: none;
+  align-self: center;
+  cursor: pointer;
+  letter-spacing: 0.078rem;
+  text-decoration: none;
+  font: var(--main-caption);
+  align-items:center;
+  justify-content: center;
+  margin:0.2rem;
+  box-shadow: var(--heavyshadow);
+}
+
+
+.mirror{
+  transform:rotate(180deg);
+  transform-origin:center center;
+}
+
+.sticky {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+}
+
+@media screen and (max-width: 359px) {
+html { font-size: 13px;}
+}
+
+@media screen and (min-width: 600px) {
+html { font-size: 14px;}
+}
+@media screen and (min-width: 1200px) {
+html { font-size: 16px;}
+}
+
+@media screen and (min-width: 1600px) {
+html { font-size: 18px;}
+}
+
+
+
+.form-section-suggest{
+  width:90%;
+  text-shadow:none;
+  background-color: var(--paper);
+  box-shadow: var(--heavyshadow);
+  padding:2rem;
+  display:flex;
+  flex-direction: column;
+  align-self: center;
+}
+
+.form-section-suggest label{
+  font:var(--main-subtitle2);
+  align-self: flex-start;
+  margin:1rem 0.5rem 0.5rem 0.5rem;
+}
+
+.form-section-suggest h6{
+  font:var(--details-headline6);
+  align-self: center;
+  margin-bottom: 2rem;
+}
+.scrollIndicator-container {
+  width: 2px;
+  height: 15px;
+  position: absolute;
+  bottom:2rem;
+  margin: auto;
+
+
+}
+.scrollIndicatorSearch {
+  width: 1.5px;
+  height: 0px;
+  background-color: var(--searchpaneltext);
+  top: 0;
+  bottom: initial;
+  animation: line-animation 2.5s ease-in-out 0s infinite normal;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.scrollIndicatorSearch::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid var(--searchpaneltext);
+  border-bottom: 2px solid var(--searchpaneltext);
+  transform: rotate(45deg);
+  display: block;
+  position: absolute;
+  bottom: 0;
+  animation: arrow-animation 2.5s ease-in-out 0s infinite normal;
+}
+.scrollIndicatorSearch::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid var(--searchpaneltext);
+  border-bottom: 2px solid var(--searchpaneltext);
+  transform: rotate(45deg);
+  display: block;
+  position: absolute;
+  bottom: 7px;
+  animation: arrow-animation 2.5s ease-in-out 0s infinite normal;
+}
+
+
+.scrollIndicatorShelf {
+  width: 1.5px;
+  height: 0px;
+  background-color: var(--shelfpaneltext);
+  top: 0;
+  bottom: initial;
+  animation: line-animation 2.5s ease-in-out 0s infinite normal;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.scrollIndicatorShelf::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid var(--shelfpaneltext);
+  border-bottom: 2px solid var(--shelfpaneltext);
+  transform: rotate(45deg);
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left:8.5vw;
+  animation: arrow-animation 2.5s ease-in-out 0s infinite normal;
+}
+.scrollIndicatorShelf::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid var(--shelfpaneltext);
+  border-bottom: 2px solid var(--shelfpaneltext);
+  transform: rotate(45deg);
+  display: block;
+  position: absolute;
+  bottom: 7px;
+  left:8.5vw;
+
+  animation: arrow-animation 2.5s ease-in-out 0s infinite normal;
+}
+
+
+.scrollIndicatorBook {
+  width: 1.5px;
+  height: 0px;
+  background-color: var(--shelfpaneltext);
+  top: 0;
+  bottom: initial;
+  animation: line-animation 2.5s ease-in-out 0s infinite normal;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.scrollIndicatorBook::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid var(--shelfpaneltext);
+  border-bottom: 2px solid var(--shelfpaneltext);
+  transform: rotate(45deg);
+  display: block;
+  position: absolute;
+  bottom: 0;
+  animation: arrow-animation 2.5s ease-in-out 0s infinite normal;
+}
+.scrollIndicatorBook::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid var(--shelfpaneltext);
+  border-bottom: 2px solid var(--shelfpaneltext);
+  transform: rotate(45deg);
+  display: block;
+  position: absolute;
+  bottom: 7px;
+  animation: arrow-animation 2.5s ease-in-out 0s infinite normal;
+}
+
+.scrollIndicatorBg {
+  width: 1.5px;
+  height: 0px;
+  background-color: var(--paper);
+  top: 0;
+  bottom: initial;
+  animation: line-animation 2.5s ease-in-out 0s infinite normal;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.scrollIndicatorBg::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid white;
+  border-bottom: 2px solid white;
+  transform: rotate(45deg);
+  display: block;
+  position: absolute;
+  bottom: 0;
+  animation: arrow-animation 2.5s ease-in-out 0s infinite normal;
+  left:30vw;
+
+}
+.scrollIndicatorBg::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid white;
+  border-bottom: 2px solid white;
+  transform: rotate(45deg);
+  display: block;
+  position: absolute;
+  bottom: 7px;
+  animation: arrow-animation 2.5s ease-in-out 0s infinite normal;
+  left:30vw;
+
+}
+
+.scrollIndicatorBio {
+  width: 1.5px;
+  height: 0px;
+  background-color: var(--darkactionbtn);
+  top: 0;
+  bottom: initial;
+  animation: line-animation 2.5s ease-in-out 0s infinite normal;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.scrollIndicatorBio::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid var(--darkactionbtn);
+  border-bottom: 2px solid var(--darkactionbtn);
+  transform: rotate(45deg);
+  display: block;
+  position: absolute;
+  bottom: 0;
+  animation: arrow-animation 2.5s ease-in-out 0s infinite normal;
+  left:30vw;
+
+}
+.scrollIndicatorBio::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid var(--darkactionbtn);
+  border-bottom: 2px solid var(--darkactionbtn);
+  transform: rotate(45deg);
+  display: block;
+  position: absolute;
+  bottom: 7px;
+  animation: arrow-animation 2.5s ease-in-out 0s infinite normal;
+  left:30vw;
+
+}
+
+.languageLabel{
+  padding:1rem 2rem;
+  width:10rem;
+  opacity:1;
+  font-size: 1.2rem;
+  cursor: pointer;
+  background:var(--paper);
+  color:var(--ink);
+}
+
+#languageSetting{
+  transition-duration: 0.3s;
+  opacity: 0.6;
+}
+
+#languageSetting:hover{
+  transform: scale(1.1);
+  transition-duration: 0.3s;
+  opacity: 1;
+}
+#languageDiv:hover{
+background: var(--detailspaneltext);
+}
+
+.languageLabel:hover{
+  background:var(--shelfpanellist);
+}
+
+@keyframes line-animation {
+  0% {opacity: 0.5}
+  50% {opacity: 0.9}
+  100% {opacity: 0.5}
+}
+
+@keyframes arrow-animation {
+  0% {opacity: 0.5}
+  50% {opacity: 0.9}
+  100% {opacity: 0.5}
 }
