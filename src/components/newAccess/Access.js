@@ -360,6 +360,12 @@ const Access =({xs,s,m,l,xl, authorView, setAuthorView, googleScriptLoaded, setG
             console.log(`no author page found for ${authorToGet}`);
             return;
           }
+          let newEditions = res.data.editions
+          if(newEditions.some(edition=>edition.language === languageSetting)){
+            newEditions = newEditions.filter((edition)=>{
+                return edition.language===languageSetting
+              })
+          }
         const newSelectedAuthor = {
           authorCountry:res.data.authorCountry,
           authorInfluenced:res.data.authorInfluenced,
@@ -369,11 +375,11 @@ const Access =({xs,s,m,l,xl, authorView, setAuthorView, googleScriptLoaded, setG
           authorBirthDate:res.data.authorBirthDate,
           authorDeathDate:res.data.authorDeathDate,
           authorLifespan:res.data.authorLifespan,
-          authorWikiTitle:res.data.editions[0].details.authorWikiTitle,
-          authorLifeWorkKeywords:res.data.editions[0].details.authorLifeWorkKeywords,
-          timelineLinks:res.data.editions[0].details.timelineLinks,
-          authorBgKeywords:res.data.editions[0].details.authorBgKeywords,
-          authorWikiExtract:res.data.editions[0].details.authorWikiExtract,
+          authorWikiTitle:newEditions[0].details.authorWikiTitle,
+          authorLifeWorkKeywords:newEditions[0].details.authorLifeWorkKeywords,
+          timelineLinks:newEditions[0].details.timelineLinks,
+          authorBgKeywords:newEditions[0].details.authorBgKeywords,
+          authorWikiExtract:newEditions[0].details.authorWikiExtract,
           }
         setSelectedAuthor({...newSelectedAuthor})
       })

@@ -15,7 +15,7 @@ import useMediaQuery from "./components/customHooks/useMediaQuery";
 const App = () => {
   const [columnFocus, setColumnFocus] = useState('init')
   const [googleScriptLoaded, setGoogleScriptLoaded] = useState(false);
-  const [languageSetting, setLanguageSetting] = useState('zh-tw')
+  const [languageSetting, setLanguageSetting] = useState('en')
   const [authorView, setAuthorView] = useState(false)
 
   useEffect(()=>{
@@ -24,7 +24,7 @@ const App = () => {
     }
     i18n.changeLanguage(removeNonCharacters(languageSetting))
   },[languageSetting])
-  
+
   /* Extra small devices (phones, 600px and down) */
   const xs = useMediaQuery('(max-width: 600px)');
   /* Small devices (portrait tablets and large phones, 600px and up) */
