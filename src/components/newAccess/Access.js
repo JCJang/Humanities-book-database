@@ -307,7 +307,7 @@ const Access =({xs,s,m,l,xl, authorView, setAuthorView, googleScriptLoaded, setG
         authorWikiExtract:"",
       })
 
-      Axios.post("http://localhost:3001/allshelves",{
+      Axios.post("https://humanities-book.herokuapp.com/allshelves",{
         languageSetting:languageSetting
       }).then((res)=>{
           const allShelves = res.data.map((shelf)=>{
@@ -351,7 +351,7 @@ const Access =({xs,s,m,l,xl, authorView, setAuthorView, googleScriptLoaded, setG
         authorBgKeywords:[],
         authorWikiExtract:"",
       })
-      Axios.post("http://localhost:3001/openedauthor",{
+      Axios.post("https://humanities-book.herokuapp.com/openedauthor",{
         authorLanguage:languageSetting,
         authorToGet:authorToGet
       })
