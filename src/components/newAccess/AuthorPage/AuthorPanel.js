@@ -88,7 +88,9 @@ const AuthorPanel = ({xs,s,m,l,xl, selectedAuthor, expandFurtherReading, setExpa
   useEffect(()=>{
 
       authorInfluences.map((author)=>{
-        if(authorInfluencesBooks.find(obj =>obj.authorWikiTitle === author)){return;}
+        if(authorInfluencesBooks.find(obj =>obj.authorWikiTitle === author)!== undefined){
+          return;
+        }
 
         Axios.post("https://humanities-book.herokuapp.com/influencesbooks",{
             languageSetting:languageSetting,
@@ -138,7 +140,9 @@ const AuthorPanel = ({xs,s,m,l,xl, selectedAuthor, expandFurtherReading, setExpa
   useEffect(()=>{
 
       authorInfluenced.map((author)=>{
-        if(authorInfluencedBooks.find(obj =>obj.authorWikiTitle === author)){return;}
+        if(authorInfluencedBooks.find(obj =>obj.authorWikiTitle === author)!== undefined){
+          return;
+        }
 
         Axios.post("https://humanities-book.herokuapp.com/influencedbooks",{
             languageSetting:languageSetting,
