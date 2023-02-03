@@ -934,7 +934,7 @@ setShelfLanguage([addLabel[0]])
 //get book data
 //shelfLanguage
   useEffect(()=>{
-    Axios.post("https://humanities-book.herokuapp.com/allshelves",{
+    Axios.post("https://humanities-db-server.onrender.com/allshelves",{
       languageSetting:shelfLanguage[0]?stripLabels(shelfLanguage)[0]:languageSetting
     }).then((res)=>{
       setAllShelves(res.data.map((x)=>{ return [x.editions[0].details.shelfTitle, x.editions[0].details.shelfDescription,  x.shelfSubjects, x._id]}))
@@ -950,7 +950,7 @@ setShelfLanguage([addLabel[0]])
 
 
   function postShelf(){
-    Axios.post("https://humanities-book.herokuapp.com/suggestshelf",{
+    Axios.post("https://humanities-db-server.onrender.com/suggestshelf",{
       shelfSubjects:stripLabels(subjects),
       shelfTitle:shelfTitle,
       bookTitle:title,
@@ -965,7 +965,7 @@ setShelfLanguage([addLabel[0]])
 
 
   function addToShelf(){
-    Axios.post("https://humanities-book.herokuapp.com/suggestbooktoshelf",{
+    Axios.post("https://humanities-db-server.onrender.com/suggestbooktoshelf",{
       shelfTitle:shelfTitle,
       shelfId:shelfId,
       bookTitle:title,

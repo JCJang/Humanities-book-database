@@ -35,7 +35,7 @@ const About = ({xs, s, m, l, xl}) => {
 
 
     function postComment(){
-      Axios.post("https://humanities-book.herokuapp.com/suggestliteraturebook",{
+      Axios.post("https://humanities-db-server.onrender.com/suggestliteraturebook",{
         bookTitle:"COMMENT",
         bookAuthor:name,
         publicationLanguage:email,

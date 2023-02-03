@@ -73,7 +73,7 @@ const AuthorPanel = ({xs,s,m,l,xl, selectedAuthor, expandFurtherReading, setExpa
     setAuthorInfluencesBooks([])
     setAuthorInfluencedBooks([])
 
-    Axios.post("https://humanities-book.herokuapp.com/influences", {
+    Axios.post("https://humanities-db-server.onrender.com/influences", {
         languageSetting: languageSetting,
         authorWikiTitle: selectedAuthor.authorWikiTitle
       })
@@ -82,7 +82,7 @@ const AuthorPanel = ({xs,s,m,l,xl, selectedAuthor, expandFurtherReading, setExpa
         setAuthorInfluences(influences)
       })
 
-    Axios.post("https://humanities-book.herokuapp.com/influenced", {
+    Axios.post("https://humanities-db-server.onrender.com/influenced", {
         languageSetting: languageSetting,
         authorWikiTitle: selectedAuthor.authorWikiTitle
       })
@@ -100,7 +100,7 @@ const AuthorPanel = ({xs,s,m,l,xl, selectedAuthor, expandFurtherReading, setExpa
         return;
       }
 
-      Axios.post("https://humanities-book.herokuapp.com/influencesbooks", {
+      Axios.post("https://humanities-db-server.onrender.com/influencesbooks", {
           languageSetting: languageSetting,
           authorWikiTitle: author
         })
@@ -162,7 +162,7 @@ const AuthorPanel = ({xs,s,m,l,xl, selectedAuthor, expandFurtherReading, setExpa
         return;
       }
 
-      Axios.post("https://humanities-book.herokuapp.com/influencedbooks", {
+      Axios.post("https://humanities-db-server.onrender.com/influencedbooks", {
           languageSetting: languageSetting,
           authorWikiTitle: author
         })

@@ -856,7 +856,7 @@ const LitMap = ({xs, s, m, l, xl, languageSetting="en"}) => {
 
 
   function postBook(){
-    Axios.post("https://humanities-book.herokuapp.com/suggestliteraturebook",{
+    Axios.post("https://humanities-db-server.onrender.com/suggestliteraturebook",{
       bookTitle:title,
       bookAuthor:author,
       publicationLanguage:stripLabels(publicationLanguage)[0],
