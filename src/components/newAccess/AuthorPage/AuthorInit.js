@@ -102,7 +102,7 @@ useEffect(()=>{
     return newStr
     }
 
-    Axios.post("https://humanities-db-server.onrender.com/getauthortimeline",{
+    Axios.post("https://humanities-book-server.cyclic.app/getauthortimeline",{
     language: languageSetting,
      timelineWikiTitle:capitalize(timeline)
 
